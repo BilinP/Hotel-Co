@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1210.0" prefWidth="1608.0" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1210.0" prefWidth="1608.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hotelco.controllers.LoginController">
    <children>
       <BorderPane layoutX="301.0" layoutY="379.0" prefHeight="958.0" prefWidth="1190.0" style="-fx-background-color: #3c4149;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
@@ -33,7 +33,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                   </Text>
-                  <TextField maxWidth="300.0" prefHeight="25.0" prefWidth="1149.0">
+                  <TextField fx:id="username" maxWidth="300.0" prefHeight="25.0" prefWidth="1149.0">
                      <VBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
                      </VBox.margin>
@@ -46,12 +46,12 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                   </Text>
-                  <PasswordField maxWidth="300.0">
+                  <PasswordField fx:id="password" maxWidth="300.0">
                      <VBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
                      </VBox.margin>
                   </PasswordField>
-                  <Button mnemonicParsing="false" text="Login">
+                  <Button fx:id="loginButton" mnemonicParsing="false" text="Login">
                      <VBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
@@ -64,4 +64,4 @@
          </bottom>
       </BorderPane>
    </children>
-</fx:root>
+</AnchorPane>
