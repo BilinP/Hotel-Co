@@ -12,18 +12,21 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1210.0" prefWidth="1608.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hotelco.controllers.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hotelco.controllers.LoginController">
    <children>
       <BorderPane layoutX="301.0" layoutY="379.0" prefHeight="958.0" prefWidth="1190.0" style="-fx-background-color: #3c4149;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
             <ImageView fitHeight="615.0" fitWidth="1121.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
                <image>
-                  <Image url="@../../../../../../hotelco/hotelco.png" />
+                  <Image url="@../images/hotelco.png" />
                </image>
+               <BorderPane.margin>
+                  <Insets top="50.0" />
+               </BorderPane.margin>
             </ImageView>
          </top>
          <bottom>
-            <VBox prefHeight="592.0" prefWidth="1608.0" style="-fx-alignment: CENTER;" BorderPane.alignment="CENTER">
+            <VBox prefHeight="415.0" prefWidth="1920.0" style="-fx-alignment: CENTER;" BorderPane.alignment="CENTER">
                <children>
                   <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
                      <font>

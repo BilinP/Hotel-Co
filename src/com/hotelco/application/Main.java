@@ -12,7 +12,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource("/com/hotelco/views/GUI.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("/com/hotelco/views/LoginGUI.fxml"));
 			Scene scene = new Scene(root,600,400);
 			primaryStage.setMaximized(true);
 			//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
