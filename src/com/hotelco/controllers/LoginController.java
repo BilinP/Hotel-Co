@@ -1,11 +1,13 @@
 package com.hotelco.controllers;
 
+import com.hotelco.utilities.FXMLPaths;
+
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 
-public class LoginController {
+public class LoginController extends BaseController {
 
     @FXML
     private TextField username;
@@ -14,6 +16,13 @@ public class LoginController {
     private PasswordField password;
 
     @FXML
-    private Button loginButton;
+    void login(MouseEvent event) {
+
+    }
+
+    @FXML
+    private void switchToCreateAccount(MouseEvent event) {
+        switchScene(FXMLPaths.CreateAccountGUI, event);
+    }
 
 }
