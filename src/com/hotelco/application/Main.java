@@ -15,7 +15,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource(FXMLPaths.LoginGUI));
+			Parent root = FXMLLoader.load(getClass().getResource(FXMLPaths.LOGIN));
 			Scene scene = new Scene(root, Screen.getPrimary().getVisualBounds().getWidth(), Screen.getPrimary().getVisualBounds().getHeight());
 			primaryStage.initStyle(StageStyle.UNDECORATED);
 			primaryStage.setTitle("HotelCo");

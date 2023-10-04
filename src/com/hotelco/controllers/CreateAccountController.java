@@ -30,7 +30,7 @@ public class CreateAccountController extends BaseController {
     @FXML
     void createAccount(MouseEvent event) {
 
-        switchScene(FXMLPaths.LoginGUI, event);
+        switchScene(FXMLPaths.MENU, event);
     }
 
 }

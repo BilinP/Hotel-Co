@@ -17,12 +17,12 @@ public class LoginController extends BaseController {
 
     @FXML
     void login(MouseEvent event) {
-
+        
     }
 
     @FXML
     private void switchToCreateAccount(MouseEvent event) {
-        switchScene(FXMLPaths.CreateAccountGUI, event);
+        switchScene(FXMLPaths.CREATE_ACCOUNT, event);
     }
 
 }
