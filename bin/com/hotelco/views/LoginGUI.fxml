@@ -6,70 +6,65 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hotelco.controllers.LoginController">
-   <children>
-      <BorderPane layoutX="301.0" layoutY="379.0" prefHeight="958.0" prefWidth="1190.0" style="-fx-background-color: #3c4149;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <top>
-            <ImageView fitHeight="615.0" fitWidth="1121.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+<BorderPane style="-fx-background-color: #3c4149;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hotelco.controllers.LoginController">
+   <center>
+      <VBox style="-fx-alignment: CENTER;" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/hotelco.png" />
                </image>
-               <BorderPane.margin>
-                  <Insets top="50.0" />
-               </BorderPane.margin>
             </ImageView>
-         </top>
-         <bottom>
-            <VBox prefHeight="415.0" prefWidth="1920.0" style="-fx-alignment: CENTER;" BorderPane.alignment="CENTER">
-               <children>
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </VBox.margin>
-                  </Text>
-                  <TextField fx:id="username" maxWidth="300.0" prefHeight="25.0" prefWidth="1149.0">
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </VBox.margin>
-                  </Text>
-                  <PasswordField fx:id="password" maxWidth="300.0">
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
-                     </VBox.margin>
-                  </PasswordField>
-                  <Button mnemonicParsing="false" onMouseReleased="#login" text="Login">
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Text fill="WHITE" onMouseReleased="#switchToCreateAccount" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have an account? Create an account.">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Text>
-               </children>
-               <BorderPane.margin>
-                  <Insets />
-               </BorderPane.margin>
-            </VBox>
-         </bottom>
-      </BorderPane>
-   </children>
-</AnchorPane>
+            <Text fx:id="notification" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text=" ">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
+               <font>
+                  <Font size="24.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </Text>
+            <TextField fx:id="username" maxWidth="300.0">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
+               </VBox.margin>
+            </TextField>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
+               <font>
+                  <Font size="24.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </Text>
+            <PasswordField fx:id="password" maxWidth="300.0">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="5.0" />
+               </VBox.margin>
+            </PasswordField>
+            <Button mnemonicParsing="false" onMouseReleased="#login" text="Login">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+            </Button>
+            <Text fill="WHITE" onMouseReleased="#switchToCreateAccount" strokeType="OUTSIDE" strokeWidth="0.0" text="Don't have an account? Create an account.">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Text>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+</BorderPane>
