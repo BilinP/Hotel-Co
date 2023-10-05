@@ -3,7 +3,10 @@
         "src"
     ],
     "java.project.outputPath": "bin",
-    "java.project.referencedLibraries": [
-        "lib/**/*.jar"
-    ]
+    "java.project.referencedLibraries": {
+        "include": [
+            "javafx-sdk-21/lib/**/*.jar"
+        ]
+    },
+    "java.format.settings.url": ".vscode/java-formatter.xml",
 }
