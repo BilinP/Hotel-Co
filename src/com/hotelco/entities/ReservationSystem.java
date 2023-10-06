@@ -8,7 +8,7 @@ public class ReservationSystem {
     private static Connection connection = DatabaseConnection.connectDB();
 
     public static Connection GetDatabaseConnection() {
-        //check if open, open if not
+        //FIXME: check if open, open if not
         return connection;
     }
 }

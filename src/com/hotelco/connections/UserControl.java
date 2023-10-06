@@ -1,5 +1,6 @@
 package com.hotelco.connections;
 import com.hotelco.TicketType;
+import com.hotelco.entities.ReservationSystem;
 
 import java.sql.*;
 
@@ -12,7 +13,7 @@ public class UserControl {
         Connection con = null;
         PreparedStatement p = null;
 
-        con = DatabaseConnection.connectDB();
+        con = ReservationSystem.GetDatabaseConnection();
 
         try {
 
