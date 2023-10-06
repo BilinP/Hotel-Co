@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class DatabaseConnection {
 
-    Connection con = null;
+    private static Connection con = connectDB();
 
     public static Connection connectDB()
     {
@@ -12,7 +12,7 @@ public class DatabaseConnection {
         {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            Connection con = DriverManager.getConnection(
+            con = DriverManager.getConnection(
                     "jdbc:mysql://sql3.freemysqlhosting.net:3306/sql3651321",
                     "sql3651321", "fB8SKw8fPQ");
 
