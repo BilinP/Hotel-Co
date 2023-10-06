@@ -1,7 +1,7 @@
 package com.hotelco.controllers;
 
 import com.hotelco.utilities.FXMLPaths;
-
+import com.hotelco.connections.UserControl;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
@@ -45,6 +45,12 @@ public class CreateAccountController extends BaseController {
     @FXML
     void createAccount(MouseEvent event) {
         LoginController loginController = (LoginController) switchScene(FXMLPaths.LOGIN, event);
+
+        //FIXME: input validation here
+
+        UserControl.CreateUser(firstName.getText(), lastName.getText(),
+                email.getText(), phoneNumber.getText(), password.getText());
+
         loginController.setNotification("Account successfully created!");
     }
 
