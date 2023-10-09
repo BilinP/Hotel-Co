@@ -9,21 +9,7 @@
             "name": "Main",
             "request": "launch",
             "mainClass": "com.hotelco.application.Main",
-            "projectName": "Hotel-Co_fb007db5"
-        },
-        {
-            "type": "java",
-            "name": "Current File",
-            "request": "launch",
-            "mainClass": "${file}"
-        },
-        {
-            "type": "java",
-            "name": "Main",
-            "request": "launch",
-            "mainClass": "com.hotelco.application.Main",
             "projectName": "Hotel-Co_f677315c",
-            "vmArgs": "--module-path ./javafx-sdk-21/lib --add-modules javafx.controls,javafx.fxml"
         }
     ]
 }
