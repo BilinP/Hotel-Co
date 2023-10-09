@@ -1,8 +1,5 @@
 package com.hotelco.application;
 
-
-import com.hotelco.connections.DatabaseConnection;
-import com.hotelco.connections.DbSandbox;
 import com.hotelco.utilities.FXMLPaths;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
