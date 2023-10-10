@@ -17,8 +17,8 @@ public class UserControl {
         try {
 
             String query = "insert into users " +
-                    "(first_name, last_name, email, phone, password, id)" +
-                    " values (?, ?, ?, ?, ?, ?)";
+                    "(first_name, last_name, email, phone, password)" +
+                    " values (?, ?, ?, ?, ?)";
 
             p = con.prepareStatement(query);
             p.setString(1, firstName);
