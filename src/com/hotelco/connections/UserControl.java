@@ -1,5 +1,6 @@
 package com.hotelco.connections;
 import com.hotelco.TicketType;
+import com.hotelco.entities.ReservationSystem;
 
 import java.sql.*;
 
@@ -12,7 +13,7 @@ public class UserControl {
         Connection con = null;
         PreparedStatement p = null;
 
-        con = DatabaseConnection.connectDB();
+        con = ReservationSystem.GetDatabaseConnection();
 
         try {
 
@@ -29,17 +30,18 @@ public class UserControl {
             p.setString(5, password);
             p.setInt(6, nextTkt);
             p.execute();
-            con.close();
 
-            System.out.println("User with following details created:\n" +
+            /*System.out.println("User with following details created:\n" +
                     "First Name: " + firstName +
                     "\nLast Name: " + lastName +
                     "\nEmail: " + email +
                     "\nPhone number: " + phone +
                     "\nPassword: " + password +
                     "\nId: " + nextTkt);
+             */
 
-            Tickets.SetNextTicket(TicketType.BOOKING, nextTkt + 1);
+            Tickets.SetNextTicket(TicketType.CUSTOMER, nextTkt + 1);
+            con.close();
         }
 
         // Catch block to handle exception

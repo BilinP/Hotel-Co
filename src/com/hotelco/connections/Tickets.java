@@ -1,25 +1,26 @@
 package com.hotelco.connections;
 import com.hotelco.TicketType;
+import com.hotelco.entities.ReservationSystem;
 
 import java.sql.*;
 
 public class Tickets {
-    public static Connection con = DatabaseConnection.connectDB();
-    public static PreparedStatement p;
-    public static ResultSet rs;
-    public static String sql;
+    public static Connection con = ReservationSystem.GetDatabaseConnection();
+    public static PreparedStatement p = null;
+    public static ResultSet rs = null;
+    public static String sql = null;
 
     public static int GetNextTicket(TicketType tktType) {
         try {
             switch (tktType) {
                 case BOOKING:
-                    sql = "SELECT booking_tkt FROM tickets";
+                    sql = "SELECT ticket FROM tickets WHERE type = 'booking'";
                     break;
                 case CUSTOMER:
-                    sql = "SELECT customer_tkt FROM tickets";
+                    sql = "SELECT ticket FROM tickets WHERE type = 'customer'";
                     break;
                 case EMPLOYEE:
-                    sql = "SELECT employee_tkt FROM tickets";
+                    sql = "SELECT ticket FROM tickets WHERE type = 'employee'";
                     break;
             }
 
@@ -40,15 +41,16 @@ public class Tickets {
 
     public static void SetNextTicket(TicketType tktType, int nextTkt) {
         try {
+            sql = "UPDATE tickets SET ticket = " + nextTkt + " WHERE type = ";
             switch (tktType) {
                 case BOOKING:
-                    sql = "UPDATE tickets SET booking_tkt = " + nextTkt;
+                    sql += "'booking'";
                     break;
                 case CUSTOMER:
-                    sql = "UPDATE tickets SET customer_tkt = " + nextTkt;
+                    sql += "'customer'";
                     break;
                 case EMPLOYEE:
-                    sql = "UPDATE tickets SET employee_tkt = " + nextTkt;
+                    sql = "'employee'";
                     break;
             }
 
