@@ -1,8 +1,8 @@
 package com.hotelco.controllers;
 
-import com.hotelco.connections.Tickets;
-import com.hotelco.utilities.FXMLPaths;
 import com.hotelco.connections.UserControl;
+import com.hotelco.utilities.FXMLPaths;
+
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;

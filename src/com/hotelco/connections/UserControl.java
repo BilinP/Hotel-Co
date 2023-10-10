@@ -1,5 +1,4 @@
 package com.hotelco.connections;
-import com.hotelco.TicketType;
 import com.hotelco.entities.ReservationSystem;
 
 import java.sql.*;
@@ -20,7 +19,6 @@ public class UserControl {
             String query = "insert into users " +
                     "(first_name, last_name, email, phone, password, id)" +
                     " values (?, ?, ?, ?, ?, ?)";
-            int nextTkt = Tickets.GetNextTicket(TicketType.CUSTOMER);
 
             p = con.prepareStatement(query);
             p.setString(1, firstName);
@@ -28,7 +26,6 @@ public class UserControl {
             p.setString(3, email);
             p.setString(4, phone);
             p.setString(5, password);
-            p.setInt(6, nextTkt);
             p.execute();
 
             /*System.out.println("User with following details created:\n" +
@@ -39,9 +36,6 @@ public class UserControl {
                     "\nPassword: " + password +
                     "\nId: " + nextTkt);
              */
-
-            Tickets.SetNextTicket(TicketType.CUSTOMER, nextTkt + 1);
-            con.close();
         }
 
         // Catch block to handle exception
