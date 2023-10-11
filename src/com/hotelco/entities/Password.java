@@ -92,13 +92,8 @@ public class Password{
             
             boolean isPasswordValid = pass.verify(inputPassword, hashedPassword);
     
-            if (isPasswordValid) {
-                System.out.println("Password is valid!");
-            } else {
-                System.out.println("Password is not valid!");
-            }
             }catch (NoSuchAlgorithmException e) {
-                System.out.println("Exception thrown for incorrect algorithm: " + e);
+                System.out.println(e);
             }
      * 
      * 
