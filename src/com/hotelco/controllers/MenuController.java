@@ -1,5 +1,6 @@
 package com.hotelco.controllers;
 
+import com.hotelco.entities.ReservationSystem;
 import com.hotelco.utilities.FXMLPaths;
 
 import javafx.application.Platform;
@@ -15,7 +16,8 @@ public class MenuController extends BaseController {
     @FXML
     private void initialize() {
         Platform.runLater(() -> {
-            welcomeText.setText("Welcome, " + "[FIRST_NAME]" + "! What would you like to do today?");
+            welcomeText.setText("Welcome, " + ReservationSystem.getCurrentUser().getFirstName() +
+                "! What would you like to do today?");
         });
     }
 

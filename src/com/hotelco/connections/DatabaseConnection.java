@@ -1,11 +1,20 @@
 package com.hotelco.connections;
 
 import java.sql.*;
-
+/**
+* DatabaseConnection creates and maintains a connection to the database.
+*
+* @author      Daniel Schwartz
+* @version     %I%, %G%
+*/
 public class DatabaseConnection {
-
+/**
+ * Holds an open connection to the database.
+ */
     private static Connection con = connectDB();
-
+/**
+ * Connects static member con to the database
+ */
     public static Connection connectDB()
     {
         try
