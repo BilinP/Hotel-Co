@@ -1,3 +1,9 @@
+/**
+ * The password class represents a password with a salt for security. It provides methods to encrypt and verify.  
+ * @author BilinP
+ * @verision 1.0
+ */
+
 package com.hotelco.entities;
 
 import java.security.MessageDigest;
@@ -7,11 +13,23 @@ import java.security.NoSuchAlgorithmException;
 import java.math.BigInteger;
 
 public class Password{
+    /**
+     * Represents the salt for an unhashed password
+     */
     private String salt;
+
+    /**
+     * Constructs A password with a given salt 
+     * @parm saltInput the salt associate with password
+     */
 
     public Password(String saltInput){
         salt=saltInput;
     }
+
+     /**
+     * Construct a password with a given salt 
+     */
 
     public Password(){
         SecureRandom rand=new SecureRandom();
@@ -20,6 +38,14 @@ public class Password{
         salt = Base64.getEncoder().encodeToString(saltByte);
     }
 
+
+    /**
+     * Encrypt a given password with the salt
+     * 
+     * @param pass the password to be encrypted
+     * @return the hashed password, which is in hexadecimal
+     * @throws NoSuchAlgorithmException 
+     */
 
 
     public String encrypt(String pass)throws NoSuchAlgorithmException{
@@ -33,7 +59,14 @@ public class Password{
 
         return bigInt.toString(16);
     }
-
+    /**
+     * Verify that the given input password is the same as the hashed password, which is done by concatenating the salt and input password.
+     * 
+     * @param inputPassword password that is input to be verified
+     * @param hashedPassword hashed password to compare against
+     * @returna boolean where true means the passwords are the same and false if not
+     * @throws NoSuchAlgorithmException
+     */
 
     
     public boolean verify(String inputPassword,String hashedPassword)throws NoSuchAlgorithmException{
@@ -63,6 +96,12 @@ public class Password{
         }
         return true;
     }
+    /**
+     * Generates a byte array with both the Salt and Password together
+     *
+     * @param pass a byte array of the password
+     * @return a byte array of the Salt and Password together
+     */
 
     private byte[] genSaltWithPass(byte[] pass){
         byte[] saltByte = Base64.getDecoder().decode(salt);
@@ -72,31 +111,12 @@ public class Password{
         return result;
     }
 
+    /**
+     * Gets the salt
+     * @return the salt
+     */
+
     public String getSalt(){
         return this.salt;
-    }
-
-    
-
-    /* 
-     *     try{
-            Password pass = new Password();
-    
-            String orignalPassword = "Password";
-    
-        
-            String hashedPassword = pass.encrypt(originalPassword);
-    
-            String inputPassword = "Password";
-    
-            
-            boolean isPasswordValid = pass.verify(inputPassword, hashedPassword);
-    
-            }catch (NoSuchAlgorithmException e) {
-                System.out.println(e);
-            }
-     * 
-     * 
-    */
-    
+    }    
 }
