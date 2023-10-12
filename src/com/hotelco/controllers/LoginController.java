@@ -24,18 +24,8 @@ public class LoginController extends BaseController {
 
     @FXML
     private void initialize() {
-        //FIXME: This code causes an error
-        /*
-        String emailStr = email.getText();
-        if(DatabaseUtil.doesEmailExist(emailStr)){
-            if (Verifier.verify(emailStr, password.getText()))
-            {
-                System.out.println("hellooooooooo");
-            }
+            //add non JavaFX related code here
 
-
-        }
-        */
         Platform.runLater(() -> {
             //add JavaFX related code here
         });
@@ -47,7 +37,17 @@ public class LoginController extends BaseController {
             notification.setText("Please enter username and password");
             return;
         }
-        //notification.setText("Invalid Username/Password!");
+        String emailStr = email.getText();
+        if(DatabaseUtil.doesEmailExist(emailStr)){
+            if (Verifier.verify(emailStr, password.getText()))
+            {
+                System.out.println("Password verified");
+                //FIXME: go to landing page after login @GAzaCSUN
+            }
+            else{
+                notification.setText("Invalid Username/Password!");
+            }
+        }
     }
 
     @FXML
