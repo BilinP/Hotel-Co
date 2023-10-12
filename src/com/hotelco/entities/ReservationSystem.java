@@ -7,7 +7,7 @@ import java.sql.Connection;
 public class ReservationSystem {
     private static Connection connection = DatabaseConnection.connectDB();
 
-    public static Connection GetDatabaseConnection() {
+    public static Connection getDatabaseConnection() {
         //FIXME: check if open, open if not
         return connection;
     }
