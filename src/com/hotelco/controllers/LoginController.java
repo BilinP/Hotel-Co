@@ -21,7 +21,7 @@ public class LoginController extends BaseController {
     private PasswordField password;
 
     @FXML
-    void initialize() {
+    private void initialize() {
         //add code not related to JavaFX here
         Platform.runLater(() -> {
             //add JavaFX related code here
@@ -29,8 +29,12 @@ public class LoginController extends BaseController {
     }
 
     @FXML
-    void login(MouseEvent event) {
-        notification.setText("Invalid Username/Password!");
+    private void login(MouseEvent event) {
+        if (email.getText().isEmpty() || password.getText().isEmpty()) {
+            notification.setText("Please enter username and password");
+            return;
+        }
+        //notification.setText("Invalid Username/Password!");
     }
 
     @FXML

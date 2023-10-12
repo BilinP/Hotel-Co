@@ -35,7 +35,7 @@ public class CreateAccountController extends BaseController {
 
     
     @FXML
-    void initialize() {
+    private void initialize() {
         //add code not related to JavaFX here
         Platform.runLater(() -> {
             //add JavaFX related code here
@@ -44,7 +44,26 @@ public class CreateAccountController extends BaseController {
 
 
     @FXML
-    void createAccount(MouseEvent event) {
+    private void createAccount(MouseEvent event) {
+        TextField[] textFields = {firstName, lastName, email, phoneNumber};
+        PasswordField[] passwordFields = {password, confirmPassword};
+        for (TextField textField: textFields) {
+            if (textField.getText().isEmpty()) {
+                notification.setText("Please complete all fields");
+                return;
+            }
+        }
+        for (PasswordField passwordField: passwordFields) {
+            if (passwordField.getText().isEmpty()) {
+                notification.setText("Please complete all fields");
+                return;
+            }
+        }
+        if (!password.getText().equals(confirmPassword.getText())) {
+            notification.setText("Passwords do not match!");
+            return;
+        }
+
         LoginController loginController = (LoginController) switchScene(FXMLPaths.LOGIN, event);
 
         //FIXME: input validation here
@@ -54,10 +73,11 @@ public class CreateAccountController extends BaseController {
                     email.getText(), phoneNumber.getText(), password.getText());
             loginController.setNotification("Account successfully created!");
         }
+
     }
 
     @FXML
-    void switchToLoginScene(MouseEvent event) {
+    private void switchToLoginScene(MouseEvent event) {
         switchScene(FXMLPaths.LOGIN, event);
     }
 

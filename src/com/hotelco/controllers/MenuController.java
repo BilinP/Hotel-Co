@@ -13,19 +13,24 @@ public class MenuController extends BaseController {
     private Text welcomeText;
 
     @FXML
-    void initialize() {
+    private void initialize() {
         Platform.runLater(() -> {
             welcomeText.setText("Welcome, " + "[FIRST_NAME]" + "! What would you like to do today?");
         });
     }
 
     @FXML
-    void switchToLookup(MouseEvent event) {
+    private void logout(MouseEvent event) {
+        switchScene(FXMLPaths.LOGIN, event);
+    }
+
+    @FXML
+    private void switchToLookup(MouseEvent event) {
         switchScene(FXMLPaths.ORDER_LOOKUP, event);
     }
 
     @FXML
-    void switchToSearch(MouseEvent event) {
+    private void switchToSearch(MouseEvent event) {
         switchScene(FXMLPaths.SEARCH, event);
     }
 
