@@ -11,16 +11,18 @@ public class DatabaseUtil{
         String sqlQuery = null;
         ResultSet rs = null;
         boolean result = false;
-        // try {
-        //     sqlQuery = "SELECT EXISTS(SELECT 1 FROM users WHERE user_id = " + userId + ")";
-        //     con = ReservationSystem.getDatabaseConnection();
-        //     ps = con.prepareStatement(sqlQuery);
-        //     rs = ps.executeQuery();
-        //     result = rs.next();
-        // }
-        // catch (SQLException e){
-        //     System.out.println(e);
-        // }
+        try {
+            sqlQuery = "SELECT count(*) FROM users where user_id = " + userId;
+            con = ReservationSystem.getDatabaseConnection();
+            ps = con.prepareStatement(sqlQuery);
+            rs = ps.executeQuery();
+            rs.next();
+            result = rs.getInt(1) == 1;
+        }
+        catch(SQLException e)
+        {
+            System.out.println(e);
+        }
         return result;
     };
 
@@ -35,7 +37,8 @@ public class DatabaseUtil{
             con = ReservationSystem.getDatabaseConnection();
             ps = con.prepareStatement(sqlQuery);
             rs = ps.executeQuery();
-            return rs.next();
+            rs.next();
+            result = rs.getInt(1) == 1;
         }
         catch (SQLException e){
             System.out.println(e);

@@ -115,19 +115,19 @@ public class User {
         PreparedStatement p = null;
         String result = null;
         ResultSet rs = null;
-        // try {
-        //     con = ReservationSystem.getDatabaseConnection();
-        //     String sqlQuery =
-        //     "SELECT salt FROM users WHERE 'user_id' = " + userId;
-        //     p = con.prepareStatement(sqlQuery);
-        //     rs = p.executeQuery();
-        //     rs.next();
-        //     result = rs.getString("salt");
-        // }
-        // catch (SQLException e)
-        // {
-        //     System.out.println(e);
-        // }
+        try {
+            con = ReservationSystem.getDatabaseConnection();
+            String sqlQuery =
+            "SELECT salt FROM users WHERE 'user_id' = " + userId;
+            p = con.prepareStatement(sqlQuery);
+            rs = p.executeQuery();
+            rs.next();
+            result = rs.getString("salt");
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e);
+        }
         return result;
     }
 
