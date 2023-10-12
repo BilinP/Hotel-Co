@@ -24,9 +24,9 @@ public class DatabaseUtil{
             System.out.println(e);
         }
         return result;
-    };
+    }
 
-        public static boolean doesEmailExist(String email){
+    public static boolean doesEmailExist(String email){
         PreparedStatement ps = null;
         Connection con = null;
         String sqlQuery = null;

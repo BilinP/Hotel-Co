@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import com.hotelco.utilities.DatabaseUtil;
 
+import javafx.scene.chart.PieChart.Data;
+
 public class User {
     
     private int userId;
@@ -48,9 +50,6 @@ public class User {
     }
 
     public void push(String password) {
-
-        Connection con = null;
-        PreparedStatement p = null;
         
         Password pass = new Password();
         String salt = pass.getSalt();
@@ -64,7 +63,8 @@ public class User {
             System.out.println(e);
         }
 
-        con = ReservationSystem.getDatabaseConnection();
+        Connection con = ReservationSystem.getDatabaseConnection();;
+        PreparedStatement p = null;
 
         try {
 
@@ -118,7 +118,7 @@ public class User {
         try {
             con = ReservationSystem.getDatabaseConnection();
             String sqlQuery =
-            "SELECT salt FROM users WHERE 'user_id' = " + userId;
+            "SELECT salt FROM users WHERE user_id = " + userId;
             p = con.prepareStatement(sqlQuery);
             rs = p.executeQuery();
             rs.next();
@@ -183,11 +183,46 @@ public class User {
             System.out.println(e);
         }
     }
-    public void Push(){
-    
-    
-
-    };
-
-
 }
+//     public void Push(){
+//         Connection con = ReservationSystem.getDatabaseConnection();;
+//         PreparedStatement p = null;
+
+//         try {
+
+//             String sqlQuery = "update users set first_name = " + firstName +
+//                 ", last_name = " + lastName +
+//                 ", email = " + email +
+
+//                 ", email"
+//                     "(first_name, last_name, email, phone, hashed_password, salt)" +
+//                     " values (?, ?, ?, ?, ?, ?)";
+
+//             p = con.prepareStatement(query);
+//             p.setString(1, firstName);
+//             p.setString(2, lastName);
+//             p.setString(3, email);
+//             p.setString(4, phone);
+//             p.setString(5, hashedPassword);
+//             p.setString(6, salt);
+//             p.execute();
+
+//             /*System.out.println("User with following details created:\n" +
+//                     "First Name: " + firstName +
+//                     "\nLast Name: " + lastName +
+//                     "\nEmail: " + email +
+//                     "\nPhone number: " + phone +
+//                     "\nPassword: " + password +
+//                     "\nId: " + nextTkt);
+//              */
+//         }
+
+//         catch (SQLException e) {
+//             System.out.println(e);
+//         }
+
+
+//     };
+
+
+// }
