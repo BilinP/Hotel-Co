@@ -64,7 +64,7 @@ public class Password{
      * 
      * @param inputPassword password that is input to be verified
      * @param hashedPassword hashed password to compare against
-     * @returna boolean where true means the passwords are the same and false if not
+     * @return a boolean where true means the passwords are the same and false if not
      * @throws NoSuchAlgorithmException
      */
 
