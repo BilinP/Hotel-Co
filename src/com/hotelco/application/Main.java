@@ -1,6 +1,5 @@
 package com.hotelco.application;
 
-
 import com.hotelco.utilities.FXMLPaths;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +13,7 @@ import javafx.scene.Scene;
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
+
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource(FXMLPaths.LOGIN));
 			Scene scene = new Scene(root, Screen.getPrimary().getVisualBounds().getWidth(), Screen.getPrimary().getVisualBounds().getHeight());

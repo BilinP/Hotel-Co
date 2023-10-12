@@ -3,10 +3,10 @@
         "src"
     ],
     "java.project.outputPath": "bin",
-    "java.project.referencedLibraries": {
-        "include": [
-            "javafx-sdk-21/lib/**/*.jar"
-        ]
-    },
+    "java.project.referencedLibraries": [
+        "javafx-sdk-21/lib/**/*.jar",
+        "mysql-connector-j-8.1.0\\mysql-connector-j-8.1.0.jar"
+    ],
     "java.format.settings.url": ".vscode/java-formatter.xml",
+    "java.debug.settings.vmArgs": "--module-path ./javafx-sdk-21/lib --add-modules javafx.controls,javafx.fxml"
 }
