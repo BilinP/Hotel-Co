@@ -38,7 +38,7 @@ public class CreateAccountController extends BaseController {
     
     @FXML
     private void initialize() {
-        TextFormatter<String> numbersOnly = new TextFormatter<>(changed -> {
+        TextFormatter<String> phoneNumberFormatter = new TextFormatter<>(changed -> {
             if (changed.getControlNewText().length() > 10) {
                 return null;
             }
@@ -50,7 +50,7 @@ public class CreateAccountController extends BaseController {
             }
         });
         Platform.runLater(() -> {
-            phoneNumber.setTextFormatter(numbersOnly);
+            phoneNumber.setTextFormatter(phoneNumberFormatter);
         });
     }
 
@@ -77,6 +77,7 @@ public class CreateAccountController extends BaseController {
         }
         if (!DatabaseUtil.doesEmailExist(email.getText())) {
             notification.setText("Email is already registered!");
+            return;
         }
 
         LoginController loginController = (LoginController) switchScene(FXMLPaths.LOGIN, event);
