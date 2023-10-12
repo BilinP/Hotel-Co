@@ -183,6 +183,29 @@ public class User {
             System.out.println(e);
         }
     }
+    public void fetchById(int userIdToFetch)
+    {
+        PreparedStatement ps = null;
+        Connection con = null;
+        String sqlQuery = null;
+        ResultSet rs = null;
+        try {
+            sqlQuery = "SELECT * FROM users WHERE user_id = " + userIdToFetch;
+            con = ReservationSystem.getDatabaseConnection();
+            ps = con.prepareStatement(sqlQuery);
+            rs = ps.executeQuery();
+            rs.next();
+            userId = rs.getInt("user_id");
+            firstName = rs.getString("first_name");
+            lastName = rs.getString("last_name");
+            isEmployee = rs.getBoolean("is_employee");
+            isManager = rs.getBoolean("is_manager");
+            //FIXME: get reservations
+        }
+        catch (SQLException e){
+            System.out.println(e);
+        }
+    }
 }
 //     public void Push(){
 //         Connection con = ReservationSystem.getDatabaseConnection();;
