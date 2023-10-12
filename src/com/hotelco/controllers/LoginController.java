@@ -15,7 +15,7 @@ public class LoginController extends BaseController {
     private Text notification;
     
     @FXML
-    private TextField username;
+    private TextField email;
 
     @FXML
     private PasswordField password;
