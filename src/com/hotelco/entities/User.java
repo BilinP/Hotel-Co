@@ -115,19 +115,19 @@ public class User {
         PreparedStatement p = null;
         String result = null;
         ResultSet rs = null;
-        try {
-            con = ReservationSystem.getDatabaseConnection();
-            String sqlQuery =
-            "SELECT 'salt' FROM 'users' WHERE 'user_id' = " + userId;
-            p = con.prepareStatement(sqlQuery);
-            rs = p.executeQuery();
-            rs.next();
-            result = rs.getString("salt");
-        }
-        catch (SQLException e)
-        {
-            System.out.println(e);
-        }
+        // try {
+        //     con = ReservationSystem.getDatabaseConnection();
+        //     String sqlQuery =
+        //     "SELECT salt FROM users WHERE 'user_id' = " + userId;
+        //     p = con.prepareStatement(sqlQuery);
+        //     rs = p.executeQuery();
+        //     rs.next();
+        //     result = rs.getString("salt");
+        // }
+        // catch (SQLException e)
+        // {
+        //     System.out.println(e);
+        // }
         return result;
     }
 
@@ -139,7 +139,7 @@ public class User {
         try {
             con = ReservationSystem.getDatabaseConnection();
             String sqlQuery =
-            "SELECT 'hashed_password' FROM 'users' WHERE 'user_id' = " + userId;
+            "SELECT hashed_password FROM users WHERE user_id = " + userId;
             p = con.prepareStatement(sqlQuery);
             rs = p.executeQuery();
             rs.next();
@@ -167,7 +167,7 @@ public class User {
         String sqlQuery = null;
         ResultSet rs = null;
         try {
-            sqlQuery = "SELECT * FROM 'users' WHERE 'email' = " + emailStr;
+            sqlQuery = "SELECT * FROM users WHERE email = '" + emailStr + "'";
             con = ReservationSystem.getDatabaseConnection();
             ps = con.prepareStatement(sqlQuery);
             rs = ps.executeQuery();

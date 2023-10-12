@@ -11,16 +11,16 @@ public class DatabaseUtil{
         String sqlQuery = null;
         ResultSet rs = null;
         boolean result = false;
-        try {
-            sqlQuery = "SELECT EXISTS(SELECT 1 from 'users' WHERE 'user_id'=" + userId + ")";
-            con = ReservationSystem.getDatabaseConnection();
-            ps = con.prepareStatement(sqlQuery);
-            rs = ps.executeQuery();
-            result = rs.next();
-        }
-        catch (SQLException e){
-            System.out.println(e);
-        }
+        // try {
+        //     sqlQuery = "SELECT EXISTS(SELECT 1 FROM users WHERE user_id = " + userId + ")";
+        //     con = ReservationSystem.getDatabaseConnection();
+        //     ps = con.prepareStatement(sqlQuery);
+        //     rs = ps.executeQuery();
+        //     result = rs.next();
+        // }
+        // catch (SQLException e){
+        //     System.out.println(e);
+        // }
         return result;
     };
 
@@ -31,11 +31,11 @@ public class DatabaseUtil{
         ResultSet rs = null;
         boolean result = false;
         try {
-            sqlQuery = "SELECT EXISTS(SELECT 1 from 'users' WHERE 'email' = " + email + ")";
+            sqlQuery = "SELECT count(*) FROM users where email = '" + email + "'";
             con = ReservationSystem.getDatabaseConnection();
             ps = con.prepareStatement(sqlQuery);
             rs = ps.executeQuery();
-            result = rs.next();
+            return rs.next();
         }
         catch (SQLException e){
             System.out.println(e);
