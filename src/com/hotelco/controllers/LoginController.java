@@ -1,10 +1,5 @@
 package com.hotelco.controllers;
 
-import java.security.NoSuchAlgorithmException;
-
-import com.hotelco.entities.Password;
-import com.hotelco.entities.ReservationSystem;
-import com.hotelco.entities.User;
 import com.hotelco.utilities.DatabaseUtil;
 import com.hotelco.utilities.FXMLPaths;
 import com.hotelco.utilities.Verifier;
@@ -29,6 +24,8 @@ public class LoginController extends BaseController {
 
     @FXML
     private void initialize() {
+        //FIXME: This code causes an error
+        /*
         String emailStr = email.getText();
         if(DatabaseUtil.doesEmailExist(emailStr)){
             if (Verifier.verify(emailStr, password.getText()))
@@ -38,7 +35,7 @@ public class LoginController extends BaseController {
 
 
         }
-
+        */
         Platform.runLater(() -> {
             //add JavaFX related code here
         });
