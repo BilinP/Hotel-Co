@@ -1,5 +1,11 @@
 package com.hotelco.controllers;
 
+import java.security.NoSuchAlgorithmException;
+
+import com.hotelco.entities.Password;
+import com.hotelco.entities.ReservationSystem;
+import com.hotelco.entities.User;
+import com.hotelco.utilities.DatabaseUtil;
 import com.hotelco.utilities.FXMLPaths;
 
 import javafx.application.Platform;
@@ -22,7 +28,25 @@ public class LoginController extends BaseController {
 
     @FXML
     private void initialize() {
-        //add code not related to JavaFX here
+        // String emailStr = email.getText();
+        // if(DatabaseUtil.doesEmailExist(emailStr)){
+        //     User temp = new User(emailStr);
+        //     Password pass = new Password(temp.getSalt());
+        //     boolean verified;
+        //     try {
+        //         verified = pass.verify(password.getText(),temp.getHashedPassword())
+        //     }
+        //     catch (NoSuchAlgorithmException e)
+        //     {
+        //         System.out.println(e);
+        //     }
+        //     if (verified)
+        //     {
+        //         ReservationSystem;
+        //     }
+
+        // }
+
         Platform.runLater(() -> {
             //add JavaFX related code here
         });

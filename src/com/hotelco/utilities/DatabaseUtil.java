@@ -24,22 +24,22 @@ public class DatabaseUtil{
         return result;
     };
 
-    //     public static boolean doesEmailExist(String email){
-    //     PreparedStatement ps = null;
-    //     Connection con = null;
-    //     String sqlQuery = null;
-    //     ResultSet rs = null;
-    //     boolean result = false;
-    //     try {
-    //         sqlQuery = "SELECT EXISTS(SELECT from 'users' WHERE 'email' = " + email + ")";
-    //         con = ReservationSystem.getDatabaseConnection();
-    //         ps = con.prepareStatement(sqlQuery);
-    //         rs = ps.executeQuery();
-    //         result = rs.next();
-    //     }
-    //     catch (SQLException e){
-    //         System.out.println(e);
-    //     }
-    //     return result;
-    // };
+        public static boolean doesEmailExist(String email){
+        PreparedStatement ps = null;
+        Connection con = null;
+        String sqlQuery = null;
+        ResultSet rs = null;
+        boolean result = false;
+        try {
+            sqlQuery = "SELECT EXISTS(SELECT 1 from 'users' WHERE 'email' = " + email + ")";
+            con = ReservationSystem.getDatabaseConnection();
+            ps = con.prepareStatement(sqlQuery);
+            rs = ps.executeQuery();
+            result = rs.next();
+        }
+        catch (SQLException e){
+            System.out.println(e);
+        }
+        return result;
+    };
 }

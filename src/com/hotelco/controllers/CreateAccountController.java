@@ -1,6 +1,6 @@
 package com.hotelco.controllers;
 
-import com.hotelco.connections.UserControl;
+import com.hotelco.entities.User;
 import com.hotelco.utilities.FXMLPaths;
 
 import javafx.application.Platform;
@@ -69,8 +69,9 @@ public class CreateAccountController extends BaseController {
         //FIXME: input validation here
         //if (condition)
         {
-            UserControl.CreateUser(firstName.getText(), lastName.getText(),
-                    email.getText(), phoneNumber.getText(), password.getText());
+            User newUser = new User(
+                firstName.getText(), lastName.getText(),email.getText(), phoneNumber.getText());
+            newUser.push(password.getText());
             loginController.setNotification("Account successfully created!");
         }
 
