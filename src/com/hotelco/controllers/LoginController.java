@@ -24,8 +24,7 @@ public class LoginController extends BaseController {
 
     @FXML
     private void initialize() {
-            //add non JavaFX related code here
-
+        //add non JavaFX related code here
         Platform.runLater(() -> {
             //add JavaFX related code here
         });
@@ -42,7 +41,7 @@ public class LoginController extends BaseController {
             if (Verifier.verify(emailStr, password.getText()))
             {
                 System.out.println("Password verified");
-                //FIXME: go to landing page after login @GAzaCSUN
+                switchScene(FXMLPaths.MENU, event);
             }
             else{
                 notification.setText("Invalid Username/Password!");

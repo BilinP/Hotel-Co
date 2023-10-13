@@ -3,12 +3,12 @@ package com.hotelco.controllers;
 import com.hotelco.entities.User;
 import com.hotelco.utilities.DatabaseUtil;
 import com.hotelco.utilities.FXMLPaths;
+import com.hotelco.utilities.TextFormatters;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
@@ -38,19 +38,10 @@ public class CreateAccountController extends BaseController {
     
     @FXML
     private void initialize() {
-        TextFormatter<String> phoneNumberFormatter = new TextFormatter<>(changed -> {
-            if (changed.getControlNewText().length() > 10) {
-                return null;
-            }
-            if (changed.getControlNewText().matches("\\d*")) {
-                return changed;
-            }
-            else {
-                return null;
-            }
-        });
         Platform.runLater(() -> {
-            phoneNumber.setTextFormatter(phoneNumberFormatter);
+            phoneNumber.setTextFormatter(TextFormatters.PHONE_NUMBER);
+            firstName.setTextFormatter(TextFormatters.FIRST_NAME);
+            lastName.setTextFormatter(TextFormatters.LAST_NAME);
         });
     }
 
@@ -82,14 +73,9 @@ public class CreateAccountController extends BaseController {
 
         LoginController loginController = (LoginController) switchScene(FXMLPaths.LOGIN, event);
 
-        //FIXME: input validation here
-        //if (condition)
-        {
-            User newUser = new User(
-                firstName.getText(), lastName.getText(),email.getText(), phoneNumber.getText());
-            newUser.push(password.getText());
-            loginController.setNotification("Account successfully created!");
-        }
+        User newUser = new User(firstName.getText(), lastName.getText(),email.getText(), phoneNumber.getText());
+        newUser.push(password.getText());
+        loginController.setNotification("Account successfully created!");
 
     }
 
