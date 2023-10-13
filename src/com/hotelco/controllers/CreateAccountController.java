@@ -67,7 +67,7 @@ public class CreateAccountController extends BaseController {
             notification.setText("Passwords do not match!");
             return;
         }
-        if (!DatabaseUtil.doesEmailExist(email.getText())) {
+        if (DatabaseUtil.doesEmailExist(email.getText())) {
             notification.setText("Email is already registered!");
             return;
         }

@@ -3,7 +3,9 @@ package com.hotelco.entities;
 import com.hotelco.connections.DatabaseConnection;
 
 import java.sql.Connection;
-
+/**
+ * Class that 
+ */
 public class ReservationSystem {
     private static Connection connection = DatabaseConnection.connectDB();
 
