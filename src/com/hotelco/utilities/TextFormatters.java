@@ -3,7 +3,7 @@ package com.hotelco.utilities;
 import javafx.scene.control.TextFormatter;
 
 public class TextFormatters {
-    public static final TextFormatter<String> PHONE_NUMBER = new TextFormatter<>(changed -> {
+    public final TextFormatter<String> PHONE_NUMBER = new TextFormatter<>(changed -> {
         if (changed.getControlNewText().length() > 10) {
             return null;
         }
@@ -15,7 +15,7 @@ public class TextFormatters {
         }
     });
 
-    public static final TextFormatter<String> FIRST_NAME = new TextFormatter<>(changed -> {
+    public final TextFormatter<String> FIRST_NAME = new TextFormatter<>(changed -> {
         if (changed.getControlNewText().isEmpty()) {
             return changed;
         }
@@ -27,7 +27,7 @@ public class TextFormatters {
         }
     });
 
-    public static final TextFormatter<String> LAST_NAME = new TextFormatter<>(changed -> {
+    public final TextFormatter<String> LAST_NAME = new TextFormatter<>(changed -> {
         if (changed.getControlNewText().isEmpty()) {
             return changed;
         }
