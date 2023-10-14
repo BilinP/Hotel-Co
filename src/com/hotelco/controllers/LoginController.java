@@ -1,5 +1,7 @@
 package com.hotelco.controllers;
 
+import com.hotelco.entities.ReservationSystem;
+import com.hotelco.entities.User;
 import com.hotelco.utilities.DatabaseUtil;
 import com.hotelco.utilities.FXMLPaths;
 import com.hotelco.utilities.Verifier;
@@ -40,7 +42,7 @@ public class LoginController extends BaseController {
         if(DatabaseUtil.doesEmailExist(emailStr)){
             if (Verifier.verify(emailStr, password.getText()))
             {
-                System.out.println("Password verified");
+                ReservationSystem.setCurrentUser(new User(emailStr));
                 switchScene(FXMLPaths.MENU, event);
             }
             else{
