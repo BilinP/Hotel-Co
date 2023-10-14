@@ -49,6 +49,9 @@ public class LoginController extends BaseController {
                 notification.setText("Invalid Username/Password!");
             }
         }
+        else {
+            notification.setText("Invalid Username/Password!");
+        }
     }
 
     @FXML
