@@ -23,7 +23,7 @@ public class MenuController extends BaseController {
 
     @FXML
     private void logout(MouseEvent event) {
-        //ReservationSystem.logout();
+        ReservationSystem.logout();
         switchScene(FXMLPaths.LOGIN, event);
     }
 

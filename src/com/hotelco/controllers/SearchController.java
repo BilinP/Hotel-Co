@@ -1,7 +1,9 @@
 package com.hotelco.controllers;
 
 import java.time.LocalDate;
+import com.hotelco.RoomType;
 
+import com.hotelco.entities.ReservationSystem;
 import com.hotelco.utilities.FXMLPaths;
 
 import javafx.application.Platform;
@@ -67,10 +69,10 @@ public class SearchController extends BaseController {
             return;
         }
         notification.setText("");
-        /*
-         * if a room is available, you can re-enable the buttons by using the function:
-         * king.setDisable(false);
-         */
+        king.setDisable(!ReservationSystem.checkAvailability(start, end, RoomType.KING));
+        queen.setDisable(!ReservationSystem.checkAvailability(start, end, RoomType.QUEEN));
+        dbl.setDisable(!ReservationSystem.checkAvailability(start, end, RoomType.DBL));
+        suite.setDisable(!ReservationSystem.checkAvailability(start, end, RoomType.SUITE));
     }
 
     @FXML

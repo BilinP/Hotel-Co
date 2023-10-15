@@ -20,6 +20,8 @@ public class User {
     private boolean isManager;
     private int reservationIds[];
 
+    public User(){}
+
     public User(int id){
         if (DatabaseUtil.doesIdExist(id)){
             //fetchById(id);
@@ -96,7 +98,7 @@ public class User {
         }
     }
 
-    public int getId(){return userId;}
+    public int getUserId(){return userId;}
 
     public String getFirstName(){return firstName;}
 
@@ -175,6 +177,7 @@ public class User {
             userId = rs.getInt("user_id");
             firstName = rs.getString("first_name");
             lastName = rs.getString("last_name");
+            phone = rs.getString("phone");
             isEmployee = rs.getBoolean("is_employee");
             isManager = rs.getBoolean("is_manager");
             //FIXME: get reservations
@@ -195,9 +198,9 @@ public class User {
             ps = con.prepareStatement(sqlQuery);
             rs = ps.executeQuery();
             rs.next();
-            userId = rs.getInt("user_id");
-            firstName = rs.getString("first_name");
-            lastName = rs.getString("last_name");
+            userId = userIdToFetch;
+            firstName = rs.getString("first_name").trim();
+            lastName = rs.getString("last_name").trim();
             isEmployee = rs.getBoolean("is_employee");
             isManager = rs.getBoolean("is_manager");
             //FIXME: get reservations

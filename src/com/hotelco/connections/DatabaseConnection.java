@@ -14,6 +14,7 @@ public class DatabaseConnection {
     private static Connection con = connectDB();
 /**
  * Connects static member con to the database
+ * @return Connection object, connected to db
  */
     public static Connection connectDB()
     {
