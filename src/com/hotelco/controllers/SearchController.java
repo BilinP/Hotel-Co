@@ -49,6 +49,10 @@ public class SearchController extends BaseController {
 
     @FXML
     private void checkAvailability(MouseEvent event) {
+        king.setDisable(true);
+        queen.setDisable(true);
+        suite.setDisable(true);
+        dbl.setDisable(true);
         DatePicker[] datePickers = {startDate, endDate};
         for (DatePicker datePicker: datePickers) {
             if (datePicker.getValue() == null) {
@@ -85,7 +89,9 @@ public class SearchController extends BaseController {
 
     @FXML
     private void incrementGuest(MouseEvent event) {
-        guests.setText(Integer.toString(Integer.parseInt(guests.getText()) + 1));
+        if (Integer.parseInt(guests.getText()) < 12) {
+            guests.setText(Integer.toString(Integer.parseInt(guests.getText()) + 1));
+        }
     }
 
     @FXML
