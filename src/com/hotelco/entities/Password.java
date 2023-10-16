@@ -1,9 +1,3 @@
-/**
- * The password class represents a password with a salt for security. It provides methods to encrypt and verify.  
- * @author BilinP
- * @verision 1.0
- */
-
 package com.hotelco.entities;
 
 import java.security.MessageDigest;
@@ -12,6 +6,11 @@ import java.util.Base64;
 import java.security.NoSuchAlgorithmException;
 import java.math.BigInteger;
 
+/**
+ * The password class represents a password with a salt for security. It provides methods to encrypt and verify.  
+ * @author BilinP
+ * @verision 1.0
+ */
 public class Password{
     /**
      * Represents the salt for an unhashed password
@@ -20,7 +19,7 @@ public class Password{
 
     /**
      * Constructs A password with a given salt 
-     * @parm saltInput the salt associate with password
+     * @param saltInput the salt associate with password
      */
 
     public Password(String saltInput){
