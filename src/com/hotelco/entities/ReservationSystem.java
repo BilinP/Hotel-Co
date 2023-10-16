@@ -81,4 +81,8 @@ public class ReservationSystem {
         }
         return result;
     }
+
+    public static int book(){
+        
+    }
 }

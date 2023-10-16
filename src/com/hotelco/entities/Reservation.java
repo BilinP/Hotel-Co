@@ -24,6 +24,8 @@ public class Reservation {
 
     private int groupSize;
 
+    private boolean isConfirmed;
+
     private int reservationId;
 
     private boolean isCancelled;
@@ -46,6 +48,8 @@ public class Reservation {
     public String[] getComments(){return comments;}
 
     public int getGroupSize(){return groupSize;}
+    
+    public boolean getIsConfirmed(){return isConfirmed;}
 
     public int getReservationId(){return reservationId;}
 
@@ -65,6 +69,8 @@ public class Reservation {
     public void setComments(String newComments[]){comments = newComments;}
 
     public void setGroupSize(int newGroupSize){groupSize = newGroupSize;}
+
+    public void setIsConfirmed(boolean newIsConfirmed){isConfirmed = newIsConfirmed;}
 
     public void setReservationId(int newReservationId){reservationId = newReservationId;}
 
@@ -93,7 +99,7 @@ public class Reservation {
             startDate = rs.getDate("startDate").toLocalDate();
             endDate = rs.getDate("endDate").toLocalDate();
             user = new User(rs.getInt("user_id"));
-            //invoiceDetails = new InvoiceDetails(reservationId);
+            isConfirmed = rs.getBoolean("is_confirmed");
             invoiceDetails.rateDiscount = rs.getBigDecimal("rate_discount");
         }
         catch (SQLException e){
@@ -107,13 +113,14 @@ public class Reservation {
         String sqlQuery = null;
         try {
             sqlQuery = "INSERT INTO reservations" +
-            "(room_num, start_date, end_date, user_id, group_size) " + 
+            "(room_num, start_date, end_date, user_id, group_size, is_confirmed) " + 
             "Values (" +
             room.getRoomNum() + ", " +
             Date.valueOf(startDate) + ", " +
             Date.valueOf(endDate) + ", " +
             user.getUserId() + ", " +
-            groupSize + ")";
+            groupSize + "," + 
+            isConfirmed + ")";
             con = ReservationSystem.getDatabaseConnection();
             ps = con.prepareStatement(sqlQuery);
             ps.execute();
