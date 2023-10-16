@@ -1,6 +1,8 @@
 package com.hotelco.controllers;
 
 import java.time.LocalDate;
+
+import com.hotelco.Constants;
 import com.hotelco.RoomType;
 
 import com.hotelco.entities.ReservationSystem;
@@ -51,6 +53,7 @@ public class SearchController extends BaseController {
 
     @FXML
     private void checkAvailability(MouseEvent event) {
+        int numGuests = Integer.parseInt(guests.getText());
         king.setDisable(true);
         queen.setDisable(true);
         suite.setDisable(true);
@@ -69,10 +72,19 @@ public class SearchController extends BaseController {
             return;
         }
         notification.setText("");
-        king.setDisable(!ReservationSystem.checkAvailability(start, end, RoomType.KING));
-        queen.setDisable(!ReservationSystem.checkAvailability(start, end, RoomType.QUEEN));
-        dbl.setDisable(!ReservationSystem.checkAvailability(start, end, RoomType.DBL));
-        suite.setDisable(!ReservationSystem.checkAvailability(start, end, RoomType.SUITE));
+
+        if(numGuests > 0 && numGuests <= Constants.DBL_CAP) {    
+            dbl.setDisable(!ReservationSystem.checkAvailability(start, end, RoomType.DBL));
+        }
+        if(numGuests <= Constants.QUEEN_CAP) {  
+            queen.setDisable(!ReservationSystem.checkAvailability(start, end, RoomType.QUEEN));
+        }
+        if(numGuests <= Constants.KING_CAP) {
+            king.setDisable(!ReservationSystem.checkAvailability(start, end, RoomType.KING));
+        }
+        if(numGuests <= Constants.SUITE_CAP) {
+            suite.setDisable(!ReservationSystem.checkAvailability(start, end, RoomType.SUITE));
+        }
     }
 
     @FXML
@@ -91,7 +103,7 @@ public class SearchController extends BaseController {
 
     @FXML
     private void incrementGuest(MouseEvent event) {
-        if (Integer.parseInt(guests.getText()) < 12) {
+        if (Integer.parseInt(guests.getText()) < Constants.MAX_CAP) {
             guests.setText(Integer.toString(Integer.parseInt(guests.getText()) + 1));
         }
     }
