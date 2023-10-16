@@ -4,8 +4,7 @@ import java.time.LocalDate;
 
 import com.hotelco.Constants;
 import com.hotelco.RoomType;
-
-import com.hotelco.entities.ReservationSystem;
+import com.hotelco.entities.*;
 import com.hotelco.utilities.FXMLPaths;
 
 import javafx.application.Platform;
@@ -92,6 +91,16 @@ public class SearchController extends BaseController {
         Button pressedButton = (Button) event.getSource();
         //Use this String to figure out which button the user pressed
         String roomType = (String) pressedButton.getUserData();
+        //For next sprint, payment first
+        Room room = new Room(
+            ReservationSystem.findEmptyRoom(
+            startDate.getValue(), endDate.getValue(), RoomType.valueOf(roomType.toUpperCase())));
+        Reservation reservation = new Reservation(
+            room, startDate.getValue(), endDate.getValue(),
+            ReservationSystem.getCurrentUser(), Integer.parseInt(guests.getText()));
+        ReservationSystem.setCurrentReservation(reservation);
+        System.out.println("currentReservation.room.roomNum = " + ReservationSystem.getCurrentReservation().getRoom().getRoomNum());
+        ReservationSystem.book();
     }
 
     @FXML

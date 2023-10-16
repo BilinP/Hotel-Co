@@ -201,6 +201,7 @@ public class User {
             userId = userIdToFetch;
             firstName = rs.getString("first_name").trim();
             lastName = rs.getString("last_name").trim();
+            phone = rs.getString("phone");
             isEmployee = rs.getBoolean("is_employee");
             isManager = rs.getBoolean("is_manager");
             //FIXME: get reservations
