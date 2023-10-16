@@ -1,7 +1,8 @@
 package com.hotelco.entities;
 
-import com.hotelco.RoomType;
 import com.hotelco.connections.DatabaseConnection;
+import com.hotelco.utilities.RoomType;
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -40,7 +41,36 @@ public class ReservationSystem {
     }
 
     public static boolean checkAvailability(LocalDate startDate, LocalDate endDate, RoomType roomType){
-        return (countRooms(roomType) - countOccupiedRooms(startDate, endDate, roomType)) > 0;
+        PreparedStatement ps = null;
+        String sqlQuery = null;
+        ResultSet rs = null;
+        boolean result = false;
+        try {
+            sqlQuery =
+            "SELECT COUNT(room_num) as total " +
+            "FROM (" +
+                "SELECT room_num " +
+                "FROM rooms " +
+                "WHERE room_num " +
+                "NOT IN (" +
+                    "SELECT room_num " + 
+                    "FROM reservations " +
+                    "WHERE start_date <= '" + Date.valueOf(endDate) + "' " +
+                    "AND end_date >= '" + Date.valueOf(startDate) + "')" +
+                "AND room_type = '" + roomType.toString() + "' " +
+                "LIMIT 1) AS T";
+            System.out.println(sqlQuery);
+            ps = connection.prepareStatement(sqlQuery);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                result = rs.getBoolean("total");
+            }
+        }
+        catch (SQLException e){
+            System.out.println(e);
+        }
+        return result;
+        //return (countRooms(roomType) - countOccupiedRooms(startDate, endDate, roomType)) > 0;
     }
 
     public static int countOccupiedRooms(LocalDate startDate, LocalDate endDate, RoomType roomType){
@@ -107,7 +137,6 @@ public class ReservationSystem {
                 "WHERE start_date <= '" + Date.valueOf(endDate) +
                 "' AND end_date >= '" + Date.valueOf(startDate) + "')" + 
             " AND room_type = '" + roomType.toString() + "'";
-                System.out.println(sqlQuery);
             ps = connection.prepareStatement(sqlQuery);
             rs = ps.executeQuery();
             if(rs.next()){
@@ -121,6 +150,11 @@ public class ReservationSystem {
     }
 
     public static void book(){
-        currentReservation.push();
+        currentReservation.create();
+    }
+
+    public static void cancelReservation(Reservation reservation){
+        reservation.setIsCancelled(true);
+        reservation.push();
     }
 }

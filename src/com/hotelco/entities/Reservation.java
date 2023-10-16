@@ -20,19 +20,24 @@ public class Reservation {
 
     private InvoiceDetails invoiceDetails;
 
-    private String[] comments;
+    private String comments;
 
     private int groupSize;
 
     private int reservationId;
 
     private boolean isCancelled;
+
+    public Reservation(){}
     
     public Reservation(int reservationIdNum)
     {
         fetch(reservationIdNum);
     }
 
+    /**
+     * Constructor for creating a new reservation that will be added to database.
+     */
     public Reservation(
         Room newRoom, LocalDate newStartDate, LocalDate newEndDate, User newUser, int newGroupSize) {
             room = newRoom;
@@ -40,6 +45,21 @@ public class Reservation {
             endDate = newEndDate;
             user = newUser;
             groupSize = newGroupSize;
+    }
+
+    public Reservation(
+        Room newRoom, LocalDate newStartDate, LocalDate newEndDate, User newUser,
+        InvoiceDetails newInvoiceDetails, String newComments, int newGroupSize,
+        int newReservationId, boolean newIsCancelled) {
+            room = newRoom;
+            startDate = newStartDate;
+            endDate = newEndDate;
+            user = newUser;
+            invoiceDetails = newInvoiceDetails;
+            comments = newComments;
+            groupSize = newGroupSize;
+            reservationId = newReservationId;
+            isCancelled = newIsCancelled;
     }
 
     public Room getRoom(){return room;}
@@ -52,14 +72,13 @@ public class Reservation {
 
     public InvoiceDetails getInvoiceDetails(){return invoiceDetails;}
 
-    public String[] getComments(){return comments;}
+    public String getComments(){return comments;}
 
     public int getGroupSize(){return groupSize;}
 
     public int getReservationId(){return reservationId;}
 
     public boolean getIsCancelled(){return isCancelled;}
-
 
     public void setRoom(Room newRoom){room = newRoom;}
 
@@ -71,7 +90,7 @@ public class Reservation {
 
     public void setInvoiceDetails(InvoiceDetails newInvoiceDetails){invoiceDetails = newInvoiceDetails;}
 
-    public void setComments(String newComments[]){comments = newComments;}
+    public void setComments(String newComments){comments = newComments;}
 
     public void setGroupSize(int newGroupSize){groupSize = newGroupSize;}
 
@@ -80,11 +99,7 @@ public class Reservation {
     public void setIsCancelled(boolean newIsCancelled){isCancelled = newIsCancelled;}
 
     public void addComment(String newComment){
-        int origSize = comments.length;
-        String newComments[] = new String[origSize + 1];
-        System.arraycopy(comments, 0, newComments, 0, origSize);
-        comments = newComments;
-        newComments[origSize] = newComment;
+        comments += newComment;
     }
 
     public void fetch(int reservationIdToFetch){
@@ -93,17 +108,18 @@ public class Reservation {
         String sqlQuery = null;
         ResultSet rs = null;
         try {
-            sqlQuery = "SELECT * FROM reservations WHERE reservation_id = " + reservationIdToFetch;
+            sqlQuery = "SELECT reservation_id FROM reservations WHERE reservation_id = " + reservationIdToFetch;
             con = ReservationSystem.getDatabaseConnection();
             ps = con.prepareStatement(sqlQuery);
             rs = ps.executeQuery();
             if(rs.next()){
                 room = new Room(rs.getInt("room_num"));
-                startDate = rs.getDate("startDate").toLocalDate();
-                endDate = rs.getDate("endDate").toLocalDate();
+                startDate = rs.getDate("start_date").toLocalDate();
+                endDate = rs.getDate("end_date").toLocalDate();
                 user = new User(rs.getInt("user_id"));
                 isCancelled = rs.getBoolean("is_cancelled");
                 invoiceDetails.rateDiscount = rs.getBigDecimal("rate_discount");
+                comments = rs.getString("comments");
             }
         }
         catch (SQLException e){
@@ -111,7 +127,7 @@ public class Reservation {
         }
     }
 
-    public void push(){
+    public void create(){
         PreparedStatement ps = null;
         Connection con = null;
         String sqlQuery = null;
@@ -131,6 +147,28 @@ public class Reservation {
         catch (SQLException e){
             System.out.println(e);
         }
+    }
+    public void push(){
+        PreparedStatement ps = null;
+        Connection con = null;
+        String sqlQuery = null;
+        try {
+            sqlQuery = "UPDATE reservations " +
+            "SET room_num = " + room.getRoomNum() +
+            ", start_date = '" + Date.valueOf(startDate) + 
+            "', end_date = '" + Date.valueOf(endDate) +
+            "',  group_size = " + groupSize +
+            ", is_cancelled = " + isCancelled +
+            ", comments = " + comments +
+            ", rateDiscount = " + invoiceDetails.rateDiscount +
+            "WHERE reservation_id = " + reservationId;
+            con = ReservationSystem.getDatabaseConnection();
+            ps = con.prepareStatement(sqlQuery);
+            ps.execute();
+        }
+        catch (SQLException e){
+            System.out.println(e);
+        }
 
     }
 
@@ -139,6 +177,11 @@ public class Reservation {
         private BigDecimal rateDiscount;
 
         private Pair<String, Integer>[] adjustments;
+        //FIXME:write adjustment class
+
+        public InvoiceDetails(){}
+
+        public BigDecimal getRateDiscount(){return rateDiscount;}
 
         // public InvoiceDetails(int reservationId){
         //     PreparedStatement ps = null;
@@ -167,30 +210,3 @@ public class Reservation {
     }
     
 }
-/*
- * -room : Room
--startDate : Date
--endDate : Date
--user : User
--invoiceDetails : InvoiceDetails
--comments : string[]
--groupSize : int
--reservationId : int
-+GetRoom() : Room
-+GetStartDate() : Date
-+GetEndDate() : Date
-+getInvoiceDetails() : InvoiceDetails
-+GetComments() : string[]
-+GetGroupSize() : int
-+GetID() : int
-+SetRoom(Room) : void
-+SetStartDate(startDate) : void
-+SetEndDate(endDate) : void
-+SetComments(comment) : void
-+SetGroupSize(groupSize) : void
-+AddComment(comment) : void
-+Fetch() : void
-+Push() : void
-+CalcTotal() : Currency
-
- */

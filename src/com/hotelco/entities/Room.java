@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.hotelco.RoomType;
+import com.hotelco.utilities.RoomType;
 
 public class Room {
     
