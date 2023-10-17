@@ -157,8 +157,9 @@ public class ReservationSystem {
                 "SELECT room_num " + 
                 "FROM reservations " + 
                 "WHERE start_date <= '" + Date.valueOf(endDate) +
-                "' AND end_date >= '" + Date.valueOf(startDate) + "')" + 
-            " AND room_type = '" + roomType.toString() + "'";
+                "' AND end_date >= '" + Date.valueOf(startDate) + "') " + 
+            "AND room_type = '" + roomType.toString() + "'" + 
+            "LIMIT 1";
             ps = connection.prepareStatement(sqlQuery);
             rs = ps.executeQuery();
             if(rs.next()){

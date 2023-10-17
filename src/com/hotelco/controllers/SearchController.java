@@ -94,7 +94,7 @@ public class SearchController extends BaseController {
         //For next sprint, implement payment right about here
         Room room = new Room(
             ReservationSystem.findEmptyRoom(
-            startDate.getValue(), endDate.getValue(), RoomType.valueOf(roomType.toUpperCase())));
+                startDate.getValue(), endDate.getValue(), RoomType.valueOf(roomType.toUpperCase())));
         Reservation reservation = new Reservation(
             room, startDate.getValue(), endDate.getValue(),
             ReservationSystem.getCurrentUser(), Integer.parseInt(guests.getText()));

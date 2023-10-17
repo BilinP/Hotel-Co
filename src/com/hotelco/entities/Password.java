@@ -13,12 +13,12 @@ import java.math.BigInteger;
  */
 public class Password{
     /**
-     * Represents the salt for an unhashed password
+     * Represents the salt for an unhashed password.
      */
     private String salt;
 
     /**
-     * Constructs A password with a given salt 
+     * Constructs A password with a given salt.
      * @param saltInput the salt associate with password
      */
 
@@ -94,7 +94,7 @@ public class Password{
         return true;
     }
     /**
-     * Generates a byte array with both the Salt and Password together
+     * Generates a byte array with both the Salt and Password together.
      *
      * @param pass a byte array of the password
      * @return a byte array of the Salt and Password together
