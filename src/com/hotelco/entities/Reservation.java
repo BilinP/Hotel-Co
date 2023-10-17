@@ -7,29 +7,57 @@ import java.sql.SQLException;
 import java.sql.Date;
 import java.time.LocalDate;
 import javafx.util.Pair;
-
+/**
+ * Reservation class requests changes or views of the current users reservation and 
+ * holds all data related to the reservation.
+ * @author Daniel Schwartz
+ * @version %I%, %G%
+ */
 public class Reservation {
-    
+    /**
+     * Represents a room.
+     */
     private Room room;
-
+    /**
+     * Represents the starting date of a reservation.
+     */
     private LocalDate startDate;
-
+    /**
+     * Represents the end date of a reservation.
+     */
     private LocalDate endDate;
-    
+    /**
+     * Represents the user associated with this reservation.
+     */
     private User user;
-
+    /**
+     * Represents the data inside reservation for the user to view.
+     */
     private InvoiceDetails invoiceDetails;
-
+    /**
+     * Represents a comment section for additional information outside of set data.
+     */
     private String comments;
-
+    /**
+     * Represents the size of the group.
+     */
     private int groupSize;
-
+    /**
+     * Represents the identification of user.
+     */
     private int reservationId;
-
+    /**
+     * Represents a mark if a user has canceled a room.
+     */
     private boolean isCancelled;
-
+    /**
+     * Sets current reservation.
+     */
     public Reservation(){}
-    
+    /**
+     * fetches user data using reservationIdNum from database.
+     * @param reservationIdNum
+     */
     public Reservation(int reservationIdNum)
     {
         fetch(reservationIdNum);
@@ -46,7 +74,18 @@ public class Reservation {
             user = newUser;
             groupSize = newGroupSize;
     }
-
+    /**
+     * 
+     * @param newRoom
+     * @param newStartDate
+     * @param newEndDate
+     * @param newUser
+     * @param newInvoiceDetails
+     * @param newComments
+     * @param newGroupSize
+     * @param newReservationId
+     * @param newIsCancelled
+     */
     public Reservation(
         Room newRoom, LocalDate newStartDate, LocalDate newEndDate, User newUser,
         InvoiceDetails newInvoiceDetails, String newComments, int newGroupSize,
