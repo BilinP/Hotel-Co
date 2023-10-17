@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 /**
- * Class that 
+ * Reservation system class to maintain and stay connected to a database as a central hub.
  */
 public class ReservationSystem {
     private static Connection connection = DatabaseConnection.connectDB();
@@ -39,7 +39,13 @@ public class ReservationSystem {
         //FIXME: check if open, open if not
         return connection;
     }
-
+    /**
+     * Checks the availability of a room within a given date.
+     * @param startDate
+     * @param endDate
+     * @param roomType
+     * @return a boolean for the availability of a room
+     */
     public static boolean checkAvailability(LocalDate startDate, LocalDate endDate, RoomType roomType){
         PreparedStatement ps = null;
         String sqlQuery = null;
@@ -72,7 +78,13 @@ public class ReservationSystem {
         return result;
         //return (countRooms(roomType) - countOccupiedRooms(startDate, endDate, roomType)) > 0;
     }
-
+    /**
+     * A function used to see how many rooms are currently occupied.
+     * @param startDate
+     * @param endDate
+     * @param roomType
+     * @return the number of occupied rooms.
+     */
     public static int countOccupiedRooms(LocalDate startDate, LocalDate endDate, RoomType roomType){
         PreparedStatement ps = null;
         String sqlQuery = null;
@@ -102,7 +114,11 @@ public class ReservationSystem {
         }
         return result;
     }
-
+    /**
+     * Gives an integer for the total amount of rooms.
+     * @param roomType
+     * @return the total amount of rooms
+     */
     public static int countRooms(RoomType roomType){
         PreparedStatement ps = null;
         String sqlQuery = null;
@@ -122,7 +138,13 @@ public class ReservationSystem {
         }
         return result;
     }
-
+    /**
+     * Finds the next empty room for a quick search.
+     * @param startDate
+     * @param endDate
+     * @param roomType
+     * @return gives a room number of an empty room.
+     */
     public static int findEmptyRoom(LocalDate startDate, LocalDate endDate, RoomType roomType){
         PreparedStatement ps = null;
         String sqlQuery = null;
@@ -148,11 +170,16 @@ public class ReservationSystem {
         }
         return result;
     }
-
+    /**
+     * Creates a reservation.
+     */
     public static void book(){
         currentReservation.create();
     }
-
+    /**
+     * Cancels a reservation by flagging a boolean.
+     * @param reservation
+     */
     public static void cancelReservation(Reservation reservation){
         reservation.setIsCancelled(true);
         reservation.push();
