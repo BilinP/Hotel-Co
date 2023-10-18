@@ -12,12 +12,13 @@ public class DatabaseUtil{
         ResultSet rs = null;
         boolean result = false;
         try {
-            sqlQuery = "SELECT count(*) FROM users where user_id = " + userId;
+            sqlQuery = "SELECT count(*) as total FROM users where user_id = " + userId;
             con = ReservationSystem.getDatabaseConnection();
             ps = con.prepareStatement(sqlQuery);
             rs = ps.executeQuery();
-            rs.next();
-            result = rs.getInt(1) == 1;
+            if(rs.next()){
+                result = rs.getInt("total") == 1;
+            }
         }
         catch(SQLException e)
         {
@@ -33,12 +34,13 @@ public class DatabaseUtil{
         ResultSet rs = null;
         boolean result = false;
         try {
-            sqlQuery = "SELECT count(*) FROM users where email = '" + email + "'";
+            sqlQuery = "SELECT count(*) AS total FROM users where email = '" + email + "'";
             con = ReservationSystem.getDatabaseConnection();
             ps = con.prepareStatement(sqlQuery);
             rs = ps.executeQuery();
-            rs.next();
-            result = rs.getInt(1) == 1;
+            if(rs.next()){
+                result = rs.getInt("total") == 1;
+            }
         }
         catch (SQLException e){
             System.out.println(e);

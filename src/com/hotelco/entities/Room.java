@@ -56,12 +56,15 @@ public class Room {
             con = ReservationSystem.getDatabaseConnection();
             ps = con.prepareStatement(sqlQuery);
             rs = ps.executeQuery();
-            rs.next();
-            roomNum = roomNumToFetch;
-            roomType = RoomType.valueOf(rs.getString("room_type").toUpperCase());
-            isOccupied = rs.getBoolean("is_occupied");
-            occupant = new User(rs.getInt("user_id"));
-            maxGroupSize = rs.getInt("max_group_size");
+            if(rs.next())
+            {
+                roomNum = roomNumToFetch;
+                roomType = RoomType.valueOf(rs.getString("room_type").toUpperCase());
+                isOccupied = rs.getBoolean("is_occupied");
+                occupant = new User(rs.getInt("user_id"));
+                maxGroupSize = rs.getInt("max_group_size");
+            }
+
         }
         catch (SQLException e){
             System.out.println(e);

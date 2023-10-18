@@ -82,8 +82,9 @@ public class User {
             "SELECT salt FROM users WHERE user_id = " + userId;
             p = con.prepareStatement(sqlQuery);
             rs = p.executeQuery();
-            rs.next();
-            result = rs.getString("salt");
+            if(rs.next()){
+                result = rs.getString("salt");
+            }
         }
         catch (SQLException e)
         {
@@ -103,8 +104,9 @@ public class User {
             "SELECT hashed_password FROM users WHERE user_id = " + userId;
             p = con.prepareStatement(sqlQuery);
             rs = p.executeQuery();
-            rs.next();
-            result = rs.getString("hashed_password");
+            if(rs.next()){
+                result = rs.getString("hashed_password");
+            }
         }
         catch (SQLException e)
         {
@@ -132,14 +134,15 @@ public class User {
             con = ReservationSystem.getDatabaseConnection();
             ps = con.prepareStatement(sqlQuery);
             rs = ps.executeQuery();
-            rs.next();
-            userId = rs.getInt("user_id");
-            firstName = rs.getString("first_name");
-            lastName = rs.getString("last_name");
-            phone = rs.getString("phone");
-            isEmployee = rs.getBoolean("is_employee");
-            isManager = rs.getBoolean("is_manager");
-            reservations = fetchReservations(userId, true);
+            if(rs.next()){
+                userId = rs.getInt("user_id");
+                firstName = rs.getString("first_name");
+                lastName = rs.getString("last_name");
+                phone = rs.getString("phone");
+                isEmployee = rs.getBoolean("is_employee");
+                isManager = rs.getBoolean("is_manager");
+                reservations = fetchReservations(userId, true);
+            }
         }
         catch (SQLException e){
             System.out.println(e);
@@ -156,15 +159,16 @@ public class User {
             con = ReservationSystem.getDatabaseConnection();
             ps = con.prepareStatement(sqlQuery);
             rs = ps.executeQuery();
-            rs.next();
-            userId = userIdToFetch;
-            email = rs.getString("email");
-            firstName = rs.getString("first_name").trim();
-            lastName = rs.getString("last_name").trim();
-            phone = rs.getString("phone");
-            isEmployee = rs.getBoolean("is_employee");
-            isManager = rs.getBoolean("is_manager");
-            reservations = fetchReservations(userIdToFetch, false);
+            if(rs.next()){
+                userId = userIdToFetch;
+                email = rs.getString("email");
+                firstName = rs.getString("first_name").trim();
+                lastName = rs.getString("last_name").trim();
+                phone = rs.getString("phone");
+                isEmployee = rs.getBoolean("is_employee");
+                isManager = rs.getBoolean("is_manager");
+                reservations = fetchReservations(userIdToFetch, false);
+            }
         }
         catch (SQLException e){
             System.out.println(e);
@@ -199,7 +203,7 @@ public Reservation[] fetchReservations(int userId, boolean fetchOnlyFuture){
         rs = ps.executeQuery();
         
         while(rs.next()){
-            tempRoom = new Room(rs.getInt("reservation_id"));
+            tempRoom = new Room(rs.getInt("room_num"));
             tempStartDate = rs.getDate("start_date").toLocalDate();
             tempEndDate = rs.getDate("end_date").toLocalDate();
             tempUser = new User(rs.getInt("user_id"));
@@ -210,7 +214,7 @@ public Reservation[] fetchReservations(int userId, boolean fetchOnlyFuture){
             tempIsCancelled = rs.getBoolean("is_cancelled");
             tempReservation = new Reservation(
                 tempRoom, tempStartDate, tempEndDate, tempUser, tempInvoiceDetails,
-            tempComments, tempGroupSize, tempReservationId, tempIsCancelled);
+                tempComments, tempGroupSize, tempReservationId, tempIsCancelled);
             reservationList.add(tempReservation);
         }
         result = new Reservation[reservationList.size()];
