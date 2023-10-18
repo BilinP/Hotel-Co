@@ -141,7 +141,7 @@ public class User {
                 phone = rs.getString("phone");
                 isEmployee = rs.getBoolean("is_employee");
                 isManager = rs.getBoolean("is_manager");
-                reservations = fetchReservations(userId, true);
+                reservations = fetchReservations(this, true);
             }
         }
         catch (SQLException e){
@@ -167,7 +167,7 @@ public class User {
                 phone = rs.getString("phone");
                 isEmployee = rs.getBoolean("is_employee");
                 isManager = rs.getBoolean("is_manager");
-                reservations = fetchReservations(userIdToFetch, false);
+                reservations = fetchReservations(this, false);
             }
         }
         catch (SQLException e){
@@ -175,7 +175,7 @@ public class User {
         }
     }
 
-public Reservation[] fetchReservations(int userId, boolean fetchOnlyFuture){
+public Reservation[] fetchReservations(User user, boolean fetchOnlyFuture){
     Reservation tempReservation = new Reservation();
     PreparedStatement ps = null;
     Connection con = null;
@@ -184,7 +184,6 @@ public Reservation[] fetchReservations(int userId, boolean fetchOnlyFuture){
     Room tempRoom = null;
     LocalDate tempStartDate = null;
     LocalDate tempEndDate = null;
-    User tempUser = null;
     InvoiceDetails tempInvoiceDetails = null;
     String tempComments = null;
     int tempGroupSize = 0;
@@ -192,7 +191,6 @@ public Reservation[] fetchReservations(int userId, boolean fetchOnlyFuture){
     boolean tempIsCancelled = false;
     ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
     Reservation[] result = null;
-
         try {
         sqlQuery = "SELECT * FROM reservations WHERE user_id = " + userId;
         if (fetchOnlyFuture) {
@@ -206,14 +204,13 @@ public Reservation[] fetchReservations(int userId, boolean fetchOnlyFuture){
             tempRoom = new Room(rs.getInt("room_num"));
             tempStartDate = rs.getDate("start_date").toLocalDate();
             tempEndDate = rs.getDate("end_date").toLocalDate();
-            tempUser = new User(rs.getInt("user_id"));
             tempInvoiceDetails = new Reservation().getInvoiceDetails();//FIXME: get real invoiceDetails
             tempComments = rs.getString("comments");
-            tempGroupSize = rs.getInt("groupSize");
+            tempGroupSize = rs.getInt("group_size");
             tempReservationId = rs.getInt("reservation_id");
             tempIsCancelled = rs.getBoolean("is_cancelled");
             tempReservation = new Reservation(
-                tempRoom, tempStartDate, tempEndDate, tempUser, tempInvoiceDetails,
+                tempRoom, tempStartDate, tempEndDate, this, tempInvoiceDetails,
                 tempComments, tempGroupSize, tempReservationId, tempIsCancelled);
             reservationList.add(tempReservation);
         }
