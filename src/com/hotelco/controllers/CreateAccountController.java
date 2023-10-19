@@ -38,10 +38,11 @@ public class CreateAccountController extends BaseController {
     
     @FXML
     private void initialize() {
+        TextFormatters textFormatters = new TextFormatters();
         Platform.runLater(() -> {
-            phoneNumber.setTextFormatter(TextFormatters.PHONE_NUMBER);
-            firstName.setTextFormatter(TextFormatters.FIRST_NAME);
-            lastName.setTextFormatter(TextFormatters.LAST_NAME);
+            phoneNumber.setTextFormatter(textFormatters.PHONE_NUMBER);
+            firstName.setTextFormatter(textFormatters.FIRST_NAME);
+            lastName.setTextFormatter(textFormatters.LAST_NAME);
         });
     }
 

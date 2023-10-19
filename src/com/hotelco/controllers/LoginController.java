@@ -61,13 +61,12 @@ public class LoginController extends BaseController {
     private void switchToCreateAccount(MouseEvent event) {
         switchScene(FXMLPaths.CREATE_ACCOUNT, event);
     }
-
     @FXML
     private void enter(KeyEvent event) {
-        if (event.getCode() == KeyCode.ENTER) {
-            login(event);
-        }
+    if (event.getCode() == KeyCode.ENTER) {
+        login(event);
     }
+}
 
     void setNotification(String s) {
         notification.setText(s);
