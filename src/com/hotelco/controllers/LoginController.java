@@ -16,14 +16,30 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
+/**
+ * The LoginController class is the associated controller class of the 'LoginGUI' view. 
+ * It handles connection between the GUI and internal data.
+ * 
+ * @author      Grigor Azakian
+ * @version     %I%, %G%
+ */
 public class LoginController extends BaseController {
 
+    /**
+     * Text that can be displayed to notify the user of any potential invalid inputs.
+     */
     @FXML
     private Text notification;
     
+    /**
+     * TextField that contains the email of the user.
+     */
     @FXML
     private TextField email;
 
+    /**
+     * TextField that contains the password of the user.
+     */
     @FXML
     private PasswordField password;
 
@@ -35,6 +51,13 @@ public class LoginController extends BaseController {
         });
     }
 
+    /**
+     * This method is called when pressing the 'Login' button.
+     * It handles input verification and user login. It will enter 'MenuGUI' upon successful login.
+     * @param event The 'mouse released' event that is triggered by pressing the 'Login' button.
+     * @author Grigor Azakian
+     * @author Daniel Schwartz
+     */
     @FXML
     private void login(Event event) {
         if (email.getText().isEmpty() || password.getText().isEmpty()) {
@@ -57,11 +80,22 @@ public class LoginController extends BaseController {
         }
     }
 
+    /**
+     * This method is called by pressing the 'Don't have an account? Create an account.' text.
+     * It exits the 'LoginGUI' and enters the 'CreateAccountGUI'.
+     * @param event The 'mouse released' event that is triggered by pressing the 'Don't have an account? Create an account.' text.
+     */
     @FXML
     private void switchToCreateAccount(MouseEvent event) {
         switchScene(FXMLPaths.CREATE_ACCOUNT, event);
     }
     
+    /**
+     * This method is called by pressing any key on the keyboard.
+     * It will call the 'login()' function if the key pressed is the 'Enter' key.
+     * @param event The 'key pressed' event that is triggered by pressing any key on the keyboard.
+     * @author Bilin P
+     */
     @FXML
     private void enter(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
@@ -69,6 +103,10 @@ public class LoginController extends BaseController {
         }
     }
 
+    /**
+     * This method is a setter for the variable 'notification'.
+     * @param s The string to set the variable 'notification' to.
+     */
     void setNotification(String s) {
         notification.setText(s);
     }

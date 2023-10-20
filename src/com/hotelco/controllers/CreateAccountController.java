@@ -13,30 +13,61 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
+/**
+ * The CreateAccountController class is the associated controller class of the 'CreateAccountGUI' view. 
+ * It handles connection between the GUI and internal data.
+ * 
+ * @author      Grigor Azakian
+ * @version     %I%, %G%
+ */
 public class CreateAccountController extends BaseController {
 
+    /**
+     * TextField that contains the first name of the user.
+     */
     @FXML
     private TextField firstName;
 
+    /**
+     * TextField that contains the last name of the user.
+     */
     @FXML
     private TextField lastName;
 
+    /**
+     * TextField that contains the email of the user.
+     */
     @FXML
     private TextField email;
 
+    /**
+     * Text that can be displayed to notify the user of any potential invalid inputs.
+     */
     @FXML
     private Text notification;
 
+    /**
+     * TextField that contains the phone number of the user.
+     */
     @FXML
     private TextField phoneNumber;
 
+    /**
+     * TextField that contains the password of the user.
+     */
     @FXML
     private PasswordField password;
 
+    /**
+     * TextField that contains the second entry of the password of the user.
+     */
     @FXML
     private PasswordField confirmPassword;
 
-    
+    /**
+     * This method is called immediately upon controller creation.
+     * It assigns TextFormatters to several TextFields to handle input verification.
+     */
     @FXML
     private void initialize() {
         TextFormatters textFormatters = new TextFormatters();
@@ -47,7 +78,13 @@ public class CreateAccountController extends BaseController {
         });
     }
 
-
+    /**
+     * This method is called when pressing the 'Create Account' button.
+     * It handles input verification and account creation. It will switch to 'LoginGUI' upon successful account creation.
+     * @param event The 'mouse released' event that is triggered by pressing the 'Create Account' button.
+     * @author Grigor Azakian
+     * @author Daniel Schwartz
+     */
     @FXML
     private void createAccount(MouseEvent event) {
         TextField[] textFields = {firstName, lastName, email, phoneNumber};
@@ -83,6 +120,11 @@ public class CreateAccountController extends BaseController {
 
     }
 
+    /**
+     * This method is called by pressing the 'Go Back' text on the top left corner.
+     * It exits the 'CreateAccountGUI' and enters the 'LoginGUI'.
+     * @param event The 'mouse released' event that is triggered by pressing the 'Go Back' text on the top left corner.
+     */
     @FXML
     private void switchToLoginScene(MouseEvent event) {
         switchScene(FXMLPaths.LOGIN, event);
