@@ -75,7 +75,6 @@ public class ReservationSystem {
                     "AND end_date >= '" + Date.valueOf(startDate) + "')" +
                 "AND room_type = '" + roomType.toString() + "' " +
                 "LIMIT 1) AS T";
-            System.out.println(sqlQuery);
             ps = connection.prepareStatement(sqlQuery);
             rs = ps.executeQuery();
             if(rs.next()){
@@ -185,9 +184,8 @@ public class ReservationSystem {
      * Inserts a reservation into the database , associated with the logged in user.
      */
     public static void book(){
-        currentUser.addReservation(currentReservation);
-        currentUser.push();
         currentReservation.create();
+        currentUser.fetch();
     }
     /**
      * Cancels a reservation by setting isCancelled.

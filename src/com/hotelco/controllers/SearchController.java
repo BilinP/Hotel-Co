@@ -100,7 +100,7 @@ public class SearchController extends BaseController {
             ReservationSystem.getCurrentUser(), Integer.parseInt(guests.getText()));
         ReservationSystem.setCurrentReservation(reservation);
         ReservationSystem.book();
-        ReservationSystem.getCurrentUser();
+        
     }
 
     @FXML

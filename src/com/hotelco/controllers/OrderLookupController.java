@@ -1,5 +1,7 @@
 package com.hotelco.controllers;
 
+import java.time.format.DateTimeFormatter;
+
 import com.hotelco.entities.Reservation;
 import com.hotelco.entities.ReservationSystem;
 import com.hotelco.utilities.FXMLPaths;
@@ -63,7 +65,7 @@ public class OrderLookupController extends BaseController {
         Reservation[] reservations = ReservationSystem.getCurrentUser().getReservations();
         Text[] texts = {firstOrder, secondOrder, thirdOrder, fourthOrder, fifthOrder};
         for (Integer i = 0; i < texts.length; i++) {
-            texts[i].setText("asjf;oiewjf");
+            texts[i].setText("");
         }
 
         index = Integer.parseInt(pageNumber.getText());
@@ -76,7 +78,13 @@ public class OrderLookupController extends BaseController {
 
         j = 0;
         for (Integer i = index; i < Math.min(index + 5, reservations.length); i++) {
-            texts[j].setText("Reservation #" + reservations[i].getReservationId());
+            //FIXME:I put this just for testing but it is ugly. We need to
+            //Make column headers and make a cancel button
+            texts[j].setText(
+                "Reservation # " + reservations[i].getReservationId() + " from " +
+                reservations[i].getStartDate().toString() + " - " +
+                reservations[i].getEndDate().toString() + " - " +
+                ", party of " + reservations[i].getGroupSize());
             j++;
         }
     }

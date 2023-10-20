@@ -221,7 +221,7 @@ public class User {
                 tempRoom = new Room(rs.getInt("room_num"));
                 tempStartDate = rs.getDate("start_date").toLocalDate();
                 tempEndDate = rs.getDate("end_date").toLocalDate();
-                //tempInvoiceDetails = getInvoiceDetails();//FIXME: get real invoiceDetails
+                //tempInvoiceDetails = new Reservation().getInvoiceDetails();//FIXME: get real invoiceDetails
                 tempComments = rs.getString("comments");
                 tempGroupSize = rs.getInt("group_size");
                 tempReservationId = rs.getInt("reservation_id");
