@@ -9,7 +9,7 @@ import com.hotelco.utilities.RoomType;
 
 public class Room {
     
-    private int roomNum;
+    private Integer roomNum;
 
     private RoomType roomType;
 
@@ -17,16 +17,16 @@ public class Room {
 
     private User occupant;
 
-    private int maxGroupSize;
+    private Integer maxGroupSize;
 
     public Room(){}
     
-    public Room(int roomNumber)
+    public Room(Integer roomNumber)
     {
         fetch(roomNumber);
     }
 
-    public int getRoomNum(){return roomNum;}
+    public Integer getRoomNum(){return roomNum;}
 
     public RoomType getRoomType(){return roomType;}
 
@@ -34,9 +34,9 @@ public class Room {
 
     public User getOccupant(){return occupant;}
 
-    public int getMaxGroupSize(){return maxGroupSize;}
+    public Integer getMaxGroupSize(){return maxGroupSize;}
 
-    public void setRoomNUm(int newRoomNum){roomNum = newRoomNum;}
+    public void setRoomNUm(IntegernewRoomNum){roomNum = newRoomNum;}
 
     public void setRoomType(RoomType newRoomType){roomType = newRoomType;}
 
@@ -44,9 +44,9 @@ public class Room {
 
     public void setOccupant(User newOccupant){occupant = newOccupant;}
 
-    public void setMaxGroupSize(int newMaxGroupSize){maxGroupSize = newMaxGroupSize;}
+    public void setMaxGroupSize(Integer newMaxGroupSize){maxGroupSize = newMaxGroupSize;}
 
-    public void fetch(int roomNumToFetch){
+    public void fetch(Integer roomNumToFetch){
         PreparedStatement ps = null;
         Connection con = null;
         String sqlQuery = null;

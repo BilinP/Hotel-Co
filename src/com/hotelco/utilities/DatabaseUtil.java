@@ -5,7 +5,7 @@ import java.sql.*;
 
 public class DatabaseUtil{
 
-    public static boolean doesIdExist(int userId){
+    public static boolean doesIdExist(Integer userId){
         PreparedStatement ps = null;
         Connection con = null;
         String sqlQuery = null;

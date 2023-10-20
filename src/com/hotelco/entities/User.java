@@ -13,7 +13,7 @@ import com.hotelco.utilities.DatabaseUtil;
 
 public class User {
     
-    private int userId;
+    private Integer userId;
 
     private String firstName;
     
@@ -29,35 +29,34 @@ public class User {
     
     private Reservation[] reservations;
 
-    public User(){}
-
-    public User(int id){
+    public User(Integer id){
         if (DatabaseUtil.doesIdExist(id)){
             fetchById(id);
         }
     }
 
     public User(String emailStr){
-        email = emailStr;
         if (DatabaseUtil.doesEmailExist(emailStr))
         {
+            email = emailStr;
             fetchByEmail(emailStr);
         }
     }
-
+    /**
+     * Creates a User object with supplied details
+     * @param newFirstName
+     * @param newLastName
+     * @param newEmail
+     * @param newPhone
+     */
     public User(String newFirstName, String newLastName, String newEmail, String newPhone){
-        if (DatabaseUtil.doesEmailExist(newEmail)){
-            fetchByEmail(newEmail);
-        }
-        else {
-            firstName = newFirstName;
-            lastName = newLastName;
-            email = newEmail;
-            phone = newPhone;
-        }
+        firstName = newFirstName;
+        lastName = newLastName;
+        email = newEmail;
+        phone = newPhone;
     }
 
-    public int getUserId(){return userId;}
+    public Integer getUserId(){return userId;}
 
     public String getFirstName(){return firstName;}
 
@@ -115,7 +114,7 @@ public class User {
         return result;
     }
 
-    public void setId(int newUserId){userId = newUserId;}
+    public void setId(Integer newUserId){userId = newUserId;}
 
     public void setFirstName(String newFirstName){firstName = newFirstName;}
 
@@ -123,8 +122,17 @@ public class User {
 
     public void setEmail(String newEmail){email = newEmail;}
 
-    public void fetchByEmail(String emailStr)
-    {
+    public void setReservations(Reservation[] newReservations){reservations = newReservations;}
+
+    public void addReservation(Reservation reservationToAdd){
+        Integer reservationsLength = reservations.length;
+        Reservation[] newReservations = new Reservation[reservationsLength + 1];
+        System.arraycopy(reservations, 0, newReservations, 0, reservationsLength);
+        newReservations[reservationsLength] = reservationToAdd;
+        reservations = newReservations;
+    }
+
+    public void fetchByEmail(String emailStr){
         PreparedStatement ps = null;
         Connection con = null;
         String sqlQuery = null;
@@ -148,8 +156,8 @@ public class User {
             System.out.println(e);
         }
     }
-    public void fetchById(int userIdToFetch)
-    {
+
+    public void fetchById(Integer userIdToFetch){
         PreparedStatement ps = null;
         Connection con = null;
         String sqlQuery = null;
@@ -175,55 +183,80 @@ public class User {
         }
     }
 
-public Reservation[] fetchReservations(User user, boolean fetchOnlyFuture){
-    Reservation tempReservation = new Reservation();
-    PreparedStatement ps = null;
-    Connection con = null;
-    String sqlQuery = null;
-    ResultSet rs = null;
-    Room tempRoom = null;
-    LocalDate tempStartDate = null;
-    LocalDate tempEndDate = null;
-    InvoiceDetails tempInvoiceDetails = null;
-    String tempComments = null;
-    int tempGroupSize = 0;
-    int tempReservationId = 0;
-    boolean tempIsCancelled = false;
-    ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
-    Reservation[] result = null;
+    public void fetch(){
+        PreparedStatement ps = null;
+        Connection con = null;
+        String sqlQuery = null;
+        ResultSet rs = null;
         try {
-        sqlQuery = "SELECT * FROM reservations WHERE user_id = " + userId;
-        if (fetchOnlyFuture) {
-            sqlQuery += " AND CURDATE() <= end_date";
+            sqlQuery = "SELECT * FROM users WHERE user_id = " + userId;
+            con = ReservationSystem.getDatabaseConnection();
+            ps = con.prepareStatement(sqlQuery);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                email = rs.getString("email");
+                firstName = rs.getString("first_name").trim();
+                lastName = rs.getString("last_name").trim();
+                phone = rs.getString("phone");
+                isEmployee = rs.getBoolean("is_employee");
+                isManager = rs.getBoolean("is_manager");
+                reservations = fetchReservations(this, false);
+            }
         }
-        con = ReservationSystem.getDatabaseConnection();
-        ps = con.prepareStatement(sqlQuery);
-        rs = ps.executeQuery();
-        
-        while(rs.next()){
-            tempRoom = new Room(rs.getInt("room_num"));
-            tempStartDate = rs.getDate("start_date").toLocalDate();
-            tempEndDate = rs.getDate("end_date").toLocalDate();
-            tempInvoiceDetails = new Reservation().getInvoiceDetails();//FIXME: get real invoiceDetails
-            tempComments = rs.getString("comments");
-            tempGroupSize = rs.getInt("group_size");
-            tempReservationId = rs.getInt("reservation_id");
-            tempIsCancelled = rs.getBoolean("is_cancelled");
-            tempReservation = new Reservation(
-                tempRoom, tempStartDate, tempEndDate, this, tempInvoiceDetails,
-                tempComments, tempGroupSize, tempReservationId, tempIsCancelled);
-            reservationList.add(tempReservation);
+        catch (SQLException e){
+            System.out.println(e);
         }
-        result = new Reservation[reservationList.size()];
-        reservationList.toArray(result);
     }
-    catch (SQLException e){
-        System.out.println(e);
-    }
-    return result;
-}
 
-public void push(String password) {
+    public Reservation[] fetchReservations(User user, boolean fetchOnlyFuture){
+        Reservation tempReservation = new Reservation();
+        PreparedStatement ps = null;
+        Connection con = null;
+        String sqlQuery = null;
+        ResultSet rs = null;
+        Room tempRoom = null;
+        LocalDate tempStartDate = null;
+        LocalDate tempEndDate = null;
+        InvoiceDetails tempInvoiceDetails = null;
+        String tempComments = null;
+        Integer tempGroupSize = 0;
+        Integer tempReservationId = 0;
+        boolean tempIsCancelled = false;
+        ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
+        Reservation[] result = null;
+            try {
+            sqlQuery = "SELECT * FROM reservations WHERE user_id = " + userId;
+            if (fetchOnlyFuture) {
+                sqlQuery += " AND CURDATE() <= end_date";
+            }
+            con = ReservationSystem.getDatabaseConnection();
+            ps = con.prepareStatement(sqlQuery);
+            rs = ps.executeQuery();
+            
+            while(rs.next()){
+                tempRoom = new Room(rs.getInt("room_num"));
+                tempStartDate = rs.getDate("start_date").toLocalDate();
+                tempEndDate = rs.getDate("end_date").toLocalDate();
+                tempInvoiceDetails = new Reservation().getInvoiceDetails();//FIXME: get real invoiceDetails
+                tempComments = rs.getString("comments");
+                tempGroupSize = rs.getInt("group_size");
+                tempReservationId = rs.getInt("reservation_id");
+                tempIsCancelled = rs.getBoolean("is_cancelled");
+                tempReservation = new Reservation(
+                    tempRoom, tempStartDate, tempEndDate, this, tempInvoiceDetails,
+                    tempComments, tempGroupSize, tempReservationId, tempIsCancelled);
+                reservationList.add(tempReservation);
+            }
+            result = new Reservation[reservationList.size()];
+            reservationList.toArray(result);
+        }
+        catch (SQLException e){
+            System.out.println(e);
+        }
+        return result;
+    }
+
+    public void push(String password) {
         
         Password pass = new Password();
         String salt = pass.getSalt();
@@ -270,30 +303,41 @@ public void push(String password) {
     }
 
     public void push(){
-        Connection con = ReservationSystem.getDatabaseConnection();;
+        Connection con = ReservationSystem.getDatabaseConnection();
         PreparedStatement p = null;
-        try {
-            String sqlQuery =
-                "UPDATE users " +
-                "SET first_name = " + firstName +
+        String sqlQuery = null;
+
+        if(email == null && userId == null){
+            //@GAzaCSUN Can we do a pop up error message here?
+        }
+        else if (userId == null){
+            sqlQuery =
+                "INSERT INTO users " +
+                "SET " +
+                "first_name = " + firstName +
                 ", last_name = " + lastName +
                 ", email = " + email +
                 ", phone = " + phone +
                 ", is_employee = " + isEmployee +
                 ", is_manager = " + isManager;
+        } else {
+            sqlQuery =
+                "UPDATE users " +
+                "SET first_name = '" + firstName +
+                "', last_name = '" + lastName +
+                "', email = '" + email +
+                "', phone = '" + phone +
+                "', is_employee = " + isEmployee +
+                ", is_manager = " + isManager + 
+                " WHERE user_id = " + userId;
+        }
+        try {
             p = con.prepareStatement(sqlQuery);
             p.execute();
-            /*System.out.println("User with following details created:\n" +
-                    "First Name: " + firstName +
-                    "\nLast Name: " + lastName +
-                    "\nEmail: " + email +
-                    "\nPhone number: " + phone +
-                    "\nPassword: " + password +
-                    "\nId: " + nextTkt);
-             */
         }
         catch (SQLException e) {
             System.out.println(e);
+            System.out.println("User not updated in database");
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.hotelco.controllers;
 
+import com.hotelco.entities.ReservationSystem;
 import com.hotelco.entities.User;
 import com.hotelco.utilities.DatabaseUtil;
 import com.hotelco.utilities.FXMLPaths;
@@ -76,6 +77,8 @@ public class CreateAccountController extends BaseController {
 
         User newUser = new User(firstName.getText(), lastName.getText(),email.getText(), phoneNumber.getText());
         newUser.push(password.getText());
+        newUser.fetchByEmail(email.getText());
+        ReservationSystem.setCurrentUser(newUser);
         loginController.setNotification("Account successfully created!");
 
     }

@@ -86,7 +86,7 @@ public class Password{
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         byte[] hashedPasswordToVerify = md.digest(nonHashedInputPassword);
        
-        for (int i = 16; i < hashedPasswordToVerify.length; i++) {
+        for (Integer i = 16; i < hashedPasswordToVerify.length; i++) {
             if (hashedPasswordBytes[i] != hashedPasswordToVerify[i]) {
                 return false; 
             }

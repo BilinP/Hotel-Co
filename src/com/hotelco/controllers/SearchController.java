@@ -52,7 +52,7 @@ public class SearchController extends BaseController {
 
     @FXML
     private void checkAvailability(MouseEvent event) {
-        int numGuests = Integer.parseInt(guests.getText());
+        Integer numGuests = Integer.parseInt(guests.getText());
         king.setDisable(true);
         queen.setDisable(true);
         suite.setDisable(true);
@@ -99,8 +99,8 @@ public class SearchController extends BaseController {
             room, startDate.getValue(), endDate.getValue(),
             ReservationSystem.getCurrentUser(), Integer.parseInt(guests.getText()));
         ReservationSystem.setCurrentReservation(reservation);
-        System.out.println("currentReservation.room.roomNum = " + ReservationSystem.getCurrentReservation().getRoom().getRoomNum());
         ReservationSystem.book();
+        ReservationSystem.getCurrentUser();
     }
 
     @FXML

@@ -59,13 +59,14 @@ public class OrderLookupController extends BaseController {
     }
 
     private void displayOrders() {
+        Integer index, j;
         Reservation[] reservations = ReservationSystem.getCurrentUser().getReservations();
         Text[] texts = {firstOrder, secondOrder, thirdOrder, fourthOrder, fifthOrder};
-        for (int i = 0; i < texts.length; i++) {
-            texts[i].setText("");
+        for (Integer i = 0; i < texts.length; i++) {
+            texts[i].setText("asjf;oiewjf");
         }
 
-        int index = Integer.parseInt(pageNumber.getText());
+        index = Integer.parseInt(pageNumber.getText());
         if (index == 1) {
             index = 0;
         }
@@ -73,8 +74,8 @@ public class OrderLookupController extends BaseController {
             index = (index - 1) * 5;
         }
 
-        int j = 0;
-        for (int i = index; i < Math.min(index + 5, reservations.length); i++) {
+        j = 0;
+        for (Integer i = index; i < Math.min(index + 5, reservations.length); i++) {
             texts[j].setText("Reservation #" + reservations[i].getReservationId());
             j++;
         }

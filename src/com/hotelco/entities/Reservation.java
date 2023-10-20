@@ -41,24 +41,24 @@ public class Reservation {
     /**
      * Represents the size of the group.
      */
-    private int groupSize;
+    private Integer groupSize;
     /**
      * Represents the identification of user.
      */
-    private int reservationId;
+    private Integer reservationId;
     /**
-     * Represents a mark if a user has canceled a room.
+     * Represents a mark if a user has canceled a reservation.
      */
     private boolean isCancelled;
     /**
-     * Sets current reservation.
+     * Creates an empty Reservation object.
      */
     public Reservation(){}
     /**
      * fetches user data using reservationIdNum from database.
      * @param reservationIdNum
      */
-    public Reservation(int reservationIdNum)
+    public Reservation(Integer reservationIdNum)
     {
         fetch(reservationIdNum);
     }
@@ -67,7 +67,7 @@ public class Reservation {
      * Constructor for creating a new reservation that will be added to database.
      */
     public Reservation(
-        Room newRoom, LocalDate newStartDate, LocalDate newEndDate, User newUser, int newGroupSize) {
+        Room newRoom, LocalDate newStartDate, LocalDate newEndDate, User newUser, Integer newGroupSize) {
             room = newRoom;
             startDate = newStartDate;
             endDate = newEndDate;
@@ -88,8 +88,8 @@ public class Reservation {
      */
     public Reservation(
         Room newRoom, LocalDate newStartDate, LocalDate newEndDate, User newUser,
-        InvoiceDetails newInvoiceDetails, String newComments, int newGroupSize,
-        int newReservationId, boolean newIsCancelled) {
+        InvoiceDetails newInvoiceDetails, String newComments, Integer newGroupSize,
+        Integer newReservationId, boolean newIsCancelled) {
             room = newRoom;
             startDate = newStartDate;
             endDate = newEndDate;
@@ -113,9 +113,9 @@ public class Reservation {
 
     public String getComments(){return comments;}
 
-    public int getGroupSize(){return groupSize;}
+    public Integer getGroupSize(){return groupSize;}
 
-    public int getReservationId(){return reservationId;}
+    public Integer getReservationId(){return reservationId;}
 
     public boolean getIsCancelled(){return isCancelled;}
 
@@ -131,9 +131,9 @@ public class Reservation {
 
     public void setComments(String newComments){comments = newComments;}
 
-    public void setGroupSize(int newGroupSize){groupSize = newGroupSize;}
+    public void setGroupSize(Integer newGroupSize){groupSize = newGroupSize;}
 
-    public void setReservationId(int newReservationId){reservationId = newReservationId;}
+    public void setReservationId(Integer newReservationId){reservationId = newReservationId;}
 
     public void setIsCancelled(boolean newIsCancelled){isCancelled = newIsCancelled;}
 
@@ -141,7 +141,7 @@ public class Reservation {
         comments += newComment;
     }
 
-    public void fetch(int reservationIdToFetch){
+    public void fetch(Integer reservationIdToFetch){
         PreparedStatement ps = null;
         Connection con = null;
         String sqlQuery = null;
@@ -200,7 +200,7 @@ public class Reservation {
             ", is_cancelled = " + isCancelled +
             ", comments = " + comments +
             ", rateDiscount = " + invoiceDetails.rateDiscount +
-            "WHERE reservation_id = " + reservationId;
+            " WHERE reservation_id = " + reservationId;
             con = ReservationSystem.getDatabaseConnection();
             ps = con.prepareStatement(sqlQuery);
             ps.execute();
@@ -222,12 +222,12 @@ public class Reservation {
 
         public BigDecimal getRateDiscount(){return rateDiscount;}
 
-        // public InvoiceDetails(int reservationId){
+        // public InvoiceDetails(Integer reservationId){
         //     PreparedStatement ps = null;
         //     Connection con = null;
         //     String sqlQuery = null;
         //     ResultSet rs = null;
-        //     int adjustmentsLength = 0;
+        //     Integer adjustmentsLength = 0;
         //     try {
         //         sqlQuery = "SELECT * FROM adjustments WHERE reservation_id = " + reservationId;
         //         con = ReservationSystem.getDatabaseConnection();
