@@ -95,7 +95,7 @@ public class OrderLookupController extends BaseController {
 
     /**
      * This method is called by pressing the 'Go Back' text.
-     * It exits the 'SearchGUI' and enters the 'MenuGUI'.
+     * It exits the 'OrderLookupGUI' and enters the 'MenuGUI'.
      * @param event The 'mouse released' event that is triggered by pressing the 'Go Back' text.
      */
     @FXML
