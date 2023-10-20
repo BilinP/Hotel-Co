@@ -13,13 +13,7 @@ public class Room {
 
     private RoomType roomType;
 
-    private boolean isOccupied;
-
-    private User occupant;
-
     private Integer maxGroupSize;
-
-    public Room(){}
     
     public Room(Integer roomNumber)
     {
@@ -30,38 +24,31 @@ public class Room {
 
     public RoomType getRoomType(){return roomType;}
 
-    public boolean getIsOccupied(){return isOccupied;}
-
-    public User getOccupant(){return occupant;}
-
     public Integer getMaxGroupSize(){return maxGroupSize;}
 
-    public void setRoomNUm(IntegernewRoomNum){roomNum = newRoomNum;}
+    public void setRoomNUm(Integer newRoomNum){roomNum = newRoomNum;}
 
     public void setRoomType(RoomType newRoomType){roomType = newRoomType;}
-
-    public void setIsOccupied(boolean newIsOccupied){isOccupied = newIsOccupied;}
-
-    public void setOccupant(User newOccupant){occupant = newOccupant;}
 
     public void setMaxGroupSize(Integer newMaxGroupSize){maxGroupSize = newMaxGroupSize;}
 
     public void fetch(Integer roomNumToFetch){
+        roomNum = roomNumToFetch;
+        fetch();
+    }
+    public void fetch(){
         PreparedStatement ps = null;
         Connection con = null;
         String sqlQuery = null;
         ResultSet rs = null;
         try {
-            sqlQuery = "SELECT * FROM rooms WHERE room_num = " + roomNumToFetch;
+            sqlQuery = "SELECT * FROM rooms WHERE room_num = " + roomNum;
             con = ReservationSystem.getDatabaseConnection();
             ps = con.prepareStatement(sqlQuery);
             rs = ps.executeQuery();
             if(rs.next())
             {
-                roomNum = roomNumToFetch;
                 roomType = RoomType.valueOf(rs.getString("room_type").toUpperCase());
-                isOccupied = rs.getBoolean("is_occupied");
-                occupant = new User(rs.getInt("user_id"));
                 maxGroupSize = rs.getInt("max_group_size");
             }
 
@@ -70,5 +57,13 @@ public class Room {
             System.out.println(e);
         }
     }
+
+    // public boolean isOccupied(){
+
+    //     return true;
+    // }
+
+    // public User getOccupant(){
+    // }
 }
 

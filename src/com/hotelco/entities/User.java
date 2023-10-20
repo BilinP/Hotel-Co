@@ -31,7 +31,8 @@ public class User {
 
     public User(Integer id){
         if (DatabaseUtil.doesIdExist(id)){
-            fetchById(id);
+            userId = id;
+            fetch();
         }
     }
 
@@ -39,7 +40,7 @@ public class User {
         if (DatabaseUtil.doesEmailExist(emailStr))
         {
             email = emailStr;
-            fetchByEmail(emailStr);
+            fetch();
         }
     }
     /**
@@ -168,7 +169,6 @@ public class User {
             ps = con.prepareStatement(sqlQuery);
             rs = ps.executeQuery();
             if(rs.next()){
-                userId = userIdToFetch;
                 email = rs.getString("email");
                 firstName = rs.getString("first_name").trim();
                 lastName = rs.getString("last_name").trim();
@@ -184,32 +184,16 @@ public class User {
     }
 
     public void fetch(){
-        PreparedStatement ps = null;
-        Connection con = null;
-        String sqlQuery = null;
-        ResultSet rs = null;
-        try {
-            sqlQuery = "SELECT * FROM users WHERE user_id = " + userId;
-            con = ReservationSystem.getDatabaseConnection();
-            ps = con.prepareStatement(sqlQuery);
-            rs = ps.executeQuery();
-            if(rs.next()){
-                email = rs.getString("email");
-                firstName = rs.getString("first_name").trim();
-                lastName = rs.getString("last_name").trim();
-                phone = rs.getString("phone");
-                isEmployee = rs.getBoolean("is_employee");
-                isManager = rs.getBoolean("is_manager");
-                reservations = fetchReservations(this, false);
-            }
+        if (userId == null) {
+            fetchByEmail(email);
         }
-        catch (SQLException e){
-            System.out.println(e);
+        else{
+            fetchById(userId);
         }
     }
 
     public Reservation[] fetchReservations(User user, boolean fetchOnlyFuture){
-        Reservation tempReservation = new Reservation();
+        Reservation tempReservation = null;
         PreparedStatement ps = null;
         Connection con = null;
         String sqlQuery = null;
@@ -237,7 +221,7 @@ public class User {
                 tempRoom = new Room(rs.getInt("room_num"));
                 tempStartDate = rs.getDate("start_date").toLocalDate();
                 tempEndDate = rs.getDate("end_date").toLocalDate();
-                tempInvoiceDetails = new Reservation().getInvoiceDetails();//FIXME: get real invoiceDetails
+                //tempInvoiceDetails = getInvoiceDetails();//FIXME: get real invoiceDetails
                 tempComments = rs.getString("comments");
                 tempGroupSize = rs.getInt("group_size");
                 tempReservationId = rs.getInt("reservation_id");

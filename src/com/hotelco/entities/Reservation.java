@@ -8,14 +8,13 @@ import java.sql.Date;
 import java.time.LocalDate;
 import javafx.util.Pair;
 /**
- * Reservation class requests changes or views of the current users reservation and 
- * holds all data related to the reservation.
+ * Maintains details of a particular reservation and mantains db transactions.
  * @author Daniel Schwartz
  * @version %I%, %G%
  */
 public class Reservation {
     /**
-     * Represents a room.
+     * Represents the room associated with this reservation.
      */
     private Room room;
     /**
@@ -50,10 +49,6 @@ public class Reservation {
      * Represents a mark if a user has canceled a reservation.
      */
     private boolean isCancelled;
-    /**
-     * Creates an empty Reservation object.
-     */
-    public Reservation(){}
     /**
      * fetches user data using reservationIdNum from database.
      * @param reservationIdNum
@@ -142,12 +137,17 @@ public class Reservation {
     }
 
     public void fetch(Integer reservationIdToFetch){
+        reservationId = reservationIdToFetch;
+        fetch();
+    }
+
+    public void fetch(){
         PreparedStatement ps = null;
         Connection con = null;
         String sqlQuery = null;
         ResultSet rs = null;
         try {
-            sqlQuery = "SELECT reservation_id FROM reservations WHERE reservation_id = " + reservationIdToFetch;
+            sqlQuery = "SELECT reservation_id FROM reservations WHERE reservation_id = " + reservationId;
             con = ReservationSystem.getDatabaseConnection();
             ps = con.prepareStatement(sqlQuery);
             rs = ps.executeQuery();

@@ -77,7 +77,7 @@ public class CreateAccountController extends BaseController {
 
         User newUser = new User(firstName.getText(), lastName.getText(),email.getText(), phoneNumber.getText());
         newUser.push(password.getText());
-        newUser.fetchByEmail(email.getText());
+        newUser.fetch();
         ReservationSystem.setCurrentUser(newUser);
         loginController.setNotification("Account successfully created!");
 

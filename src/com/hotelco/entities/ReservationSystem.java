@@ -37,7 +37,16 @@ public class ReservationSystem {
     }
 
     public static Connection getDatabaseConnection() {
-        //FIXME: check if open, open if not
+        try{
+            if(connection.isClosed())
+            {
+                DatabaseConnection.connectDB();
+            }   
+        }
+        catch (SQLException e)
+        {
+            System.out.println(e);
+        }
         return connection;
     }
     /**
