@@ -4,7 +4,10 @@ import java.security.NoSuchAlgorithmException;
 
 import com.hotelco.entities.Password;
 import com.hotelco.entities.User;
-
+/**
+ * Utility to check and verify if a proper password is inputted.
+ * @return a boolean for a proper password.
+ */
 public class Verifier {
     public static boolean verify(String email, String password)
     {
