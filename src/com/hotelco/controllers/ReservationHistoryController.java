@@ -10,14 +10,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
 /**
- * The OrderLookupController class is the associated controller class of the 'OrderLookupGUI' view. 
+ * The ReservationHistoryController class is the associated controller class of the 'ReservationHistoryGUI' view. 
  * It handles connection between the GUI and internal data.
  * 
  * @author      Grigor Azakian
  * @version     %I%, %G%
  */
-
-public class OrderLookupController extends BaseController {
+public class ReservationHistoryController extends BaseController {
 
     /**
      * Text that will display a reservation at the top of the list.
