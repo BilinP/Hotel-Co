@@ -2,7 +2,9 @@ package com.hotelco.utilities;
 
 import com.hotelco.entities.ReservationSystem;
 import java.sql.*;
-
+/**
+ * Utility class to help maitain stability and connection to the database.
+ */
 public class DatabaseUtil{
 
     public static boolean doesIdExist(Integer userId){
@@ -26,7 +28,11 @@ public class DatabaseUtil{
         }
         return result;
     }
-
+    /**
+     * Utility function to check for an existing email.
+     * @param email
+     * @return boolean for email existence
+     */
     public static boolean doesEmailExist(String email){
         PreparedStatement ps = null;
         Connection con = null;
