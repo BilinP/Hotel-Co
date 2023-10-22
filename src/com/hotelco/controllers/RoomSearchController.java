@@ -8,20 +8,24 @@ import com.hotelco.utilities.FXMLPaths;
 import com.hotelco.utilities.RoomType;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.util.Callback;
 
 /**
- * The SearchController class is the associated controller class of the 'SearchGUI' view. 
+ * The RoomSearchController class is the associated controller class of the 'RoomSearchGUI' view. 
  * It handles connection between the GUI and internal data.
  * 
  * @author      Grigor Azakian
  * @version     %I%, %G%
  */
-public class SearchController extends BaseController {
+public class RoomSearchController extends BaseController {
 
     /**
      * DatePicker that contains the date the user wants to be the first day of their booking.
@@ -77,15 +81,46 @@ public class SearchController extends BaseController {
 
     /**
      * This method is called immediately upon controller creation.
-     * It assigns data to several buttons so that it will be easier to tell which button was pressed.
+     * It sets up the state of all Button and DatePicker variables.
      */
     @FXML
     private void initialize() {
+
+        //This lets a DatePicker tell when its value has changed, and disables all Button variables if it has.
+        final ChangeListener<LocalDate> changeListener = new ChangeListener<LocalDate>() {
+            @Override
+            public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue,
+                    LocalDate newValue) {
+                disableButtons();
+            }
+        };
+
+        //This sets up the DatePicker to not allow a user to choose a date before the current date.
+        final Callback<DatePicker, DateCell> dayCellFactory = new Callback<DatePicker, DateCell>() {
+            @Override
+            public DateCell call(DatePicker param) {
+                return new DateCell() {
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+                        LocalDate currentDate = LocalDate.now();
+                        setDisable(empty || item.compareTo(currentDate) < 0);
+                    }
+                };
+            }
+
+        };
+
         Platform.runLater(() -> {
             king.setUserData("king");
             queen.setUserData("queen");
             suite.setUserData("suite");
             dbl.setUserData("dbl");
+
+            startDate.valueProperty().addListener(changeListener);
+            endDate.valueProperty().addListener(changeListener);
+            startDate.setDayCellFactory(dayCellFactory);
+            endDate.setDayCellFactory(dayCellFactory);
         });
     }
 
@@ -99,11 +134,8 @@ public class SearchController extends BaseController {
      */
     @FXML
     private void checkAvailability(MouseEvent event) {
+        disableButtons();
         Integer numGuests = Integer.parseInt(guests.getText());
-        king.setDisable(true);
-        queen.setDisable(true);
-        suite.setDisable(true);
-        dbl.setDisable(true);
         DatePicker[] datePickers = {startDate, endDate};
         for (DatePicker datePicker: datePickers) {
             if (datePicker.getValue() == null) {
@@ -136,6 +168,7 @@ public class SearchController extends BaseController {
     /**
      * This method is called when pressing the 'Book' button.
      * It will create a booking in the class ReservationSystem for the corresponding user.
+     * After creating the booking, it will enter 'ThankYouGUI'.
      * @param event The 'mouse released' event that is triggered by pressing the 'Book' button.
      * @author Grigor Azakian
      * @author Daniel Schwartz
@@ -154,7 +187,8 @@ public class SearchController extends BaseController {
             ReservationSystem.getCurrentUser(), Integer.parseInt(guests.getText()));
         ReservationSystem.setCurrentReservation(reservation);
         ReservationSystem.book();
-        
+        ThankYouController thankYouController = (ThankYouController) switchScene(FXMLPaths.THANK_YOU, event);
+        thankYouController.writeReservationInfo(reservation);
     }
 
     /**
@@ -166,6 +200,10 @@ public class SearchController extends BaseController {
     private void decrementGuest(MouseEvent event) {
         if (Integer.parseInt(guests.getText()) > 1) {
             guests.setText(Integer.toString(Integer.parseInt(guests.getText()) - 1));
+            Button[] buttons = {king, queen, dbl, suite};
+            for (Button button: buttons) {
+                button.setDisable(true);
+            }
         }
     }
 
@@ -180,6 +218,10 @@ public class SearchController extends BaseController {
     private void incrementGuest(MouseEvent event) {
         if (Integer.parseInt(guests.getText()) < Constants.MAX_CAP) {
             guests.setText(Integer.toString(Integer.parseInt(guests.getText()) + 1));
+            Button[] buttons = {king, queen, dbl, suite};
+            for (Button button: buttons) {
+                button.setDisable(true);
+            }
         }
     }
 
@@ -191,6 +233,16 @@ public class SearchController extends BaseController {
     @FXML
     private void switchToMenuScene(MouseEvent event) {
         switchScene(FXMLPaths.MENU, event);
+    }
+    
+    /**
+     * This method disables all buttons.
+     */
+    private void disableButtons() {
+        Button[] buttons = {king, queen, dbl, suite};
+        for (Button button: buttons) {
+            button.setDisable(true);
+        }
     }
 
 }
