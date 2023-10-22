@@ -11,71 +11,71 @@
    <center>
       <VBox alignment="CENTER" BorderPane.alignment="CENTER">
          <children>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Orders">
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Thank you for your reservation!">
                <font>
                   <Font size="36.0" />
                </font>
             </Text>
-            <Text fx:id="firstOrder" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0">
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Reservation Number:">
+               <font>
+                  <Font size="28.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
+            </Text>
+            <Text fx:id="reservationNumber" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0">
                <font>
                   <Font size="24.0" />
                </font>
             </Text>
-            <Text fx:id="secondOrder" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Text>
-            <Text fx:id="thirdOrder" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Text>
-            <Text fx:id="fourthOrder" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Text>
-            <Text fx:id="fifthOrder" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Text>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Page">
-               <font>
-                  <Font size="36.0" />
-               </font>
-            </Text>
-            <HBox alignment="CENTER">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="300.0">
                <children>
-                  <Text fill="WHITE" onMouseReleased="#decrementPage" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
-                     <font>
-                        <Font size="36.0" />
-                     </font>
-                  </Text>
-                  <Text fx:id="pageNumber" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="1">
-                     <font>
-                        <Font size="36.0" />
-                     </font>
-                  </Text>
-                  <Text fill="WHITE" onMouseReleased="#incrementPage" strokeType="OUTSIDE" strokeWidth="0.0" text="+">
-                     <font>
-                        <Font size="36.0" />
-                     </font>
-                  </Text>
+                  <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Check-in Date:">
+                           <font>
+                              <Font size="28.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="checkInDate" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Check-out Date:">
+                           <font>
+                              <Font size="28.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="checkOutDate" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </VBox>
                </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <VBox.margin>
+                  <Insets bottom="30.0" top="30.0" />
+               </VBox.margin>
             </HBox>
+            <Text fill="WHITE" onMouseReleased="#switchToMenuScene" strokeType="OUTSIDE" strokeWidth="0.0" text="Return to Main Menu">
+               <font>
+                  <Font size="36.0" />
+               </font>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Text>
          </children>
       </VBox>
    </center>
-   <top>
-      <Text fill="WHITE" onMouseReleased="#switchToMenuScene" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt; Go Back" BorderPane.alignment="TOP_LEFT">
-         <font>
-            <Font size="24.0" />
-         </font>
-         <BorderPane.margin>
-            <Insets left="30.0" top="30.0" />
-         </BorderPane.margin>
-      </Text>
-   </top>
 </BorderPane>
