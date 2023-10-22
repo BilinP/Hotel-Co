@@ -8,7 +8,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import javafx.util.Pair;
 /**
- * Maintains details of a particular reservation and mantains db transactions.
+ * Maintains details of a particular reservation and facilitates database transactions.
  * @author Daniel Schwartz
  * @version %I%, %G%
  */
@@ -30,7 +30,7 @@ public class Reservation {
      */
     private User user;
     /**
-     * Represents the data inside reservation for the user to view.
+     * Represents billing details specific to this reservation.
      */
     private InvoiceDetails invoiceDetails;
     /**
@@ -38,7 +38,7 @@ public class Reservation {
      */
     private String comments;
     /**
-     * Represents the size of the group.
+     * Represents the number of guests for this reservation.
      */
     private Integer groupSize;
     /**
@@ -46,12 +46,13 @@ public class Reservation {
      */
     private Integer reservationId;
     /**
-     * Represents a mark if a user has canceled a reservation.
+     * Marks this reservation as cancelled when true.
      */
     private boolean isCancelled;
     /**
-     * fetches user data using reservationIdNum from database.
-     * @param reservationIdNum
+     * Constructs a reservation and fills it with details from the database.
+     * Looks up the reservation in the database based on the supplied parameter
+     * @param reservationIdNum Unique reservation id
      */
     public Reservation(Integer reservationIdNum)
     {
@@ -59,7 +60,14 @@ public class Reservation {
     }
 
     /**
-     * Constructor for creating a new reservation that will be added to database.
+     * Constructor for creating a new reservation that will be added to the
+     * database after construction. After construction, the reservation is ready
+     * for push() to be called, which will add the reservation to the database.
+     * @param newRoom
+     * @param newStartDate
+     * @param newEndDate
+     * @param newUser
+     * @param newGroupSize
      */
     public Reservation(
         Room newRoom, LocalDate newStartDate, LocalDate newEndDate, User newUser, Integer newGroupSize) {
@@ -70,7 +78,7 @@ public class Reservation {
             groupSize = newGroupSize;
     }
     /**
-     * Constructor for creating a new reservation that will be added to database.
+     * Constructor for creating a reservation, explicitly defining every member of Reservation
      * @param newRoom
      * @param newStartDate
      * @param newEndDate
@@ -96,112 +104,112 @@ public class Reservation {
             isCancelled = newIsCancelled;
     }
     /**
-    * Getter for room id of reservation.
-    * @return the room id
+    * Gets room of this reservation.
+    * @return room associated with this reservation
     */
     public Room getRoom(){return room;}
     /**
-     * Getter for start date of reservation.
-     * @return start date
+     * Gets start date of this reservation.
+     * @return start date associated with this reservation
      */
     public LocalDate getStartDate(){return startDate;}
     /**
-     * Getter for end date of reservation.
-     * @return end date
+     * Gets end date of this reservation.
+     * @return end date associated with this reservation
      */
     public LocalDate getEndDate(){return endDate;}
     /**
-     * Getter for User.
-     * @return user
+     * Gets User.
+     * @return User object associated with this reservation
      */
     public User getUser(){return user;}
     /**
-     * Getter for the details of the invoice of reservation.
-     * @return The invoice details
+     * Gets the details of the invoice of reservation.
+     * @return InvoiceDetails object with invoice details for this reservation
      */
     public InvoiceDetails getInvoiceDetails(){return invoiceDetails;}
     /**
-     * Getter for the comments of a reservvation for additional info.
-     * @return comments string
+     * Gets the comments of a reservvation for additional info.
+     * @return comments associated with this reservation
      */
     public String getComments(){return comments;}
     /**
-     * Getter for the group size of the reservation.
-     * @return an integer for the group size
+     * Gets the group size of the reservation.
+     * @return the number of members in this group
      */
     public Integer getGroupSize(){return groupSize;}
     /**
-     * Getter for the reservation id to make each reservation unique.
-     * @return reservation id
+     * Gets the unique reservation.
+     * @return unique reservation id of this reservation
      */
     public Integer getReservationId(){return reservationId;}
     /**
-     * Getter to cancel reservations.
-     * @return a boolean for canceled rooms
+     * Gets the cancellation status of this reservation.
+     * @return true when reservation is cancelled, false when it is not cancelled
      */
     public boolean getIsCancelled(){return isCancelled;}
     /**
-     * Setter to create a room entity.
-     * @return a new room
+     * Sets a room to this reservation.
+     * @param newRoom the room to be associated with this reservation
      */
     public void setRoom(Room newRoom){room = newRoom;}
     /**
-    * Setter to create or update a start date of a reservation.
-    * @param newStartDate
+    * Sets the start date of this reservation.
+    * @param newStartDate the start date to be associated with this reservation
     */
     public void setStartDate(LocalDate newStartDate){startDate = newStartDate;}
     /**
-     * Setter to create or update an end date of a reservation.
-     * @param newEndDate
+     * Sets the end date of this reservation.
+     * @param newEndDate the end date to be associated with this reservation
      */
     public void setEndDate(LocalDate newEndDate){endDate = newEndDate;}
     /**
-     * Setter to create or update a user.
-     * @param newUser
+     * Sets the user for this reservation.
+     * @param newUser the user to be associated with this reservation
      */
     public void setUser(User newUser){user = newUser;}
     /**
-     * Setter to create or update the details of a reservation invoice.
-     * @param newInvoiceDetails
+     * Sets the details of a reservation invoice.
+     * @param newInvoiceDetails invoice details to be associated with this reservation.
      */
     public void setInvoiceDetails(InvoiceDetails newInvoiceDetails){invoiceDetails = newInvoiceDetails;}
     /**
-     * Setter to create or update a reservation's comments.
-     * @param newComments
+     * Sets the reservation's comments.
+     * @param newComments comments to be associated with this reservation
      */
     public void setComments(String newComments){comments = newComments;}
     /**
-     * Setter to create or update a group size.
-     * @param newGroupSize
+     * Sets the group size.
+     * @param newGroupSize group size to be associated with this reservation
      */
     public void setGroupSize(Integer newGroupSize){groupSize = newGroupSize;}
     /**
-     * Setter to create or update a reservation id.
-     * @param newReservationId
+     * Sets the reservation id.
+     * @param newReservationId reservation id to be associated with this reservation
      */
     public void setReservationId(Integer newReservationId){reservationId = newReservationId;}
     /**
-     * Setter to update the status of a room's cancellation.
-     * @param newIsCancelled
+     * Sets the status of a room's cancellation.
+     * @param newIsCancelled cancellation status to be associated with this reservation
      */
     public void setIsCancelled(boolean newIsCancelled){isCancelled = newIsCancelled;}
     /**
-     * An extension tool associated with comments to add on to an existing comment.
-     * @param newComment
+     * Adds comments to the end of the existing comments. Does not alter previous comments.
+     * @param newComment comment to add to comments.
      */
     public void addComment(String newComment){
         comments += newComment;
     }
     /**
-     * Function used to search a database by a unique reservation id to fetch a reservation's data.
-     * @param reservationIdToFetch
+     * Fetches a reservation's data from the database by reservationId.
+     * @param reservationIdToFetch unique reservation id
      */
     public void fetch(Integer reservationIdToFetch){
         reservationId = reservationIdToFetch;
         fetch();
     }
     /**
-     * Function used to search a database.
+     * Fetches a reservation's data from the database.
      */
     public void fetch(){
         PreparedStatement ps = null;
@@ -228,7 +236,7 @@ public class Reservation {
         }
     }
     /**
-     * To create a reservation object.
+     * Inserts the caller's reservation into a new row in the database table 'reservations'.
      */
     public void create(){
         PreparedStatement ps = null;
@@ -252,7 +260,7 @@ public class Reservation {
         }
     }
     /**
-     * To push the reservation object's data into the database.
+     * Updates the reservation object's data in the database.
      */
     public void push(){
         PreparedStatement ps = null;

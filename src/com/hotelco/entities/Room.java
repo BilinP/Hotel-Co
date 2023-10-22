@@ -21,57 +21,58 @@ public class Room {
      */
     private RoomType roomType;
     /**
-     * Represents the group size for a room.
+     * Represents the max group size for this room.
      */
     private Integer maxGroupSize;
     /**
-     * Fetches the room number of a room.
-     * @param roomNumber
+     * Creates a room with supplied room number. To be used
+     * immediately with fetch().
+     * @param roomNumber room number to be associated with this room
      */
     public Room(Integer roomNumber)
     {
-        fetch(roomNumber);
+        roomNum = roomNumber;
     }
     /**
-     * Getter for the room number.
-     * @return a room unique room number
+     * Gets the room number associated with this room.
+     * @return the room number associated with this room.
      */
     public Integer getRoomNum(){return roomNum;}
     /**
-     * Getter for the room type.
-     * @return the room type
+     * Gets the room type associated with this room.
+     * @return the room type associated with this room.
      */
     public RoomType getRoomType(){return roomType;}
     /**
-     * Getter for the maximum group size.
+     * Gets the maximum group size associated with this room.
      * @return the group size
      */
     public Integer getMaxGroupSize(){return maxGroupSize;}
     /**
-     * Setter for the room Number
-     * @param newRoomNum
+     * Sets the room number.
+     * @param newRoomNum the room number to be associated with this room.
      */
     public void setRoomNum(Integer newRoomNum){roomNum = newRoomNum;}
     /**
-     * Setter for the room type.
-     * @param newRoomType
+     * Sets the room type.
+     * @param newRoomType the room type to be associated with this room.
      */
     public void setRoomType(RoomType newRoomType){roomType = newRoomType;}
     /**
-     * Setter for the maximum room size.
-     * @param newMaxGroupSize
+     * Sets the maximum number of occupants allowed in this room.
+     * @param newMaxGroupSize the maximum occupancy to be associated with this room.
      */
     public void setMaxGroupSize(Integer newMaxGroupSize){maxGroupSize = newMaxGroupSize;}
     /**
-     * Fetches the room number with a given room number.
-     * @param roomNumToFetch
+     * Fetches the room with a given room number from the database.
+     * @param roomNumToFetch room number to use for database fetch
      */
     public void fetch(Integer roomNumToFetch){
         roomNum = roomNumToFetch;
         fetch();
     }
     /**
-     * Fetches a room number through a query.
+     * Fetches a room from the database.
      */
     public void fetch(){
         PreparedStatement ps = null;

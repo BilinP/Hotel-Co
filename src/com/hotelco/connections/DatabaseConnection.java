@@ -2,7 +2,7 @@ package com.hotelco.connections;
 
 import java.sql.*;
 /**
-* DatabaseConnection creates and maintains a connection to the database.
+* Creates and maintains a connection to a pre-defined database.
 *
 * @author      Daniel Schwartz
 * @version     %I%, %G%
