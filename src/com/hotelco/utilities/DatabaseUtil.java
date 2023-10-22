@@ -3,10 +3,14 @@ package com.hotelco.utilities;
 import com.hotelco.entities.ReservationSystem;
 import java.sql.*;
 /**
- * Utility class to help maitain stability and connection to the database.
+ * Utility class to check if user ids or emails exist.
  */
 public class DatabaseUtil{
-
+/**
+ * Checks if ID exists in the database.
+ * @param userId id to check
+ * @return true if id exists in the database, false if not.
+ */
     public static boolean doesIdExist(Integer userId){
         PreparedStatement ps = null;
         Connection con = null;
@@ -29,10 +33,10 @@ public class DatabaseUtil{
         return result;
     }
     /**
-     * Utility function to check for an existing email.
-     * @param email
-     * @return boolean for email existence
-     */
+    * Checks if email exists in the database.
+    * @param email email to check
+    * @return true if email exists in the database, false if not.
+    */
     public static boolean doesEmailExist(String email){
         PreparedStatement ps = null;
         Connection con = null;
