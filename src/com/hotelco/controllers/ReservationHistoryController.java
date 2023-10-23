@@ -123,9 +123,9 @@ public class ReservationHistoryController extends BaseController {
             Text text = new Text();
             text.setFill(Color.WHITE);
             text.setFont(Font.font("System", 24));
-            text.setText("Reservation " + reservations[i].getReservationId() + ": (" + 
-            reservations[i].getStartDate().format(dateTimeFormatter) + " - " +
-            reservations[i].getEndDate().format(dateTimeFormatter) + ")");
+            text.setText("Reservation from " + 
+            reservations[i].getStartDate().format(dateTimeFormatter) + " to " +
+            reservations[i].getEndDate().format(dateTimeFormatter));
             map.put(text, reservations[i]);
             text.setOnMouseReleased(event -> {
                 ReservationLookupController reservationLookupController = (ReservationLookupController) switchScene(FXMLPaths.RESERVATION_LOOKUP, event);
