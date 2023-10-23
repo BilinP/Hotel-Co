@@ -66,22 +66,28 @@ public class Password{
      * @return a boolean where true means the passwords are the same and false if not
      * @throws NoSuchAlgorithmException
      */    
-    public boolean verify(String inputPassword,String hashedPassword)throws NoSuchAlgorithmException{
+    public boolean verify(
+        String inputPassword,String hashedPassword)throws NoSuchAlgorithmException{
         BigInteger bigInt= new BigInteger(hashedPassword,16);
         byte[] hashedPasswordBytes = bigInt.toByteArray();
         
         if (hashedPasswordBytes.length > 16 && hashedPasswordBytes[0] == 0) {
            byte[] temp = new byte[hashedPasswordBytes.length - 1];
-           System.arraycopy(hashedPasswordBytes, 1, temp, 0, temp.length);
+           System.arraycopy(hashedPasswordBytes, 1, temp,
+           0, temp.length);
         hashedPasswordBytes = temp;
         }
         
 
         byte[] saltByte =Base64.getDecoder().decode(salt);
         
-        byte[] nonHashedInputPassword = new byte[inputPassword.getBytes().length+16];
-        System.arraycopy(saltByte, 0, nonHashedInputPassword, 0, 16);
-        System.arraycopy(inputPassword.getBytes(), 0, nonHashedInputPassword, 16, inputPassword.getBytes().length);
+        byte[] nonHashedInputPassword =
+            new byte[inputPassword.getBytes().length+16];
+        System.arraycopy(
+            saltByte, 0, nonHashedInputPassword, 0, 16);
+        System.arraycopy(
+            inputPassword.getBytes(), 0, nonHashedInputPassword,
+            16, inputPassword.getBytes().length);
        
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         byte[] hashedPasswordToVerify = md.digest(nonHashedInputPassword);

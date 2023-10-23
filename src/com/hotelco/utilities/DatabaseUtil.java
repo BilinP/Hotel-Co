@@ -18,7 +18,8 @@ public class DatabaseUtil{
         ResultSet rs = null;
         boolean result = false;
         try {
-            sqlQuery = "SELECT count(*) as total FROM users where user_id = " + userId;
+            sqlQuery = "SELECT count(*) as total FROM users where user_id = " +
+                userId;
             con = ReservationSystem.getDatabaseConnection();
             ps = con.prepareStatement(sqlQuery);
             rs = ps.executeQuery();
@@ -44,7 +45,8 @@ public class DatabaseUtil{
         ResultSet rs = null;
         boolean result = false;
         try {
-            sqlQuery = "SELECT count(*) AS total FROM users where email = '" + email + "'";
+            sqlQuery = "SELECT count(*) AS total FROM users where email = '" +
+                email + "'";
             con = ReservationSystem.getDatabaseConnection();
             ps = con.prepareStatement(sqlQuery);
             rs = ps.executeQuery();

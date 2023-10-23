@@ -62,7 +62,8 @@ public class Room {
      * Sets the maximum number of occupants allowed in this room.
      * @param newMaxGroupSize the maximum occupancy to be associated with this room.
      */
-    public void setMaxGroupSize(Integer newMaxGroupSize){maxGroupSize = newMaxGroupSize;}
+    public void setMaxGroupSize(Integer newMaxGroupSize){
+        maxGroupSize = newMaxGroupSize;}
     /**
      * Fetches the room with a given room number from the database.
      * @param roomNumToFetch room number to use for database fetch
@@ -86,7 +87,8 @@ public class Room {
             rs = ps.executeQuery();
             if(rs.next())
             {
-                roomType = RoomType.valueOf(rs.getString("room_type").toUpperCase());
+                roomType = RoomType.valueOf(
+                    rs.getString("room_type").toUpperCase());
                 maxGroupSize = rs.getInt("max_group_size");
             }
 

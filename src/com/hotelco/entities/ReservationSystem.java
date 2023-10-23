@@ -85,7 +85,8 @@ public class ReservationSystem {
      * @param roomType room type to check
      * @return the availability of a room with supplied parameters
      */
-    public static boolean checkAvailability(LocalDate startDate, LocalDate endDate, RoomType roomType){
+    public static boolean checkAvailability(
+            LocalDate startDate, LocalDate endDate, RoomType roomType){
         PreparedStatement ps = null;
         String sqlQuery = null;
         ResultSet rs = null;
@@ -122,13 +123,15 @@ public class ReservationSystem {
      * @param roomType
      * @return the number of occupied rooms.
      */
-    public static Integer countOccupiedRooms(LocalDate startDate, LocalDate endDate, RoomType roomType){
+    public static Integer countOccupiedRooms(
+        LocalDate startDate, LocalDate endDate, RoomType roomType){
         PreparedStatement ps = null;
         String sqlQuery = null;
         ResultSet rs = null;
         Integer result = 0;
         try {
-            sqlQuery = "SELECT COUNT(reservations.room_num) AS total FROM reservations " + 
+            sqlQuery = "SELECT COUNT(reservations.room_num)" + 
+            "AS total FROM reservations " + 
             "INNER JOIN rooms ON reservations.room_num = rooms.room_num " + 
             "WHERE ('" + Date.valueOf(startDate) + "' >= start_date AND '" +
                 Date.valueOf(startDate) + "' <= end_date) " +
@@ -162,7 +165,8 @@ public class ReservationSystem {
         ResultSet rs = null;
         Integer result = 0;
         try {
-            sqlQuery = "SELECT COUNT(room_num) AS total FROM rooms WHERE room_type = '" +
+            sqlQuery =
+                "SELECT COUNT(room_num) AS total FROM rooms WHERE room_type = '" +
                 roomType.toString() + "'";
             ps = connection.prepareStatement(sqlQuery);
             rs = ps.executeQuery();
@@ -182,7 +186,8 @@ public class ReservationSystem {
      * @param roomType room type to check
      * @return gives a room number of an empty room.
      */
-    public static Integer findEmptyRoom(LocalDate startDate, LocalDate endDate, RoomType roomType){
+    public static Integer findEmptyRoom(
+        LocalDate startDate, LocalDate endDate, RoomType roomType){
         PreparedStatement ps = null;
         String sqlQuery = null;
         ResultSet rs = null;
@@ -209,17 +214,21 @@ public class ReservationSystem {
         return result;
     }
     /**
-     * Inserts a reservation into the database, associated with the logged in user.
+     * Inserts a reservation into the database, associated with the
+     * logged in user.
      */
     public static void book(){
         currentReservation.create();
-        currentUser.fetch(); //assures currentUser is immediately updated with new booking
-        Reservation[] userReservations = currentUser.fetchReservations(false,false);
-        ReservationSystem.currentReservation = userReservations[userReservations.length - 1];
+        //assures currentUser is immediately updated with new booking
+        currentUser.fetch(); 
+        Reservation[] userReservations =
+            currentUser.fetchReservations(false,false);
+        ReservationSystem.currentReservation = 
+            userReservations[userReservations.length - 1];
     }
     /**
-     * Cancels the "current reservation" by setting isCancelled. See currentReservation
-     * member for further description of current reservation.
+     * Cancels the "current reservation" by setting isCancelled. See
+     * currentReservation member for further description of current reservation.
      */
     public static void cancelReservation(){
         currentReservation.setIsCancelled(true);
