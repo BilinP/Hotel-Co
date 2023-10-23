@@ -27,13 +27,13 @@
                               <Font size="18.0" />
                            </font>
                         </Text>
-                        <DatePicker fx:id="startDate" />
+                        <DatePicker fx:id="startDate" editable="false" />
                         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Check out:">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Text>
-                        <DatePicker fx:id="endDate" />
+                        <DatePicker fx:id="endDate" editable="false" />
                         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of guests:">
                            <font>
                               <Font size="18.0" />
