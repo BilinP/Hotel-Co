@@ -2,6 +2,12 @@ package com.hotelco.utilities;
 
 import javafx.scene.control.TextFormatter;
 
+/**
+ * The TextFormatters class contains the relevant TextField logic for CreateAccountController.
+ * 
+ * @author      Grigor Azakian
+ * @version     %I%, %G%
+ */
 public class TextFormatters {
     public final TextFormatter<String> PHONE_NUMBER = new TextFormatter<>(changed -> {
         if (changed.getControlNewText().length() > 10) {
