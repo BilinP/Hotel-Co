@@ -1,5 +1,6 @@
 package com.hotelco.controllers;
 
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -79,7 +80,7 @@ public class ReservationHistoryController extends BaseController {
      */
     @FXML
     private void incrementPage(MouseEvent event) {
-        Reservation[] reservations = ReservationSystem.getCurrentUser().getReservations();
+        Reservation[] reservations = ReservationSystem.getCurrentUser().fetchReservations(false, true);
         if (Integer.parseInt(pageNumber.getText()) < Math.ceil(reservations.length/5.0)) {
             pageNumber.setText(Integer.toString(Integer.parseInt(pageNumber.getText()) + 1));
             displayOrders();
@@ -100,8 +101,9 @@ public class ReservationHistoryController extends BaseController {
      * This method displays a logged in users reservation history corresponding to the page number.
      */
     private void displayOrders() {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         reservationsContainer.getChildren().clear();
-        Reservation[] reservations = ReservationSystem.getCurrentUser().getReservations();
+        Reservation[] reservations = ReservationSystem.getCurrentUser().fetchReservations(false, true);
         if (reservations.length == 0) {
             Text text = new Text();
             text.setFill(Color.WHITE);
@@ -118,7 +120,9 @@ public class ReservationHistoryController extends BaseController {
             Text text = new Text();
             text.setFill(Color.WHITE);
             text.setFont(Font.font("System", 24));
-            text.setText("Reservation # " + reservations[i].getReservationId());
+            text.setText("Reservation " + reservations[i].getReservationId() + ": (" + 
+            reservations[i].getStartDate().format(dateTimeFormatter) + " - " +
+            reservations[i].getEndDate().format(dateTimeFormatter) + ")");
             map.put(text, reservations[i]);
             text.setOnMouseReleased(event -> {
                 ReservationLookupController reservationLookupController = (ReservationLookupController) switchScene(FXMLPaths.RESERVATION_LOOKUP, event);

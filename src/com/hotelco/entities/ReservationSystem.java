@@ -214,7 +214,7 @@ public class ReservationSystem {
     public static void book(){
         currentReservation.create();
         currentUser.fetch(); //assures currentUser is immediately updated with new booking
-        Reservation[] userReservations = currentUser.fetchReservations(false);
+        Reservation[] userReservations = currentUser.fetchReservations(false,false);
         ReservationSystem.currentReservation = userReservations[userReservations.length - 1];
     }
     /**
