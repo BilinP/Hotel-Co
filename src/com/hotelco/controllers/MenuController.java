@@ -47,9 +47,9 @@ public class MenuController extends BaseController {
     }
 
     /**
-     * This method is called by pressing the 'Find a room' text.
-     * It exits the 'MenuGUI' and enters the 'SearchGUI'.
-     * @param event The 'mouse released' event that is triggered by pressing the 'Find a room' text.
+     * This method is called by pressing the 'Review/Cancel your booking' text.
+     * It exits the 'MenuGUI' and enters the 'RoomSearchGUI'.
+     * @param event The 'mouse released' event that is triggered by pressing the 'Review/Cancel your booking' text.
      */
     @FXML
     private void switchToLookup(MouseEvent event) {
@@ -57,9 +57,9 @@ public class MenuController extends BaseController {
     }
 
     /**
-     * This method is called by pressing the 'Review/Cancel your booking' text.
-     * It exits the 'MenuGUI' and enters the 'OrderLookupGUI'.
-     * @param event The 'mouse released' event that is triggered by pressing the 'Review/Cancel your booking' text.
+     * This method is called by pressing the 'Find a room' text.
+     * It exits the 'MenuGUI' and enters the 'SearchGUI'.
+     * @param event The 'mouse released' event that is triggered by pressing the 'Find a room' text.
      */
     @FXML
     private void switchToSearch(MouseEvent event) {
