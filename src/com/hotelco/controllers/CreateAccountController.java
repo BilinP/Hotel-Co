@@ -97,7 +97,6 @@ public class CreateAccountController extends BaseController {
         PasswordField[] passwordFields = {password, confirmPassword};
         for (TextField textField: textFields) {
             if (textField.getText().isEmpty()) {
-               
                 notification.setText("Please complete all fields");
                 notification.setFill(Color.RED);
                 return;
@@ -110,7 +109,7 @@ public class CreateAccountController extends BaseController {
                 return;
             }
         }
-        if(!ValidEmail(email.getText())){
+        if(!validEmail(email.getText())){
             notification.setText("Please use a valid Email address!");
             notification.setFill(Color.RED);
             return;
@@ -142,7 +141,7 @@ public class CreateAccountController extends BaseController {
      * @return a boolean where true means the email is valid and false if not
      * @author Bilin Pattasseril
      */
-    private boolean ValidEmail(String email){
+    private boolean validEmail(String email){
         if(email.length()>320){return false;};
         final String regex = "^[A-Za-z0-9]+([. -][A-Za-z0-9]+)*@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
         Pattern pattern = Pattern.compile(regex);
