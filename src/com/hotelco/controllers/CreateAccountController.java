@@ -16,7 +16,6 @@ import javafx.scene.text.Text;
 
 
 import java.util.regex.Pattern;
-import java.security.NoSuchAlgorithmException;
 import java.util.regex.Matcher;
 
 /**
@@ -110,6 +109,11 @@ public class CreateAccountController extends BaseController {
                 return;
             }
         }
+        if(!ValidEmail(email.getText())){
+            notification.setText("Not a Valid Email");
+            notification.setFill(Color.RED);
+            return;
+        }
         if (!password.getText().equals(confirmPassword.getText())) {
             notification.setText("Passwords do not match!");
             notification.setFill(Color.RED);
@@ -120,12 +124,6 @@ public class CreateAccountController extends BaseController {
             notification.setFill(Color.RED);
             return;
         }
-        if(!ValidEmail(email.getText())){
-            notification.setText("Not a Valid Email");
-            notification.setFill(Color.RED);
-            return;
-        }
-
 
         LoginController loginController = (LoginController) switchScene(FXMLPaths.LOGIN, event);
 
@@ -138,16 +136,14 @@ public class CreateAccountController extends BaseController {
     }
     
     /**
-      * Method checks if given email address matches a regular expression pattern which is the current format an email suppose to be in.
-     * 
+     * Method checks if given email address matches a regular expression pattern which is the current format an email suppose to be in.
      * @param email The email address to be validated.
      * @return a boolean where true means the email is valid and false if not
      * @author Bilin Pattasseril
      */
-
     public static boolean ValidEmail(String email){
         if(email.length()>320){return false;};
-        final String  regex=   "^[A-Za-z0-9]+([. -][A-Za-z0-9]+)*@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+        final String regex = "^[A-Za-z0-9]+([. -][A-Za-z0-9]+)*@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();

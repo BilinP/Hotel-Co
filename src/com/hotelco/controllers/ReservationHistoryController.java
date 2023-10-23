@@ -103,7 +103,6 @@ public class ReservationHistoryController extends BaseController {
      * This method displays a logged in users reservation history corresponding to the page number.
      */
     private void displayOrders() {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         reservationsContainer.getChildren().clear();
         Reservation[] reservations = ReservationSystem.getCurrentUser().fetchReservations(false, true);
         if (reservations.length == 0) {
@@ -115,6 +114,7 @@ public class ReservationHistoryController extends BaseController {
             return;
         }
 
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         Collections.reverse(Arrays.asList(reservations));
         int i = Integer.parseInt(pageNumber.getText()) == 1 ? 0 : (Integer.parseInt(pageNumber.getText()) - 1) * 5;
         int upperLimit = i + 5;
