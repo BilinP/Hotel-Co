@@ -226,7 +226,7 @@ public class User {
                 phone = rs.getString("phone");
                 isEmployee = rs.getBoolean("is_employee");
                 isManager = rs.getBoolean("is_manager");
-                reservations = fetchReservations(false);
+                reservations = fetchReservations(false,false);
             }
         }
         catch (SQLException e){
@@ -254,7 +254,7 @@ public class User {
                 phone = rs.getString("phone");
                 isEmployee = rs.getBoolean("is_employee");
                 isManager = rs.getBoolean("is_manager");
-                reservations = fetchReservations(false);
+                reservations = fetchReservations(false,false);
             }
         }
         catch (SQLException e){
@@ -279,7 +279,7 @@ public class User {
      * @param fetchOnlyFuture
      * @return the reservation results.
      */
-    public Reservation[] fetchReservations(boolean fetchOnlyFuture){
+    public Reservation[] fetchReservations(boolean fetchOnlyFuture, boolean byDate){
         Reservation tempReservation = null;
         PreparedStatement ps = null;
         Connection con = null;
@@ -299,6 +299,11 @@ public class User {
             sqlQuery = "SELECT * FROM reservations WHERE user_id = " + userId;
             if (fetchOnlyFuture) {
                 sqlQuery += " AND CURDATE() <= end_date";
+            }
+            if (byDate)
+            {
+                sqlQuery += " ORDER BY 'start_date'";
+                System.out.println(sqlQuery);
             }
             con = ReservationSystem.getDatabaseConnection();
             ps = con.prepareStatement(sqlQuery);
