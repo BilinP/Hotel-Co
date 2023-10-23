@@ -94,15 +94,14 @@ public class ReservationLookupController extends BaseController {
             status.setText("Completed");
             vBox.getChildren().remove(cancel);
         }
-        else {
-            if (reservation.getIsCancelled()) {
-                status.setText("Canceled");
-                vBox.getChildren().remove(cancel);
-            }
-            else {
-                status.setText("Active");
-            }
+        else if (reservation.getIsCancelled()) {
+            status.setText("Canceled");
+            vBox.getChildren().remove(cancel);
+
         }
+        else {
+            status.setText("Active");
+        }        
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         checkInDate.setText(reservation.getStartDate().format(dateTimeFormatter));
         checkOutDate.setText(reservation.getEndDate().format(dateTimeFormatter));
