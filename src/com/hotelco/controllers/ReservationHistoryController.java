@@ -102,15 +102,9 @@ public class ReservationHistoryController extends BaseController {
             return;
         }
 
-        int i = Integer.parseInt(pageNumber.getText());
-        if (i == 1) {
-            i = 0;
-        }
-        else {
-            i = (i - 1) * 5;
-        }
-
+        int i = Integer.parseInt(pageNumber.getText()) == 1 ? 0 : (Integer.parseInt(pageNumber.getText()) - 1) * 5;
         int upperLimit = i + 5;
+        
         for (; i < Math.min(upperLimit, reservations.length); i++) {
             Text text = new Text();
             text.setFill(Color.WHITE);
