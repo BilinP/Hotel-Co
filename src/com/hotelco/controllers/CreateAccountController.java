@@ -13,6 +13,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
+
+import java.util.regex.Pattern;
+import java.security.NoSuchAlgorithmException;
+import java.util.regex.Matcher;
+
 /**
  * The CreateAccountController class is the associated controller class of the 'CreateAccountGUI' view. 
  * It handles connection between the GUI and internal data.
@@ -91,7 +96,9 @@ public class CreateAccountController extends BaseController {
         PasswordField[] passwordFields = {password, confirmPassword};
         for (TextField textField: textFields) {
             if (textField.getText().isEmpty()) {
+               
                 notification.setText("Please complete all fields");
+                notification.setStyle("-fx-text-inner-color: red;");
                 return;
             }
         }
@@ -110,6 +117,7 @@ public class CreateAccountController extends BaseController {
             return;
         }
 
+
         LoginController loginController = (LoginController) switchScene(FXMLPaths.LOGIN, event);
 
         User newUser = new User(firstName.getText(), lastName.getText(),email.getText(), phoneNumber.getText());
@@ -118,6 +126,21 @@ public class CreateAccountController extends BaseController {
         ReservationSystem.setCurrentUser(newUser);
         loginController.setNotification("Account successfully created!");
 
+    }
+    
+    /**
+      * Method checks if given email address matches a regular expression pattern which is the current format an email suppose to be in.
+     * 
+     * @param email The email address to be validated.
+     * @return a boolean where true means the email is valid and false if not
+     * @author Bilin Pattasseril
+     */
+
+    public static boolean ValidEmail(String email){
+        final String  regex=   "^[A-Za-z0-9]+([. -][A-Za-z0-9]+)*@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
     }
 
     /**
