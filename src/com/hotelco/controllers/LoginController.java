@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 /**
@@ -73,10 +74,12 @@ public class LoginController extends BaseController {
             }
             else{
                 notification.setText("Invalid Username/Password!");
+                notification.setFill(Color.RED);
             }
         }
         else {
             notification.setText("Invalid Username/Password!");
+            notification.setFill(Color.RED);
         }
     }
 
@@ -105,10 +108,15 @@ public class LoginController extends BaseController {
 
     /**
      * This method is a setter for the variable 'notification'.
-     * @param s The string to set the variable 'notification' to.
+     * @param  The string to set the variable 'notification' to.
+     * @parm color sets the string color for 'notification' to specifed color and if it is null it will not set a color. 
+     * @author Bilin P
      */
-    void setNotification(String s) {
+    void setNotification(String s, Color color) {
         notification.setText(s);
+        if(color!=null){
+        notification.setFill(color);
+        }
     }
 
 }

@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 
@@ -98,22 +99,25 @@ public class CreateAccountController extends BaseController {
             if (textField.getText().isEmpty()) {
                
                 notification.setText("Please complete all fields");
-                notification.setStyle("-fx-text-inner-color: red;");
+                notification.setFill(Color.RED);
                 return;
             }
         }
         for (PasswordField passwordField: passwordFields) {
             if (passwordField.getText().isEmpty()) {
                 notification.setText("Please complete all fields");
+                notification.setFill(Color.RED);
                 return;
             }
         }
         if (!password.getText().equals(confirmPassword.getText())) {
             notification.setText("Passwords do not match!");
+            notification.setFill(Color.RED);
             return;
         }
         if (DatabaseUtil.doesEmailExist(email.getText())) {
             notification.setText("Email is already registered!");
+            notification.setFill(Color.RED);
             return;
         }
 
@@ -124,7 +128,7 @@ public class CreateAccountController extends BaseController {
         newUser.push(password.getText());
         newUser.fetch();
         ReservationSystem.setCurrentUser(newUser);
-        loginController.setNotification("Account successfully created!");
+        loginController.setNotification("Account successfully created!",Color.GREEN);
 
     }
     
@@ -137,11 +141,14 @@ public class CreateAccountController extends BaseController {
      */
 
     public static boolean ValidEmail(String email){
+        if(email.length()>320){return false;};
         final String  regex=   "^[A-Za-z0-9]+([. -][A-Za-z0-9]+)*@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
+
+
 
     /**
      * This method is called by pressing the 'Go Back' text on the top left corner.
