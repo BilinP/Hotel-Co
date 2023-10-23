@@ -36,7 +36,7 @@ public class ReservationHistoryController extends BaseController {
     @FXML
     private Text pageNumber;
 
-    Map<Text, Reservation> map;
+    private Map<Text, Reservation> map;
 
     /**
      * This method is called immediately upon controller creation.
@@ -91,33 +91,34 @@ public class ReservationHistoryController extends BaseController {
      * This method displays a logged in users reservation history corresponding to the page number.
      */
     private void displayOrders() {
-        Integer index;
-        Reservation[] reservations = ReservationSystem.getCurrentUser().getReservations();
         reservationsContainer.getChildren().clear();
-
-        index = Integer.parseInt(pageNumber.getText());
-        if (index == 1) {
-            index = 0;
-        }
-        else {
-            index = (index - 1) * 5;
-        }
-
-        
-        for (Integer i = index; i < Math.min(index + 5, reservations.length); i++) {
-            //FIXME:I put this just for testing but it is ugly. We need to
-            //Make column headers and make a cancel button
+        Reservation[] reservations = ReservationSystem.getCurrentUser().getReservations();
+        if (reservations.length == 0) {
             Text text = new Text();
             text.setFill(Color.WHITE);
             text.setFont(Font.font("System", 24));
-            text.setText(
-                "Reservation # " + reservations[i].getReservationId() + " from " +
-                reservations[i].getStartDate().toString() + " - " +
-                reservations[i].getEndDate().toString() + " - " +
-                ", party of " + reservations[i].getGroupSize());
+            text.setText("No past reservations!");
+            reservationsContainer.getChildren().add(text);
+            return;
+        }
+
+        int i = Integer.parseInt(pageNumber.getText());
+        if (i == 1) {
+            i = 0;
+        }
+        else {
+            i = (i - 1) * 5;
+        }
+
+        int upperLimit = i + 5;
+        for (; i < Math.min(upperLimit, reservations.length); i++) {
+            Text text = new Text();
+            text.setFill(Color.WHITE);
+            text.setFont(Font.font("System", 24));
+            text.setText("Reservation # " + reservations[i].getReservationId());
             map.put(text, reservations[i]);
-            text.setOnMouseReleased(e -> {
-                ReservationLookupController reservationLookupController = (ReservationLookupController) switchScene(FXMLPaths.RESERVATION_LOOKUP, e);
+            text.setOnMouseReleased(event -> {
+                ReservationLookupController reservationLookupController = (ReservationLookupController) switchScene(FXMLPaths.RESERVATION_LOOKUP, event);
                 reservationLookupController.writeReservationInfo(map.get(text));
             });
             reservationsContainer.getChildren().add(text);
