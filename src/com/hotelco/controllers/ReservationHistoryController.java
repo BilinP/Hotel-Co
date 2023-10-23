@@ -1,5 +1,8 @@
 package com.hotelco.controllers;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.hotelco.entities.Reservation;
 import com.hotelco.entities.ReservationSystem;
 import com.hotelco.utilities.FXMLPaths;
@@ -7,6 +10,9 @@ import com.hotelco.utilities.FXMLPaths;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 /**
@@ -19,34 +25,10 @@ import javafx.scene.text.Text;
 public class ReservationHistoryController extends BaseController {
 
     /**
-     * Text that will display a reservation at the top of the list.
+     * VBox that will contain an array of Text of all reservations the logged in user has created.
      */
     @FXML
-    private Text firstOrder;
-
-    /**
-     * Text that will display a reservation below 'firstOrder'.
-     */
-    @FXML
-    private Text secondOrder;
-
-    /**
-     * Text that will display a reservation below 'secondOrder'.
-     */
-    @FXML
-    private Text thirdOrder;
-
-    /**
-     * Text that will display a reservation below 'thirdOrder'.
-     */
-    @FXML
-    private Text fourthOrder;
-
-    /**
-     * Text that will display a reservation below 'fourthOrder'.
-     */
-    @FXML
-    private Text fifthOrder;
+    private VBox reservationsContainer;
 
     /**
      * Text that will display the current page number.
@@ -54,12 +36,15 @@ public class ReservationHistoryController extends BaseController {
     @FXML
     private Text pageNumber;
 
+    Map<Text, Reservation> map;
+
     /**
      * This method is called immediately upon controller creation.
      * It calls 'displayOrders()' to immediately display a users reservations.
      */
     @FXML
     private void initialize() {
+        map = new HashMap<>();
         Platform.runLater(() -> {
             displayOrders();
         });
@@ -74,8 +59,8 @@ public class ReservationHistoryController extends BaseController {
     private void decrementPage(MouseEvent event) {
         if (Integer.parseInt(pageNumber.getText()) > 1) {
             pageNumber.setText(Integer.toString(Integer.parseInt(pageNumber.getText()) - 1));
+            displayOrders();
         }
-        displayOrders();
     }
 
     /**
@@ -88,13 +73,13 @@ public class ReservationHistoryController extends BaseController {
         Reservation[] reservations = ReservationSystem.getCurrentUser().getReservations();
         if (Integer.parseInt(pageNumber.getText()) < Math.ceil(reservations.length/5.0)) {
             pageNumber.setText(Integer.toString(Integer.parseInt(pageNumber.getText()) + 1));
+            displayOrders();
         }
-        displayOrders();
     }
 
     /**
      * This method is called by pressing the 'Go Back' text.
-     * It exits the 'OrderLookupGUI' and enters the 'MenuGUI'.
+     * It exits the 'ReservationHistoryGUI' and enters the 'MenuGUI'.
      * @param event The 'mouse released' event that is triggered by pressing the 'Go Back' text.
      */
     @FXML
@@ -103,15 +88,22 @@ public class ReservationHistoryController extends BaseController {
     }
 
     /**
+     * This method is called by pressing any displayed reservation.
+     * It exits the 'ReservationHistoryGUI' and enters the 'ReservationLookupGUI'.
+     * @param event The 'mouse released' event that is triggered by pressing any displayed reservation.
+     */
+    @FXML
+    void switchToReservationLookupScene(MouseEvent event) {
+        switchScene(FXMLPaths.RESERVATION_LOOKUP, event);
+    }
+
+    /**
      * This method displays a logged in users reservation history corresponding to the page number.
      */
     private void displayOrders() {
-        Integer index, j;
+        Integer index;
         Reservation[] reservations = ReservationSystem.getCurrentUser().getReservations();
-        Text[] texts = {firstOrder, secondOrder, thirdOrder, fourthOrder, fifthOrder};
-        for (Integer i = 0; i < texts.length; i++) {
-            texts[i].setText("");
-        }
+        reservationsContainer.getChildren().clear();
 
         index = Integer.parseInt(pageNumber.getText());
         if (index == 1) {
@@ -121,18 +113,24 @@ public class ReservationHistoryController extends BaseController {
             index = (index - 1) * 5;
         }
 
-        j = 0;
+        
         for (Integer i = index; i < Math.min(index + 5, reservations.length); i++) {
             //FIXME:I put this just for testing but it is ugly. We need to
             //Make column headers and make a cancel button
-            texts[j].setText(
+            Text text = new Text();
+            text.setFill(Color.WHITE);
+            text.setFont(Font.font("System", 24));
+            text.setText(
                 "Reservation # " + reservations[i].getReservationId() + " from " +
                 reservations[i].getStartDate().toString() + " - " +
                 reservations[i].getEndDate().toString() + " - " +
                 ", party of " + reservations[i].getGroupSize());
-            j++;
+            map.put(text, reservations[i]);
+            text.setOnMouseReleased(e -> {
+                ReservationLookupController reservationLookupController = (ReservationLookupController) switchScene(FXMLPaths.RESERVATION_LOOKUP, e);
+                reservationLookupController.writeReservationInfo(map.get(text));
+            });
+            reservationsContainer.getChildren().add(text);
         }
     }
-
-
 }

@@ -8,6 +8,16 @@
 <?import javafx.scene.text.Text?>
 
 <BorderPane style="-fx-background-color: #3c4149;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hotelco.controllers.ReservationHistoryController">
+   <top>
+      <Text fill="WHITE" onMouseReleased="#switchToMenuScene" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt; Go Back" BorderPane.alignment="TOP_LEFT">
+         <font>
+            <Font size="24.0" />
+         </font>
+         <BorderPane.margin>
+            <Insets left="30.0" top="30.0" />
+         </BorderPane.margin>
+      </Text>
+   </top>
    <center>
       <VBox alignment="CENTER" BorderPane.alignment="CENTER">
          <children>
@@ -16,31 +26,7 @@
                   <Font size="36.0" />
                </font>
             </Text>
-            <Text fx:id="firstOrder" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Text>
-            <Text fx:id="secondOrder" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Text>
-            <Text fx:id="thirdOrder" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Text>
-            <Text fx:id="fourthOrder" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Text>
-            <Text fx:id="fifthOrder" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Text>
+            <VBox fx:id="reservationsContainer" alignment="CENTER" />
             <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Page">
                <font>
                   <Font size="36.0" />
@@ -68,14 +54,4 @@
          </children>
       </VBox>
    </center>
-   <top>
-      <Text fill="WHITE" onMouseReleased="#switchToMenuScene" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt; Go Back" BorderPane.alignment="TOP_LEFT">
-         <font>
-            <Font size="24.0" />
-         </font>
-         <BorderPane.margin>
-            <Insets left="30.0" top="30.0" />
-         </BorderPane.margin>
-      </Text>
-   </top>
 </BorderPane>
