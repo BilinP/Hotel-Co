@@ -89,6 +89,7 @@ public class CreateAccountController extends BaseController {
      * @param event The 'mouse released' event that is triggered by pressing the 'Create Account' button.
      * @author Grigor Azakian
      * @author Daniel Schwartz
+     * @author Bilin Pattasseril
      */
     @FXML
     private void createAccount(MouseEvent event) {
@@ -110,7 +111,7 @@ public class CreateAccountController extends BaseController {
             }
         }
         if(!ValidEmail(email.getText())){
-            notification.setText("Not a Valid Email");
+            notification.setText("Please use a valid Email address!");
             notification.setFill(Color.RED);
             return;
         }
@@ -131,7 +132,7 @@ public class CreateAccountController extends BaseController {
         newUser.push(password.getText());
         newUser.fetch();
         ReservationSystem.setCurrentUser(newUser);
-        loginController.setNotification("Account successfully created!",Color.GREEN);
+        loginController.setNotification("Account successfully created!", Color.GREEN);
 
     }
     
@@ -141,15 +142,13 @@ public class CreateAccountController extends BaseController {
      * @return a boolean where true means the email is valid and false if not
      * @author Bilin Pattasseril
      */
-    public static boolean ValidEmail(String email){
+    private boolean ValidEmail(String email){
         if(email.length()>320){return false;};
         final String regex = "^[A-Za-z0-9]+([. -][A-Za-z0-9]+)*@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
-
-
 
     /**
      * This method is called by pressing the 'Go Back' text on the top left corner.
