@@ -7,8 +7,7 @@ import java.util.regex.Pattern;
 import com.hotelco.entities.Password;
 import com.hotelco.entities.User;
 /**
- * The Verifer Class contains methods used to verify valid email address and 
- * passwords.
+ * Utility class for verifications
  * @author BilinP
  * @verision 1.0
  */
@@ -18,7 +17,7 @@ public class Verifier {
     * Utility to check and verify if a proper password is inputted.
     * @return a boolean for a proper password.
     */
-    public static boolean verify(String email, String password)
+    public static boolean verifyPassword(String email, String password)
     {
             User temp = new User(email);
             Password pass = new Password(temp.getSalt());
