@@ -121,7 +121,7 @@ public class CreateAccountController extends BaseController {
             return;
         }
         if(!ValidEmail(email.getText())){
-            notification.setText("Email is already registered!");
+            notification.setText("Not a Valid Email");
             notification.setFill(Color.RED);
             return;
         }
