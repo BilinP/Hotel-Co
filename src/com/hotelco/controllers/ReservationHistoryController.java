@@ -36,6 +36,15 @@ public class ReservationHistoryController extends BaseController {
     @FXML
     private Text pageNumber;
 
+    /**
+     * Text that can be used to notify if a cancelation was successful.
+     */
+    @FXML
+    private Text notification;
+
+    /**
+     * Map that assigns a Reservation object to a printed Text object.
+     */
     private Map<Text, Reservation> map;
 
     /**
@@ -104,7 +113,7 @@ public class ReservationHistoryController extends BaseController {
 
         int i = Integer.parseInt(pageNumber.getText()) == 1 ? 0 : (Integer.parseInt(pageNumber.getText()) - 1) * 5;
         int upperLimit = i + 5;
-        
+
         for (; i < Math.min(upperLimit, reservations.length); i++) {
             Text text = new Text();
             text.setFill(Color.WHITE);
@@ -117,5 +126,9 @@ public class ReservationHistoryController extends BaseController {
             });
             reservationsContainer.getChildren().add(text);
         }
+    }
+
+    void setNotification(String s) {
+        notification.setText(s);
     }
 }
