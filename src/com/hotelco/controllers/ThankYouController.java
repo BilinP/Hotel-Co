@@ -60,6 +60,7 @@ public class ThankYouController extends BaseController {
      * @param reservation The current reservation to print details for.
      */
     void writeReservationInfo(Reservation reservation) {
+        //FIXME:
         //Currently broken, the reservation ID is null when this is called.
         //reservationNumber.setText(Integer.toString(reservation.getReservationId()));
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
