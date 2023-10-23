@@ -35,6 +35,9 @@ public class ReservationLookupController extends BaseController {
     @FXML
     private Text guestNumber;
 
+    @FXML
+    private Text status;
+
     /**
      * Instance of current Reservation being viewed.
      */
@@ -47,7 +50,6 @@ public class ReservationLookupController extends BaseController {
      */
     @FXML
     private void cancel(MouseEvent event) {
-        //FIXME: setIsCancelled() has no noticable visual effect on orders.
         reservation.setIsCancelled(true);
         switchScene(FXMLPaths.ORDER_LOOKUP, event);
     }
@@ -68,9 +70,8 @@ public class ReservationLookupController extends BaseController {
      */
     void writeReservationInfo(Reservation reservation) {
         this.reservation = reservation;
-        //FIXME:
-        //Currently broken, the reservation ID is null when this is called.
-        //reservationID.setText(reservationID.getText() + Integer.toString(reservation.getReservationId()));
+        reservationID.setText(reservationID.getText() + Integer.toString(reservation.getReservationId()));
+        status.setText(reservation.getIsCancelled() ? "Canceled" : "Active");
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         checkInDate.setText(reservation.getStartDate().format(dateTimeFormatter));
         checkOutDate.setText(reservation.getEndDate().format(dateTimeFormatter));

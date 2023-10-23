@@ -20,9 +20,19 @@
                   <Insets bottom="20.0" />
                </VBox.margin>
             </Text>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Status:">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <Text fx:id="status" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
             <VBox alignment="CENTER" maxWidth="600.0">
                <VBox.margin>
-                  <Insets bottom="30.0" />
+                  <Insets />
                </VBox.margin>
                <children>
                   <HBox spacing="400.0">
