@@ -214,6 +214,8 @@ public class ReservationSystem {
     public static void book(){
         currentReservation.create();
         currentUser.fetch(); //assures currentUser is immediately updated with new booking
+        Reservation[] userReservations = currentUser.fetchReservations(false);
+        ReservationSystem.currentReservation = userReservations[userReservations.length - 1];
     }
     /**
      * Cancels the "current reservation" by setting isCancelled. See currentReservation

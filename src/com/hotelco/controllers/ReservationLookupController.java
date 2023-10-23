@@ -69,6 +69,7 @@ public class ReservationLookupController extends BaseController {
     @FXML
     private void cancel(MouseEvent event) {
         reservation.setIsCancelled(true);
+        reservation.push();
         ReservationHistoryController rhc = (ReservationHistoryController) switchScene(FXMLPaths.ORDER_LOOKUP, event);
         rhc.setNotification("Reservation successfully canceled.");
     }

@@ -187,6 +187,7 @@ public class RoomSearchController extends BaseController {
             ReservationSystem.getCurrentUser(), Integer.parseInt(guests.getText()));
         ReservationSystem.setCurrentReservation(reservation);
         ReservationSystem.book();
+        reservation = ReservationSystem.getCurrentReservation();
         ThankYouController thankYouController = (ThankYouController) switchScene(FXMLPaths.THANK_YOU, event);
         thankYouController.writeReservationInfo(reservation);
     }

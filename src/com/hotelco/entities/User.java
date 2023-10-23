@@ -226,7 +226,7 @@ public class User {
                 phone = rs.getString("phone");
                 isEmployee = rs.getBoolean("is_employee");
                 isManager = rs.getBoolean("is_manager");
-                reservations = fetchReservations(true);
+                reservations = fetchReservations(false);
             }
         }
         catch (SQLException e){
