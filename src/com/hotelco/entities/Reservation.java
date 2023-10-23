@@ -274,7 +274,7 @@ public class Reservation {
             "',  group_size = " + groupSize +
             ", is_cancelled = " + isCancelled +
             ", comments = " + comments +
-            ", rateDiscount = " + invoiceDetails.rateDiscount +
+            //", rateDiscount = " + invoiceDetails.rateDiscount +
             " WHERE reservation_id = " + reservationId;
             con = ReservationSystem.getDatabaseConnection();
             ps = con.prepareStatement(sqlQuery);
