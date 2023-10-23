@@ -90,6 +90,7 @@ public class CreateAccountController extends BaseController {
      * @param event The 'mouse released' event that is triggered by pressing the 'Create Account' button.
      * @author Grigor Azakian
      * @author Daniel Schwartz
+     * @author Bilin Pattasseril
      */
     @FXML
     private void createAccount(MouseEvent event) {
@@ -121,7 +122,7 @@ public class CreateAccountController extends BaseController {
             return;
         }
         if(!ValidEmail(email.getText())){
-            notification.setText("Not a Valid Email");
+            notification.setText("Please use a valid Email address!");
             notification.setFill(Color.RED);
             return;
         }
