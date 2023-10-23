@@ -69,7 +69,8 @@ public class ReservationLookupController extends BaseController {
     @FXML
     private void cancel(MouseEvent event) {
         reservation.setIsCancelled(true);
-        switchScene(FXMLPaths.ORDER_LOOKUP, event);
+        ReservationHistoryController rhc = (ReservationHistoryController) switchScene(FXMLPaths.ORDER_LOOKUP, event);
+        rhc.setNotification("Reservation successfully canceled.");
     }
 
     /**
@@ -97,7 +98,6 @@ public class ReservationLookupController extends BaseController {
         else if (reservation.getIsCancelled()) {
             status.setText("Canceled");
             vBox.getChildren().remove(cancel);
-
         }
         else {
             status.setText("Active");
