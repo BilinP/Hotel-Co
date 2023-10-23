@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 public class ReservationLookupController extends BaseController {
@@ -98,6 +99,7 @@ public class ReservationLookupController extends BaseController {
         }
         else if (reservation.getIsCancelled()) {
             status.setText("Canceled");
+            status.setFill(Color.GRAY);
             vBox.getChildren().remove(cancel);
         }
         else {

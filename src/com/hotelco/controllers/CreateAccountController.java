@@ -120,6 +120,11 @@ public class CreateAccountController extends BaseController {
             notification.setFill(Color.RED);
             return;
         }
+        if(!ValidEmail(email.getText())){
+            notification.setText("Not a Valid Email");
+            notification.setFill(Color.RED);
+            return;
+        }
 
 
         LoginController loginController = (LoginController) switchScene(FXMLPaths.LOGIN, event);
