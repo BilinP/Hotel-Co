@@ -200,10 +200,7 @@ public class RoomSearchController extends BaseController {
     private void decrementGuest(MouseEvent event) {
         if (Integer.parseInt(guests.getText()) > 1) {
             guests.setText(Integer.toString(Integer.parseInt(guests.getText()) - 1));
-            Button[] buttons = {king, queen, dbl, suite};
-            for (Button button: buttons) {
-                button.setDisable(true);
-            }
+            disableButtons();
         }
     }
 
@@ -218,10 +215,7 @@ public class RoomSearchController extends BaseController {
     private void incrementGuest(MouseEvent event) {
         if (Integer.parseInt(guests.getText()) < Constants.MAX_CAP) {
             guests.setText(Integer.toString(Integer.parseInt(guests.getText()) + 1));
-            Button[] buttons = {king, queen, dbl, suite};
-            for (Button button: buttons) {
-                button.setDisable(true);
-            }
+            disableButtons();
         }
     }
 

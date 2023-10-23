@@ -88,16 +88,6 @@ public class ReservationHistoryController extends BaseController {
     }
 
     /**
-     * This method is called by pressing any displayed reservation.
-     * It exits the 'ReservationHistoryGUI' and enters the 'ReservationLookupGUI'.
-     * @param event The 'mouse released' event that is triggered by pressing any displayed reservation.
-     */
-    @FXML
-    void switchToReservationLookupScene(MouseEvent event) {
-        switchScene(FXMLPaths.RESERVATION_LOOKUP, event);
-    }
-
-    /**
      * This method displays a logged in users reservation history corresponding to the page number.
      */
     private void displayOrders() {
