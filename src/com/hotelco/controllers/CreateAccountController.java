@@ -5,6 +5,7 @@ import com.hotelco.entities.User;
 import com.hotelco.utilities.DatabaseUtil;
 import com.hotelco.utilities.FXMLPaths;
 import com.hotelco.utilities.TextFormatters;
+import com.hotelco.utilities.Verifier;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -13,10 +14,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-
-
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 
 /**
  * The CreateAccountController class is the associated controller class of the 'CreateAccountGUI' view. 
@@ -109,8 +106,14 @@ public class CreateAccountController extends BaseController {
                 return;
             }
         }
-        if(!validEmail(email.getText())){
+        Verifier emailCheck= new Verifier();
+        if(!emailCheck.isValidEmail(email.getText())){
             notification.setText("Please use a valid Email address!");
+            notification.setFill(Color.RED);
+            return;
+        }
+        if(phoneNumber.getText().length()!=10){
+            notification.setText("Please use a valid phone number!");
             notification.setFill(Color.RED);
             return;
         }
@@ -135,19 +138,7 @@ public class CreateAccountController extends BaseController {
 
     }
     
-    /**
-     * Method checks if given email address matches a regular expression pattern which is the current format an email suppose to be in.
-     * @param email The email address to be validated.
-     * @return a boolean where true means the email is valid and false if not
-     * @author Bilin Pattasseril
-     */
-    private boolean validEmail(String email){
-        if(email.length()>320){return false;};
-        final String regex = "^[A-Za-z0-9]+([. -][A-Za-z0-9]+)*@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
-    }
+
 
     /**
      * This method is called by pressing the 'Go Back' text on the top left corner.
