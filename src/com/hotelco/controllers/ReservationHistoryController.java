@@ -1,6 +1,8 @@
 package com.hotelco.controllers;
 
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -113,6 +115,7 @@ public class ReservationHistoryController extends BaseController {
             return;
         }
 
+        Collections.reverse(Arrays.asList(reservations));
         int i = Integer.parseInt(pageNumber.getText()) == 1 ? 0 : (Integer.parseInt(pageNumber.getText()) - 1) * 5;
         int upperLimit = i + 5;
 
