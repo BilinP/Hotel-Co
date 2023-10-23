@@ -12,7 +12,7 @@
    <center>
       <VBox alignment="CENTER" BorderPane.alignment="CENTER">
          <children>
-            <Text fx:id="reservationID" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Reservation">
+            <Text fx:id="reservationID" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Reservation #">
                <font>
                   <Font size="36.0" />
                </font>
