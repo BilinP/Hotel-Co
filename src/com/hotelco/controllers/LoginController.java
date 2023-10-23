@@ -67,7 +67,7 @@ public class LoginController extends BaseController {
         }
         String emailStr = email.getText();
         if(DatabaseUtil.doesEmailExist(emailStr)){
-            if (Verifier.verify(emailStr, password.getText()))
+            if (Verifier.verifyPassword(emailStr, password.getText()))
             {
                 ReservationSystem.setCurrentUser(new User(emailStr));
                 switchScene(FXMLPaths.MENU, event);
