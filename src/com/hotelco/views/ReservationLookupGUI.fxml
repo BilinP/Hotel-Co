@@ -67,7 +67,7 @@
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <Button mnemonicParsing="false" text="Cancel">
+                  <Button mnemonicParsing="false" onMouseReleased="#cancel" text="Cancel">
                      <VBox.margin>
                         <Insets bottom="15.0" top="25.0" />
                      </VBox.margin>
