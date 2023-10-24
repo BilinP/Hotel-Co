@@ -63,6 +63,7 @@ public class LoginController extends BaseController {
     private void login(Event event) {
         if (email.getText().isEmpty() || password.getText().isEmpty()) {
             notification.setText("Please enter username and password");
+            notification.setFill(Color.RED);
             return;
         }
         String emailStr = email.getText();
