@@ -10,13 +10,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hotelco.controllers.CreateAccountController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hotelco.controllers.CreateAccountController">
    <left>
       <AnchorPane prefHeight="500.0" prefWidth="350.0" BorderPane.alignment="CENTER">
          <children>
             <AnchorPane prefHeight="507.0" prefWidth="350.0" style="-fx-background-color: #3c4149;">
                <children>
-                  <PasswordField fx:id="password" layoutX="68.0" layoutY="289.0" prefHeight="29.0" prefWidth="216.0" promptText="Password" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-border-color: white; -fx-border-width: 0 0 4 0;" />
+                  <PasswordField fx:id="password" focusTraversable="false" layoutX="68.0" layoutY="289.0" prefHeight="29.0" prefWidth="216.0" promptText="Password" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-border-color: white; -fx-border-width: 0 0 4 0;" />
                   <Text fill="#f9bd1a" layoutX="128.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Register">
                      <font>
                         <Font name="Brush Script MT Italic" size="36.0" />
@@ -35,7 +35,7 @@
                   <TextField fx:id="firstName" layoutX="70.0" layoutY="99.0" prefHeight="26.0" prefWidth="213.0" promptText="First Name" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-border-color: white; -fx-border-width: 0 0 4 0;" />
                   <TextField fx:id="lastName" layoutX="70.0" layoutY="147.0" prefHeight="26.0" prefWidth="213.0" promptText="Last name" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-border-color: white; -fx-border-width: 0 0 4 0;" />
                   <TextField fx:id="email" layoutX="70.0" layoutY="193.0" prefHeight="26.0" prefWidth="213.0" promptText="Email" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-border-color: white; -fx-border-width: 0 0 4 0;" />
-                  <PasswordField fx:id="confirmPassword" layoutX="69.0" layoutY="336.0" prefHeight="29.0" prefWidth="216.0" promptText="Confirm Password" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-border-color: white; -fx-border-width: 0 0 4 0;" />
+                  <PasswordField fx:id="confirmPassword" focusTraversable="false" layoutX="69.0" layoutY="336.0" prefHeight="29.0" prefWidth="216.0" promptText="Confirm Password" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-border-color: white; -fx-border-width: 0 0 4 0;" />
                   <TextField fx:id="phoneNumber" layoutX="70.0" layoutY="242.0" prefHeight="26.0" prefWidth="213.0" promptText="Phone Number" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-border-color: white; -fx-border-width: 0 0 4 0;" />
                   <Text fx:id="notification" fill="WHITE" layoutX="1.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="342.0">
                      <font>
