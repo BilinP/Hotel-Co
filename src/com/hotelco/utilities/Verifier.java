@@ -4,6 +4,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.hotelco.entities.CreditCard;
 import com.hotelco.entities.Password;
 import com.hotelco.entities.User;
 /**
@@ -39,11 +40,20 @@ public class Verifier {
      * @return a boolean where true means the email is valid and false if not
      * @author Bilin Pattasseril
      */
-    public boolean isValidEmail(String email){
+    public static boolean isValidEmail(String email){
         if(email.length()>320){return false;}
         final String regex = "^[A-Za-z0-9]+([. -][A-Za-z0-9]+)*@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
+    }
+    /**
+     * Verifies a credit card could be real and is not expired
+     * @param creditCard credit card to be verified
+     * @return true when credit card can be valid, false, when credit card
+     * could not be valid
+     */
+    public static boolean verifyCreditCard(CreditCard creditCard){
+            return creditCard.verify();
     }
 }

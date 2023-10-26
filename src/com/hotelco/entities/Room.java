@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.hotelco.utilities.RoomType;
+import com.hotelco.constants.RoomType;
 /**
  * Class that structures the details of a room 
  * @author Daniel Schwartz

@@ -2,10 +2,10 @@ package com.hotelco.controllers;
 
 import java.time.LocalDate;
 
+import com.hotelco.constants.Constants;
+import com.hotelco.constants.RoomType;
 import com.hotelco.entities.*;
-import com.hotelco.utilities.Constants;
 import com.hotelco.utilities.FXMLPaths;
-import com.hotelco.utilities.RoomType;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;

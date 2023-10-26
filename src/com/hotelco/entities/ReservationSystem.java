@@ -1,7 +1,7 @@
 package com.hotelco.entities;
 
 import com.hotelco.connections.DatabaseConnection;
-import com.hotelco.utilities.RoomType;
+import com.hotelco.constants.RoomType;
 
 import java.sql.Connection;
 import java.sql.Date;

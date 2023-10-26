@@ -106,8 +106,8 @@ public class CreateAccountController extends BaseController {
                 return;
             }
         }
-        Verifier emailCheck= new Verifier();
-        if(!emailCheck.isValidEmail(email.getText())){
+
+        if(!Verifier.isValidEmail(email.getText())){
             notification.setText("Please use a valid Email address!");
             notification.setFill(Color.RED);
             return;

@@ -1,4 +1,4 @@
-package com.hotelco.utilities;
+package com.hotelco.constants;
 
 public final class Constants {
     public static final Integer DBL_CAP = 2;

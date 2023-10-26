@@ -1,94 +1,219 @@
 package com.hotelco.entities;
 
-import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 
+import com.hotelco.constants.CreditCardType;
 
+/**
+ * Maintains a credit card associated with a single user. Assumes that
+ * every User has at most 1 credit cards.
+ */
 public class CreditCard{
+    /**
+     * Credit card number
+     */
+    private String creditCardNum;
+    /**
+     * CVV number
+     */
 
-    private String CreditCardNum;
+    private String cvvNum;
+    /**
+     * Expiration date. LocalDate created with first day of expDate's year-month
+     * 
+     */
+    private LocalDate expDate;
+    /**
+     * Type of credit card. See CreditCardType.java for types available.
+     */
+    private CreditCardType creditCardType;
+    /**
+     * User associated with this card.
+     */
+    private User user;
+    /**
+     * Gets the credit card number
+     * @return credit card number
+     */
+    public String getCreditCardNum(){return creditCardNum;}
+    /**
+     * Gets the CVV number
+     * @return the CVV number
+     */
+    public String getCvvNum(){return cvvNum;}
+    /**
+     * Gets the expiration date
+     * @return the expiration date
+     */
+    public LocalDate getExpDate(){return expDate;}
+    /**
+     * Gets the credit card type
+     * @return the credit card type
+     */
+    public CreditCardType getCreditCardType(){return creditCardType;}
+    /**
+     * Sets the credit card number
+     * @param newCreditCardNum the credit card number to be associated with
+     * this card
+     */
+    public void setCreditCardNum(String newCreditCardNum){
+        creditCardNum = newCreditCardNum;
+    }
+    /** 
+     * Sets the CVV number
+     * @param newCvvNum the CVV number to be associated wiih this credit card
+     */
+    public void setCvvNum(String newCvvNum){cvvNum = newCvvNum;}
 
-    private String CVVNum;
+    public void setExpDate(LocalDate newExpDate){expDate = newExpDate;}
 
-    private String ExpDate;
-
-    private String CreditCardType;
-
-
-
-public String getCreditCardNum(){return this.CreditCardNum;}
-
-public String getCVVNum(){return this.CVVNum;}
-
-public String getExpDate(){return this.ExpDate;}
-
-//public String getCreditCardType(){return this.CreditCardType;}
-
-public void setCreditCardNum(String newCreditCardNum){CreditCardNum = newCreditCardNum;}
-
-public void setCVVNum(String newCVVNum){CVVNum = newCVVNum;}
-
-public void setExpDate(String newExpDate){ExpDate = newExpDate;}
-
-//public void setCreditCardType(String newCreditCardType){CreditCardType = newCreditCardType;}
-
-public CreditCard(CreditCard CreditCardInfo)
-    {
-        //fetch(CreditCardInfo);
+    public void setCreditCardType(CreditCardType newCreditCardType){
+        creditCardType = newCreditCardType;
+    }
+/**
+ * Creates CreditCard by fetching from database by userId.
+ * @param owner user to be associated with this credit card
+ */
+    public CreditCard(User owner){
+        user = owner;
+        fetch();
     }
 
-public CreditCard(
-        String newCreditCardNum, String newCVVNum, String newExpDate) {
-            CreditCardNum = newCreditCardNum;
-            CVVNum = newCVVNum;
-            ExpDate = newExpDate;
-            //CreditCardType = newCreditCardType;
-    }
-
-public boolean verifyCreditCard(CreditCard CardInfo)throws NoSuchAlgorithmException{
-
-        int cardSize = CardInfo.CreditCardNum.length();
-        int totalSum = 0;
-        boolean secondNum = false;
-        String temp = LocalDate.now().toString();
-        String currentDate = "";
-
-
-
-        //Checks the credit card number for validity.
-        if (CardInfo.CreditCardNum.charAt(0) == '4' && (CardInfo.CreditCardNum.length() == 16 ||  CardInfo.CreditCardNum.length() == 13)){} //VISA
-        else if (CardInfo.CreditCardNum.charAt(0) == '4' && CardInfo.CreditCardNum.length() == 16){} //Mastercard
-        else if (CardInfo.CreditCardNum.charAt(0) == '3' && CardInfo.CreditCardNum.length() == 15 
-            && (CardInfo.CreditCardNum.charAt(1) == '4' || CardInfo.CreditCardNum.charAt(1) == '7')){} //American Express
-        else if (CardInfo.CreditCardNum.charAt(0) == '6' && CardInfo.CreditCardNum.length() == 16){} //Discover
-        else {return false;}
-        for (int i = cardSize - 1; i >= 0; i--){ 
-
-            int j = CardInfo.CreditCardNum.charAt(i) - '0';
-
-            if (secondNum == true)
-                j = j * 2;
-            
-            
-            totalSum += j / 10;
-            totalSum += j % 10;
-
-            secondNum = !secondNum;
-        }
-        if (totalSum%10 != 0){
-            return false;
-        }
-
-        for (int i = 0; i < 3; i++) { currentDate = currentDate + temp.charAt(i); } //Checks if credit card expired
-        for (int i = 5; i < 6; i++) { currentDate = currentDate + temp.charAt(i); }
-        if (Integer.parseInt(currentDate) > Integer.parseInt(CardInfo.ExpDate)) {return false;}
-
-        //Dont know if CVV is needed.
+    public CreditCard(
+        String newCreditCardNum, String newCVVNum,
+        LocalDate newExpDate,  CreditCardType newCreditCardType, User newUser){
         
+        creditCardNum = newCreditCardNum;
+        cvvNum = newCVVNum;
+        expDate = newExpDate;
+        creditCardType = newCreditCardType;
+        user = newUser;
+        }
 
-        return true;
+    public void determineCardType(){
+        Integer cardNumLen = creditCardNum.length();
+        if (cardNumLen == 15 && creditCardNum.charAt(0) == '3'){
+            creditCardType = CreditCardType.AMEX;
+        }
+        if(cardNumLen == 16){
+            switch(creditCardNum.charAt(0)){
+                case '4':
+                creditCardType = CreditCardType.VISA;
+                break;
+                case '5':
+                creditCardType = CreditCardType.MASTERCARD;
+                break;
+                case '6':
+                creditCardType = CreditCardType.DISCOVER;
+                break;
+            }
+        }
     }
 
+    public boolean luhnCheck(){
+        Integer cardNumLen = creditCardNum.length();
+        boolean isSecond = false;
+        Integer totalSum = 0;
+        for (int i = cardNumLen - 1; i >= 0; --i){ 
+
+                int currDigit = creditCardNum.charAt(i) - '0';
+
+                if (isSecond == true){
+                    currDigit = currDigit * 2;
+                }
+                totalSum += currDigit / 10;
+                totalSum += currDigit % 10;
+
+                isSecond = !isSecond;
+            }
+        return (totalSum % 10 == 0);
+    }
+
+    public boolean verify(){
+        determineCardType();
+        return creditCardType != null &&
+            luhnCheck() &&
+            expDate.isAfter(LocalDate.now());
+    }
+
+    public void assign(){
+        if(user != null && verify()){
+            PreparedStatement ps = null;
+            Connection con = null;
+            String sqlQuery = null;
+            if (userHasOneCard()){
+                sqlQuery = "UPDATE credit_cards" +
+                "SET card_num = '" + creditCardNum +
+                "', cvv = '" + cvvNum +
+                "', exp_date = '" + Date.valueOf(expDate) +
+                "' WHERE user_id = " + user.getUserId();
+            }
+            else {
+                sqlQuery = "INSERT INTO credit_cards" +
+                "SET card_num = '" + creditCardNum +
+                "', cvv = '" + cvvNum +
+                "', exp_date = '" + Date.valueOf(expDate) +
+                "', user_id = " + user.getUserId();
+            }
+            try {
+                con = ReservationSystem.getDatabaseConnection();
+                ps = con.prepareStatement(sqlQuery);
+                ps.execute();
+            }
+            catch (SQLException e){
+                System.out.println(e);
+            }
+        }
+    }
+
+    public void fetch(){
+        PreparedStatement ps = null;
+        Connection con = null;
+        ResultSet rs = null;
+        String sqlQuery = "SELECT * FROM credit_cards " +
+            "WHERE user_id = " + user.getUserId();;
+        try {
+            con = ReservationSystem.getDatabaseConnection();
+            ps = con.prepareStatement(sqlQuery);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                creditCardNum = rs.getString("card_num");
+                cvvNum = rs.getString("cvv");
+                expDate = rs.getDate("exp_date").toLocalDate();
+            }
+        }
+        catch (SQLException e){
+            System.out.println(e);
+        }
+    }
+
+    public boolean userHasOneCard(){
+        PreparedStatement ps = null;
+        Connection con = null;
+        String sqlQuery = null;
+        ResultSet rs = null;
+        boolean result = false;
+        try {
+            sqlQuery = "SELECT COUNT(*) AS total " +
+            "FROM credit_cards " +
+            "WHERE user_id = " + user.getUserId();
+            con = ReservationSystem.getDatabaseConnection();
+            ps = con.prepareStatement(sqlQuery);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                result = rs.getInt("total") == 1;
+            }
+        }
+        catch (SQLException e){
+            System.out.println(e);
+        }
+        return result;
+    }
 
 }
 

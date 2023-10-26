@@ -1,4 +1,4 @@
-package com.hotelco.utilities;
+package com.hotelco.constants;
 
 public enum RoomType {
     DBL,
