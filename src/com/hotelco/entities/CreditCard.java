@@ -69,9 +69,16 @@ public class CreditCard{
      * @param newCvvNum the CVV number to be associated wiih this credit card
      */
     public void setCvvNum(String newCvvNum){cvvNum = newCvvNum;}
-
+    /**
+     * Sets the expiration date
+     * @param newExpDate the expiration date to be associated with this credit card
+     */
     public void setExpDate(LocalDate newExpDate){expDate = newExpDate;}
-
+    /**
+     * Sets the credit card type
+     * @param newCreditCardType the credit card type to be associated
+     * with this credit card
+     */
     public void setCreditCardType(CreditCardType newCreditCardType){
         creditCardType = newCreditCardType;
     }
@@ -83,7 +90,14 @@ public class CreditCard{
         user = owner;
         fetch();
     }
-
+/**
+ * Creates a credit card by explicitly defining every member
+ * @param newCreditCardNum
+ * @param newCVVNum
+ * @param newExpDate
+ * @param newCreditCardType
+ * @param newUser
+ */
     public CreditCard(
         String newCreditCardNum, String newCVVNum,
         LocalDate newExpDate,  CreditCardType newCreditCardType, User newUser){
@@ -94,8 +108,13 @@ public class CreditCard{
         creditCardType = newCreditCardType;
         user = newUser;
         }
-
-    public void determineCardType(){
+/**
+ * Determines and sets the card type. If first character/length combination is
+ * not a possibly valid card of the types in CreditCardType.java,
+ * creditCardType becomes null. 
+ */
+    public void setValidCardType(){
+        creditCardType = null;
         Integer cardNumLen = creditCardNum.length();
         if (cardNumLen == 15 && creditCardNum.charAt(0) == '3'){
             creditCardType = CreditCardType.AMEX;
@@ -114,7 +133,10 @@ public class CreditCard{
             }
         }
     }
-
+/**
+ * Uses the Luhn algorithm to check if a card is invalid.
+ * @return true if passes Luhn algorithm check, false if it fails
+ */
     public boolean luhnCheck(){
         Integer cardNumLen = creditCardNum.length();
         boolean isSecond = false;
@@ -133,14 +155,22 @@ public class CreditCard{
             }
         return (totalSum % 10 == 0);
     }
-
+    /**
+     * Verifies the credit card is a valid type of card, passes Luhn algorithm check,
+     * and is not expired
+     * @return true if credit card is possibly valid, false if it cannot be valid
+     */
     public boolean verify(){
-        determineCardType();
+        setValidCardType();
         return creditCardType != null &&
             luhnCheck() &&
             expDate.isAfter(LocalDate.now());
     }
-
+    /**
+     * Database push function that assigns a credit card to CreditCard's user.
+     * Adds a new entry if the user has no credit card, replaces the entry if
+     * the user already has a credit card.
+     */
     public void assign(){
         if(user != null && verify()){
             PreparedStatement ps = null;
@@ -170,7 +200,9 @@ public class CreditCard{
             }
         }
     }
-
+    /**
+     * Fetches a credit card from the database by user.
+     */
     public void fetch(){
         PreparedStatement ps = null;
         Connection con = null;
@@ -191,7 +223,12 @@ public class CreditCard{
             System.out.println(e);
         }
     }
-
+    /**
+     * Checks if the CreditCard's user has a card associated with them in the
+     * database.
+     * @return true if the user has a card in the database already, false if they
+     * do not
+     */
     public boolean userHasOneCard(){
         PreparedStatement ps = null;
         Connection con = null;
