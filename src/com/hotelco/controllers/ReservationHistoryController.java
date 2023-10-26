@@ -82,7 +82,8 @@ public class ReservationHistoryController extends BaseController {
      */
     @FXML
     private void incrementPage(MouseEvent event) {
-        Reservation[] reservations = ReservationSystem.getCurrentUser().fetchReservations(false, true);
+        Reservation[] reservations = ReservationSystem.getCurrentUser().
+            fetchReservations(false, true, false);
         if (Integer.parseInt(pageNumber.getText()) < Math.ceil(reservations.length/5.0)) {
             pageNumber.setText(Integer.toString(Integer.parseInt(pageNumber.getText()) + 1));
             displayOrders();
@@ -104,7 +105,7 @@ public class ReservationHistoryController extends BaseController {
      */
     private void displayOrders() {
         reservationsContainer.getChildren().clear();
-        Reservation[] reservations = ReservationSystem.getCurrentUser().fetchReservations(false, true);
+        Reservation[] reservations = ReservationSystem.getCurrentUser().fetchReservations(false, true, false);
         if (reservations.length == 0) {
             Text text = new Text();
             text.setFill(Color.WHITE);
@@ -129,7 +130,8 @@ public class ReservationHistoryController extends BaseController {
             if(reservations[i].getIsCancelled()){text.setFill(Color.GRAY);}
             map.put(text, reservations[i]);
             text.setOnMouseReleased(event -> {
-                ReservationLookupController reservationLookupController = (ReservationLookupController) switchScene(FXMLPaths.RESERVATION_LOOKUP, event);
+                ReservationLookupController reservationLookupController =
+                (ReservationLookupController) switchScene(FXMLPaths.RESERVATION_LOOKUP, event);
                 reservationLookupController.writeReservationInfo(map.get(text));
             });
             reservationsContainer.getChildren().add(text);

@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import com.hotelco.entities.Reservation.InvoiceDetails;
 import com.hotelco.utilities.DatabaseUtil;
 /**
  * Maintains details of a users information.
@@ -231,7 +230,7 @@ public class User {
                 phone = rs.getString("phone");
                 isEmployee = rs.getBoolean("is_employee");
                 isManager = rs.getBoolean("is_manager");
-                reservations = fetchReservations(false,false);
+                reservations = fetchReservations(false, false, false);
             }
         }
         catch (SQLException e){
@@ -259,7 +258,7 @@ public class User {
                 phone = rs.getString("phone");
                 isEmployee = rs.getBoolean("is_employee");
                 isManager = rs.getBoolean("is_manager");
-                reservations = fetchReservations(false,false);
+                reservations = fetchReservations(false, false, false);
             }
         }
         catch (SQLException e){
@@ -285,7 +284,7 @@ public class User {
      * @return the reservation results.
      */
     public Reservation[] fetchReservations(
-        boolean fetchOnlyFuture, boolean byDate){
+        boolean onlyFuture, boolean byDate, boolean onlyNotCancelled){
 
         Reservation tempReservation = null;
         PreparedStatement ps = null;
@@ -295,22 +294,24 @@ public class User {
         Room tempRoom = null;
         LocalDate tempStartDate = null;
         LocalDate tempEndDate = null;
-        InvoiceDetails tempInvoiceDetails = null;
         String tempComments = null;
         Integer tempGroupSize = 0;
         Integer tempReservationId = 0;
         boolean tempIsCancelled = false;
+        boolean tempIsCheckedIn = false;
         ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
         Reservation[] result = null;
             try {
             sqlQuery = "SELECT * FROM reservations WHERE user_id = " + userId;
-            if (fetchOnlyFuture) {
+            if (onlyFuture) {
                 sqlQuery += " AND CURDATE() <= end_date";
+            }
+            if (onlyNotCancelled){
+                sqlQuery += " AND is_cancelled = 0";
             }
             if (byDate)
             {
-                sqlQuery += " ORDER BY 'start_date'";
-                System.out.println(sqlQuery);
+                sqlQuery += " ORDER BY start_date";
             }
             con = ReservationSystem.getDatabaseConnection();
             ps = con.prepareStatement(sqlQuery);
@@ -320,15 +321,14 @@ public class User {
                 tempRoom = new Room(rs.getInt("room_num"));
                 tempStartDate = rs.getDate("start_date").toLocalDate();
                 tempEndDate = rs.getDate("end_date").toLocalDate();
-                //tempInvoiceDetails = new Reservation().getInvoiceDetails();
-                //FIXME: get real invoiceDetails
                 tempComments = rs.getString("comments");
                 tempGroupSize = rs.getInt("group_size");
                 tempReservationId = rs.getInt("reservation_id");
                 tempIsCancelled = rs.getBoolean("is_cancelled");
-                tempReservation = new Reservation(
-                    tempRoom, tempStartDate, tempEndDate, this, tempInvoiceDetails,
-                    tempComments, tempGroupSize, tempReservationId, tempIsCancelled);
+                tempIsCheckedIn = rs.getBoolean("is_checked_in");
+                tempReservation = new Reservation(tempRoom, tempStartDate,
+                    tempEndDate, this, tempComments, tempGroupSize,
+                    tempReservationId, tempIsCancelled, tempIsCheckedIn);
                 reservationList.add(tempReservation);
             }
             result = new Reservation[reservationList.size()];
@@ -396,14 +396,14 @@ public class User {
         Connection con = ReservationSystem.getDatabaseConnection();
         PreparedStatement p = null;
         String sqlQuery =
-                "UPDATE users " +
-                "SET first_name = '" + firstName +
-                "', last_name = '" + lastName +
-                "', email = '" + email +
-                "', phone = '" + phone +
-                "', is_employee = " + isEmployee +
-                ", is_manager = " + isManager + 
-                " WHERE user_id = " + userId;
+            "UPDATE users " +
+            "SET first_name = '" + firstName +
+            "', last_name = '" + lastName +
+            "', email = '" + email +
+            "', phone = '" + phone +
+            "', is_employee = " + isEmployee +
+            ", is_manager = " + isManager + 
+            " WHERE user_id = " + userId;
         try {
             p = con.prepareStatement(sqlQuery);
             p.execute();

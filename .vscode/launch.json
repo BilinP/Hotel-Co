@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "DailyTask",
+            "request": "launch",
+            "mainClass": "com.hotelco.utilities.DailyTask",
+            "projectName": "Hotel-Co_fb007db5"
+        },
+        {
+            "type": "java",
             "name": "Main",
             "request": "launch",
             "mainClass": "com.hotelco.application.Main",

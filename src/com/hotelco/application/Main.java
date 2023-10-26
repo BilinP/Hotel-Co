@@ -1,5 +1,6 @@
 package com.hotelco.application;
 
+import com.hotelco.utilities.DailyTask;
 import com.hotelco.utilities.FXMLPaths;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +14,7 @@ import javafx.scene.image.Image;
 public class Main extends Application {
 	private double xOffset = 0;
     private double yOffset = 0;
+	DailyTask dt = new DailyTask();
 	@Override
 	public void start(Stage primaryStage) {
 		

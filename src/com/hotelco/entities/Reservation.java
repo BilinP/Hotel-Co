@@ -1,12 +1,12 @@
 package com.hotelco.entities;
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Date;
 import java.time.LocalDate;
-import javafx.util.Pair;
+import java.util.ArrayList;
+
 /**
  * Maintains details of a particular reservation and facilitates database transactions.
  * @author Daniel Schwartz
@@ -50,6 +50,10 @@ public class Reservation {
      */
     private boolean isCancelled;
     /**
+     * Marks this reservation as checked in when true.
+     */
+    private boolean isCheckedIn;
+    /**
      * Constructs a reservation and fills it with details from the database.
      * Looks up the reservation in the database based on the supplied parameter
      * @param reservationIdNum Unique reservation id
@@ -70,7 +74,8 @@ public class Reservation {
      * @param newGroupSize
      */
     public Reservation(
-        Room newRoom, LocalDate newStartDate, LocalDate newEndDate, User newUser, Integer newGroupSize) {
+        Room newRoom, LocalDate newStartDate, LocalDate newEndDate,
+        User newUser, Integer newGroupSize) {
             room = newRoom;
             startDate = newStartDate;
             endDate = newEndDate;
@@ -78,7 +83,8 @@ public class Reservation {
             groupSize = newGroupSize;
     }
     /**
-     * Constructor for creating a reservation, explicitly defining every member of Reservation
+     * Creates a reservation with most fields explicitly defined.
+     * Invoice details are fetched from the database.
      * @param newRoom
      * @param newStartDate
      * @param newEndDate
@@ -90,18 +96,19 @@ public class Reservation {
      * @param newIsCancelled
      */
     public Reservation(
-        Room newRoom, LocalDate newStartDate, LocalDate newEndDate, User newUser,
-        InvoiceDetails newInvoiceDetails, String newComments, Integer newGroupSize,
-        Integer newReservationId, boolean newIsCancelled) {
+        Room newRoom, LocalDate newStartDate, LocalDate newEndDate, User newUser, 
+        String newComments, Integer newGroupSize,
+        Integer newReservationId, boolean newIsCancelled, boolean newIsCheckedIn) {
             room = newRoom;
             startDate = newStartDate;
             endDate = newEndDate;
             user = newUser;
-            invoiceDetails = newInvoiceDetails;
             comments = newComments;
             groupSize = newGroupSize;
             reservationId = newReservationId;
             isCancelled = newIsCancelled;
+            isCheckedIn = newIsCheckedIn;
+            fetchInvoiceDetails();
     }
     /**
     * Gets room of this reservation.
@@ -149,6 +156,12 @@ public class Reservation {
      */
     public boolean getIsCancelled(){return isCancelled;}
     /**
+     * Gets the checked in status of this reservation.
+     * @return true when reservation is checked in,
+     * false when it is not checked in
+     */
+    public boolean getIsCheckedIn(){return isCheckedIn;}
+    /**
      * Sets a room to this reservation.
      * @param newRoom the room to be associated with this reservation
      */
@@ -189,10 +202,15 @@ public class Reservation {
      */
     public void setReservationId(Integer newReservationId){reservationId = newReservationId;}
     /**
-     * Sets the status of a room's cancellation.
+     * Sets the status of a reservation's cancellation.
      * @param newIsCancelled cancellation status to be associated with this reservation
      */
     public void setIsCancelled(boolean newIsCancelled){isCancelled = newIsCancelled;}
+     /**
+     * Sets the check in status of a reservation.
+     * @param newIsCheckedIn check in status to be associated with this reservation
+     */
+    public void setIsCheckedIn(boolean newIsCheckedIn){isCheckedIn = newIsCheckedIn;}
     /**
      * Adds comments to the end of the existing comments. Does not alter previous comments.
      * @param newComment comment to add to comments.
@@ -217,7 +235,8 @@ public class Reservation {
         String sqlQuery = null;
         ResultSet rs = null;
         try {
-            sqlQuery = "SELECT reservation_id FROM reservations WHERE reservation_id = " + reservationId;
+            sqlQuery = "SELECT * FROM reservations WHERE reservation_id = "
+                + reservationId;
             con = ReservationSystem.getDatabaseConnection();
             ps = con.prepareStatement(sqlQuery);
             rs = ps.executeQuery();
@@ -227,7 +246,9 @@ public class Reservation {
                 endDate = rs.getDate("end_date").toLocalDate();
                 user = new User(rs.getInt("user_id"));
                 isCancelled = rs.getBoolean("is_cancelled");
-                invoiceDetails.rateDiscount = rs.getBigDecimal("rate_discount");
+                isCheckedIn = rs.getBoolean("is_checked_in");
+                groupSize = rs.getInt("group_size");
+                fetchInvoiceDetails();
                 comments = rs.getString("comments");
             }
         }
@@ -235,6 +256,28 @@ public class Reservation {
             System.out.println(e);
         }
     }
+    public void fetchInvoiceDetails(){
+        PreparedStatement ps = null;
+        Connection con = null;
+        String sqlQuery = null;
+        ResultSet rs = null;
+        try {
+            sqlQuery = "SELECT * FROM adjustments WHERE reservation_id = " + reservationId;
+            con = ReservationSystem.getDatabaseConnection();
+            ps = con.prepareStatement(sqlQuery);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                invoiceDetails = new InvoiceDetails(
+                          new Adjustment("Rate discount",
+                        rs.getBigDecimal("rate_discount")),
+                        fetchAdjustments());
+            }
+        }
+        catch (SQLException e){
+            System.out.println(e);
+        }
+    }
+
     /**
      * Inserts the caller's reservation into a new row in the database table 'reservations'.
      */
@@ -265,17 +308,19 @@ public class Reservation {
     public void push(){
         PreparedStatement ps = null;
         Connection con = null;
-        String sqlQuery = null;
-        try {
-            sqlQuery = "UPDATE reservations " +
+        String strRateDiscount = invoiceDetails == null ? "" :
+        ", rate_discount = " + invoiceDetails.getRateDiscount();
+        String sqlQuery = "UPDATE reservations " +
             "SET room_num = " + room.getRoomNum() +
             ", start_date = '" + Date.valueOf(startDate) + 
             "', end_date = '" + Date.valueOf(endDate) +
             "',  group_size = " + groupSize +
             ", is_cancelled = " + isCancelled +
+            ", is_checked_in = " + isCheckedIn +
             ", comments = " + comments +
-            //", rateDiscount = " + invoiceDetails.rateDiscount +
+            strRateDiscount +
             " WHERE reservation_id = " + reservationId;
+        try {
             con = ReservationSystem.getDatabaseConnection();
             ps = con.prepareStatement(sqlQuery);
             ps.execute();
@@ -283,21 +328,126 @@ public class Reservation {
         catch (SQLException e){
             System.out.println(e);
         }
-
     }
 
+public Adjustment[] fetchAdjustments(){
+    PreparedStatement ps = null;
+    Connection con = null;
+    String sqlQuery = null;
+    ResultSet rs = null;
+    ArrayList<Adjustment> adjustmentList = new ArrayList<Adjustment>();
+    Adjustment[] result = null;
+    try {
+        sqlQuery = "SELECT * FROM adjustments WHERE reservation_id = " +
+        reservationId + " AND NOT comment = 'Rate discount'";
+        con = ReservationSystem.getDatabaseConnection();
+        ps = con.prepareStatement(sqlQuery);
+        rs = ps.executeQuery();
+        while(rs.next()){
+            adjustmentList.add(
+                new Adjustment(
+                    rs.getString("comment"),
+                    rs.getBigDecimal("amount")));
+        }
+        result = new Adjustment[adjustmentList.size()];
+        adjustmentList.toArray(result);
+    }
+    catch (SQLException e){
+        System.out.println(e);
+    }
+    return result;
+}
+public void pushNewAdjustment(Adjustment adjustment){
+    PreparedStatement ps = null;
+    Connection con = null;
+    String sqlQuery = null;
+    try {
+        sqlQuery = "INSERT INTO adjustments" +
+        "SET comment = '" + adjustment.getComment() +
+        "', amount = " + adjustment.getAmount() +
+        ", reservation_id = " + reservationId;
+        con = ReservationSystem.getDatabaseConnection();
+        ps = con.prepareStatement(sqlQuery);
+        ps.execute();
+    }
+    catch (SQLException e){
+        System.out.println(e);
+    }
+}
+public void createNewAdjustment(Adjustment adjustment){
+    pushNewAdjustment(adjustment);
+    fetch();
+}
+/**
+ * Holds various payment details in one object. Inner class of Reservation
+ */
+public class InvoiceDetails {
     /**
-     * Invoice class to show the details of the reservation pricing.
+     * An array of adjustments that have been applied to this reservation.
      */
-    public class InvoiceDetails{
-        private BigDecimal rateDiscount;
-
-        private Pair<String, Integer>[] adjustments;
-        //FIXME:write adjustment class
-
-        public InvoiceDetails(){}
-
-        public BigDecimal getRateDiscount(){return rateDiscount;}
+    private Adjustment[] adjustments;
+    /**
+     * A discount on the daily rate, to be applied to the entire stay
+     */
+    private Adjustment rateDiscount;
+    /**
+     * Gets the adjustments associated with this InvoiceDetails
+     * @return the adjustments associated with this InvoiceDetails
+     */
+    public InvoiceDetails(Adjustment newRateDiscount, Adjustment[] newAdjustments){
+        adjustments = newAdjustments;
+        rateDiscount = newRateDiscount;
+    }
+    public Adjustment[] getAdjustments(){return adjustments;}
+    /**
+     * Gets the rate discount associated with this InvoiceDetails
+     * @return the rate discount associated with this InvoiceDetails
+     */
+    public Adjustment getRateDiscount(){return rateDiscount;}
+    /**
+     * Sets the adjustments to be associated with this InvoiceDetails
+     * @param newAdjustments the adjustments to be associated
+     * with this InvoiceDetails
+     */
+    public void setAdjustments(Adjustment[] newAdjustments){
+        adjustments = newAdjustments;
+    }
+    /**
+     * Sets the rate discount to be associated with this InvoiceDetails
+     * @param newRateDiscount the rate discount to be associated
+     * with this InvoiceDetails
+     */
+    public void setRateDiscount(Adjustment newRateDiscount){
+        rateDiscount = newRateDiscount;
+    }
+    //unlikely to use this function
+    public void addAdjustment(Adjustment adjustmentToAdd){
+        Integer adjustmentsLength = adjustments.length;
+        Adjustment[] newAdjustments = new Adjustment[adjustmentsLength + 1];
+        System.arraycopy(
+            adjustments, 0, newAdjustments, 0, adjustmentsLength);
+        newAdjustments[adjustmentsLength] = adjustmentToAdd;
+        adjustments = newAdjustments;
+    }
+}
+/**
+ * Checks out this reservation and ensures that it is updated to
+ * ReservationSystem members.
+ */
+public void checkOut(){
+    isCheckedIn = false;
+    push();
+    ReservationSystem.update();
+}
+/**
+ * Checks in this reservation and ensures that it is updated to
+ * ReservationSystem members.
+ */
+public void checkIn(){
+    isCheckedIn = true;
+    push();
+    ReservationSystem.update();
+}
 
         // public InvoiceDetails(Integer reservationId){
         //     PreparedStatement ps = null;
@@ -323,6 +473,6 @@ public class Reservation {
         //         System.out.println(e);
         //     }
         // }
-    }
+    //}
     
 }

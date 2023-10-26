@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 /**
  * Main system that drives the application and holds the active elements
@@ -222,7 +223,7 @@ public class ReservationSystem {
         //assures currentUser is immediately updated with new booking
         currentUser.fetch(); 
         Reservation[] userReservations =
-            currentUser.fetchReservations(false,false);
+            currentUser.fetchReservations(false, false, false);
         ReservationSystem.currentReservation = 
             userReservations[userReservations.length - 1];
     }
@@ -233,5 +234,81 @@ public class ReservationSystem {
     public static void cancelReservation(){
         currentReservation.setIsCancelled(true);
         currentReservation.push();
+    }
+
+    public static void dailyCheckOut(){
+        int i;
+        Reservation[] todayCheckOuts = getTodayCheckouts();
+        for(i = 0; i < todayCheckOuts.length; i++){
+            todayCheckOuts[i].checkOut();
+        }
+    }
+
+    public static void dailyCheckIn(){
+        int i;
+        Reservation[] todayCheckIns = getTodayCheckIns();
+        for(i = 0; i < todayCheckIns.length; i++){
+            todayCheckIns[i].checkIn();
+        }
+    }
+
+    public static Reservation[] getTodayCheckouts(){
+        PreparedStatement ps = null;
+        String sqlQuery = null;
+        ResultSet rs = null;
+        ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
+        Reservation[] result = null;
+        try {
+            sqlQuery = "SELECT * " + 
+            "FROM reservations " + 
+            "WHERE end_date <= CURDATE() " +
+            "AND is_checked_in = 1";
+            ps = connection.prepareStatement(sqlQuery);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                reservationList.add(
+                    new Reservation(rs.getInt("reservation_id")));
+            }
+            result = new Reservation[reservationList.size()];
+            reservationList.toArray(result);
+        }
+        catch (SQLException e){
+            System.out.println(e);
+        }
+        return result;
+    }
+
+    public static Reservation[] getTodayCheckIns(){
+        PreparedStatement ps = null;
+        String sqlQuery = null;
+        ResultSet rs = null;
+        ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
+        Reservation[] result = null;
+        try {
+            sqlQuery = "SELECT * " + 
+            "FROM reservations " + 
+            "WHERE start_date = CURDATE() " +
+            "AND is_checked_in = 0";
+            ps = connection.prepareStatement(sqlQuery);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                reservationList.add(
+                    new Reservation(rs.getInt("reservation_id")));
+            }
+            result = new Reservation[reservationList.size()];
+            reservationList.toArray(result);
+        }
+        catch (SQLException e){
+            System.out.println(e);
+        }
+        return result;
+    }
+    public static void update(){
+        if (ReservationSystem.getCurrentUser() != null){
+            ReservationSystem.getCurrentUser().fetch();
+        }
+        if (ReservationSystem.getCurrentReservation() != null){
+            ReservationSystem.getCurrentReservation().fetch();
+        }
     }
 }
