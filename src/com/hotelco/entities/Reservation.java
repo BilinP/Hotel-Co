@@ -48,11 +48,11 @@ public class Reservation {
     /**
      * Marks this reservation as cancelled when true.
      */
-    private boolean isCancelled;
+    private Boolean isCancelled;
     /**
      * Marks this reservation as checked in when true.
      */
-    private boolean isCheckedIn;
+    private Boolean isCheckedIn;
     /**
      * Constructs a reservation and fills it with details from the database.
      * Looks up the reservation in the database based on the supplied parameter
@@ -98,7 +98,7 @@ public class Reservation {
     public Reservation(
         Room newRoom, LocalDate newStartDate, LocalDate newEndDate, User newUser, 
         String newComments, Integer newGroupSize,
-        Integer newReservationId, boolean newIsCancelled, boolean newIsCheckedIn) {
+        Integer newReservationId, Boolean newIsCancelled, Boolean newIsCheckedIn) {
             room = newRoom;
             startDate = newStartDate;
             endDate = newEndDate;
@@ -154,13 +154,13 @@ public class Reservation {
      * Gets the cancellation status of this reservation.
      * @return true when reservation is cancelled, false when it is not cancelled
      */
-    public boolean getIsCancelled(){return isCancelled;}
+    public Boolean getIsCancelled(){return isCancelled;}
     /**
      * Gets the checked in status of this reservation.
      * @return true when reservation is checked in,
      * false when it is not checked in
      */
-    public boolean getIsCheckedIn(){return isCheckedIn;}
+    public Boolean getIsCheckedIn(){return isCheckedIn;}
     /**
      * Sets a room to this reservation.
      * @param newRoom the room to be associated with this reservation
@@ -205,12 +205,12 @@ public class Reservation {
      * Sets the status of a reservation's cancellation.
      * @param newIsCancelled cancellation status to be associated with this reservation
      */
-    public void setIsCancelled(boolean newIsCancelled){isCancelled = newIsCancelled;}
+    public void setIsCancelled(Boolean newIsCancelled){isCancelled = newIsCancelled;}
      /**
      * Sets the check in status of a reservation.
      * @param newIsCheckedIn check in status to be associated with this reservation
      */
-    public void setIsCheckedIn(boolean newIsCheckedIn){isCheckedIn = newIsCheckedIn;}
+    public void setIsCheckedIn(Boolean newIsCheckedIn){isCheckedIn = newIsCheckedIn;}
     /**
      * Adds comments to the end of the existing comments. Does not alter previous comments.
      * @param newComment comment to add to comments.
@@ -447,6 +447,8 @@ public void checkIn(){
     isCheckedIn = true;
     push();
     ReservationSystem.update();
+    System.out.println("Reservation " + reservationId +
+        "'s isCheckedIn = " + this.getIsCheckedIn().toString());
 }
 
         // public InvoiceDetails(Integer reservationId){

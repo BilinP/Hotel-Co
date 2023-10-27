@@ -16,13 +16,13 @@ import com.hotelco.entities.User;
 public class Verifier {
     /**
     * Utility to check and verify if a proper password is inputted.
-    * @return a boolean for a proper password.
+    * @return a Boolean for a proper password.
     */
-    public static boolean verifyPassword(String email, String password)
+    public static Boolean verifyPassword(String email, String password)
     {
             User temp = new User(email);
             Password pass = new Password(temp.getSalt());
-            boolean isVerified = false;
+            Boolean isVerified = false;
             try {
                 isVerified = pass.verify(password, temp.getHashedPassword());
             }
@@ -37,10 +37,10 @@ public class Verifier {
      * Method checks if given email address matches a regular expression pattern
      * which is checking the format of the email.
      * @param email The email address to be validated.
-     * @return a boolean where true means the email is valid and false if not
+     * @return a Boolean where true means the email is valid and false if not
      * @author Bilin Pattasseril
      */
-    public static boolean isValidEmail(String email){
+    public static Boolean isValidEmail(String email){
         if(email.length()>320){return false;}
         final String regex = "^[A-Za-z0-9]+([. -][A-Za-z0-9]+)*@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
         Pattern pattern = Pattern.compile(regex);
@@ -53,7 +53,7 @@ public class Verifier {
      * @return true when credit card can be valid, false, when credit card
      * could not be valid
      */
-    public static boolean verifyCreditCard(CreditCard creditCard){
+    public static Boolean verifyCreditCard(CreditCard creditCard){
             return creditCard.verify();
     }
 }

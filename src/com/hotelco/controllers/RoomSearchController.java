@@ -101,7 +101,7 @@ public class RoomSearchController extends BaseController {
             public DateCell call(DatePicker param) {
                 return new DateCell() {
                     @Override
-                    public void updateItem(LocalDate item, boolean empty) {
+                    public void updateItem(LocalDate item, Boolean empty) {
                         super.updateItem(item, empty);
                         LocalDate currentDate = LocalDate.now();
                         setDisable(empty || item.compareTo(currentDate) < 0);

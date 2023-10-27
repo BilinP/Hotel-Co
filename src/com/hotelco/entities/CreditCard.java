@@ -137,9 +137,9 @@ public class CreditCard{
  * Uses the Luhn algorithm to check if a card is invalid.
  * @return true if passes Luhn algorithm check, false if it fails
  */
-    public boolean luhnCheck(){
+    public Boolean luhnCheck(){
         Integer cardNumLen = creditCardNum.length();
-        boolean isSecond = false;
+        Boolean isSecond = false;
         Integer totalSum = 0;
         for (int i = cardNumLen - 1; i >= 0; --i){ 
 
@@ -160,7 +160,7 @@ public class CreditCard{
      * and is not expired
      * @return true if credit card is possibly valid, false if it cannot be valid
      */
-    public boolean verify(){
+    public Boolean verify(){
         setValidCardType();
         return creditCardType != null &&
             luhnCheck() &&
@@ -229,12 +229,12 @@ public class CreditCard{
      * @return true if the user has a card in the database already, false if they
      * do not
      */
-    public boolean userHasOneCard(){
+    public Boolean userHasOneCard(){
         PreparedStatement ps = null;
         Connection con = null;
         String sqlQuery = null;
         ResultSet rs = null;
-        boolean result = false;
+        Boolean result = false;
         try {
             sqlQuery = "SELECT COUNT(*) AS total " +
             "FROM credit_cards " +

@@ -98,7 +98,7 @@ public class Room {
         }
     }
 
-    // public boolean isOccupied(){
+    // public Boolean isOccupied(){
 
     //     return true;
     // }

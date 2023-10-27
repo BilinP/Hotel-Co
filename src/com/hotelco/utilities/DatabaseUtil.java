@@ -11,12 +11,12 @@ public class DatabaseUtil{
  * @param userId id to check
  * @return true if id exists in the database, false if not.
  */
-    public static boolean doesIdExist(Integer userId){
+    public static Boolean doesIdExist(Integer userId){
         PreparedStatement ps = null;
         Connection con = null;
         String sqlQuery = null;
         ResultSet rs = null;
-        boolean result = false;
+        Boolean result = false;
         try {
             sqlQuery = "SELECT count(*) as total FROM users where user_id = " +
                 userId;
@@ -38,12 +38,12 @@ public class DatabaseUtil{
     * @param email email to check
     * @return true if email exists in the database, false if not.
     */
-    public static boolean doesEmailExist(String email){
+    public static Boolean doesEmailExist(String email){
         PreparedStatement ps = null;
         Connection con = null;
         String sqlQuery = null;
         ResultSet rs = null;
-        boolean result = false;
+        Boolean result = false;
         try {
             sqlQuery = "SELECT count(*) AS total FROM users where email = '" +
                 email + "'";

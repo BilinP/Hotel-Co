@@ -86,12 +86,12 @@ public class ReservationSystem {
      * @param roomType room type to check
      * @return the availability of a room with supplied parameters
      */
-    public static boolean checkAvailability(
+    public static Boolean checkAvailability(
             LocalDate startDate, LocalDate endDate, RoomType roomType){
         PreparedStatement ps = null;
         String sqlQuery = null;
         ResultSet rs = null;
-        boolean result = false;
+        Boolean result = false;
         try {
             sqlQuery =
             "SELECT COUNT(room_num) as total " +
@@ -106,7 +106,7 @@ public class ReservationSystem {
                     "AND end_date >= '" + Date.valueOf(startDate) + "')" +
                 "AND room_type = '" + roomType.toString() + "' " +
                 "LIMIT 1) AS T";
-            ps = connection.prepareStatement(sqlQuery);
+            ps = getDatabaseConnection().prepareStatement(sqlQuery);
             rs = ps.executeQuery();
             if(rs.next()){
                 result = rs.getBoolean("total");
@@ -169,7 +169,7 @@ public class ReservationSystem {
             sqlQuery =
                 "SELECT COUNT(room_num) AS total FROM rooms WHERE room_type = '" +
                 roomType.toString() + "'";
-            ps = connection.prepareStatement(sqlQuery);
+            ps = getDatabaseConnection().prepareStatement(sqlQuery);
             rs = ps.executeQuery();
             if(rs.next()){
                 result = rs.getInt("total");
@@ -203,7 +203,7 @@ public class ReservationSystem {
                 "' AND end_date >= '" + Date.valueOf(startDate) + "') " + 
             "AND room_type = '" + roomType.toString() + "'" + 
             "LIMIT 1";
-            ps = connection.prepareStatement(sqlQuery);
+            ps = getDatabaseConnection().prepareStatement(sqlQuery);
             rs = ps.executeQuery();
             if(rs.next()){
                 result = rs.getInt("room_num");
@@ -239,16 +239,22 @@ public class ReservationSystem {
     public static void dailyCheckOut(){
         int i;
         Reservation[] todayCheckOuts = getTodayCheckouts();
-        for(i = 0; i < todayCheckOuts.length; i++){
-            todayCheckOuts[i].checkOut();
+        if(todayCheckOuts != null){
+            for(i = 0; i < todayCheckOuts.length; i++){
+                todayCheckOuts[i].checkOut();
+            }
         }
     }
 
     public static void dailyCheckIn(){
         int i;
         Reservation[] todayCheckIns = getTodayCheckIns();
-        for(i = 0; i < todayCheckIns.length; i++){
-            todayCheckIns[i].checkIn();
+        if (todayCheckIns != null){
+            for(i = 0; i < todayCheckIns.length; i++){
+                System.out.println("Checking in Reservation " +
+                    todayCheckIns[i].getReservationId());
+                todayCheckIns[i].checkIn();            
+            }
         }
     }
 
@@ -263,7 +269,7 @@ public class ReservationSystem {
             "FROM reservations " + 
             "WHERE end_date <= CURDATE() " +
             "AND is_checked_in = 1";
-            ps = connection.prepareStatement(sqlQuery);
+            ps = getDatabaseConnection().prepareStatement(sqlQuery);
             rs = ps.executeQuery();
             while(rs.next()){
                 reservationList.add(
@@ -289,7 +295,7 @@ public class ReservationSystem {
             "FROM reservations " + 
             "WHERE start_date = CURDATE() " +
             "AND is_checked_in = 0";
-            ps = connection.prepareStatement(sqlQuery);
+            ps = getDatabaseConnection().prepareStatement(sqlQuery);
             rs = ps.executeQuery();
             while(rs.next()){
                 reservationList.add(

@@ -39,11 +39,11 @@ public class User {
     /**
      * Represents the employee status of a user.
      */
-    private boolean isEmployee;
+    private Boolean isEmployee;
     /**
      * Represents the manager status of a user.
      */
-    private boolean isManager;
+    private Boolean isManager;
     /**
      * Represents all reservations associated with this user.
      */
@@ -110,12 +110,12 @@ public class User {
      * Gets the employee status associated with this user.
      * @return the employee status associated with this user
      */
-    public boolean getIsEmployee(){return isEmployee;}
+    public Boolean getIsEmployee(){return isEmployee;}
     /**
      * Gets the manager status associated with this user.
      * @return the manager status associated with this user
      */
-    public boolean getIsManager(){return isManager;}
+    public Boolean getIsManager(){return isManager;}
     /**
      * Gets all reservations associated with this user.
      * @return all reservations associated with this user
@@ -284,7 +284,7 @@ public class User {
      * @return the reservation results.
      */
     public Reservation[] fetchReservations(
-        boolean onlyFuture, boolean byDate, boolean onlyNotCancelled){
+        Boolean onlyFuture, Boolean byDate, Boolean onlyNotCancelled){
 
         Reservation tempReservation = null;
         PreparedStatement ps = null;
@@ -297,8 +297,8 @@ public class User {
         String tempComments = null;
         Integer tempGroupSize = 0;
         Integer tempReservationId = 0;
-        boolean tempIsCancelled = false;
-        boolean tempIsCheckedIn = false;
+        Boolean tempIsCancelled = false;
+        Boolean tempIsCheckedIn = false;
         ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
         Reservation[] result = null;
             try {

@@ -1,7 +1,11 @@
 package com.hotelco.application;
 
+import com.hotelco.constants.Constants;
+import com.hotelco.entities.ReservationSystem;
 import com.hotelco.utilities.DailyTask;
 import com.hotelco.utilities.FXMLPaths;
+import com.hotelco.utilities.Verifier;
+import com.hotelco.utilities.DailyTask;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -14,11 +18,8 @@ import javafx.scene.image.Image;
 public class Main extends Application {
 	private double xOffset = 0;
     private double yOffset = 0;
-	DailyTask dt = new DailyTask();
 	@Override
 	public void start(Stage primaryStage) {
-		
-
 		
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource(FXMLPaths.LOGIN));
@@ -48,6 +49,7 @@ public class Main extends Application {
 	}
 	
 	public static void main(String[] args) {
+		DailyTask.runDailyTasks();
 		launch(args);
 	}
 	

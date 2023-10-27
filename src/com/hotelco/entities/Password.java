@@ -63,10 +63,10 @@ public class Password{
      * 
      * @param inputPassword password that is input to be verified
      * @param hashedPassword hashed password to compare against
-     * @return a boolean where true means the passwords are the same and false if not
+     * @return a Boolean where true means the passwords are the same and false if not
      * @throws NoSuchAlgorithmException
      */    
-    public boolean verify(
+    public Boolean verify(
         String inputPassword,String hashedPassword)throws NoSuchAlgorithmException{
         BigInteger bigInt= new BigInteger(hashedPassword,16);
         byte[] hashedPasswordBytes = bigInt.toByteArray();
