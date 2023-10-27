@@ -4,8 +4,12 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import com.hotelco.entities.Reservation;
-
+/**
+ * Calculates the amount a reservation would cost.
+ * @author Daniel Schwartz
+ */
 public class ReservationCalculator {
+
     private Reservation reservation;
 
     private Integer total;
@@ -20,7 +24,11 @@ public class ReservationCalculator {
         }
         return sum;
     }
-
+    /**
+     * Calculates the cost of a reserved room within a certain day.
+     * @param date
+     * @return the cost of a single room.
+     */
     public BigDecimal calcDailyTotal(LocalDate date){
         BigDecimal dailyRate =
             DailyRates.getRoomRate(reservation.getRoom().getRoomType());

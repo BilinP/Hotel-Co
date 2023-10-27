@@ -9,7 +9,10 @@ import java.time.LocalDate;
 
 import com.hotelco.constants.RoomType;
 import com.hotelco.entities.ReservationSystem;
-
+/**
+ * Gives the rate of a room from a database.
+ * @author Daniel Schwartz
+ */
 public class DailyRates {
     public static BigDecimal getRoomRate(RoomType roomType){
         Connection con = ReservationSystem.getDatabaseConnection();
