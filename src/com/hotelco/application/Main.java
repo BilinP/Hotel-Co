@@ -1,11 +1,7 @@
 package com.hotelco.application;
 
-import com.hotelco.constants.Constants;
-import com.hotelco.entities.ReservationSystem;
 import com.hotelco.utilities.DailyTask;
 import com.hotelco.utilities.FXMLPaths;
-import com.hotelco.utilities.Verifier;
-import com.hotelco.utilities.DailyTask;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -49,7 +45,7 @@ public class Main extends Application {
 	}
 	
 	public static void main(String[] args) {
-		DailyTask.runDailyTasks();
+		DailyTask.scheduleDailyTasks();
 		launch(args);
 	}
 	

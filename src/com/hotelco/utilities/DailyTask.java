@@ -8,7 +8,7 @@ import com.hotelco.constants.Constants;
 import com.hotelco.entities.ReservationSystem;
 
 public class DailyTask {
-    public DailyTask(Integer hour){
+    public DailyTask(Integer hour, Boolean checkIn){
         System.out.println("Setting timer");
         Timer timer = new Timer(true);
         Calendar calendar = Calendar.getInstance();
@@ -16,19 +16,32 @@ public class DailyTask {
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         Date time = calendar.getTime();
-        timer.scheduleAtFixedRate(new DailyScheduledTask(), time, 86400000);
+        if (checkIn){
+            timer.scheduleAtFixedRate(new CheckInScheduledTask(), time,
+            86400000);
+        }
+        else {
+            timer.scheduleAtFixedRate(new CheckOutScheduledTask(), time,
+            86400000);
+        }
     }
 
-    class DailyScheduledTask extends TimerTask {
+    class CheckInScheduledTask extends TimerTask {
         public void run() {
             System.out.println("Running daily check ins");
             ReservationSystem.dailyCheckIn();
+        }
+    }
+
+    class CheckOutScheduledTask extends TimerTask {
+        public void run() {
             System.out.println("Running daily check outs");
             ReservationSystem.dailyCheckOut();
         }
     }
-    public static void runDailyTasks(){
-        new DailyTask(Constants.CHECK_IN_TIME);
-	    new DailyTask(Constants.CHECK_OUT_TIME);
+
+    public static void scheduleDailyTasks(){
+        new DailyTask(Constants.CHECK_IN_TIME, true);
+	    new DailyTask(Constants.CHECK_OUT_TIME, false);
     }
 }

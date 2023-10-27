@@ -21,7 +21,6 @@ public class CreditCard{
     /**
      * CVV number
      */
-
     private String cvvNum;
     /**
      * Expiration date. LocalDate created with first day of expDate's year-month
