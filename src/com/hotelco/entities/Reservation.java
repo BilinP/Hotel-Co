@@ -479,47 +479,20 @@ public void checkOut(){
         String message = "Dear " + user.getFirstName() + " " +
         user.getLastName() + ", it has come to our attention that " +
         "your payment could not be processed at the time of checkout. " +
-        "Please ensure that payment is promptly issued to Hotel co. to avoid " +
-        "further charges.\n\t\tSincerely, Hotel co.";
+        "Please ensure that payment is promptly issued to Hotel Co. to avoid " +
+        "further charges.\n\t\tSincerely, Hotel Co.";
         //Email.send(user.getEmail(), subject, message);
     }
 }
-/**
- * Checks in this reservation and ensures that it is updated to
- * ReservationSystem members.
- */
-public void checkIn(){
-    isCheckedIn = true;
-    push();
-    ReservationSystem.update();
-    System.out.println("Reservation " + reservationId +
-        "'s isCheckedIn = " + this.getIsCheckedIn().toString());
-}
-
-        // public InvoiceDetails(Integer reservationId){
-        //     PreparedStatement ps = null;
-        //     Connection con = null;
-        //     String sqlQuery = null;
-        //     ResultSet rs = null;
-        //     Integer adjustmentsLength = 0;
-        //     try {
-        //         sqlQuery = "SELECT * FROM adjustments WHERE reservation_id = " + reservationId;
-        //         con = ReservationSystem.getDatabaseConnection();
-        //         ps = con.prepareStatement(sqlQuery);
-        //         rs = ps.executeQuery();
-        //         rs.last();
-        //         adjustmentsLength = rs.getRow();
-        //         adjustments = new Pair<String,Integer>[adjustmentsLength];
-        //         rs.beforeFirst();
-        //         while (rs.next()){
-        //             adjustments
-        //             list.add(temp);
-        //         }
-        //     }
-        //     catch (SQLException e){
-        //         System.out.println(e);
-        //     }
-        // }
-    //}
-    
+    /**
+     * Checks in this reservation and ensures that it is updated to
+     * ReservationSystem members.
+     */
+    public void checkIn(){
+        isCheckedIn = true;
+        push();
+        ReservationSystem.update();
+        System.out.println("Reservation " + reservationId +
+            "'s isCheckedIn = " + this.getIsCheckedIn().toString());
+    }
 }
