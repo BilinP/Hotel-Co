@@ -8,8 +8,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hotelco.controllers.DashboardController">
    <left>
       <AnchorPane prefHeight="600.0" prefWidth="250.0" style="-fx-background-color: #3c4149;" BorderPane.alignment="CENTER">
          <children>
@@ -50,7 +49,7 @@
                   <Insets left="90.0" />
                </padding>
             </Button>
-            <Button alignment="BASELINE_LEFT" layoutY="188.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="250.0" style="-fx-background-color: transparent; -fx-border-color: black;" text="Home" textAlignment="CENTER" textFill="#f9bd1a">
+            <Button alignment="BASELINE_LEFT" layoutY="188.0" mnemonicParsing="false" onMouseReleased="#switchToMenu" prefHeight="49.0" prefWidth="250.0" style="-fx-background-color: transparent; -fx-border-color: black;" text="Home" textAlignment="CENTER" textFill="#f9bd1a">
                <font>
                   <Font size="18.0" />
                </font>
@@ -62,7 +61,7 @@
       </AnchorPane>
    </left>
    <right>
-      <AnchorPane prefHeight="600.0" prefWidth="750.0" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="anchor" prefHeight="600.0" prefWidth="750.0" BorderPane.alignment="CENTER">
          <padding>
             <Insets left="90.0" />
          </padding>

@@ -20,6 +20,7 @@ public class Main extends Application {
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource(FXMLPaths.LOGIN));
 			Scene scene = new Scene(root, 700, 500);
+			primaryStage.centerOnScreen();
 			primaryStage.initStyle(StageStyle.UNDECORATED);
 			primaryStage.setTitle("HotelCo");
 			primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/com/hotelco/images/hotelco.png")));
