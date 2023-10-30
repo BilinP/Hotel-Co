@@ -9,13 +9,22 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import com.hotelco.utilities.ReservationCalculator;
-
+/**
+ * Maintains the payment associated with a reservation.
+ * @author Daniel Schwartz
+ */
 public class Payment {
-
+    /**
+     * Total amount after calculation.
+     */
     private BigDecimal amount;
-    
+    /**
+     * Unique ID for payment.
+     */
     private Integer paymentId;
-
+    /**
+     * Time payment is created.
+     */
     private LocalDateTime timeOfPayment;
     
     public BigDecimal getAmount(){return amount;}

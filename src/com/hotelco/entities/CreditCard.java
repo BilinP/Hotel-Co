@@ -12,6 +12,7 @@ import com.hotelco.constants.CreditCardType;
 /**
  * Maintains a credit card associated with a single user. Assumes that
  * every User has 1 credit card at most.
+ * @author John Lee, Daniel Schwartz
  */
 public class CreditCard{
     /**
