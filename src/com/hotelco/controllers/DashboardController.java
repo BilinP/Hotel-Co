@@ -6,11 +6,9 @@ import com.hotelco.utilities.FXMLPaths;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 
 /**
  * The ThankYouController class is the associated controller class of the 'ThankYouGUI' view. 
@@ -43,8 +41,7 @@ public class DashboardController extends BaseController {
      */
     @FXML
     private void switchToMenu(MouseEvent event) {
-        
-      FXMLLoader loader = new FXMLLoader(getClass().getResource(FXMLPaths.NEWMENU));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(FXMLPaths.NEWMENU));
 
         try {
             AnchorPane newContent = loader.load();
@@ -53,7 +50,6 @@ public class DashboardController extends BaseController {
             e.printStackTrace();
         }
     }
+    }
 
-   
 
-}

@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hotelco.controllers.DashboardController">
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hotelco.controllers.DashboardController">
    <left>
       <AnchorPane prefHeight="600.0" prefWidth="250.0" style="-fx-background-color: #3c4149;" BorderPane.alignment="CENTER">
          <children>
@@ -61,7 +61,7 @@
       </AnchorPane>
    </left>
    <right>
-      <AnchorPane fx:id="anchor" prefHeight="600.0" prefWidth="750.0" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="anchor" prefHeight="600.0" prefWidth="750.0">
          <padding>
             <Insets left="90.0" />
          </padding>
