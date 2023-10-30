@@ -56,6 +56,11 @@ public class MenuController extends BaseController {
         switchScene(FXMLPaths.ORDER_LOOKUP, event);
     }
 
+    @FXML
+    private void dashboard(MouseEvent event) {
+        switchScene(FXMLPaths.DASHBOARD, event);
+    }
+
     /**
      * This method is called by pressing the 'Find a room' text.
      * It exits the 'MenuGUI' and enters the 'SearchGUI'.

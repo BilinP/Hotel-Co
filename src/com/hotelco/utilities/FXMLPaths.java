@@ -14,4 +14,6 @@ public class FXMLPaths {
     public static final String SEARCH = "/com/hotelco/views/RoomSearchGUI.fxml";
     public static final String THANK_YOU = "/com/hotelco/views/ThankYouGUI.fxml";
     public static final String RESERVATION_LOOKUP = "/com/hotelco/views/ReservationLookupGUI.fxml";
+    public static final String DASHBOARD=  "/com/hotelco/views/dashboard.fxml";
+    public static final String NEWMENU=  "/com/hotelco/views/NEWMenuGUI.fxml";
 }
