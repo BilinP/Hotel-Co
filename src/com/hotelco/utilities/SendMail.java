@@ -1,4 +1,4 @@
-package utilities;
+package com.hotelco.utilities;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -13,7 +13,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 
-public class Mail
+public class SendMail
 {
 
 	//SETUP MAIL SERVER PROPERTIES
@@ -24,7 +24,7 @@ public class Mail
 	MimeMessage mimeMessage = null;
 	public static void main(String args[]) throws AddressException, MessagingException, IOException
 	{
-		Mail mail = new Mail();
+		SendMail mail = new SendMail();
 		mail.setupServerProperties();
 		mail.draftEmail();
 		mail.sendEmail();
