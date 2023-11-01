@@ -61,10 +61,6 @@
       </AnchorPane>
    </left>
    <right>
-      <AnchorPane fx:id="anchor" prefHeight="600.0" prefWidth="750.0">
-         <padding>
-            <Insets left="90.0" />
-         </padding>
-      </AnchorPane>
+      <AnchorPane fx:id="anchor" BorderPane.alignment="CENTER" />
    </right>
 </BorderPane>
