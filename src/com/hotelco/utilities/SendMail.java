@@ -31,8 +31,8 @@ public class SendMail
 	}
 
 	private void sendEmail() throws MessagingException {
-		String fromUser = "pqr@gmail.com";  //Enter sender email id
-		String fromUserPassword = "*****";  //Enter sender gmail password , this will be authenticated by gmail smtp server
+		String fromUser = "hotelcoDesk@gmail.com";  //Enter sender email id
+		String fromUserPassword = "Safepassword4!";  //Enter sender gmail password , this will be authenticated by gmail smtp server
 		String emailHost = "smtp.gmail.com";
 		Transport transport = newSession.getTransport("smtp");
 		transport.connect(emailHost, fromUser, fromUserPassword);
@@ -41,6 +41,7 @@ public class SendMail
 		System.out.println("Email successfully sent!!!");
 	}
 
+	//Add user email and info for room
 	private MimeMessage draftEmail() throws AddressException, MessagingException, IOException {
 		String[] emailReceipients = {"abc@gmail.com","xyz@gmail.com"};  //Enter list of email recepients
 		String emailSubject = "Test Mail";
