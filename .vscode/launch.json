@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "SendMail",
+            "request": "launch",
+            "mainClass": "com.hotelco.utilities.SendMail",
+            "projectName": "Hotel-Co_63101c95"
+        },
+        {
+            "type": "java",
             "name": "DailyTask",
             "request": "launch",
             "mainClass": "com.hotelco.utilities.DailyTask",
