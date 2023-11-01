@@ -2,6 +2,7 @@ package com.hotelco.controllers;
 
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -33,9 +34,7 @@ public class BaseController  {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlLocation));
         Parent root = loader.load();
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        double preferredWidth = ((BorderPane) root).getPrefWidth();
-        double preferredHeight = ((BorderPane) root).getPrefHeight();
-        Scene scene = new Scene(root, preferredWidth, preferredHeight);
+      Scene scene = new Scene(root, Screen.getPrimary().getVisualBounds().getWidth(), Screen.getPrimary().getVisualBounds().getHeight());
         stage.setResizable(false);
 
         root.setOnMousePressed(mEvent -> {

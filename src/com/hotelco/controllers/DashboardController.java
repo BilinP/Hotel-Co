@@ -41,7 +41,11 @@ public class DashboardController extends BaseController {
      */
     @FXML
     private void switchToMenu(MouseEvent event) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(FXMLPaths.NEWMENU));
+       switchAnchor(FXMLPaths.NEWMENU);
+    }
+
+    private void switchAnchor(String path){
+         FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
 
         try {
             AnchorPane newContent = loader.load();
@@ -49,7 +53,9 @@ public class DashboardController extends BaseController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    
     }
+
     }
 
 

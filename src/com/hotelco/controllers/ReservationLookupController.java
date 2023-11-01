@@ -3,11 +3,16 @@ package com.hotelco.controllers;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import com.hotelco.constants.RoomType;
 import com.hotelco.entities.Reservation;
+import com.hotelco.entities.ReservationSystem;
 import com.hotelco.utilities.FXMLPaths;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -57,10 +62,23 @@ public class ReservationLookupController extends BaseController {
     @FXML
     private VBox vBox;
 
+    @FXML
+    private DatePicker checkInChange;
+
+    @FXML
+    private DatePicker checkOutChange;
+
+    @FXML
+    private Button change;
+    @FXML
+    private Button check;
+
     /**
      * Instance of current Reservation being viewed.
      */
     private Reservation reservation;
+
+   
 
     /**
      * This method will cancel the reservation currently being viewed.
@@ -109,6 +127,29 @@ public class ReservationLookupController extends BaseController {
         checkInDate.setText(reservation.getStartDate().format(dateTimeFormatter));
         checkOutDate.setText(reservation.getEndDate().format(dateTimeFormatter));
         guestNumber.setText(Integer.toString(reservation.getGroupSize()));
+        checkInChange.setValue(reservation.getStartDate());
+        checkOutChange.setValue(reservation.getEndDate());
+    }
+
+    @FXML
+    private void change(MouseEvent event) {
+        LocalDate start = checkInChange.getValue();
+        LocalDate end = checkOutChange.getValue();
+        reservation.setStartDate(start);
+        reservation.setEndDate(end);
+        reservation.push();
+    }
+
+    @FXML
+    private void check(MouseEvent event) {
+        System.out.print("hi");
+        LocalDate start = checkInChange.getValue();
+        LocalDate end = checkOutChange.getValue();
+
+         if(ReservationSystem.checkAvailability(start, end, reservation.getRoom().getRoomType())){
+            change.setDisable(false);
+         }else{change.setDisable(true);}
+
     }
 
 }
