@@ -22,11 +22,12 @@ public class SendMail
 		
 	Session newSession = null;
 	MimeMessage mimeMessage = null;
-	public static void main(String args[]) throws AddressException, MessagingException, IOException
+	public static void main(String[] args) throws AddressException, MessagingException, IOException
 	{
+
 		SendMail mail = new SendMail();
 		mail.setupServerProperties();
-		mail.draftEmail();
+		mail.draftEmail(args[0], args[1], args[2]); //(Email, EmailSubject, EmailBody)
 		mail.sendEmail();
 	}
 
@@ -42,16 +43,15 @@ public class SendMail
 	}
 
 	//Add user email and info for room
-	private MimeMessage draftEmail() throws AddressException, MessagingException, IOException {
-		String[] emailReceipients = {"abc@gmail.com","xyz@gmail.com"};  //Enter list of email recepients
-		String emailSubject = "Test Mail";
-		String emailBody = "Test Body of my email";
+	private MimeMessage draftEmail(String Email, String EmailSubject, String EmailBody) throws AddressException, MessagingException, IOException {
+		String emailReceipient = Email;  //Enter list of email recepients
+		String emailSubject = EmailSubject;
+		String emailBody = EmailBody;
 		mimeMessage = new MimeMessage(newSession);
-		
-		for (int i =0 ;i<emailReceipients.length;i++)
-		{
-			mimeMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(emailReceipients[i]));
-		}
+		 
+
+			mimeMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(emailReceipient));
+
 		mimeMessage.setSubject(emailSubject);
 	   
       // CREATE MIMEMESSAGE 
