@@ -13,5 +13,6 @@
     "java.debug.settings.vmArgs": "--module-path ./javafx-sdk-21/lib --add-modules javafx.controls,javafx.fxml",
     "editor.rulers": [
         80
-    ]
+    ],
+    "java.dependency.packagePresentation": "hierarchical"
 }
