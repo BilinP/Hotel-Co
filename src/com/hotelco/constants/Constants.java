@@ -2,6 +2,9 @@ package com.hotelco.constants;
 /**
  * Contains all constants
  */
+
+import java.math.BigDecimal;
+
 public final class Constants {
     /**
      * Standard check in time
@@ -31,4 +34,6 @@ public final class Constants {
      * Maximum capacity of any room in the hotel
      */ 
     public static final Integer MAX_CAP = 6;
+
+    public static final BigDecimal WEEKEND_MULTIPLIER = new BigDecimal(1.2);
 }

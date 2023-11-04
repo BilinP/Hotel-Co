@@ -101,7 +101,7 @@ public class RoomSearchController extends BaseController {
             public DateCell call(DatePicker param) {
                 return new DateCell() {
                     @Override
-                    public void updateItem(LocalDate item, Boolean empty) {
+                    public void updateItem(LocalDate item, boolean empty) {
                         super.updateItem(item, empty);
                         LocalDate currentDate = LocalDate.now();
                         setDisable(empty || item.compareTo(currentDate) < 0);
@@ -181,14 +181,20 @@ public class RoomSearchController extends BaseController {
         //For next sprint, implement payment right about here
         Room room = new Room(
             ReservationSystem.findEmptyRoom(
-                startDate.getValue(), endDate.getValue(), RoomType.valueOf(roomType.toUpperCase())));
+                startDate.getValue(), endDate.getValue(),
+                RoomType.valueOf(roomType.toUpperCase())));
         Reservation reservation = new Reservation(
             room, startDate.getValue(), endDate.getValue(),
             ReservationSystem.getCurrentUser(), Integer.parseInt(guests.getText()));
         ReservationSystem.setCurrentReservation(reservation);
+
+        /*From here down is no longer needed in sprint 2 flow. Something similar
+        will appear in the payController*/
+        
         ReservationSystem.book();
         reservation = ReservationSystem.getCurrentReservation();
-        ThankYouController thankYouController = (ThankYouController) switchScene(FXMLPaths.THANK_YOU, event);
+        ThankYouController thankYouController =
+            (ThankYouController) switchScene(FXMLPaths.THANK_YOU, event);
         thankYouController.writeReservationInfo(reservation);
     }
 

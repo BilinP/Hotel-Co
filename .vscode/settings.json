@@ -5,11 +5,14 @@
     "java.project.outputPath": "bin",
     "java.project.referencedLibraries": [
         "javafx-sdk-21/lib/**/*.jar",
-        "mysql-connector-j-8.1.0\\mysql-connector-j-8.1.0.jar"
+        "mysql-connector-j-8.1.0\\mysql-connector-j-8.1.0.jar",
+        "c:\\Users\\metam\\Downloads\\activation-1.1.1.jar",
+        "c:\\Users\\metam\\Downloads\\javax.mail.jar"
     ],
     "java.format.settings.url": ".vscode/java-formatter.xml",
     "java.debug.settings.vmArgs": "--module-path ./javafx-sdk-21/lib --add-modules javafx.controls,javafx.fxml",
     "editor.rulers": [
         80
-    ]
+    ],
+    "java.dependency.packagePresentation": "hierarchical"
 }

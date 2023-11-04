@@ -1,4 +1,5 @@
 package com.hotelco.entities;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -54,19 +55,23 @@ public class Reservation {
      */
     private Boolean isCheckedIn;
     /**
+     * Marks this reservation as checked out when true.
+     */ 
+    private Boolean isCheckedOut;
+    /**
      * Constructs a reservation and fills it with details from the database.
      * Looks up the reservation in the database based on the supplied parameter
      * @param reservationIdNum Unique reservation id
      */
+    
     public Reservation(Integer reservationIdNum)
     {
         fetch(reservationIdNum);
     }
 
     /**
-     * Constructor for creating a new reservation that will be added to the
-     * database after construction. After construction, the reservation is ready
-     * for push() to be called, which will add the reservation to the database.
+     * Creates a new reservation, ready to be added to the database. Programmer
+     * must explcitly call push() to add the reservation to the database.
      * @param newRoom
      * @param newStartDate
      * @param newEndDate
@@ -97,8 +102,8 @@ public class Reservation {
      */
     public Reservation(
         Room newRoom, LocalDate newStartDate, LocalDate newEndDate, User newUser, 
-        String newComments, Integer newGroupSize,
-        Integer newReservationId, Boolean newIsCancelled, Boolean newIsCheckedIn) {
+        String newComments, Integer newGroupSize, Integer newReservationId,
+        Boolean newIsCancelled, Boolean newIsCheckedIn, Boolean newIsCheckedOut) {
             room = newRoom;
             startDate = newStartDate;
             endDate = newEndDate;
@@ -108,6 +113,7 @@ public class Reservation {
             reservationId = newReservationId;
             isCancelled = newIsCancelled;
             isCheckedIn = newIsCheckedIn;
+            isCheckedOut = newIsCheckedOut;
             fetchInvoiceDetails();
     }
     /**
@@ -162,6 +168,12 @@ public class Reservation {
      */
     public Boolean getIsCheckedIn(){return isCheckedIn;}
     /**
+     * Gets the checked out status of this reservation.
+     * @return true when reservation is checked out,
+     * false when it is not checked out
+     */
+    public Boolean getIsCheckedOut(){return isCheckedOut;}
+    /**
      * Sets a room to this reservation.
      * @param newRoom the room to be associated with this reservation
      */
@@ -185,7 +197,9 @@ public class Reservation {
      * Sets the details of a reservation invoice.
      * @param newInvoiceDetails invoice details to be associated with this reservation.
      */
-    public void setInvoiceDetails(InvoiceDetails newInvoiceDetails){invoiceDetails = newInvoiceDetails;}
+    public void setInvoiceDetails(InvoiceDetails newInvoiceDetails){
+        invoiceDetails = newInvoiceDetails;
+    }
     /**
      * Sets the reservation's comments.
      * @param newComments comments to be associated with this reservation
@@ -211,6 +225,11 @@ public class Reservation {
      * @param newIsCheckedIn check in status to be associated with this reservation
      */
     public void setIsCheckedIn(Boolean newIsCheckedIn){isCheckedIn = newIsCheckedIn;}
+     /**
+     * Sets the check out status of a reservation.
+     * @param newIsCheckedOut check out status to be associated with this reservation
+     */
+    public void setIsCheckedOut(Boolean newIsCheckedOut){isCheckedOut = newIsCheckedOut;}
     /**
      * Adds comments to the end of the existing comments. Does not alter previous comments.
      * @param newComment comment to add to comments.
@@ -247,6 +266,7 @@ public class Reservation {
                 user = new User(rs.getInt("user_id"));
                 isCancelled = rs.getBoolean("is_cancelled");
                 isCheckedIn = rs.getBoolean("is_checked_in");
+                isCheckedOut = rs.getBoolean("is_checked_out");
                 groupSize = rs.getInt("group_size");
                 fetchInvoiceDetails();
                 comments = rs.getString("comments");
@@ -285,6 +305,7 @@ public class Reservation {
         PreparedStatement ps = null;
         Connection con = null;
         String sqlQuery = null;
+        ResultSet rs = null;
         try {
             sqlQuery = "INSERT INTO reservations" +
             "(room_num, start_date, end_date, user_id, group_size) " + 
@@ -297,6 +318,11 @@ public class Reservation {
             con = ReservationSystem.getDatabaseConnection();
             ps = con.prepareStatement(sqlQuery);
             ps.execute();
+            ps = con.prepareStatement("SELECT LAST_INSERT_ID() as id");
+            rs = ps.executeQuery();
+            if(rs.next()){
+                reservationId = rs.getInt("id");
+            }
         }
         catch (SQLException e){
             System.out.println(e);
@@ -317,6 +343,7 @@ public class Reservation {
             "',  group_size = " + groupSize +
             ", is_cancelled = " + isCancelled +
             ", is_checked_in = " + isCheckedIn +
+            ", is_checked_out = " + isCheckedOut +
             ", comments = " + comments +
             strRateDiscount +
             " WHERE reservation_id = " + reservationId;
@@ -429,6 +456,14 @@ public class InvoiceDetails {
         newAdjustments[adjustmentsLength] = adjustmentToAdd;
         adjustments = newAdjustments;
     }
+    public BigDecimal getTotalAdustments(){
+        Integer adjustmentsLength = adjustments.length;
+        BigDecimal total = new BigDecimal(0);
+        for(Integer i = 0; i < adjustmentsLength; i++){
+            total = total.add(adjustments[i].getAmount());
+        }
+        return total;
+    }
 }
 /**
  * Checks out this reservation and ensures that it is updated to
@@ -436,45 +471,28 @@ public class InvoiceDetails {
  */
 public void checkOut(){
     isCheckedIn = false;
-    push();
-    ReservationSystem.update();
+    isCheckedOut = true;
+    if(ReservationSystem.makePayment(this)){
+        push();}
+    else {
+        String subject = "Reservation " + getReservationId() + " payment";
+        String message = "Dear " + user.getFirstName() + " " +
+        user.getLastName() + ", it has come to our attention that " +
+        "your payment could not be processed at the time of checkout. " +
+        "Please ensure that payment is promptly issued to Hotel Co. to avoid " +
+        "further charges.\n\t\tSincerely, Hotel Co.";
+        //Email.send(user.getEmail(), subject, message);
+    }
 }
-/**
- * Checks in this reservation and ensures that it is updated to
- * ReservationSystem members.
- */
-public void checkIn(){
-    isCheckedIn = true;
-    push();
-    ReservationSystem.update();
-    System.out.println("Reservation " + reservationId +
-        "'s isCheckedIn = " + this.getIsCheckedIn().toString());
-}
-
-        // public InvoiceDetails(Integer reservationId){
-        //     PreparedStatement ps = null;
-        //     Connection con = null;
-        //     String sqlQuery = null;
-        //     ResultSet rs = null;
-        //     Integer adjustmentsLength = 0;
-        //     try {
-        //         sqlQuery = "SELECT * FROM adjustments WHERE reservation_id = " + reservationId;
-        //         con = ReservationSystem.getDatabaseConnection();
-        //         ps = con.prepareStatement(sqlQuery);
-        //         rs = ps.executeQuery();
-        //         rs.last();
-        //         adjustmentsLength = rs.getRow();
-        //         adjustments = new Pair<String,Integer>[adjustmentsLength];
-        //         rs.beforeFirst();
-        //         while (rs.next()){
-        //             adjustments
-        //             list.add(temp);
-        //         }
-        //     }
-        //     catch (SQLException e){
-        //         System.out.println(e);
-        //     }
-        // }
-    //}
-    
+    /**
+     * Checks in this reservation and ensures that it is updated to
+     * ReservationSystem members.
+     */
+    public void checkIn(){
+        isCheckedIn = true;
+        push();
+        ReservationSystem.update();
+        System.out.println("Reservation " + reservationId +
+            "'s isCheckedIn = " + this.getIsCheckedIn().toString());
+    }
 }

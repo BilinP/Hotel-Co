@@ -2,6 +2,7 @@ package com.hotelco.entities;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -299,12 +300,14 @@ public class User {
         Integer tempReservationId = 0;
         Boolean tempIsCancelled = false;
         Boolean tempIsCheckedIn = false;
+        Boolean tempIsCheckedOut = false;
         ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
         Reservation[] result = null;
             try {
             sqlQuery = "SELECT * FROM reservations WHERE user_id = " + userId;
             if (onlyFuture) {
-                sqlQuery += " AND CURDATE() <= end_date";
+                sqlQuery += " AND '" + Date.valueOf(LocalDate.now()) +
+                "' <= end_date";
             }
             if (onlyNotCancelled){
                 sqlQuery += " AND is_cancelled = 0";
@@ -326,9 +329,11 @@ public class User {
                 tempReservationId = rs.getInt("reservation_id");
                 tempIsCancelled = rs.getBoolean("is_cancelled");
                 tempIsCheckedIn = rs.getBoolean("is_checked_in");
+                tempIsCheckedOut = rs.getBoolean("is_checked_out");
                 tempReservation = new Reservation(tempRoom, tempStartDate,
                     tempEndDate, this, tempComments, tempGroupSize,
-                    tempReservationId, tempIsCancelled, tempIsCheckedIn);
+                    tempReservationId, tempIsCancelled, tempIsCheckedIn,
+                    tempIsCheckedOut);
                 reservationList.add(tempReservation);
             }
             result = new Reservation[reservationList.size()];

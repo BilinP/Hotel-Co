@@ -1,7 +1,14 @@
 package com.hotelco.entities;
 
-import java.time.LocalDate;
+import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+import com.hotelco.utilities.ReservationCalculator;
 /**
  * Maintains the payment associated with a reservation.
  * @author Daniel Schwartz
@@ -10,7 +17,7 @@ public class Payment {
     /**
      * Total amount after calculation.
      */
-    private Integer amount;
+    private BigDecimal amount;
     /**
      * Unique ID for payment.
      */
@@ -19,28 +26,58 @@ public class Payment {
      * Time payment is created.
      */
     private LocalDateTime timeOfPayment;
+    
+    public BigDecimal getAmount(){return amount;}
 
-    //members: timeOfPayment? paymentId
-    /**
-     * Getter for an amount.
-     * @return the amount
-     */
-    public Integer getAmount(){return amount;}
-    /**
-     * Setter for an amount.
-     * @param newAmount
-     */
-    public void setAmount(Integer newAmount){amount = newAmount;}
-    /**
-     * Processes and calls a reservation calculator method.
-     * @param reservation
-     */
-    public void processPayment(Reservation reservation){
-        /*
-        iterate through the dates, calculating each day's total into an ArrayList
-        Add any adjustments
-        call dummy credit card function
-        */
+    public Integer getPaymentId(){return paymentId;}
+    
+    public LocalDateTime getTimeOfPayment(){return timeOfPayment;}
+
+    public void setAmount(BigDecimal newAmount){amount = newAmount;}
+
+    public void setPaymentId(Integer newPaymentId){paymentId = newPaymentId;}
+
+    public void setTimeOfPayment(LocalDateTime newTimeOfPayment){
+        timeOfPayment = newTimeOfPayment;
+    }
+
+    public Payment(Reservation reservation){
+        amount = ReservationCalculator.calcTotal(reservation);
+        timeOfPayment = LocalDateTime.now();
+        if(ReservationSystem.requestCreditCardPayment(amount)){
+            push();
+        }
     }
     
+    /**
+     * Inserts a new paid payment into database. ReservationSystem's
+     * currentReservation will be associated with this payment in the database.
+     * Note that there is no push function to update a payment in the database,
+     * only to insert a new payment.
+     */
+    public void push(){
+        PreparedStatement ps = null;
+        Connection con = null;
+        ResultSet rs = null;
+        DateTimeFormatter formatter =
+            DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
+        String sqlQuery = "INSERT INTO payments " +
+            "SET amount = " + amount +
+            ", SET time = '" + formatter.format(timeOfPayment) +
+            "', SET reservation_id = " +
+            ReservationSystem.getCurrentReservation().getReservationId();
+        try {
+            con = ReservationSystem.getDatabaseConnection();
+            ps = con.prepareStatement(sqlQuery);
+            ps.execute();
+            ps = con.prepareStatement("SELECT LAST_INSERT_ID() as id");
+            rs = ps.executeQuery();
+            if(rs.next()){
+                paymentId = rs.getInt("id");
+            }
+        }
+        catch (SQLException e){
+            System.out.println(e);
+        }
+    }
 }

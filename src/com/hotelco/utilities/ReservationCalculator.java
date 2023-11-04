@@ -10,26 +10,26 @@ import com.hotelco.entities.Reservation;
  */
 public class ReservationCalculator {
 
-    private Reservation reservation;
-
-    private Integer total;
-    
-    public BigDecimal calcTotal(){
+    public static BigDecimal calcTotal(Reservation reservation){
         LocalDate i;
         BigDecimal sum = new BigDecimal(0);
 
         for (i = reservation.getStartDate();
         i.isBefore(reservation.getEndDate()); i.plusDays(1)){
-            sum = sum.add(calcDailyTotal(i));
+            sum = sum.add(calcDailyTotal(reservation, i));
         }
+        sum = sum.multiply(
+            new BigDecimal(1).subtract(
+                reservation.getInvoiceDetails().getRateDiscount().getAmount()));
+        sum = sum.add(reservation.getInvoiceDetails().getTotalAdustments());
         return sum;
     }
     /**
      * Calculates the cost of a reserved room within a certain day.
-     * @param date
-     * @return the cost of a single room.
+     * @param date the single day being considered in the calculation
+     * @return the calculated daily rate
      */
-    public BigDecimal calcDailyTotal(LocalDate date){
+    public static BigDecimal calcDailyTotal(Reservation reservation, LocalDate date){
         BigDecimal dailyRate =
             DailyRates.getRoomRate(reservation.getRoom().getRoomType());
         if (date.getDayOfWeek().getValue() == 1 ||

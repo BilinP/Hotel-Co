@@ -11,8 +11,8 @@ import com.hotelco.constants.CreditCardType;
 
 /**
  * Maintains a credit card associated with a single user. Assumes that
- * every User has at most 1 credit cards.
- * @author John Lee
+ * every User has 1 credit card at most.
+ * @author John Lee, Daniel Schwartz
  */
 public class CreditCard{
     /**
@@ -109,8 +109,8 @@ public class CreditCard{
         user = newUser;
         }
 /**
- * Determines and sets the card type. If first character/length combination is
- * not a possibly valid card of the types in CreditCardType.java,
+ * Determines and sets the card type. If first character/length combination 
+ * implies it is not a possibly valid card of the types in CreditCardType.java,
  * creditCardType becomes null. 
  */
     public void setValidCardType(){
@@ -169,10 +169,11 @@ public class CreditCard{
     /**
      * Database push function that assigns a credit card to CreditCard's user.
      * Adds a new entry if the user has no credit card, replaces the entry if
-     * the user already has a credit card.
+     * the user already has a credit card. It is recommended to use verify()
+     * before assign().
      */
     public void assign(){
-        if(user != null && verify()){
+        if(user != null){
             PreparedStatement ps = null;
             Connection con = null;
             String sqlQuery = null;
@@ -251,7 +252,13 @@ public class CreditCard{
         }
         return result;
     }
-
+    /**
+     * Dummy function to check if a credit card can accept a charge
+     * @return true if authentication succeeds, false if it fails
+     */
+    public Boolean authenticate(){
+        return true;
+    }
 }
 
 

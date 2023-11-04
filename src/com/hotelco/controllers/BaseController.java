@@ -18,8 +18,6 @@ import javafx.scene.Node;
  * @version     %I%, %G%
  */
 public class BaseController  {
-    private double xOffset = 0;
-    private double yOffset = 0;
     /**
      * This method will switch the scene the user is currently viewing to the provided FXML file located in 'fxmlLocation'.
      * @param fxmlLocation The file path of the FXML file to switch to.

@@ -3,6 +3,7 @@ package com.hotelco.entities;
 import com.hotelco.connections.DatabaseConnection;
 import com.hotelco.constants.RoomType;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -235,7 +236,9 @@ public class ReservationSystem {
         currentReservation.setIsCancelled(true);
         currentReservation.push();
     }
-
+    /**
+     * Checks out every reservation whose check out date is today
+     */
     public static void dailyCheckOut(){
         int i;
         Reservation[] todayCheckOuts = getTodayCheckouts();
@@ -245,7 +248,9 @@ public class ReservationSystem {
             }
         }
     }
-
+    /**
+     * Checks in every reservation whose check in date is today
+     */
     public static void dailyCheckIn(){
         int i;
         Reservation[] todayCheckIns = getTodayCheckIns();
@@ -257,7 +262,10 @@ public class ReservationSystem {
             }
         }
     }
-
+    /**
+     * Gets all the reservations with today as their check out date.
+     * @return the reservations with today as their check out date
+     */
     public static Reservation[] getTodayCheckouts(){
         PreparedStatement ps = null;
         String sqlQuery = null;
@@ -267,8 +275,9 @@ public class ReservationSystem {
         try {
             sqlQuery = "SELECT * " + 
             "FROM reservations " + 
-            "WHERE end_date <= CURDATE() " +
-            "AND is_checked_in = 1";
+            "WHERE end_date <= '" + Date.valueOf(LocalDate.now()) +
+            "' AND is_checked_in = 1";
+            System.out.println(sqlQuery);
             ps = getDatabaseConnection().prepareStatement(sqlQuery);
             rs = ps.executeQuery();
             while(rs.next()){
@@ -283,7 +292,10 @@ public class ReservationSystem {
         }
         return result;
     }
-
+    /**
+     * Gets all the reservations with today as their check in date.
+     * @return the reservations with today as their check in date
+     */
     public static Reservation[] getTodayCheckIns(){
         PreparedStatement ps = null;
         String sqlQuery = null;
@@ -293,8 +305,8 @@ public class ReservationSystem {
         try {
             sqlQuery = "SELECT * " + 
             "FROM reservations " + 
-            "WHERE start_date = CURDATE() " +
-            "AND is_checked_in = 0";
+            "WHERE start_date = '" + Date.valueOf(LocalDate.now()) +
+            "' AND is_checked_in = 0";
             ps = getDatabaseConnection().prepareStatement(sqlQuery);
             rs = ps.executeQuery();
             while(rs.next()){
@@ -309,6 +321,9 @@ public class ReservationSystem {
         }
         return result;
     }
+    /**
+     * Updates the current user and reservation from the database.
+     */
     public static void update(){
         if (ReservationSystem.getCurrentUser() != null){
             ReservationSystem.getCurrentUser().fetch();
@@ -316,5 +331,22 @@ public class ReservationSystem {
         if (ReservationSystem.getCurrentReservation() != null){
             ReservationSystem.getCurrentReservation().fetch();
         }
+    }
+    /**
+     * Dummy function that would connect and request payment
+     * @param amount the amount to be paid
+     * @return true if payment succeeded, false if payment fails
+     */
+    public static Boolean requestCreditCardPayment(BigDecimal amount){
+        return true;
+    }
+    /**
+     * Makes a payment for a reservation based on their user's credit card
+     * @param reservation Reservation to be paid
+     * @return true if payment succeeded, false if it failed
+     */
+    public static Boolean makePayment(Reservation reservation){
+        Payment payment = new Payment(reservation);
+        return payment.getPaymentId() == null;
     }
 }

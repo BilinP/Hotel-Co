@@ -9,7 +9,6 @@ import com.hotelco.entities.ReservationSystem;
 
 public class DailyTask {
     public DailyTask(Integer hour, Boolean checkIn){
-        System.out.println("Setting timer");
         Timer timer = new Timer(true);
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, hour);

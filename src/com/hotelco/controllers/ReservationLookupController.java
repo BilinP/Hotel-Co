@@ -4,10 +4,12 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import com.hotelco.entities.Reservation;
+import com.hotelco.entities.ReservationSystem;
 import com.hotelco.utilities.FXMLPaths;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -57,10 +59,23 @@ public class ReservationLookupController extends BaseController {
     @FXML
     private VBox vBox;
 
+    @FXML
+    private DatePicker checkInChange;
+
+    @FXML
+    private DatePicker checkOutChange;
+
+    @FXML
+    private Button change;
+    @FXML
+    private Button check;
+
     /**
      * Instance of current Reservation being viewed.
      */
     private Reservation reservation;
+
+   
 
     /**
      * This method will cancel the reservation currently being viewed.
@@ -92,7 +107,7 @@ public class ReservationLookupController extends BaseController {
      */
     void writeReservationInfo(Reservation reservation) {
         this.reservation = reservation;
-        reservationID.setText(reservationID.getText() + Integer.toString(reservation.getReservationId()));
+        reservationID.setText("Reservation# "+ Integer.toString(reservation.getReservationId()));
         if (reservation.getEndDate().isBefore(LocalDate.now())) {
             status.setText("Completed");
             vBox.getChildren().remove(cancel);
@@ -109,6 +124,31 @@ public class ReservationLookupController extends BaseController {
         checkInDate.setText(reservation.getStartDate().format(dateTimeFormatter));
         checkOutDate.setText(reservation.getEndDate().format(dateTimeFormatter));
         guestNumber.setText(Integer.toString(reservation.getGroupSize()));
+        checkInChange.setValue(reservation.getStartDate());
+        checkOutChange.setValue(reservation.getEndDate());
+    }
+
+    @FXML
+    private void change(MouseEvent event) {
+        LocalDate start = checkInChange.getValue();
+        LocalDate end = checkOutChange.getValue();
+        reservation.setStartDate(start);
+        reservation.setEndDate(end);
+        reservation.push();
+        writeReservationInfo(reservation);
+        
+    }
+
+    @FXML
+    private void check(MouseEvent event) {
+        LocalDate start = checkInChange.getValue();
+        LocalDate end = checkOutChange.getValue();
+
+         if(ReservationSystem.checkAvailability(start, end, reservation.getRoom().getRoomType())){
+            System.out.print("true");
+            change.setDisable(false);
+         }else{ System.out.print("false");change.setDisable(true);}
+
     }
 
 }

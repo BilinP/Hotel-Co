@@ -32,6 +32,7 @@ public class Room {
     public Room(Integer roomNumber)
     {
         roomNum = roomNumber;
+        fetch();
     }
     /**
      * Gets the room number associated with this room.

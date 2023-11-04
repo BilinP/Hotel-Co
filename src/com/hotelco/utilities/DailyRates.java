@@ -5,8 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-
 import com.hotelco.constants.RoomType;
 import com.hotelco.entities.ReservationSystem;
 /**
@@ -36,6 +34,4 @@ public class DailyRates {
         }
         return result;
     }
-
-                //date.getDayOfWeek().toString() 
 }
