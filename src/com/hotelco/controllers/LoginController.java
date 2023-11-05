@@ -11,9 +11,18 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
@@ -45,10 +54,20 @@ public class LoginController extends BaseController {
     private PasswordField password;
 
     @FXML
-    private void initialize() {
-        //add non JavaFX related code here
+    private StackPane stackPane;
+
+    @FXML
+    private BorderPane borderPane;
+     @FXML
+    private AnchorPane leftAnchor;
+
+    @FXML
+    private void initialize() {     
+
+           
+       
         Platform.runLater(() -> {
-            //add JavaFX related code here
+           
         });
     }
 

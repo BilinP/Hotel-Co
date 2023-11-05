@@ -4,7 +4,10 @@ import com.hotelco.entities.ReservationSystem;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.Screen;
 
 /**
  * The NEWMenuController class is the associated controller class of the 'NewMenu' view. 
@@ -20,6 +23,10 @@ public class NEWMenuController extends BaseController {
      */
     @FXML
     private Text welcomeText;
+    @FXML
+    private AnchorPane anchor;
+    @FXML
+    private ImageView image;
 
     /**
      * This method is called immediately upon controller creation.
@@ -27,12 +34,15 @@ public class NEWMenuController extends BaseController {
      */
     @FXML
     private void initialize() {
+       
         Platform.runLater(() -> {
             welcomeText.setText("Welcome, " + ReservationSystem.getCurrentUser().getFirstName() +
                 "! What would you like to do today?");
+
+       
+
         });
     }
 
    
-
 }
