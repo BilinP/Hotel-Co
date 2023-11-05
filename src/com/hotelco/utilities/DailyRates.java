@@ -18,9 +18,8 @@ public class DailyRates {
         BigDecimal result = null;
         ResultSet rs = null;
         String sqlQuery =
-            "SELECT rate FROM rates," +
-            "WHERE type = '" + roomType.toString().toLowerCase(null) +
-            "'";
+            "SELECT rate FROM rates " +
+            "WHERE type = '" + roomType.toString().toLowerCase() + "'";
         try {
             ps = con.prepareStatement(sqlQuery);
             rs = ps.executeQuery();

@@ -27,14 +27,14 @@ public class DailyTask {
 
     class CheckInScheduledTask extends TimerTask {
         public void run() {
-            System.out.println("Running daily check ins");
+            //System.out.println("Running daily check ins");
             ReservationSystem.dailyCheckIn();
         }
     }
 
     class CheckOutScheduledTask extends TimerTask {
         public void run() {
-            System.out.println("Running daily check outs");
+            //System.out.println("Running daily check outs");
             ReservationSystem.dailyCheckOut();
         }
     }

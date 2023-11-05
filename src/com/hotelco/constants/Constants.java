@@ -9,11 +9,11 @@ public final class Constants {
     /**
      * Standard check in time
      */
-    public static final Integer CHECK_IN_TIME = 17;
+    public static final Integer CHECK_IN_TIME = 1;
     /**
      * Standard check out time
      */
-    public static final Integer CHECK_OUT_TIME = 18;
+    public static final Integer CHECK_OUT_TIME = 2;
     /**
      * Maximum capacity of a double room
      */
@@ -35,5 +35,5 @@ public final class Constants {
      */ 
     public static final Integer MAX_CAP = 6;
 
-    public static final BigDecimal WEEKEND_MULTIPLIER = new BigDecimal(1.2);
+    public static final BigDecimal WEEKEND_MULTIPLIER = new BigDecimal("1.2");
 }

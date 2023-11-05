@@ -9,6 +9,13 @@
             "name": "SendMail",
             "request": "launch",
             "mainClass": "com.hotelco.utilities.SendMail",
+            "projectName": "Hotel-Co_fb007db5"
+        },
+        {
+            "type": "java",
+            "name": "SendMail",
+            "request": "launch",
+            "mainClass": "com.hotelco.utilities.SendMail",
             "projectName": "Hotel-Co_63101c95"
         },
         {

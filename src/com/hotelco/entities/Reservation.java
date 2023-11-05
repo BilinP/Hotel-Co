@@ -292,6 +292,12 @@ public class Reservation {
                         rs.getBigDecimal("rate_discount")),
                         fetchAdjustments());
             }
+            else {
+                invoiceDetails = new InvoiceDetails(
+                          new Adjustment(
+                            "Rate discount", new BigDecimal(0)),
+                            Adjustment.emptyAdjustments);
+            }
         }
         catch (SQLException e){
             System.out.println(e);
@@ -335,12 +341,12 @@ public class Reservation {
         PreparedStatement ps = null;
         Connection con = null;
         String strRateDiscount = invoiceDetails == null ? "" :
-        ", rate_discount = " + invoiceDetails.getRateDiscount();
+        ", rate_discount = " + invoiceDetails.getRateDiscount().getAmount();
         String sqlQuery = "UPDATE reservations " +
             "SET room_num = " + room.getRoomNum() +
             ", start_date = '" + Date.valueOf(startDate) + 
             "', end_date = '" + Date.valueOf(endDate) +
-            "',  group_size = " + groupSize +
+            "', group_size = " + groupSize +
             ", is_cancelled = " + isCancelled +
             ", is_checked_in = " + isCheckedIn +
             ", is_checked_out = " + isCheckedOut +
@@ -473,7 +479,9 @@ public void checkOut(){
     isCheckedIn = false;
     isCheckedOut = true;
     if(ReservationSystem.makePayment(this)){
-        push();}
+        push();
+        //System.out.println(reservationId + " checked out");
+    }
     else {
         String subject = "Reservation " + getReservationId() + " payment";
         String message = "Dear " + user.getFirstName() + " " +
@@ -481,7 +489,7 @@ public void checkOut(){
         "your payment could not be processed at the time of checkout. " +
         "Please ensure that payment is promptly issued to Hotel Co. to avoid " +
         "further charges.\n\t\tSincerely, Hotel Co.";
-        //Email.send(user.getEmail(), subject, message);
+        //Email.send(ReservationSystem.getCurrentUser().getEmail(), subject, message);
     }
 }
     /**
@@ -492,7 +500,7 @@ public void checkOut(){
         isCheckedIn = true;
         push();
         ReservationSystem.update();
-        System.out.println("Reservation " + reservationId +
-            "'s isCheckedIn = " + this.getIsCheckedIn().toString());
+        // System.out.println("Reservation " + reservationId +
+        //     "'s isCheckedIn = " + this.getIsCheckedIn().toString());
     }
 }

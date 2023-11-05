@@ -43,7 +43,9 @@ public class Room {
      * Gets the room type associated with this room.
      * @return the room type associated with this room.
      */
-    public RoomType getRoomType(){return roomType;}
+    public RoomType getRoomType(){
+        return roomType;
+    }
     /**
      * Gets the maximum group size associated with this room.
      * @return the group size

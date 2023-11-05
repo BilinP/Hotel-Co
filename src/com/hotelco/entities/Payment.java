@@ -42,11 +42,14 @@ public class Payment {
     }
 
     public Payment(Reservation reservation){
+        Reservation temp = ReservationSystem.getCurrentReservation();
+        ReservationSystem.setCurrentReservation(reservation);
         amount = ReservationCalculator.calcTotal(reservation);
         timeOfPayment = LocalDateTime.now();
         if(ReservationSystem.requestCreditCardPayment(amount)){
             push();
         }
+        ReservationSystem.setCurrentReservation(temp);
     }
     
     /**
@@ -56,22 +59,23 @@ public class Payment {
      * only to insert a new payment.
      */
     public void push(){
-        PreparedStatement ps = null;
+        PreparedStatement ps1 = null;
+        PreparedStatement ps2 = null;
         Connection con = null;
         ResultSet rs = null;
         DateTimeFormatter formatter =
             DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
         String sqlQuery = "INSERT INTO payments " +
             "SET amount = " + amount +
-            ", SET time = '" + formatter.format(timeOfPayment) +
-            "', SET reservation_id = " +
+            ", time = '" + formatter.format(timeOfPayment) +
+            "', reservation_id = " +
             ReservationSystem.getCurrentReservation().getReservationId();
         try {
             con = ReservationSystem.getDatabaseConnection();
-            ps = con.prepareStatement(sqlQuery);
-            ps.execute();
-            ps = con.prepareStatement("SELECT LAST_INSERT_ID() as id");
-            rs = ps.executeQuery();
+            ps1 = con.prepareStatement(sqlQuery);
+            ps1.execute();
+            ps2 = con.prepareStatement("SELECT LAST_INSERT_ID() as id");
+            rs = ps2.executeQuery();
             if(rs.next()){
                 paymentId = rs.getInt("id");
             }

@@ -72,6 +72,7 @@ public class ReservationSystem {
             if(connection.isClosed())
             {
                 DatabaseConnection.connectDB();
+                System.out.println("System has registered that connection is closed");
             }   
         }
         catch (SQLException e)
@@ -107,6 +108,7 @@ public class ReservationSystem {
                     "AND end_date >= '" + Date.valueOf(startDate) + "')" +
                 "AND room_type = '" + roomType.toString() + "' " +
                 "LIMIT 1) AS T";
+                //System.out.println(sqlQuery);
             ps = getDatabaseConnection().prepareStatement(sqlQuery);
             rs = ps.executeQuery();
             if(rs.next()){
@@ -247,6 +249,10 @@ public class ReservationSystem {
                 todayCheckOuts[i].checkOut();
             }
         }
+        else{
+            //System.out.println("No checkouts found today.");
+        }
+        
     }
     /**
      * Checks in every reservation whose check in date is today
@@ -272,12 +278,13 @@ public class ReservationSystem {
         ResultSet rs = null;
         ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
         Reservation[] result = null;
+        //FIXME: What to do when the daily check out doesn't run?
         try {
             sqlQuery = "SELECT * " + 
             "FROM reservations " + 
             "WHERE end_date <= '" + Date.valueOf(LocalDate.now()) +
             "' AND is_checked_in = 1";
-            System.out.println(sqlQuery);
+            //System.out.println(sqlQuery);
             ps = getDatabaseConnection().prepareStatement(sqlQuery);
             rs = ps.executeQuery();
             while(rs.next()){
@@ -290,6 +297,7 @@ public class ReservationSystem {
         catch (SQLException e){
             System.out.println(e);
         }
+        //result = result.length == 0 ? null : result;
         return result;
     }
     /**
@@ -347,6 +355,8 @@ public class ReservationSystem {
      */
     public static Boolean makePayment(Reservation reservation){
         Payment payment = new Payment(reservation);
-        return payment.getPaymentId() == null;
+        System.out.println("line 356, Payment supposedly just made. The expression\n\t" +
+        "payment.getPaymentId()!= null\n evaluates to " + (payment.getPaymentId()!= null));
+        return payment.getPaymentId() != null;
     }
 }

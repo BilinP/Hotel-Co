@@ -17,6 +17,8 @@ public class Adjustment {
      * Gets the comment associated with this adjusment
      * @return the comment associated with this adjusment
      */
+    public final static Adjustment[] emptyAdjustments = new Adjustment[0];
+
     public Adjustment(String newComment, BigDecimal newAmount){
         comment = newComment;
         amount = newAmount;

@@ -1,4 +1,6 @@
 package com.hotelco.utilities;
+public class SendMail{}
+/*package com.hotelco.utilities;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -78,3 +80,4 @@ public class SendMail
 	}
 	
 }	
+*/
