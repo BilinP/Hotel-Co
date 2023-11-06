@@ -71,7 +71,7 @@ public class ReservationSystem {
         try{
             if(connection.isClosed())
             {
-                DatabaseConnection.connectDB();
+                connection = DatabaseConnection.connectDB();
                 System.out.println("System has registered that connection is closed");
             }   
         }
@@ -262,8 +262,8 @@ public class ReservationSystem {
         Reservation[] todayCheckIns = getTodayCheckIns();
         if (todayCheckIns != null){
             for(i = 0; i < todayCheckIns.length; i++){
-                System.out.println("Checking in Reservation " +
-                    todayCheckIns[i].getReservationId());
+                // System.out.println("Checking in Reservation " +
+                //     todayCheckIns[i].getReservationId());
                 todayCheckIns[i].checkIn();            
             }
         }
@@ -355,8 +355,6 @@ public class ReservationSystem {
      */
     public static Boolean makePayment(Reservation reservation){
         Payment payment = new Payment(reservation);
-        System.out.println("line 356, Payment supposedly just made. The expression\n\t" +
-        "payment.getPaymentId()!= null\n evaluates to " + (payment.getPaymentId()!= null));
         return payment.getPaymentId() != null;
     }
 }

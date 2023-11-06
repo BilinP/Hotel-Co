@@ -3,12 +3,16 @@ package com.hotelco.controllers;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import com.hotelco.constants.RoomType;
 import com.hotelco.entities.Reservation;
 import com.hotelco.entities.ReservationSystem;
 import com.hotelco.utilities.FXMLPaths;
 
+import javafx.beans.Observable;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
@@ -64,6 +68,12 @@ public class ReservationLookupController extends BaseController {
 
     @FXML
     private DatePicker checkOutChange;
+
+    //@FXML
+    //private Text guests;
+
+    //@FXML
+    //private ChoiceBox roomtypeChange;
 
     @FXML
     private Button change;
@@ -132,8 +142,10 @@ public class ReservationLookupController extends BaseController {
     private void change(MouseEvent event) {
         LocalDate start = checkInChange.getValue();
         LocalDate end = checkOutChange.getValue();
+        //Integer groupSize = groupSizeChange.getValue();
         reservation.setStartDate(start);
         reservation.setEndDate(end);
+        //reservation.setGroupSize(groupSize);
         reservation.push();
         writeReservationInfo(reservation);
         
@@ -143,12 +155,35 @@ public class ReservationLookupController extends BaseController {
     private void check(MouseEvent event) {
         LocalDate start = checkInChange.getValue();
         LocalDate end = checkOutChange.getValue();
+        //Integer groupSize = groupSizeChange.getValue();
+        RoomType roomtype = reservation.getRoom().getRoomType();
+        //RoomType roomtype = roomTypeChange.getValue();
 
-         if(ReservationSystem.checkAvailability(start, end, reservation.getRoom().getRoomType())){
-            System.out.print("true");
+        if(ReservationSystem.checkAvailability(start, end, roomtype)){
+            //System.out.print("true");
             change.setDisable(false);
-         }else{ System.out.print("false");change.setDisable(true);}
-
+         }else{
+            // System.out.print("false");
+            change.setDisable(true);
+         }
     }
 
+    /* I'm thinking there should be a dropdown that persistently populates with
+    roomtypes that can hold the capacity in the groupSize incrementable.
+
+    ChoiceBox<String> dropdown = new ChoiceBox<>();
+    ObservableList<String> dropdownItems = dropdown.getItems();
+    switch (GroupSize.toRoomTypes(groupSize)[0]){
+        case RoomType.DBL:
+            //add double to dropdown
+            //dropdown.add(RoomType.DBL.toPrettyString());
+        case RoomType.QUEEN:
+            //add Queen AND King to dropdown
+            //dropdown.add(RoomType.QUEEN.toPrettyString());
+            //dropdown.add(RoomType.KING.toPrettyString())
+        case RoomType.SUITE:
+            //add Suite to dropdown
+            //dropdown.add(roomType.SUITE.toPrettyString());
+    }
+*/
 }

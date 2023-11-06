@@ -151,16 +151,16 @@ public class RoomSearchController extends BaseController {
         }
         notification.setText("");
 
-        if(numGuests > 0 && numGuests <= Constants.DBL_CAP) {    
+        if(numGuests > 0 && numGuests <= Constants.CAPACITIES.get(RoomType.DBL)) {
             dbl.setDisable(!ReservationSystem.checkAvailability(start, end, RoomType.DBL));
         }
-        if(numGuests <= Constants.QUEEN_CAP) {  
+        if(numGuests <= Constants.CAPACITIES.get(RoomType.QUEEN)) {  
             queen.setDisable(!ReservationSystem.checkAvailability(start, end, RoomType.QUEEN));
         }
-        if(numGuests <= Constants.KING_CAP) {
+        if(numGuests <= Constants.CAPACITIES.get(RoomType.KING)) {
             king.setDisable(!ReservationSystem.checkAvailability(start, end, RoomType.KING));
         }
-        if(numGuests <= Constants.SUITE_CAP) {
+        if(numGuests <= Constants.CAPACITIES.get(RoomType.SUITE)) {
             suite.setDisable(!ReservationSystem.checkAvailability(start, end, RoomType.SUITE));
         }
     }

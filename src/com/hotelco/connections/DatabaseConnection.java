@@ -23,7 +23,7 @@ public class DatabaseConnection {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             con = DriverManager.getConnection(
-                    "jdbc:mysql://sql3.freemysqlhosting.net:3306/sql3651321",
+                    "jdbc:mysql://sql3.freemysqlhosting.net:3306/sql3651321?autoreconnect=true",
                     "sql3651321", "fB8SKw8fPQ");
 
             return con;

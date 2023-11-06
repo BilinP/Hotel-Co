@@ -29,7 +29,6 @@ public class DailyRates {
         }
         catch (SQLException e) {
             System.out.println(e);
-            System.out.println("User not updated in database");
         }
         return result;
     }
