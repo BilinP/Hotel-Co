@@ -1,6 +1,4 @@
 package com.hotelco.utilities;
-public class SendMail{}
-/*package com.hotelco.utilities;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -24,7 +22,7 @@ public class SendMail
 		
 	Session newSession = null;
 	MimeMessage mimeMessage = null;
-	public static void main(String[] args) throws AddressException, MessagingException, IOException
+	public static void mainMail(String[] args) throws AddressException, MessagingException, IOException
 	{
 
 		SendMail mail = new SendMail();
@@ -41,7 +39,7 @@ public class SendMail
 		transport.connect(emailHost, fromUser, fromUserPassword);
 		transport.sendMessage(mimeMessage, mimeMessage.getAllRecipients());
 		transport.close();
-		System.out.println("Email successfully sent!!!");
+		System.out.println("\nEmail successfully sent!\n");
 	}
 
 	//Add user email and info for room
@@ -79,5 +77,4 @@ public class SendMail
 		newSession = Session.getDefaultInstance(properties,null);
 	}
 	
-}	
-*/
+}
