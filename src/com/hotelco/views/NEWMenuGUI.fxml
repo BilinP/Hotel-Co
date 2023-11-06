@@ -6,14 +6,14 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="900.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hotelco.controllers.NEWMenuController">
+<AnchorPane fx:id="anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hotelco.controllers.NEWMenuController">
    <children>
-      <ImageView fx:id="image" blendMode="MULTIPLY" fitHeight="800.0" fitWidth="900.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ImageView fx:id="image" blendMode="MULTIPLY" fitHeight="700.0" fitWidth="900.0" pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
             <Image url="@../images/Welcome.jpg" />
          </image>
       </ImageView>
-      <Text fx:id="welcomeText" layoutX="161.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome, ! What would you like to do today?">
+      <Text fx:id="welcomeText" layoutX="161.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome, ! What would you like to do today?">
          <font>
             <Font name="System Bold" size="27.0" />
          </font>

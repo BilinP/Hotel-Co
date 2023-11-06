@@ -9,12 +9,11 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-
-<StackPane prefHeight="843.0" prefWidth="1261.0" styleClass="background" stylesheets="@../controllers/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hotelco.controllers.DashboardController">
+<StackPane prefHeight="800.0" prefWidth="1300.0" styleClass="background" stylesheets="@../controllers/style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hotelco.controllers.DashboardController">
    <children>
-      <BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0">
+      <BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0">
          <left>
-            <AnchorPane fx:id="leftAnchor" prefHeight="600.0" prefWidth="300.0" style="-fx-background-color: #3c4149;" BorderPane.alignment="CENTER">
+            <AnchorPane fx:id="leftAnchor" prefHeight="700.0" prefWidth="300.0" style="-fx-background-color: #3c4149;" BorderPane.alignment="CENTER">
                <children>
                   <ImageView fitHeight="143.0" fitWidth="156.0" layoutX="75.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -65,7 +64,7 @@
             </AnchorPane>
          </left>
          <right>
-            <AnchorPane fx:id="rightAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="900.0" style="-fx-background-color: green;" BorderPane.alignment="CENTER" />
+            <AnchorPane fx:id="rightAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: green;" BorderPane.alignment="CENTER" />
          </right>
       </BorderPane>
    </children>

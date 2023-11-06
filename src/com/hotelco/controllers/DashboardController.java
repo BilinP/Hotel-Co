@@ -1,6 +1,6 @@
 package com.hotelco.controllers;
 import java.io.IOException;
-import java.util.List;
+
 
 import com.hotelco.utilities.FXMLPaths;
 
@@ -11,7 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Screen;
+
 
 /**
  * The ThankYouController class is the associated controller class of the 'ThankYouGUI' view. 
@@ -49,6 +49,7 @@ public class DashboardController extends BaseController {
     private Button viewBookingButton;
 
     private final Button[] menubuttons = new Button[5];
+    private String currentPath;
     @FXML
     private void initialize() {
         //add non JavaFX related code here
@@ -112,6 +113,7 @@ public class DashboardController extends BaseController {
 
     
     private void switchAnchor(String path){
+        if(!path.equals(currentPath)){
          FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
 
         try {
@@ -120,7 +122,8 @@ public class DashboardController extends BaseController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    
+        currentPath=path;
+        }
     }
 
     }
