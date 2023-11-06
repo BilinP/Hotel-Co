@@ -182,7 +182,7 @@ public class RoomSearchController extends BaseController {
         Room room = new Room(
             ReservationSystem.findEmptyRoom(
                 startDate.getValue(), endDate.getValue(),
-                RoomType.valueOf(roomType.toUpperCase())));
+                RoomType.toRoomType(roomType)));
         Reservation reservation = new Reservation(
             room, startDate.getValue(), endDate.getValue(),
             ReservationSystem.getCurrentUser(), Integer.parseInt(guests.getText()));

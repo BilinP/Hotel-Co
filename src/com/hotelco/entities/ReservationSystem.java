@@ -129,6 +129,7 @@ public class ReservationSystem {
      */
     public static Integer countOccupiedRooms(
         LocalDate startDate, LocalDate endDate, RoomType roomType){
+        Connection con = ReservationSystem.getDatabaseConnection();
         PreparedStatement ps = null;
         String sqlQuery = null;
         ResultSet rs = null;
@@ -147,7 +148,7 @@ public class ReservationSystem {
                 "' AND end_date <= '" + Date.valueOf(endDate) + "') " +
             "AND room_type = '" + roomType.toString() + "' " +
             "AND is_cancelled = 0";
-            ps = connection.prepareStatement(sqlQuery);
+            ps = con.prepareStatement(sqlQuery);
             rs = ps.executeQuery();
             if(rs.next()){
                 result = rs.getInt("total");

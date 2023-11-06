@@ -503,4 +503,15 @@ public void checkOut(){
         // System.out.println("Reservation " + reservationId +
         //     "'s isCheckedIn = " + this.getIsCheckedIn().toString());
     }
+
+    public void cancel(Boolean payNow){
+        isCancelled = true;
+        if (isCheckedIn){
+            isCheckedIn = false;
+            if (payNow) {
+                ReservationSystem.makePayment(this);
+            }
+            isCheckedOut = true;
+        }
+    }
 }

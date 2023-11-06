@@ -70,10 +70,10 @@ public class ReservationLookupController extends BaseController {
     private DatePicker checkOutChange;
 
     //@FXML
-    //private Text guests;
+    //private Text guestsChange;
 
     //@FXML
-    //private ChoiceBox roomtypeChange;
+    //private ChoiceBox roomTypeChange;
 
     @FXML
     private Button change;
@@ -140,14 +140,28 @@ public class ReservationLookupController extends BaseController {
 
     @FXML
     private void change(MouseEvent event) {
-        LocalDate start = checkInChange.getValue();
-        LocalDate end = checkOutChange.getValue();
-        //Integer groupSize = groupSizeChange.getValue();
-        reservation.setStartDate(start);
-        reservation.setEndDate(end);
-        //reservation.setGroupSize(groupSize);
-        reservation.push();
-        writeReservationInfo(reservation);
+        // if (reservation.getRoom().getRoomType() == RoomType.toRoomType(roomTypeChange.getValue())){
+            LocalDate start = checkInChange.getValue();
+            LocalDate end = checkOutChange.getValue();
+            //Integer groupSize = groupSizeChange.getValue();
+            reservation.setStartDate(start);
+            reservation.setEndDate(end);
+            //reservation.setGroupSize(groupSize);
+            reservation.push();
+            writeReservationInfo(reservation);
+        // }
+        /*else {
+            reservation.cancel(true);
+            Room room = new Room(
+            ReservationSystem.findEmptyRoom(
+                startDate.getValue(), endDate.getValue(),
+                RoomType.toRoomType(roomTypeChange)));
+            reservation.setStartDate(start);
+            reservation.setEndDate(end);
+            reservation.setGroupSize(groupSize);
+            reservation.setRoom(room);
+            book a new reservation
+        } */
         
     }
 
@@ -168,7 +182,7 @@ public class ReservationLookupController extends BaseController {
          }
     }
 
-    /* I'm thinking there should be a dropdown that persistently populates with
+    /* I'm thinking there should be a dropdown that dynamically populates with
     roomtypes that can hold the capacity in the groupSize incrementable.
 
     ChoiceBox<String> dropdown = new ChoiceBox<>();
