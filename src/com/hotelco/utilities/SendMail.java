@@ -22,18 +22,16 @@ public class SendMail
 		
 	Session newSession = null;
 	MimeMessage mimeMessage = null;
-	public static void mainMail(String[] args) throws AddressException, MessagingException, IOException
+	public static void startSend(SendMail mail, String emailString, String subject, String body) throws AddressException, MessagingException, IOException
 	{
-
-		SendMail mail = new SendMail();
 		mail.setupServerProperties();
-		mail.draftEmail(args[0], args[1], args[2]); //(Email, EmailSubject, EmailBody)
+		mail.draftEmail(emailString, subject, body); //(Email, EmailSubject, EmailBody)
 		mail.sendEmail();
 	}
 
 	private void sendEmail() throws MessagingException {
-		String fromUser = "hotelcoDesk@gmail.com";  //Enter sender email id
-		String fromUserPassword = "Safepassword4!";  //Enter sender gmail password , this will be authenticated by gmail smtp server
+		String fromUser = "hotelcodesk@gmail.com";  //Enter sender email id
+		String fromUserPassword = "bhyt bqgl fwbd tpav";  //Enter sender gmail password , this will be authenticated by gmail smtp server
 		String emailHost = "smtp.gmail.com";
 		Transport transport = newSession.getTransport("smtp");
 		transport.connect(emailHost, fromUser, fromUserPassword);
@@ -71,7 +69,7 @@ public class SendMail
 
 	private void setupServerProperties() {
 		Properties properties = System.getProperties();
-		properties.put("mail.smtp.port", "547");
+		properties.put("mail.smtp.port", "587");
 		properties.put("mail.smtp.auth", "true");
 		properties.put("mail.smtp.starttls.enable", "true");
 		newSession = Session.getDefaultInstance(properties,null);

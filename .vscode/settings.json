@@ -7,8 +7,8 @@
         "include": [
             "javafx-sdk-21/lib/**/*.jar",
             "mysql-connector-j-8.1.0\\mysql-connector-j-8.1.0.jar",
-            "c:\\Users\\metam\\Downloads\\activation-1.1.1.jar",
-            "c:\\Users\\metam\\Downloads\\javax.mail.jar",
+            "lib\\activation-1.1.1.jar",
+            "lib\\javax.mail.jar",
             "lib\\protobuf-java-3.21.9.jar"
         ],
         "exclude": [
