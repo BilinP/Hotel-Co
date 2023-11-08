@@ -48,22 +48,17 @@ public class SendMail
 		mimeMessage = new MimeMessage(newSession);
 		 
 
-			mimeMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(emailReceipient));
+		mimeMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(emailReceipient));
 
 		mimeMessage.setSubject(emailSubject);
+		mimeMessage.setText("Body!");
+		
 	   
       // CREATE MIMEMESSAGE 
 	    // CREATE MESSAGE BODY PARTS 
 	    // CREATE MESSAGE MULTIPART 
 	    // ADD MESSAGE BODY PARTS ----> MULTIPART 
 	    // FINALLY ADD MULTIPART TO MESSAGECONTENT i.e. mimeMessage object 
-	    
-	    
-		 MimeBodyPart bodyPart = new MimeBodyPart();
-		 bodyPart.setContent(emailBody,"html/text");
-		 MimeMultipart multiPart = new MimeMultipart();
-		 multiPart.addBodyPart(bodyPart);
-		 mimeMessage.setContent(multiPart);
 		 return mimeMessage;
 	}
 
