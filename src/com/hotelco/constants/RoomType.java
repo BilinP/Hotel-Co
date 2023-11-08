@@ -1,22 +1,32 @@
 package com.hotelco.constants;
 
-
+/**
+ * Type of room from {double, queen, king, suite}
+ */
 public enum RoomType {
     DBL("Double"),
     QUEEN("Queen"),
     KING("King"),
     SUITE("Suite");
-
+/**
+ * Snake case and "pretty" string of this enum 
+ */
     private final String prettyName;
-
+/**
+ * Constructs an empty roomtype
+ */
     RoomType(){prettyName = null;}
 
     RoomType(String prettyName) {
         this.prettyName = prettyName;
     }
 
-
-    public static RoomType toRoomType(String roomTypeStr) {
+/**
+ * Parses the string argument as a RoomType enume
+ * @param roomTypeStr string to be converted
+ * @return a RoomType enum based on the supplied string
+ */
+    public static RoomType parseString(String roomTypeStr) {
         RoomType rt = null;
         switch (roomTypeStr.toUpperCase()){
             case "DBL":

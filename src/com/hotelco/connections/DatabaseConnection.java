@@ -8,10 +8,7 @@ import java.sql.*;
 * @version     %I%, %G%
 */
 public class DatabaseConnection {
-/**
- * Holds an open connection to the database.
- */
-    private static Connection con = connectDB();
+
 /**
  * Connects static member con to the database
  * @return Connection object, connected to db
@@ -22,11 +19,9 @@ public class DatabaseConnection {
         {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            con = DriverManager.getConnection(
+            return DriverManager.getConnection(
                     "jdbc:mysql://sql3.freemysqlhosting.net:3306/sql3651321?autoreconnect=true",
                     "sql3651321", "fB8SKw8fPQ");
-
-            return con;
         }
 
         catch (SQLException | ClassNotFoundException e)

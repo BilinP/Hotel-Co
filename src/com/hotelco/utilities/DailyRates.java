@@ -13,13 +13,14 @@ import com.hotelco.entities.ReservationSystem;
  */
 public class DailyRates {
     public static BigDecimal getRoomRate(RoomType roomType){
-        Connection con = ReservationSystem.getDatabaseConnection();
-        PreparedStatement ps = null;
         BigDecimal result = null;
+        PreparedStatement ps = null;
         ResultSet rs = null;
         String sqlQuery =
             "SELECT rate FROM rates " +
             "WHERE type = '" + roomType.toString().toLowerCase() + "'";
+        Connection con = ReservationSystem.getDatabaseConnection();
+
         try {
             ps = con.prepareStatement(sqlQuery);
             rs = ps.executeQuery();
@@ -29,7 +30,9 @@ public class DailyRates {
         }
         catch (SQLException e) {
             System.out.println(e);
+            System.out.println("DailyRates.getRoomRate()");
         }
+        ReservationSystem.ready();
         return result;
     }
 }

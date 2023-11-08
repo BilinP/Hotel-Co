@@ -61,7 +61,6 @@ public class Payment {
     public void push(){
         PreparedStatement ps1 = null;
         PreparedStatement ps2 = null;
-        Connection con = null;
         ResultSet rs = null;
         DateTimeFormatter formatter =
             DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
@@ -70,8 +69,9 @@ public class Payment {
             ", time = '" + formatter.format(timeOfPayment) +
             "', reservation_id = " +
             ReservationSystem.getCurrentReservation().getReservationId();
+        Connection con = ReservationSystem.getDatabaseConnection();
+
         try {
-            con = ReservationSystem.getDatabaseConnection();
             ps1 = con.prepareStatement(sqlQuery);
             ps1.execute();
             ps2 = con.prepareStatement("SELECT LAST_INSERT_ID() as id");
@@ -80,8 +80,12 @@ public class Payment {
                 paymentId = rs.getInt("id");
             }
         }
-        catch (SQLException e){
+        catch (SQLException e){ 
+            System.out.println("Payment.push()");
+            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
+            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
+        ReservationSystem.ready();
     }
 }

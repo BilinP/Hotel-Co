@@ -38,6 +38,17 @@ public final class Constants {
      * Maximum capacity of any room in the hotel
      */ 
     public static final Integer MAX_CAP = 6;
-
+    /**
+     * Interval for closing and reopening database connection
+     */
+    public static final Integer RECONNECT_INTERVAL = 1200000;
+    /**
+     * Interval for attempting to close and reopen database connection after
+     * failed attempt to do so
+     */
+    public static final Integer RETRY_INTERVAL = 30000;
+    /**
+     * Tax rate multiplier on the weekends
+     */
     public static final BigDecimal WEEKEND_MULTIPLIER = new BigDecimal("1.2");
 }

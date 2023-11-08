@@ -51,13 +51,20 @@ public class ReservationHistoryController extends BaseController {
     private Map<Text, Reservation> map;
 
     /**
+     * The user's reservations
+     */
+    private Reservation[] reservations;
+
+    /**
      * This method is called immediately upon controller creation.
-     * It calls 'displayOrders()' to immediately display a users reservations.
+     * It calls 'displayOrders()' to immediately display a user's reservations.
      */
     @FXML
     private void initialize() {
         map = new HashMap<>();
         Platform.runLater(() -> {
+            reservations = ReservationSystem.getCurrentUser()
+                .fetchReservations(false, true, false);
             displayOrders();
         });
     }
@@ -82,8 +89,6 @@ public class ReservationHistoryController extends BaseController {
      */
     @FXML
     private void incrementPage(MouseEvent event) {
-        Reservation[] reservations = ReservationSystem.getCurrentUser().
-            fetchReservations(false, true, false);
         if (Integer.parseInt(pageNumber.getText()) < Math.ceil(reservations.length/5.0)) {
             pageNumber.setText(Integer.toString(Integer.parseInt(pageNumber.getText()) + 1));
             displayOrders();
@@ -105,7 +110,6 @@ public class ReservationHistoryController extends BaseController {
      */
     private void displayOrders() {
         reservationsContainer.getChildren().clear();
-        Reservation[] reservations = ReservationSystem.getCurrentUser().fetchReservations(false, true, false);
         if (reservations.length == 0) {
             Text text = new Text();
             text.setFill(Color.WHITE);

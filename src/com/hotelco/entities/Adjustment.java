@@ -14,15 +14,25 @@ public class Adjustment {
      */
     private BigDecimal amount;
     /**
-     * Gets the comment associated with this adjusment
-     * @return the comment associated with this adjusment
+     * Constructs an empty Adjustment
      */
-    public final static Adjustment[] emptyAdjustments = new Adjustment[0];
-
+    public Adjustment(){
+        comment = "";
+        amount = new BigDecimal(0);
+    }
+    /**
+     * Constructs an adjustment with the supplied arguments
+     * @param newComment String comment to be associated with the adjustment
+     * @param newAmount BigDecimal amount to be associated with the adjustment
+     */
     public Adjustment(String newComment, BigDecimal newAmount){
         comment = newComment;
         amount = newAmount;
     }
+    /**
+     * Gets the comment associated with this adjusment
+     * @return the comment associated with this adjusment
+     */
     public String getComment(){return comment;}
     /**
      * Gets the amount associated with this adjustment

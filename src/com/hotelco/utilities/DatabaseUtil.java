@@ -12,25 +12,26 @@ public class DatabaseUtil{
  * @return true if id exists in the database, false if not.
  */
     public static Boolean doesIdExist(Integer userId){
-        PreparedStatement ps = null;
-        Connection con = null;
-        String sqlQuery = null;
-        ResultSet rs = null;
         Boolean result = false;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sqlQuery =
+            "SELECT count(*) as total FROM users where user_id = " + userId;
+        Connection con = ReservationSystem.getDatabaseConnection();
+
         try {
-            sqlQuery = "SELECT count(*) as total FROM users where user_id = " +
-                userId;
-            con = ReservationSystem.getDatabaseConnection();
             ps = con.prepareStatement(sqlQuery);
             rs = ps.executeQuery();
             if(rs.next()){
                 result = rs.getInt("total") == 1;
             }
-        }
+                    }
         catch(SQLException e)
         {
+            System.out.println("doesIdExist()");
             System.out.println(e);
         }
+        ReservationSystem.ready();
         return result;
     }
     /**
@@ -39,24 +40,27 @@ public class DatabaseUtil{
     * @return true if email exists in the database, false if not.
     */
     public static Boolean doesEmailExist(String email){
-        PreparedStatement ps = null;
-        Connection con = null;
-        String sqlQuery = null;
-        ResultSet rs = null;
         Boolean result = false;
-        try {
-            sqlQuery = "SELECT count(*) AS total FROM users where email = '" +
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sqlQuery = "SELECT count(*) AS total FROM users where email = '" +
                 email + "'";
-            con = ReservationSystem.getDatabaseConnection();
+        Connection con = ReservationSystem.getDatabaseConnection();
+        
+        try {
             ps = con.prepareStatement(sqlQuery);
             rs = ps.executeQuery();
             if(rs.next()){
                 result = rs.getInt("total") == 1;
             }
-        }
+                    }
         catch (SQLException e){
+            System.out.println("DatabaseUtil.doesEmailExist()");
+            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
+            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
+        ReservationSystem.ready();
         return result;
     };
 }

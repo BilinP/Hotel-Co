@@ -153,14 +153,15 @@ public class ReservationLookupController extends BaseController {
         /*else {
             reservation.cancel(true);
             Room room = new Room(
-            ReservationSystem.findEmptyRoom(
+                ReservationSystem.findEmptyRoom(
                 startDate.getValue(), endDate.getValue(),
                 RoomType.toRoomType(roomTypeChange)));
             reservation.setStartDate(start);
             reservation.setEndDate(end);
             reservation.setGroupSize(groupSize);
             reservation.setRoom(room);
-            book a new reservation
+            ReservationSystem.setCurrentReservation(reservation);
+            ReservationSystem.book();
         } */
         
     }

@@ -7,16 +7,23 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.hotelco.entities.ReservationSystem;
-
+/**
+ * Uses the tax rate from the database to generate relevant Tax BigDecimals.
+ */
 public class TaxRate {
+    /**
+     * Gets the tax rate from the database
+     * @return the tax rate
+     */
     public static BigDecimal getTaxRate(){
-        Connection con = ReservationSystem.getDatabaseConnection();
-        PreparedStatement ps = null;
         BigDecimal result = null;
+        PreparedStatement ps = null;
         ResultSet rs = null;
         String sqlQuery =
             "SELECT rate FROM rates " +
             "WHERE type = 'tax'";
+        Connection con = ReservationSystem.getDatabaseConnection();
+
         try {
             ps = con.prepareStatement(sqlQuery);
             rs = ps.executeQuery();
@@ -30,18 +37,25 @@ public class TaxRate {
         }
         catch (SQLException e) {
             System.out.println(e);
+            System.out.println("TaxRate.getTaxRate()");
         }
+        ReservationSystem.ready();
         return result;
     }
-
+    /**
+     * Calculates the tax multiplier from the database. Multiplier is a
+     * BigDecimal equal to 1 + TaxRate.
+     * @return the tax multiplier
+     */
      public static BigDecimal getTaxMultiplier(){
-        Connection con = ReservationSystem.getDatabaseConnection();
-        PreparedStatement ps = null;
         BigDecimal result = null;
+        PreparedStatement ps = null;
         ResultSet rs = null;
         String sqlQuery =
             "SELECT rate FROM rates " +
             "WHERE type = 'tax'";
+        Connection con = ReservationSystem.getDatabaseConnection();
+
         try {
             ps = con.prepareStatement(sqlQuery);
             rs = ps.executeQuery();
@@ -52,14 +66,20 @@ public class TaxRate {
                 result = null;
                 System.out.println("Tax rate not fetched");
             }
+            
         }
         catch (SQLException e) {
             System.out.println(e);
+            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
+            System.out.println("TaxRate.getTaxMultiplier()");
         }
+        ReservationSystem.ready();
+        
         if (result != null){
             result = result.divide(new BigDecimal("100"));
             result = result.add(new BigDecimal("1"));
         }
+
         return result;
     }
 }

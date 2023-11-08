@@ -1,6 +1,7 @@
 package com.hotelco.entities;
 
 import com.hotelco.connections.DatabaseConnection;
+import com.hotelco.constants.DatabaseStatus;
 import com.hotelco.constants.RoomType;
 
 import java.math.BigDecimal;
@@ -21,7 +22,12 @@ import java.util.ArrayList;
  */
 public class ReservationSystem {
     /**
-     * Generally open connection to database.
+     * Status of the database, as an enum DatabaseStatus
+     */
+    private static DatabaseStatus status = DatabaseStatus.NOT_CONNECTED;
+    /**
+     * Connection to database. Not safe to use directly. Instead, use
+     * getDabaseConnection().
      */
     private static Connection connection = DatabaseConnection.connectDB();
     /**
@@ -30,7 +36,6 @@ public class ReservationSystem {
     private static User currentUser;
     /**
      * The single reservation held by the Reservation System for processing.
-     * Should be used immediately and set to NULL after use.
      */
     private static Reservation currentReservation;
     /**
@@ -44,6 +49,11 @@ public class ReservationSystem {
      */
     public static Reservation getCurrentReservation(){return currentReservation;}
     /**
+     * Gets the current status of the DB as a DatabaseStatus enum
+     * @return the current status of the DB as a DatabaseStatus enum
+     */
+    public static DatabaseStatus getDatabaseStatus(){return status;}
+    /**
      * Logs in the supplied user
      * @param newUser user to be logged in
      */
@@ -56,6 +66,16 @@ public class ReservationSystem {
         currentReservation = newReservation;
     }
     /**
+     * Sets the current database status
+     * @param newStatus current status of the DB
+     */
+    public static void setDatabaseStatus(DatabaseStatus newStatus){status = newStatus;}
+    /**
+     * Checks if the database is ready for processing
+     * @return true if databse is ready, false if not
+     */
+    public static Boolean isReady(){return status == DatabaseStatus.READY;};
+    /**
      * Logs out the logged in user.
      */
     public static void logout()
@@ -64,20 +84,23 @@ public class ReservationSystem {
         currentReservation = null;
     }
     /**
-     * Connects to the database.
+     * Connects to the database. Reconnects if connection is closed. Changes
+     * status to DatabaseStatus.PROCESSING. Every call should be coupled with
+     * ReservationSystem.ready() after processing completes.
      * @return connection to the database
      */
     public static Connection getDatabaseConnection() {
+        status = DatabaseStatus.PROCESSING;
         try{
-            if(connection.isClosed())
-            {
-                connection = DatabaseConnection.connectDB();
+            if (connection.isClosed()){
                 System.out.println("System has registered that connection is closed");
-            }   
+                connection = DatabaseConnection.connectDB();
+            }
         }
         catch (SQLException e)
         {
             System.out.println(e);
+            System.out.println("DatabaseConnection.getDatabaseConnection()");
         }
         return connection;
     }
@@ -90,12 +113,10 @@ public class ReservationSystem {
      */
     public static Boolean checkAvailability(
             LocalDate startDate, LocalDate endDate, RoomType roomType){
-        PreparedStatement ps = null;
-        String sqlQuery = null;
-        ResultSet rs = null;
         Boolean result = false;
-        try {
-            sqlQuery =
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sqlQuery =
             "SELECT COUNT(room_num) as total " +
             "FROM (" +
                 "SELECT room_num " +
@@ -108,16 +129,22 @@ public class ReservationSystem {
                     "AND end_date >= '" + Date.valueOf(startDate) + "')" +
                 "AND room_type = '" + roomType.toString() + "' " +
                 "LIMIT 1) AS T";
-                //System.out.println(sqlQuery);
-            ps = getDatabaseConnection().prepareStatement(sqlQuery);
+        Connection con = getDatabaseConnection();
+
+        try {
+            ps = con.prepareStatement(sqlQuery);
             rs = ps.executeQuery();
             if(rs.next()){
                 result = rs.getBoolean("total");
             }
         }
         catch (SQLException e){
+            System.out.println("ReservationSystem.checkAvailability()");
+            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
+            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
+        ready();
         return result;
     }
     /**
@@ -129,13 +156,10 @@ public class ReservationSystem {
      */
     public static Integer countOccupiedRooms(
         LocalDate startDate, LocalDate endDate, RoomType roomType){
-        Connection con = ReservationSystem.getDatabaseConnection();
-        PreparedStatement ps = null;
-        String sqlQuery = null;
-        ResultSet rs = null;
         Integer result = 0;
-        try {
-            sqlQuery = "SELECT COUNT(reservations.room_num)" + 
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sqlQuery = "SELECT COUNT(reservations.room_num)" + 
             "AS total FROM reservations " + 
             "INNER JOIN rooms ON reservations.room_num = rooms.room_num " + 
             "WHERE ('" + Date.valueOf(startDate) + "' >= start_date AND '" +
@@ -147,7 +171,10 @@ public class ReservationSystem {
             "OR (end_date >= '" + Date.valueOf(startDate) +
                 "' AND end_date <= '" + Date.valueOf(endDate) + "') " +
             "AND room_type = '" + roomType.toString() + "' " +
-            "AND is_cancelled = 0";
+            "AND is_cancelled = 0";;
+        Connection con = getDatabaseConnection();
+        
+        try {
             ps = con.prepareStatement(sqlQuery);
             rs = ps.executeQuery();
             if(rs.next()){
@@ -155,33 +182,41 @@ public class ReservationSystem {
             }
         }
         catch (SQLException e){
+            System.out.println("ReservationSystem.countOccupiedRooms()");
+            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
+            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
+        ready();
         return result;
     }
     /**
-     * Gives an integer for the total amount of rooms.
-     * @param roomType
-     * @return the total amount of rooms
+     * Gets an Integer for the total amount of rooms in the database by room type
+     * @param roomType the room type to count
+     * @return the total amount of rooms of the supplied room type
      */
     public static Integer countRooms(RoomType roomType){
-        PreparedStatement ps = null;
-        String sqlQuery = null;
-        ResultSet rs = null;
         Integer result = 0;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sqlQuery = "SELECT COUNT(room_num) AS total FROM rooms WHERE room_type = '" +
+                roomType.toString() + "'";;
+        Connection con = getDatabaseConnection();
+
         try {
-            sqlQuery =
-                "SELECT COUNT(room_num) AS total FROM rooms WHERE room_type = '" +
-                roomType.toString() + "'";
-            ps = getDatabaseConnection().prepareStatement(sqlQuery);
+            ps = con.prepareStatement(sqlQuery);
             rs = ps.executeQuery();
             if(rs.next()){
                 result = rs.getInt("total");
             }
         }
         catch (SQLException e){
+            System.out.println("ReservationSystem.countRooms()");
+            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
+            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
+        ready();
         return result;
     }
     /**
@@ -193,12 +228,10 @@ public class ReservationSystem {
      */
     public static Integer findEmptyRoom(
         LocalDate startDate, LocalDate endDate, RoomType roomType){
-        PreparedStatement ps = null;
-        String sqlQuery = null;
-        ResultSet rs = null;
         Integer result = 0;
-        try {
-            sqlQuery = "SELECT room_num " + 
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sqlQuery = "SELECT room_num " + 
             "FROM rooms " + 
             "WHERE room_num NOT IN (" + 
                 "SELECT room_num " + 
@@ -207,15 +240,22 @@ public class ReservationSystem {
                 "' AND end_date >= '" + Date.valueOf(startDate) + "') " + 
             "AND room_type = '" + roomType.toString() + "'" + 
             "LIMIT 1";
-            ps = getDatabaseConnection().prepareStatement(sqlQuery);
+        Connection con = getDatabaseConnection();
+
+        try {
+            ps = con.prepareStatement(sqlQuery);
             rs = ps.executeQuery();
             if(rs.next()){
                 result = rs.getInt("room_num");
             }
         }
         catch (SQLException e){
+            System.out.println("ReservationSystem.findEmptyRoom()");
+            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
+            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
+        ready();
         return result;
     }
     /**
@@ -224,12 +264,6 @@ public class ReservationSystem {
      */
     public static void book(){
         currentReservation.create();
-        //assures currentUser is immediately updated with new booking
-        currentUser.fetch(); 
-        Reservation[] userReservations =
-            currentUser.fetchReservations(false, false, false);
-        ReservationSystem.currentReservation = 
-            userReservations[userReservations.length - 1];
     }
     /**
      * Cancels the "current reservation" by setting isCancelled. See
@@ -274,31 +308,34 @@ public class ReservationSystem {
      * @return the reservations with today as their check out date
      */
     public static Reservation[] getTodayCheckouts(){
-        PreparedStatement ps = null;
-        String sqlQuery = null;
-        ResultSet rs = null;
+        //FIXME: What to do when the daily check out doesn't run?
         ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
         Reservation[] result = null;
-        //FIXME: What to do when the daily check out doesn't run?
-        try {
-            sqlQuery = "SELECT * " + 
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sqlQuery = "SELECT * " + 
             "FROM reservations " + 
             "WHERE end_date <= '" + Date.valueOf(LocalDate.now()) +
             "' AND is_checked_in = 1";
-            //System.out.println(sqlQuery);
-            ps = getDatabaseConnection().prepareStatement(sqlQuery);
+        Connection con = getDatabaseConnection();
+        try {
+            ps = con.prepareStatement(sqlQuery);
             rs = ps.executeQuery();
             while(rs.next()){
                 reservationList.add(
                     new Reservation(rs.getInt("reservation_id")));
+                processing();
             }
             result = new Reservation[reservationList.size()];
             reservationList.toArray(result);
         }
         catch (SQLException e){
+            System.out.println("ReservationSystem.getTodayCheckouts()");
+            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
+            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
-        //result = result.length == 0 ? null : result;
+        ready();
         return result;
     }
     /**
@@ -306,28 +343,34 @@ public class ReservationSystem {
      * @return the reservations with today as their check in date
      */
     public static Reservation[] getTodayCheckIns(){
-        PreparedStatement ps = null;
-        String sqlQuery = null;
-        ResultSet rs = null;
         ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
         Reservation[] result = null;
-        try {
-            sqlQuery = "SELECT * " + 
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sqlQuery = "SELECT * " + 
             "FROM reservations " + 
             "WHERE start_date = '" + Date.valueOf(LocalDate.now()) +
             "' AND is_checked_in = 0";
-            ps = getDatabaseConnection().prepareStatement(sqlQuery);
+        Connection con = getDatabaseConnection();
+
+        try {
+            ps = con.prepareStatement(sqlQuery);
             rs = ps.executeQuery();
             while(rs.next()){
                 reservationList.add(
                     new Reservation(rs.getInt("reservation_id")));
+                processing();
             }
             result = new Reservation[reservationList.size()];
             reservationList.toArray(result);
         }
         catch (SQLException e){
+            System.out.println("ReservationSystem.getTodayCheckIns()");
+            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
+            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
+        ready();
         return result;
     }
     /**
@@ -357,5 +400,13 @@ public class ReservationSystem {
     public static Boolean makePayment(Reservation reservation){
         Payment payment = new Payment(reservation);
         return payment.getPaymentId() != null;
+    }
+
+    public static void ready(){
+        ReservationSystem.setDatabaseStatus(DatabaseStatus.READY);
+    }
+
+    public static void processing(){
+        ReservationSystem.setDatabaseStatus(DatabaseStatus.PROCESSING);
     }
 }

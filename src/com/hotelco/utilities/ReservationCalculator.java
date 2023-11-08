@@ -2,10 +2,7 @@ package com.hotelco.utilities;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DateFormat;
 import java.time.LocalDate;
-
-import javax.swing.text.DateFormatter;
 
 import com.hotelco.entities.Reservation;
 /**

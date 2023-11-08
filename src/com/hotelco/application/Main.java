@@ -2,6 +2,8 @@ package com.hotelco.application;
 
 import com.hotelco.utilities.DailyTask;
 import com.hotelco.utilities.FXMLPaths;
+import com.hotelco.utilities.FrequentTask;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Screen;
@@ -37,6 +39,7 @@ public class Main extends Application {
 	
 	public static void main(String[] args) {
 		DailyTask.scheduleDailyTasks();
+		FrequentTask.scheduleFrequentTasks();
 		launch(args);
 	}
 	

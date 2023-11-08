@@ -173,11 +173,13 @@ public class CreditCard{
      * before assign().
      */
     public void assign(){
+        PreparedStatement ps = null;
+        String sqlQuery = null;
+        Connection con = null;
+        
         if(user != null){
-            PreparedStatement ps = null;
-            Connection con = null;
-            String sqlQuery = null;
             if (userHasOneCard()){
+                ReservationSystem.processing();
                 sqlQuery = "UPDATE credit_cards" +
                 "SET card_num = '" + creditCardNum +
                 "', cvv = '" + cvvNum +
@@ -185,20 +187,25 @@ public class CreditCard{
                 "' WHERE user_id = " + user.getUserId();
             }
             else {
+                ReservationSystem.processing();
                 sqlQuery = "INSERT INTO credit_cards" +
                 "SET card_num = '" + creditCardNum +
                 "', cvv = '" + cvvNum +
                 "', exp_date = '" + Date.valueOf(expDate) +
                 "', user_id = " + user.getUserId();
             }
+            con = ReservationSystem.getDatabaseConnection();
             try {
-                con = ReservationSystem.getDatabaseConnection();
                 ps = con.prepareStatement(sqlQuery);
                 ps.execute();
-            }
+                }
             catch (SQLException e){
+                System.out.println("CreditCard.assign()");
+                System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
+                System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
                 System.out.println(e);
             }
+            ReservationSystem.ready();
         }
     }
     /**
@@ -206,12 +213,12 @@ public class CreditCard{
      */
     public void fetch(){
         PreparedStatement ps = null;
-        Connection con = null;
         ResultSet rs = null;
         String sqlQuery = "SELECT * FROM credit_cards " +
             "WHERE user_id = " + user.getUserId();;
+        Connection con = ReservationSystem.getDatabaseConnection();
+        
         try {
-            con = ReservationSystem.getDatabaseConnection();
             ps = con.prepareStatement(sqlQuery);
             rs = ps.executeQuery();
             if(rs.next()){
@@ -219,10 +226,14 @@ public class CreditCard{
                 cvvNum = rs.getString("cvv");
                 expDate = rs.getDate("exp_date").toLocalDate();
             }
-        }
+       }
         catch (SQLException e){
+            System.out.println("CreditCard.fetch()");
+            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
+            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
+        ReservationSystem.ready();
     }
     /**
      * Checks if the CreditCard's user has a card associated with them in the
@@ -232,15 +243,14 @@ public class CreditCard{
      */
     public Boolean userHasOneCard(){
         PreparedStatement ps = null;
-        Connection con = null;
-        String sqlQuery = null;
-        ResultSet rs = null;
-        Boolean result = false;
-        try {
-            sqlQuery = "SELECT COUNT(*) AS total " +
+        String sqlQuery = "SELECT COUNT(*) AS total " +
             "FROM credit_cards " +
             "WHERE user_id = " + user.getUserId();
-            con = ReservationSystem.getDatabaseConnection();
+        ResultSet rs = null;
+        Boolean result = false;
+        Connection con = ReservationSystem.getDatabaseConnection();
+
+        try {
             ps = con.prepareStatement(sqlQuery);
             rs = ps.executeQuery();
             if(rs.next()){
@@ -248,8 +258,12 @@ public class CreditCard{
             }
         }
         catch (SQLException e){
+            System.out.println("CreditCard.userHasOneCard()");
+            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
+            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
+        ReservationSystem.ready();
         return result;
     }
     /**

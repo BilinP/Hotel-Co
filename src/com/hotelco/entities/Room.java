@@ -80,25 +80,26 @@ public class Room {
      */
     public void fetch(){
         PreparedStatement ps = null;
-        Connection con = null;
-        String sqlQuery = null;
         ResultSet rs = null;
+        String sqlQuery = "SELECT * FROM rooms WHERE room_num = " + roomNum;
+        Connection con = ReservationSystem.getDatabaseConnection();
+
         try {
-            sqlQuery = "SELECT * FROM rooms WHERE room_num = " + roomNum;
-            con = ReservationSystem.getDatabaseConnection();
             ps = con.prepareStatement(sqlQuery);
             rs = ps.executeQuery();
             if(rs.next())
             {
-                roomType = RoomType.valueOf(
-                    rs.getString("room_type").toUpperCase());
+                roomType = RoomType.parseString(rs.getString("room_type"));
                 maxGroupSize = rs.getInt("max_group_size");
             }
-
-        }
+                    }
         catch (SQLException e){
+            System.out.println("Room.fetch()");
+            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
+            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
+        ReservationSystem.ready();
     }
 
     // public Boolean isOccupied(){

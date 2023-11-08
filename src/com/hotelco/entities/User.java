@@ -127,14 +127,14 @@ public class User {
      * @return the salt associated with this user
      */
     public String getSalt() {
-        Connection con = null;
         PreparedStatement p = null;
         String result = null;
         ResultSet rs = null;
-        try {
-            con = ReservationSystem.getDatabaseConnection();
-            String sqlQuery =
+        String sqlQuery =
             "SELECT salt FROM users WHERE user_id = " + userId;
+        Connection con = ReservationSystem.getDatabaseConnection();
+
+        try {
             p = con.prepareStatement(sqlQuery);
             rs = p.executeQuery();
             if(rs.next()){
@@ -143,8 +143,10 @@ public class User {
         }
         catch (SQLException e)
         {
+            System.out.println("Reservation.getSalt()");
             System.out.println(e);
         }
+        ReservationSystem.ready();
         return result;
     }
     /**
@@ -152,16 +154,16 @@ public class User {
      * @return the hashed password associated with this user
      */
      public String getHashedPassword() {
-        Connection con = null;
-        PreparedStatement p = null;
+        PreparedStatement ps = null;
         String result = null;
         ResultSet rs = null;
-        try {
-            con = ReservationSystem.getDatabaseConnection();
-            String sqlQuery =
+        String sqlQuery =
             "SELECT hashed_password FROM users WHERE user_id = " + userId;
-            p = con.prepareStatement(sqlQuery);
-            rs = p.executeQuery();
+        Connection con = ReservationSystem.getDatabaseConnection();
+
+        try {
+            ps = con.prepareStatement(sqlQuery);
+            rs = ps.executeQuery();
             if(rs.next()){
                 result = rs.getString("hashed_password");
             }
@@ -169,7 +171,9 @@ public class User {
         catch (SQLException e)
         {
             System.out.println(e);
+            System.out.println("User.getHashedPassword()");
         }
+        ReservationSystem.ready();
         return result;
     }
     /**
@@ -216,12 +220,11 @@ public class User {
      */
     public void fetchByEmail(String emailStr){
         PreparedStatement ps = null;
-        Connection con = null;
-        String sqlQuery = null;
         ResultSet rs = null;
+        String sqlQuery = "SELECT * FROM users WHERE email = '" + emailStr + "'";
+        Connection con = ReservationSystem.getDatabaseConnection();
+
         try {
-            sqlQuery = "SELECT * FROM users WHERE email = '" + emailStr + "'";
-            con = ReservationSystem.getDatabaseConnection();
             ps = con.prepareStatement(sqlQuery);
             rs = ps.executeQuery();
             if(rs.next()){
@@ -235,8 +238,12 @@ public class User {
             }
         }
         catch (SQLException e){
+            System.out.println("User.fetchByEmail()");
+            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
+            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
+        ReservationSystem.ready();
     }
     /**
      * Fetches User from database through user ID.
@@ -244,12 +251,11 @@ public class User {
      */
     public void fetchById(Integer userIdToFetch){
         PreparedStatement ps = null;
-        Connection con = null;
-        String sqlQuery = null;
         ResultSet rs = null;
+        String sqlQuery = "SELECT * FROM users WHERE user_id = " + userIdToFetch;
+        Connection con = ReservationSystem.getDatabaseConnection();
+
         try {
-            sqlQuery = "SELECT * FROM users WHERE user_id = " + userIdToFetch;
-            con = ReservationSystem.getDatabaseConnection();
             ps = con.prepareStatement(sqlQuery);
             rs = ps.executeQuery();
             if(rs.next()){
@@ -263,8 +269,12 @@ public class User {
             }
         }
         catch (SQLException e){
+            System.out.println("User.fetchById()");
+            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
+            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
+        ReservationSystem.ready();
     }
     /**
      * Fetches user from database by email or id. Assumes user has one of
@@ -286,12 +296,7 @@ public class User {
      */
     public Reservation[] fetchReservations(
         Boolean onlyFuture, Boolean byDate, Boolean onlyNotCancelled){
-
         Reservation tempReservation = null;
-        PreparedStatement ps = null;
-        Connection con = null;
-        String sqlQuery = null;
-        ResultSet rs = null;
         Room tempRoom = null;
         LocalDate tempStartDate = null;
         LocalDate tempEndDate = null;
@@ -303,25 +308,31 @@ public class User {
         Boolean tempIsCheckedOut = false;
         ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
         Reservation[] result = null;
-            try {
-            sqlQuery = "SELECT * FROM reservations WHERE user_id = " + userId;
-            if (onlyFuture) {
-                sqlQuery += " AND '" + Date.valueOf(LocalDate.now()) +
-                "' <= end_date";
-            }
-            if (onlyNotCancelled){
-                sqlQuery += " AND is_cancelled = 0";
-            }
-            if (byDate)
-            {
-                sqlQuery += " ORDER BY start_date";
-            }
-            con = ReservationSystem.getDatabaseConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sqlQuery = "SELECT * FROM reservations WHERE user_id = " + userId;
+        Connection con = null;
+        
+        if (onlyFuture) {
+            sqlQuery += " AND '" + Date.valueOf(LocalDate.now()) +
+            "' <= end_date";
+        }
+        if (onlyNotCancelled){
+            sqlQuery += " AND is_cancelled = 0";
+        }
+        if (byDate)
+        {
+            sqlQuery += " ORDER BY start_date";
+        }
+        con = ReservationSystem.getDatabaseConnection();
+
+        try {
             ps = con.prepareStatement(sqlQuery);
             rs = ps.executeQuery();
             
             while(rs.next()){
                 tempRoom = new Room(rs.getInt("room_num"));
+                ReservationSystem.processing();
                 tempStartDate = rs.getDate("start_date").toLocalDate();
                 tempEndDate = rs.getDate("end_date").toLocalDate();
                 tempComments = rs.getString("comments");
@@ -334,14 +345,19 @@ public class User {
                     tempEndDate, this, tempComments, tempGroupSize,
                     tempReservationId, tempIsCancelled, tempIsCheckedIn,
                     tempIsCheckedOut);
+                ReservationSystem.processing();
                 reservationList.add(tempReservation);
             }
             result = new Reservation[reservationList.size()];
             reservationList.toArray(result);
         }
         catch (SQLException e){
+            System.out.println("User.fetchReservations()");
+            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
+            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
+        ReservationSystem.ready();
         return result;
     }
     /**
@@ -350,11 +366,15 @@ public class User {
      * @param password actual password provided by user
      */
     public void push(String password) {
-        
         Password pass = new Password();
         String salt = pass.getSalt();
         String hashedPassword = null;
-
+        PreparedStatement p = null;
+        Connection con = null;
+        String sqlQuery = "insert into users " +
+                    "(first_name, last_name, email, phone, hashed_password, salt)" +
+                    " values (?, ?, ?, ?, ?, ?)";
+        
         try {
             hashedPassword = pass.encrypt(password);
         }
@@ -363,16 +383,10 @@ public class User {
             System.out.println(e);
         }
 
-        Connection con = ReservationSystem.getDatabaseConnection();;
-        PreparedStatement p = null;
+        con = ReservationSystem.getDatabaseConnection();
 
         try {
-
-            String query = "insert into users " +
-                    "(first_name, last_name, email, phone, hashed_password, salt)" +
-                    " values (?, ?, ?, ?, ?, ?)";
-
-            p = con.prepareStatement(query);
+            p = con.prepareStatement(sqlQuery);
             p.setString(1, firstName);
             p.setString(2, lastName);
             p.setString(3, email);
@@ -392,14 +406,15 @@ public class User {
         }
         catch (SQLException e) {
             System.out.println(e);
+            System.out.println("User.push(password)");
         }
+        ReservationSystem.ready();
     }
     /**
      * Pushes a password by default.
      */
     public void push(){
-        Connection con = ReservationSystem.getDatabaseConnection();
-        PreparedStatement p = null;
+        PreparedStatement ps = null;
         String sqlQuery =
             "UPDATE users " +
             "SET first_name = '" + firstName +
@@ -409,13 +424,17 @@ public class User {
             "', is_employee = " + isEmployee +
             ", is_manager = " + isManager + 
             " WHERE user_id = " + userId;
+        Connection con = ReservationSystem.getDatabaseConnection();
+
         try {
-            p = con.prepareStatement(sqlQuery);
-            p.execute();
+            ps = con.prepareStatement(sqlQuery);
+            ps.execute();
         }
         catch (SQLException e) {
             System.out.println(e);
             System.out.println("User not updated in database");
+            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
+        ReservationSystem.ready();
     }
 }
