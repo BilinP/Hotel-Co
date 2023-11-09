@@ -1,8 +1,14 @@
 package com.hotelco.application;
 
+import java.io.IOException;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+
 import com.hotelco.utilities.DailyTask;
 import com.hotelco.utilities.FXMLPaths;
 import com.hotelco.utilities.FrequentTask;
+import com.hotelco.utilities.SendMail;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -37,7 +43,10 @@ public class Main extends Application {
 		}
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws AddressException, MessagingException, IOException {
+		String[] testargs = {"bilin.pattasseril.563@my.csun.edu", "for realsy", "we won a award!"};
+		
+		SendMail.startSend(testargs[0], testargs[1], testargs[2]);
 		DailyTask.scheduleDailyTasks();
 		FrequentTask.scheduleFrequentTasks();
 		launch(args);
