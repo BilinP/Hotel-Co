@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -21,7 +22,12 @@
                   <Insets bottom="20.0" />
                </VBox.margin>
             </Text>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Status:">
+            <Text fx:id="status" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Status:">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Text>
+            <Text fx:id="roomtype" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Room Type:">
                <font>
                   <Font size="24.0" />
                </font>
@@ -31,11 +37,6 @@
                   <Insets bottom="15.0" top="25.0" />
                </VBox.margin>
             </Button>
-            <Text fx:id="status" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Text>
             <VBox fx:id="vBox" alignment="CENTER" maxWidth="600.0">
                <VBox.margin>
                   <Insets />
@@ -73,16 +74,52 @@
                         </VBox>
                      </children>
                   </HBox>
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Guests:">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Text>
-                  <Text fx:id="guestNumber" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Text>
+                  <HBox prefHeight="23.0" prefWidth="618.0">
+                     <children>
+                        <VBox prefHeight="32.0" prefWidth="29.0">
+                           <children>
+                              <Text fill="WHITE" onMouseReleased="#decreaseGuest" rotate="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;" wrappingWidth="20.8756103515625">
+                                 <font>
+                                    <Font name="System Bold" size="24.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="250.0" />
+                                 </VBox.margin>
+                              </Text>
+                           </children>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </VBox>
+                        <VBox prefHeight="66.0" prefWidth="119.0">
+                           <children>
+                              <Text fx:id="guestNumber" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Guests:">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="10.0" />
+                                 </VBox.margin>
+                              </Text>
+                           </children>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </VBox>
+                        <VBox prefHeight="32.0" prefWidth="32.0">
+                           <children>
+                              <Text fill="WHITE" onMouseReleased="#increaseGuest" rotate="-90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;" wrappingWidth="20.8756103515625">
+                                 <font>
+                                    <Font name="System Bold" size="24.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </Text>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <VBox prefHeight="200.0" prefWidth="100.0">
@@ -100,9 +137,9 @@
                               <Insets left="30.0" />
                            </padding>
                         </VBox>
-                        <VBox prefHeight="100.0" prefWidth="180.0">
+                        <VBox prefHeight="100.0" prefWidth="161.0">
                            <HBox.margin>
-                              <Insets left="40.0" />
+                              <Insets />
                            </HBox.margin>
                            <children>
                               <Button fx:id="check" mnemonicParsing="false" onMouseReleased="#check" text="Check Availability">
@@ -113,6 +150,19 @@
                               <Button fx:id="change" alignment="CENTER" disable="true" mnemonicParsing="false" onMouseReleased="#change" text="Change Reservation">
                                  <VBox.margin>
                                     <Insets left="25.0" top="20.0" />
+                                 </VBox.margin>
+                              </Button>
+                           </children>
+                        </VBox>
+                        <VBox prefHeight="100.0" prefWidth="186.0">
+                           <padding>
+                              <Insets left="30.0" />
+                           </padding>
+                           <children>
+                              <ComboBox fx:id="RoomSelection" prefWidth="150.0" promptText="Change Room Type" />
+                              <Button mnemonicParsing="false" onMouseReleased="#ChangeRoom" text="Change Room">
+                                 <VBox.margin>
+                                    <Insets left="30.0" top="40.0" />
                                  </VBox.margin>
                               </Button>
                            </children>

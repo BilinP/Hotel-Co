@@ -8,11 +8,9 @@ import com.hotelco.entities.Reservation;
 import com.hotelco.entities.ReservationSystem;
 import com.hotelco.utilities.FXMLPaths;
 
-import javafx.beans.Observable;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
@@ -20,6 +18,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 public class ReservationLookupController extends BaseController {
+
+
+    @FXML
+    private ComboBox<?> RoomSelection;
 
     /**
      * Text containing the ID of the reservation being viewed.
@@ -84,6 +86,7 @@ public class ReservationLookupController extends BaseController {
      * Instance of current Reservation being viewed.
      */
     private Reservation reservation;
+    private int amountOfGuest;
 
    
 
@@ -119,11 +122,11 @@ public class ReservationLookupController extends BaseController {
         this.reservation = reservation;
         reservationID.setText("Reservation# "+ Integer.toString(reservation.getReservationId()));
         if (reservation.getEndDate().isBefore(LocalDate.now())) {
-            status.setText("Completed");
+            status.setText("Status: Completed");
             vBox.getChildren().remove(cancel);
         }
         else if (reservation.getIsCancelled()) {
-            status.setText("Canceled");
+            status.setText("Status: Canceled");
             status.setFill(Color.GRAY);
             vBox.getChildren().remove(cancel);
         }
@@ -133,7 +136,8 @@ public class ReservationLookupController extends BaseController {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         checkInDate.setText(reservation.getStartDate().format(dateTimeFormatter));
         checkOutDate.setText(reservation.getEndDate().format(dateTimeFormatter));
-        guestNumber.setText(Integer.toString(reservation.getGroupSize()));
+        amountOfGuest=reservation.getGroupSize();
+        guestNumber.setText("Guest: "+ Integer.toString(amountOfGuest));
         checkInChange.setValue(reservation.getStartDate());
         checkOutChange.setValue(reservation.getEndDate());
     }
@@ -181,6 +185,26 @@ public class ReservationLookupController extends BaseController {
             // System.out.print("false");
             change.setDisable(true);
          }
+    }
+
+    @FXML
+    void decreaseGuest(MouseEvent event) {
+        amountOfGuest--;
+        guestNumber.setText(Integer.toString(amountOfGuest));
+
+    }
+
+    @FXML
+    void increaseGuest(MouseEvent event) {
+        amountOfGuest++;
+        guestNumber.setText(Integer.toString(amountOfGuest));
+        
+    }
+
+    @FXML
+    void ChangeRoom(MouseEvent event) {
+        
+
     }
 
     /* I'm thinking there should be a dropdown that dynamically populates with
