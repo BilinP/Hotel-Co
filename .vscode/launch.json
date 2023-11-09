@@ -9,6 +9,13 @@
             "name": "Main",
             "request": "launch",
             "mainClass": "com.hotelco.application.Main",
+            "projectName": "Hotel-Co_a22fafbd"
+        },
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "com.hotelco.application.Main",
             "projectName": "Hotel-Co_f677315c"
         },
         {

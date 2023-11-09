@@ -8,9 +8,9 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
+
+import com.hotelco.constants.EmailSignature;
 
 
 public class SendMail
@@ -22,8 +22,10 @@ public class SendMail
 		
 	Session newSession = null;
 	MimeMessage mimeMessage = null;
-	public static void startSend(SendMail mail, String emailString, String subject, String body) throws AddressException, MessagingException, IOException
+	public static void startSend(String emailString, String subject, String body) throws AddressException, MessagingException, IOException
 	{
+		body = body + EmailSignature.getSignature();
+		SendMail mail = new SendMail();
 		mail.setupServerProperties();
 		mail.draftEmail(emailString, subject, body); //(Email, EmailSubject, EmailBody)
 		mail.sendEmail();
@@ -51,7 +53,7 @@ public class SendMail
 		mimeMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(emailReceipient));
 
 		mimeMessage.setSubject(emailSubject);
-		mimeMessage.setText("Body!");
+		mimeMessage.setText(EmailBody);
 		
 	   
       // CREATE MIMEMESSAGE 
