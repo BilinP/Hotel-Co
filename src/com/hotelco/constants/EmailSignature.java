@@ -1,7 +1,9 @@
 package com.hotelco.constants;
-
+/**
+* Contains the email signature constant for sent emails.
+ */
 public class EmailSignature {
-   private static String signature = "\n\nWon the VermaVroomVroom Roadtrip Award of the Year 2016\r\n" + //
+   private static final String signature = "\n\nWon the VermaVroomVroom Roadtrip Award of the Year 2016\r\n" + //
             "Phone: 001 - 010 - 0011\r\n" + //
             "Email: HotelCoDesk@gmail.com\r\n" + //
             "Website: hotelco.hotel.co\r\n" + //
