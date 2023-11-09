@@ -46,7 +46,6 @@ public class SendMail
 	private MimeMessage draftEmail(String Email, String EmailSubject, String EmailBody) throws AddressException, MessagingException, IOException {
 		String emailReceipient = Email;  //Enter list of email recepients
 		String emailSubject = EmailSubject;
-		String emailBody = EmailBody;
 		mimeMessage = new MimeMessage(newSession);
 		 
 
