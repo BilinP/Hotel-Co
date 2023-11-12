@@ -76,8 +76,9 @@ public class DatabaseUtil{
         BigDecimal rate = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sqlQuery = "SELECT rate FROM rates" +
+        String sqlQuery = "SELECT rate FROM rates " +
             "WHERE type = '" + roomType.toString().toLowerCase() + "'";
+        System.out.println(sqlQuery);
         Connection con = ReservationSystem.getDatabaseConnection();
         
         try {
