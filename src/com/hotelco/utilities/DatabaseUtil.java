@@ -1,6 +1,9 @@
 package com.hotelco.utilities;
 
+import com.hotelco.constants.RoomType;
 import com.hotelco.entities.ReservationSystem;
+
+import java.math.BigDecimal;
 import java.sql.*;
 /**
  * Utility class to check if user ids or emails exist.
@@ -62,5 +65,35 @@ public class DatabaseUtil{
         }
         ReservationSystem.ready();
         return result;
+    };
+
+    /**
+     * Gets the rate from the database for the supplied RoomType
+     * @param roomType the room type for this rate request 
+     * @return the rate of this room type
+     */
+    public static BigDecimal getRate(RoomType roomType){
+        BigDecimal rate = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sqlQuery = "SELECT rate FROM rates" +
+            "WHERE type = '" + roomType.toString().toLowerCase() + "'";
+        Connection con = ReservationSystem.getDatabaseConnection();
+        
+        try {
+            ps = con.prepareStatement(sqlQuery);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                rate = rs.getBigDecimal("rate");
+            }
+                    }
+        catch (SQLException e){
+            System.out.println("DatabaseUtil.getRate");
+            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
+            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
+            System.out.println(e);
+        }
+        ReservationSystem.ready();
+        return rate;
     };
 }
