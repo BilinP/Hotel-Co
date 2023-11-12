@@ -34,17 +34,13 @@ public class PaymentController extends BaseController{
     
     @FXML
     void initialize() {
-        // Populate the RoomSelection ComboBox with RoomType values
         cardType.getItems().addAll(CreditCardType.values());
-
-        // Set an initial selection if needed
-        cardType.getSelectionModel().selectFirst();
     }
 
     @FXML
     void payment(MouseEvent event) {
         Reservation reservation=ReservationSystem.getCurrentReservation(); 
-        CreditCard card= new CreditCard(creditCardNum.getText(), CVV.getText(), expDate.getValue(), null, reservation.getUser());
+        CreditCard card= new CreditCard(creditCardNum.getText(), CVV.getText(), expDate.getValue(), cardType.getValue(), reservation.getUser());
     }
 
     @FXML
