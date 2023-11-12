@@ -111,7 +111,6 @@
                         <Insets left="50.0" />
                      </HBox.margin>
                   </VBox>
-                  <Button mnemonicParsing="false" onMouseReleased="#switchToPayment" style="-fx-background-color: green;" text="Checkout" textFill="#fffbfb" />
                </children>
             </HBox>
          </children>
