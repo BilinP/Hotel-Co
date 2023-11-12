@@ -245,5 +245,4 @@ public class RoomSearchController extends BaseController {
             button.setDisable(true);
         }
     }
-
 }
