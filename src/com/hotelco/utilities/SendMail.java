@@ -50,6 +50,7 @@ public class SendMail
 	 * @throws MessagingException
 	 */
 	private void sendEmail() throws MessagingException {
+		/**the string you should use */
 		String fromUser = "hotelcodesk@gmail.com";  //Enter sender email id
 		String fromUserPassword = "bhyt bqgl fwbd tpav";  //Enter sender gmail password , this will be authenticated by gmail smtp server
 		String emailHost = "smtp.gmail.com";

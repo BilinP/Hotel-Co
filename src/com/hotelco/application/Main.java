@@ -26,6 +26,8 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		
 		try {
+			DailyTask.scheduleDailyTasks();
+			FrequentTask.scheduleFrequentTasks();
 			Parent root = FXMLLoader.load(getClass().getResource(FXMLPaths.LOGIN));
 			Scene scene = new Scene(root, Screen.getPrimary().getBounds().getWidth(),Screen.getPrimary().getBounds().getHeight() );
 			primaryStage.centerOnScreen();
@@ -47,8 +49,6 @@ public class Main extends Application {
 		String[] testargs = {"bilin.pattasseril.563@my.csun.edu", "for realsy", "we won a award!"};
 		
 		SendMail.startSend(testargs[0], testargs[1], testargs[2]);
-		DailyTask.scheduleDailyTasks();
-		FrequentTask.scheduleFrequentTasks();
 		launch(args);
 	}
 	**/

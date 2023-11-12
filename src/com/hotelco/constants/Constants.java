@@ -1,7 +1,4 @@
 package com.hotelco.constants;
-/**
- * Contains all constants
- */
 
 import java.math.BigDecimal;
 import java.util.AbstractMap;
@@ -9,9 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import com.hotelco.entities.Room;
-
+/**
+ * Contains all constants
+ */
 public final class Constants {
     /**
      * Standard check in time
@@ -26,7 +23,9 @@ public final class Constants {
      */
     public static final Map<RoomType,Integer> Capacities =
         new HashMap<RoomType,Integer>();
-
+    /**
+     * Room capacities for each RoomType
+     */
     public static final Map<RoomType, Integer> CAPACITIES = Stream.of(
   new AbstractMap.SimpleImmutableEntry<>(RoomType.DBL, 2),    
   new AbstractMap.SimpleImmutableEntry<>(RoomType.QUEEN, 4),
