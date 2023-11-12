@@ -7,20 +7,27 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane prefHeight="800.0" prefWidth="1300.0" styleClass="background" stylesheets="@../controllers/style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hotelco.controllers.DashboardController">
+<StackPane prefHeight="800.0" prefWidth="1300.0" styleClass="background" stylesheets="@../stylesheets/LoginSS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hotelco.controllers.DashboardController">
    <children>
-      <BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0">
+      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0">
+         <right>
+            <AnchorPane fx:id="rightAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: green;" BorderPane.alignment="CENTER" />
+         </right>
          <left>
-            <AnchorPane fx:id="leftAnchor" prefHeight="700.0" prefWidth="300.0" style="-fx-background-color: #3c4149;" BorderPane.alignment="CENTER">
+            <VBox alignment="TOP_CENTER" style="-fx-background-color: #3c4149;" BorderPane.alignment="CENTER">
                <children>
-                  <ImageView fitHeight="143.0" fitWidth="156.0" layoutX="75.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="143.0" fitWidth="156.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/hotelco.png" />
                      </image>
+                     <VBox.margin>
+                        <Insets bottom="30.0" top="30.0" />
+                     </VBox.margin>
                   </ImageView>
-                  <Button fx:id="bookRoomButton" alignment="BASELINE_LEFT" layoutY="237.0" mnemonicParsing="false" onMouseReleased="#switchToRoomSearch" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: transparent; -fx-border-color: black;" text="Book Room" textFill="#f9bd1a">
+                  <Button fx:id="homeButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseReleased="#switchToMenu" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: transparent;" text="Home" textAlignment="CENTER" textFill="#f9bd1a">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -28,7 +35,7 @@
                         <Insets left="90.0" />
                      </padding>
                   </Button>
-                  <Button fx:id="viewBookingButton" alignment="BASELINE_LEFT" layoutY="335.0" mnemonicParsing="false" onMouseReleased="#switchToReservationHistory" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: transparent; -fx-border-color: black;" text="View Booking" textFill="#f9bd1a">
+                  <Button fx:id="bookRoomButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseReleased="#switchToRoomSearch" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: transparent;" text="Book Room" textFill="#f9bd1a">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -36,7 +43,7 @@
                         <Insets left="90.0" />
                      </padding>
                   </Button>
-                  <Button fx:id="cartButton" alignment="BASELINE_LEFT" layoutY="286.0" mnemonicParsing="false" onMouseReleased="#switchToCart" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: transparent; -fx-border-color: black;" text="Cart" textFill="#f9bd1a">
+                  <Button fx:id="cartButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseReleased="#switchToCart" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: transparent;" text="Cart" textFill="#f9bd1a">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -44,7 +51,7 @@
                         <Insets left="90.0" />
                      </padding>
                   </Button>
-                  <Button fx:id="profileButton" alignment="BASELINE_LEFT" layoutY="384.0" mnemonicParsing="false" onMouseReleased="#switchToProfile" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: transparent; -fx-border-color: black;" text="Profile" textFill="#f9bd1a">
+                  <Button fx:id="viewBookingButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseReleased="#switchToReservationHistory" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: transparent;" text="View Booking" textFill="#f9bd1a">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -52,7 +59,7 @@
                         <Insets left="90.0" />
                      </padding>
                   </Button>
-                  <Button fx:id="homeButton" alignment="BASELINE_LEFT" layoutY="188.0" mnemonicParsing="false" onMouseReleased="#switchToMenu" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: transparent; -fx-border-color: black;" text="Home" textAlignment="CENTER" textFill="#f9bd1a">
+                  <Button fx:id="profileButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseReleased="#switchToProfile" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: transparent;" text="Profile" textFill="#f9bd1a">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -61,11 +68,8 @@
                      </padding>
                   </Button>
                </children>
-            </AnchorPane>
+            </VBox>
          </left>
-         <right>
-            <AnchorPane fx:id="rightAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: green;" BorderPane.alignment="CENTER" />
-         </right>
       </BorderPane>
    </children>
 </StackPane>
