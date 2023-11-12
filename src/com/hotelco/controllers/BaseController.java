@@ -6,7 +6,6 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.Node;
 
 /**
@@ -25,23 +24,15 @@ public class BaseController  {
      * @return Returns the controller associated with 'fxmlLocation'. If the method fails to switch the scene, returns null.
      */
     protected BaseController switchScene(String fxmlLocation, Event event) {
-
-        
-
         try {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlLocation));
-        Parent root = loader.load();
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, Screen.getPrimary().getVisualBounds().getWidth(), Screen.getPrimary().getVisualBounds().getHeight());
-        stage.setResizable(false);
-        
-          
-    
-        stage.setScene(scene);
-        
-        stage.show();
-        
-        return loader.getController();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlLocation));
+            Parent root = loader.load();
+            Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root, Screen.getPrimary().getBounds().getWidth(), Screen.getPrimary().getBounds().getHeight());
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.show();
+            return loader.getController();
         } catch (Exception e) {
             e.printStackTrace();
         }
