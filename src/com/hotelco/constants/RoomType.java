@@ -31,16 +31,16 @@ public enum RoomType {
         switch (roomTypeStr.toUpperCase()){
             case "DBL":
             case "DOUBLE":
-                rt = RoomType.DBL;
+                rt = DBL;
                 break;
             case "QUEEN":
-                rt = RoomType.QUEEN;
+                rt = QUEEN;
                 break;
             case "KING":
-                rt = RoomType.KING;
+                rt = KING;
                 break;
             case "SUITE":
-                rt = RoomType.SUITE;
+                rt = SUITE;
                 break;
         }
         return rt;

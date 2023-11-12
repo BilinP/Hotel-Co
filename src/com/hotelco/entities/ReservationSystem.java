@@ -93,7 +93,6 @@ public class ReservationSystem {
         status = DatabaseStatus.PROCESSING;
         try{
             if (connection.isClosed()){
-                System.out.println("System has registered that connection is closed");
                 connection = DatabaseConnection.connectDB();
             }
         }
