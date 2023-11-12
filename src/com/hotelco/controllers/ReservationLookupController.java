@@ -3,10 +3,12 @@ package com.hotelco.controllers;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import com.hotelco.constants.Constants;
 import com.hotelco.constants.RoomType;
 import com.hotelco.entities.Reservation;
 import com.hotelco.entities.ReservationSystem;
 import com.hotelco.utilities.FXMLPaths;
+import com.hotelco.utilities.GroupSize;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -142,7 +144,7 @@ public class ReservationLookupController extends BaseController {
         checkInDate.setText(reservation.getStartDate().format(dateTimeFormatter));
         checkOutDate.setText(reservation.getEndDate().format(dateTimeFormatter));
         amountOfGuest=reservation.getGroupSize();
-        roomtype.setText("Room Type:"+ reservation.getRoom().getRoomType().toString());
+        roomtype.setText("Room Type: "+ reservation.getRoom().getRoomType().toPrettyString());
         RoomSelection.getItems().addAll(RoomType.values());
         RoomSelection.getSelectionModel().select(reservation.getRoom().getRoomType());
         guestNumber.setText("Guest: "+ Integer.toString(amountOfGuest));
@@ -197,16 +199,28 @@ public class ReservationLookupController extends BaseController {
 
     @FXML
     void decreaseGuest(MouseEvent event) {
+<<<<<<< Updated upstream
         amountOfGuest--;
         guestNumber.setText("Guests: "+ Integer.toString(amountOfGuest));
 
+=======
+        if (amountOfGuest > 1) {
+            --amountOfGuest;
+            updateRoomChoices();
+            guestNumber.setText("Guest: "+ Integer.toString(amountOfGuest));
+            change.setDisable(true);
+        }
+>>>>>>> Stashed changes
     }
 
     @FXML
     void increaseGuest(MouseEvent event) {
-        amountOfGuest++;
-        guestNumber.setText("Guest: "+Integer.toString(amountOfGuest));
-        
+        if (amountOfGuest < Constants.MAX_CAP) {
+            ++amountOfGuest;
+            updateRoomChoices();
+            guestNumber.setText("Guest: "+Integer.toString(amountOfGuest));
+            change.setDisable(true);
+        }
     }
 
     @FXML
@@ -233,22 +247,18 @@ public class ReservationLookupController extends BaseController {
         switchScene(FXMLPaths.PAYMENT, event);
     }
 
-    /* I'm thinking there should be a dropdown that dynamically populates with
-    roomtypes that can hold the capacity in the groupSize incrementable.
-
-    ChoiceBox<String> dropdown = new ChoiceBox<>();
-    ObservableList<String> dropdownItems = dropdown.getItems();
-    switch (GroupSize.toRoomTypes(groupSize)[0]){
-        case RoomType.DBL:
-            //add double to dropdown
-            //dropdown.add(RoomType.DBL.toPrettyString());
-        case RoomType.QUEEN:
-            //add Queen AND King to dropdown
-            //dropdown.add(RoomType.QUEEN.toPrettyString());
-            //dropdown.add(RoomType.KING.toPrettyString())
-        case RoomType.SUITE:
-            //add Suite to dropdown
-            //dropdown.add(roomType.SUITE.toPrettyString());
+    public void updateRoomChoices(){
+        RoomType temp = RoomSelection.getValue();
+        RoomSelection.getItems().clear();
+        switch (GroupSize.toRoomTypes(amountOfGuest)[0]){
+            case DBL:
+                RoomSelection.getItems().add(RoomType.DBL);
+            case QUEEN:
+                RoomSelection.getItems().add(RoomType.QUEEN);
+                RoomSelection.getItems().add(RoomType.KING);
+            case SUITE:
+                RoomSelection.getItems().add(RoomType.SUITE);
+        }
+        RoomSelection.setValue(temp);
     }
-*/
 }
