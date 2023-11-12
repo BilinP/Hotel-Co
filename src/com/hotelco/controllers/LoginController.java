@@ -11,19 +11,12 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 /**
@@ -35,6 +28,11 @@ import javafx.scene.text.Text;
  */
 public class LoginController extends BaseController {
 
+    @FXML
+    private ImageView image;
+
+    @FXML
+    private ImageView imageRight;
     /**
      * Text that can be displayed to notify the user of any potential invalid inputs.
      */
@@ -53,21 +51,28 @@ public class LoginController extends BaseController {
     @FXML
     private PasswordField password;
 
-    @FXML
-    private StackPane stackPane;
-
-    @FXML
-    private BorderPane borderPane;
-     @FXML
-    private AnchorPane leftAnchor;
-
+    /**
+     * Rounds the corners of the beach ImageView upon initialization of the Controller.
+     * @author Grigor Azakian
+     */
     @FXML
     private void initialize() {     
-
-           
-       
         Platform.runLater(() -> {
-           
+           Rectangle rectangle = new Rectangle(
+                image.getFitWidth(),
+                image.getFitHeight()
+           );
+
+            Rectangle clip = new Rectangle(
+                image.getFitWidth() / 2,
+                image.getFitHeight()
+           );
+
+            rectangle.setArcWidth(20);
+            rectangle.setArcHeight(20);
+            clip.setX(imageRight.getFitWidth() / 2);
+            image.setClip(rectangle);
+            imageRight.setClip(clip);
         });
     }
 
@@ -90,7 +95,7 @@ public class LoginController extends BaseController {
             if (Verifier.verifyPassword(emailStr, password.getText()))
             {
                 ReservationSystem.setCurrentUser(new User(emailStr));
-                switchScene(FXMLPaths.MENU, event);
+                switchScene(FXMLPaths.DASHBOARD, event);
             }
             else{
                 notification.setText("Invalid Username/Password!");
