@@ -1,4 +1,7 @@
 package com.hotelco.entities;
+
+
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,6 +10,10 @@ import java.sql.SQLException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
+
+import javax.mail.MessagingException;
+
+import com.hotelco.utilities.SendMail;
 
 /**
  * Maintains details of a particular reservation and facilitates database transactions.
@@ -526,7 +533,13 @@ public class Reservation {
             "your payment could not be processed at the time of checkout. " +
             "Please ensure that payment is promptly issued to Hotel Co. to avoid " +
             "further charges.\n\t\tSincerely, Hotel Co.";
-            //Email.send(ReservationSystem.getCurrentUser().getEmail(), subject, message);
+            try {
+                SendMail.startSend(
+                    ReservationSystem.getCurrentUser().getEmail(), subject, message);
+            }
+            catch(MessagingException | IOException e){
+                System.out.println(e);
+            }
         }
     }
     /**

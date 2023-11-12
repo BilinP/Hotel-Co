@@ -411,7 +411,7 @@ public class User {
         ReservationSystem.ready();
     }
     /**
-     * Pushes a password by default.
+     * Updates a user's details in the database.
      */
     public void push(){
         PreparedStatement ps = null;

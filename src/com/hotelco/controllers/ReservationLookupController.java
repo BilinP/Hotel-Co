@@ -3,11 +3,14 @@ package com.hotelco.controllers;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import com.hotelco.constants.Constants;
 import com.hotelco.constants.RoomType;
 import com.hotelco.entities.Reservation;
 import com.hotelco.entities.ReservationSystem;
 import com.hotelco.utilities.FXMLPaths;
+import com.hotelco.utilities.GroupSize;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -21,7 +24,7 @@ public class ReservationLookupController extends BaseController {
 
 
     @FXML
-    private ComboBox<?> RoomSelection;
+    private ComboBox<RoomType> RoomSelection;
 
     /**
      * Text containing the ID of the reservation being viewed.
@@ -70,6 +73,8 @@ public class ReservationLookupController extends BaseController {
 
     @FXML
     private DatePicker checkOutChange;
+    
+    
 
     //@FXML
     //private Text guestsChange;
@@ -81,12 +86,15 @@ public class ReservationLookupController extends BaseController {
     private Button change;
     @FXML
     private Button check;
+    @FXML
+    private Text roomtype;
 
     /**
      * Instance of current Reservation being viewed.
      */
     private Reservation reservation;
     private int amountOfGuest;
+
 
    
 
@@ -131,12 +139,15 @@ public class ReservationLookupController extends BaseController {
             vBox.getChildren().remove(cancel);
         }
         else {
-            status.setText("Active");
+            status.setText("Status: Active");
         }        
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         checkInDate.setText(reservation.getStartDate().format(dateTimeFormatter));
         checkOutDate.setText(reservation.getEndDate().format(dateTimeFormatter));
         amountOfGuest=reservation.getGroupSize();
+        roomtype.setText("Room Type: "+ reservation.getRoom().getRoomType().toPrettyString());
+        RoomSelection.getItems().addAll(RoomType.values());
+        RoomSelection.getSelectionModel().select(reservation.getRoom().getRoomType());
         guestNumber.setText("Guest: "+ Integer.toString(amountOfGuest));
         checkInChange.setValue(reservation.getStartDate());
         checkOutChange.setValue(reservation.getEndDate());
@@ -189,40 +200,67 @@ public class ReservationLookupController extends BaseController {
 
     @FXML
     void decreaseGuest(MouseEvent event) {
-        amountOfGuest--;
-        guestNumber.setText(Integer.toString(amountOfGuest));
-
+        if (amountOfGuest > 1) {
+            --amountOfGuest;
+            updateRoomChoices();
+            guestNumber.setText("Guest: "+ Integer.toString(amountOfGuest));
+            change.setDisable(true);
+        }
     }
 
     @FXML
     void increaseGuest(MouseEvent event) {
-        amountOfGuest++;
-        guestNumber.setText(Integer.toString(amountOfGuest));
-        
+        if (amountOfGuest < Constants.MAX_CAP) {
+            ++amountOfGuest;
+            updateRoomChoices();
+            guestNumber.setText("Guest: "+Integer.toString(amountOfGuest));
+            change.setDisable(true);
+        }
     }
 
     @FXML
     void ChangeRoom(MouseEvent event) {
-        
-
+        if(!(reservation.getRoom().getRoomType().equals(RoomSelection.getValue()))){
+         reservation.getRoom().setRoomType(RoomSelection.getValue());
+        }
+         reservation.push();
+        writeReservationInfo(reservation);
     }
 
-    /* I'm thinking there should be a dropdown that dynamically populates with
-    roomtypes that can hold the capacity in the groupSize incrementable.
-
-    ChoiceBox<String> dropdown = new ChoiceBox<>();
-    ObservableList<String> dropdownItems = dropdown.getItems();
-    switch (GroupSize.toRoomTypes(groupSize)[0]){
-        case RoomType.DBL:
-            //add double to dropdown
-            //dropdown.add(RoomType.DBL.toPrettyString());
-        case RoomType.QUEEN:
-            //add Queen AND King to dropdown
-            //dropdown.add(RoomType.QUEEN.toPrettyString());
-            //dropdown.add(RoomType.KING.toPrettyString())
-        case RoomType.SUITE:
-            //add Suite to dropdown
-            //dropdown.add(roomType.SUITE.toPrettyString());
+    @FXML
+    void updateGuest(MouseEvent event) {
+        if(!(reservation.getGroupSize()==amountOfGuest)){
+         reservation.setGroupSize(amountOfGuest);
+        }
+        reservation.push();
+        writeReservationInfo(reservation);
     }
-*/
+    
+
+    @FXML
+    void switchToPayment(MouseEvent event) {
+        PaymentController reservationLookupController =
+        (PaymentController) switchScene(FXMLPaths.PAYMENT, event);
+        reservationLookupController.writePayment(reservation);
+        switchScene(FXMLPaths.PAYMENT, event);
+    }
+     @FXML
+    void ChangedRoomType(ActionEvent event) {
+        change.setDisable(true);
+    }
+
+    public void updateRoomChoices(){
+        RoomType temp = RoomSelection.getValue();
+        RoomSelection.getItems().clear();
+        switch (GroupSize.toRoomTypes(amountOfGuest)[0]){
+            case DBL:
+                RoomSelection.getItems().add(RoomType.DBL);
+            case QUEEN:
+                RoomSelection.getItems().add(RoomType.QUEEN);
+                RoomSelection.getItems().add(RoomType.KING);
+            case SUITE:
+                RoomSelection.getItems().add(RoomType.SUITE);
+        }
+        RoomSelection.setValue(temp);
+    }
 }

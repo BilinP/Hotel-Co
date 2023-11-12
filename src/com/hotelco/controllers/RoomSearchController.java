@@ -1,11 +1,18 @@
 package com.hotelco.controllers;
 
+import java.io.IOException;
+import java.text.Format;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+import javax.mail.MessagingException;
+import javax.swing.text.DateFormatter;
 
 import com.hotelco.constants.Constants;
 import com.hotelco.constants.RoomType;
 import com.hotelco.entities.*;
 import com.hotelco.utilities.FXMLPaths;
+import com.hotelco.utilities.SendMail;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -150,7 +157,6 @@ public class RoomSearchController extends BaseController {
             return;
         }
         notification.setText("");
-
         if(numGuests > 0 && numGuests <= Constants.CAPACITIES.get(RoomType.DBL)) {
             dbl.setDisable(!ReservationSystem.checkAvailability(start, end, RoomType.DBL));
         }
@@ -175,9 +181,13 @@ public class RoomSearchController extends BaseController {
      */
     @FXML
     private void createBooking(MouseEvent event) {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yy");
+        String subject = null;
+        String message = null;
         Button pressedButton = (Button) event.getSource();
         //Use this String to figure out which button the user pressed
         String roomType = (String) pressedButton.getUserData();
+
         //For next sprint, implement payment right about here
         Room room = new Room(
             ReservationSystem.findEmptyRoom(
@@ -192,6 +202,25 @@ public class RoomSearchController extends BaseController {
         will appear in the payController*/
         
         ReservationSystem.book();
+        subject = "Reservation confirmation";
+        message = "Hello " + reservation.getUser().getFirstName() + " " +
+            reservation.getUser().getLastName() +
+            ", and thank you for booking with Hotel Co.\n\n" +
+            "Please find your booking details below:\n\n" +
+            "Reservation number: " + reservation.getReservationId() +
+            "\nStart Date: "  + reservation.getStartDate().format(dateTimeFormatter) +
+            "\nEnd Date: "  + reservation.getEndDate().format(dateTimeFormatter) +
+            "\nNumber of guests: "  + reservation.getGroupSize() +
+            "\nRoom type: "  + reservation.getRoom().getRoomType().toPrettyString() +
+            "\n\nWe hope you thoroughly enjoy your stay with us." +
+            "\n\n\t\tSincerely,\n\t\t\tHotel Co.";
+            try {
+                SendMail.startSend(
+                    reservation.getUser().getEmail(), subject, message);
+            }
+            catch(MessagingException | IOException e){
+                System.out.println(e);
+            }
         reservation = ReservationSystem.getCurrentReservation();
         ThankYouController thankYouController =
             (ThankYouController) switchScene(FXMLPaths.THANK_YOU, event);
@@ -245,5 +274,4 @@ public class RoomSearchController extends BaseController {
             button.setDisable(true);
         }
     }
-
 }
