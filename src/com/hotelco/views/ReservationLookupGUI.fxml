@@ -37,6 +37,7 @@
                   <Insets bottom="15.0" top="25.0" />
                </VBox.margin>
             </Button>
+            <Button mnemonicParsing="false" style="-fx-background-color: green;" text="Check Out" textFill="WHITE" />
             <VBox fx:id="vBox" alignment="CENTER" maxWidth="600.0">
                <VBox.margin>
                   <Insets />

@@ -198,7 +198,7 @@ public class ReservationLookupController extends BaseController {
     @FXML
     void decreaseGuest(MouseEvent event) {
         amountOfGuest--;
-        guestNumber.setText("Guest: "+ Integer.toString(amountOfGuest));
+        guestNumber.setText("Guests: "+ Integer.toString(amountOfGuest));
 
     }
 
@@ -225,6 +225,12 @@ public class ReservationLookupController extends BaseController {
         }
         reservation.push();
         writeReservationInfo(reservation);
+    }
+    
+
+    @FXML
+    void switchToPayment(MouseEvent event) {
+        switchScene(FXMLPaths.PAYMENT, event);
     }
 
     /* I'm thinking there should be a dropdown that dynamically populates with
