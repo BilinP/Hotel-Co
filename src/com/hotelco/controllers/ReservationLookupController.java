@@ -10,6 +10,7 @@ import com.hotelco.entities.ReservationSystem;
 import com.hotelco.utilities.FXMLPaths;
 import com.hotelco.utilities.GroupSize;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -248,6 +249,10 @@ public class ReservationLookupController extends BaseController {
         (PaymentController) switchScene(FXMLPaths.PAYMENT, event);
         reservationLookupController.writePayment(reservation);
         switchScene(FXMLPaths.PAYMENT, event);
+    }
+     @FXML
+    void ChangedRoomType(ActionEvent event) {
+        change.setDisable(true);
     }
 
     public void updateRoomChoices(){
