@@ -21,7 +21,7 @@ public class ReservationLookupController extends BaseController {
 
 
     @FXML
-    private ComboBox<?> RoomSelection;
+    private ComboBox<RoomType> RoomSelection;
 
     /**
      * Text containing the ID of the reservation being viewed.
@@ -70,6 +70,8 @@ public class ReservationLookupController extends BaseController {
 
     @FXML
     private DatePicker checkOutChange;
+    
+    
 
     //@FXML
     //private Text guestsChange;
@@ -81,12 +83,15 @@ public class ReservationLookupController extends BaseController {
     private Button change;
     @FXML
     private Button check;
+    @FXML
+    private Text roomtype;
 
     /**
      * Instance of current Reservation being viewed.
      */
     private Reservation reservation;
     private int amountOfGuest;
+
 
    
 
@@ -131,12 +136,15 @@ public class ReservationLookupController extends BaseController {
             vBox.getChildren().remove(cancel);
         }
         else {
-            status.setText("Active");
+            status.setText("Status: Active");
         }        
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         checkInDate.setText(reservation.getStartDate().format(dateTimeFormatter));
         checkOutDate.setText(reservation.getEndDate().format(dateTimeFormatter));
         amountOfGuest=reservation.getGroupSize();
+        roomtype.setText("Room Type:"+ reservation.getRoom().getRoomType().toString());
+        RoomSelection.getItems().addAll(RoomType.values());
+        RoomSelection.getSelectionModel().select(reservation.getRoom().getRoomType());
         guestNumber.setText("Guest: "+ Integer.toString(amountOfGuest));
         checkInChange.setValue(reservation.getStartDate());
         checkOutChange.setValue(reservation.getEndDate());
@@ -190,21 +198,33 @@ public class ReservationLookupController extends BaseController {
     @FXML
     void decreaseGuest(MouseEvent event) {
         amountOfGuest--;
-        guestNumber.setText(Integer.toString(amountOfGuest));
+        guestNumber.setText("Guest: "+ Integer.toString(amountOfGuest));
 
     }
 
     @FXML
     void increaseGuest(MouseEvent event) {
         amountOfGuest++;
-        guestNumber.setText(Integer.toString(amountOfGuest));
+        guestNumber.setText("Guest: "+Integer.toString(amountOfGuest));
         
     }
 
     @FXML
     void ChangeRoom(MouseEvent event) {
-        
+        if(!(reservation.getRoom().getRoomType().equals(RoomSelection.getValue()))){
+         reservation.getRoom().setRoomType(RoomSelection.getValue());
+        }
+         reservation.push();
+        writeReservationInfo(reservation);
+    }
 
+    @FXML
+    void updateGuest(MouseEvent event) {
+        if(!(reservation.getGroupSize()==amountOfGuest)){
+         reservation.setGroupSize(amountOfGuest);
+        }
+        reservation.push();
+        writeReservationInfo(reservation);
     }
 
     /* I'm thinking there should be a dropdown that dynamically populates with

@@ -43,7 +43,7 @@ public class Main extends Application {
 		}
 	}
 	
-	public static void main(String[] args) throws AddressException, MessagingException, IOException {
+	 /**public static void main(String[] args) throws AddressException, MessagingException, IOException {
 		String[] testargs = {"bilin.pattasseril.563@my.csun.edu", "for realsy", "we won a award!"};
 		
 		SendMail.startSend(testargs[0], testargs[1], testargs[2]);
@@ -51,5 +51,5 @@ public class Main extends Application {
 		FrequentTask.scheduleFrequentTasks();
 		launch(args);
 	}
-	
+	**/
 }

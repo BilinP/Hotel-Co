@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane style="-fx-background-color: #3c4149;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hotelco.controllers.ReservationLookupController">
+<BorderPane style="-fx-background-color: #3c4149;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hotelco.controllers.ReservationLookupController">
    <center>
       <VBox alignment="CENTER" BorderPane.alignment="CENTER">
          <children>
@@ -78,7 +78,7 @@
                      <children>
                         <VBox prefHeight="32.0" prefWidth="29.0">
                            <children>
-                              <Text fill="WHITE" onMouseReleased="#decreaseGuest" rotate="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;" wrappingWidth="20.8756103515625">
+                              <Text fill="WHITE" onMouseReleased="#increaseGuest" rotate="90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;" wrappingWidth="20.8756103515625">
                                  <font>
                                     <Font name="System Bold" size="24.0" />
                                  </font>
@@ -108,7 +108,7 @@
                         </VBox>
                         <VBox prefHeight="32.0" prefWidth="32.0">
                            <children>
-                              <Text fill="WHITE" onMouseReleased="#increaseGuest" rotate="-90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;" wrappingWidth="20.8756103515625">
+                              <Text fill="WHITE" onMouseReleased="#decreaseGuest" rotate="-90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="&lt;" wrappingWidth="20.8756103515625">
                                  <font>
                                     <Font name="System Bold" size="24.0" />
                                  </font>
@@ -118,6 +118,7 @@
                               </Text>
                            </children>
                         </VBox>
+                        <Button mnemonicParsing="false" onMouseReleased="#updateGuest" text="Update Guests" />
                      </children>
                   </HBox>
                   <HBox prefHeight="100.0" prefWidth="200.0">
@@ -162,7 +163,7 @@
                               <ComboBox fx:id="RoomSelection" prefWidth="150.0" promptText="Change Room Type" />
                               <Button mnemonicParsing="false" onMouseReleased="#ChangeRoom" text="Change Room">
                                  <VBox.margin>
-                                    <Insets left="30.0" top="40.0" />
+                                    <Insets left="30.0" top="20.0" />
                                  </VBox.margin>
                               </Button>
                            </children>
