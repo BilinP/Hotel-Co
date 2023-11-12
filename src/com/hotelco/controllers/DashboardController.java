@@ -10,7 +10,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 
 
 /**
@@ -28,16 +27,10 @@ public class DashboardController extends BaseController {
     private Button bookRoomButton;
 
     @FXML
-    private BorderPane borderPane;
-
-    @FXML
     private Button cartButton;
 
     @FXML
     private Button homeButton;
-
-    @FXML
-    private AnchorPane leftAnchor;
 
     @FXML
     private Button profileButton;
@@ -53,7 +46,7 @@ public class DashboardController extends BaseController {
     @FXML
     private void initialize() {
         //add non JavaFX related code here
-         switchAnchor(FXMLPaths.NEWMENU);
+         switchAnchor(FXMLPaths.MENU);
          menubuttons[0] = bookRoomButton;
          menubuttons[1] = cartButton;
          menubuttons[2] = homeButton;
@@ -80,7 +73,7 @@ public class DashboardController extends BaseController {
      */
     @FXML
     private void switchToMenu(MouseEvent event) {
-       switchAnchor(FXMLPaths.NEWMENU);
+       switchAnchor(FXMLPaths.MENU);
        buttonSelection(homeButton);
     }
 
@@ -92,20 +85,22 @@ public class DashboardController extends BaseController {
 
     @FXML
     void switchToReservationHistory(MouseEvent event) {
+        switchAnchor(FXMLPaths.RHGUI);
         buttonSelection(viewBookingButton);
     }
 
     @FXML
     void switchToRoomSearch(MouseEvent event) {
+        switchAnchor(FXMLPaths.ROOMS);
         buttonSelection(bookRoomButton);
     }
 
     private void buttonSelection(Button selectedButton){
         for(Button button: menubuttons){
             if(button!= null && button.equals(selectedButton)){
-                button.setStyle("-fx-text-fill: #3c4149;-fx-background-color:#f9bd1a;-fx-border-color: black;");
+                button.setStyle("-fx-text-fill: #3c4149;-fx-background-color:#f9bd1a;-fx-border-color: transparent;");
             }else if (button!=null){
-                button.setStyle("-fx-text-fill: #f9bd1a;-fx-background-color:#3c4149;-fx-border-color: black;");
+                button.setStyle("-fx-text-fill: #f9bd1a;-fx-background-color:#3c4149;-fx-border-color: transparent;");
             }
         }
 
