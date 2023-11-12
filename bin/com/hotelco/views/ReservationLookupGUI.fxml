@@ -161,7 +161,7 @@
                               <Insets left="30.0" />
                            </padding>
                            <children>
-                              <ComboBox fx:id="RoomSelection" prefWidth="150.0" promptText="Change Room Type" />
+                              <ComboBox fx:id="RoomSelection" onAction="#ChangedRoomType" prefWidth="150.0" promptText="Change Room Type" />
                               <Button mnemonicParsing="false" onMouseReleased="#ChangeRoom" text="Change Room">
                                  <VBox.margin>
                                     <Insets left="30.0" top="20.0" />

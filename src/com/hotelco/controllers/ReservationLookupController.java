@@ -8,6 +8,7 @@ import com.hotelco.entities.Reservation;
 import com.hotelco.entities.ReservationSystem;
 import com.hotelco.utilities.FXMLPaths;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -234,6 +235,10 @@ public class ReservationLookupController extends BaseController {
         (PaymentController) switchScene(FXMLPaths.PAYMENT, event);
         reservationLookupController.writePayment(reservation);
         switchScene(FXMLPaths.PAYMENT, event);
+    }
+     @FXML
+    void ChangedRoomType(ActionEvent event) {
+        change.setDisable(true);
     }
 
     /* I'm thinking there should be a dropdown that dynamically populates with
