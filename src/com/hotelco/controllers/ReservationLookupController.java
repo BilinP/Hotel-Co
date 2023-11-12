@@ -200,18 +200,12 @@ public class ReservationLookupController extends BaseController {
 
     @FXML
     void decreaseGuest(MouseEvent event) {
-<<<<<<< Updated upstream
-        amountOfGuest--;
-        guestNumber.setText("Guests: "+ Integer.toString(amountOfGuest));
-
-=======
         if (amountOfGuest > 1) {
             --amountOfGuest;
             updateRoomChoices();
             guestNumber.setText("Guest: "+ Integer.toString(amountOfGuest));
             change.setDisable(true);
         }
->>>>>>> Stashed changes
     }
 
     @FXML
