@@ -230,6 +230,9 @@ public class ReservationLookupController extends BaseController {
 
     @FXML
     void switchToPayment(MouseEvent event) {
+        PaymentController reservationLookupController =
+        (PaymentController) switchScene(FXMLPaths.PAYMENT, event);
+        reservationLookupController.writePayment(reservation);
         switchScene(FXMLPaths.PAYMENT, event);
     }
 
