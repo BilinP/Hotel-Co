@@ -3,10 +3,12 @@ package com.hotelco.controllers;
 import com.hotelco.constants.CreditCardType;
 import com.hotelco.constants.RoomType;
 import com.hotelco.entities.CreditCard;
+import com.hotelco.entities.Payment;
 import com.hotelco.entities.Reservation;
 import com.hotelco.entities.ReservationSystem;
 import com.hotelco.utilities.FXMLPaths;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
@@ -31,16 +33,24 @@ public class PaymentController extends BaseController{
     @FXML
     private ChoiceBox<CreditCardType> cardType;
 
-    
-    @FXML
-    void initialize() {
+    private Reservation reservation;
+
+
+    public void writePayment(Reservation reservation){
         cardType.getItems().addAll(CreditCardType.values());
+        this.reservation=reservation;
+        Payment pay= new Payment(reservation);
+        due.setText("Totel Due: "+ pay.getAmount().toString());
+
     }
 
     @FXML
     void payment(MouseEvent event) {
-        Reservation reservation=ReservationSystem.getCurrentReservation(); 
         CreditCard card= new CreditCard(creditCardNum.getText(), CVV.getText(), expDate.getValue(), cardType.getValue(), reservation.getUser());
+        if(card.verify()){
+        card.assign();
+        switchScene(FXMLPaths.THANK_YOU, event);
+        }
     }
 
     @FXML
