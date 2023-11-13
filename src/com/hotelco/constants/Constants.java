@@ -40,7 +40,7 @@ public final class Constants {
     /**
      * Interval for closing and reopening database connection
      */
-    public static final Integer RECONNECT_INTERVAL = 1200000;
+    public static final Integer RECONNECT_INTERVAL = 1 * MsTime.MINUTE;
     /**
      * Interval for attempting to close and reopen database connection after
      * failed attempt to do so
