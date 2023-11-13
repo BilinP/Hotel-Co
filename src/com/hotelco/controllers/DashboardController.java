@@ -1,7 +1,7 @@
 package com.hotelco.controllers;
 import java.io.IOException;
 
-
+import com.hotelco.entities.ReservationSystem;
 import com.hotelco.utilities.FXMLPaths;
 
 import javafx.application.Platform;
@@ -77,6 +77,11 @@ public class DashboardController extends BaseController {
        buttonSelection(homeButton);
     }
 
+    @FXML
+    void switchToLoginScene(MouseEvent event) {
+        ReservationSystem.logout();
+        switchScene(FXMLPaths.LOGIN, event);
+    }
 
     @FXML
     void switchToProfile(MouseEvent event) {
