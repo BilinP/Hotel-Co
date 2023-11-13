@@ -38,3 +38,7 @@
 .table-view .virtual-flow .scroll-bar:horizontal .track-background {
     -fx-background-color: transparent;
 }
+
+.table-view .column-header .arrow {
+    -fx-background-color: white;
+}
