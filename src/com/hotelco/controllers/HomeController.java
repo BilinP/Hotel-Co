@@ -10,7 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 /**
- * The HomeController class is the associated controller class of the 'NewMenu' view. 
+ * The HomeController class is the associated controller class of the 'HomeGUI' view. 
  * It handles connection between the GUI and internal data.
  * 
  * @author      Grigor Azakian 
