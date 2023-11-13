@@ -12,7 +12,7 @@
    <children>
       <VBox prefHeight="700.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Text fill="#f9bd1a" strokeType="OUTSIDE" strokeWidth="0.0" text="Order History">
+            <Text fill="#f9bd1a" strokeType="OUTSIDE" strokeWidth="0.0" text="Reservation History">
                <font>
                   <Font size="64.0" />
                </font>
@@ -22,8 +22,8 @@
             </Text>
             <TableView fx:id="table" prefHeight="554.0" prefWidth="900.0" style="-fx-background-color: transparent;" stylesheets="@../stylesheets/ReservationHistorySS.css">
               <columns>
+                <TableColumn fx:id="orderNumber" editable="false" prefWidth="71.0" text="Reservation Number" />
                 <TableColumn fx:id="roomType" editable="false" prefWidth="79.0" text="Room Type" />
-                <TableColumn fx:id="orderNumber" editable="false" prefWidth="71.0" text="Order Number" />
                   <TableColumn fx:id="checkInDate" editable="false" prefWidth="75.0" text="Check In" />
                   <TableColumn fx:id="checkOutDate" editable="false" prefWidth="75.0" text="Check Out" />
                   <TableColumn fx:id="status" editable="false" prefWidth="75.0" text="Status" />
