@@ -102,7 +102,7 @@ public class ReservationHistoryController extends BaseController {
      */
     @FXML
     private void switchToMenuScene(MouseEvent event) {
-        switchScene(FXMLPaths.MENU, event);
+        switchScene(FXMLPaths.HOME, event);
     }
 
     /**

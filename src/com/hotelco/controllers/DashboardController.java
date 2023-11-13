@@ -46,7 +46,7 @@ public class DashboardController extends BaseController {
     @FXML
     private void initialize() {
         //add non JavaFX related code here
-         switchAnchor(FXMLPaths.MENU);
+         switchAnchor(FXMLPaths.HOME);
          menubuttons[0] = bookRoomButton;
          menubuttons[1] = cartButton;
          menubuttons[2] = homeButton;
@@ -73,7 +73,7 @@ public class DashboardController extends BaseController {
      */
     @FXML
     private void switchToMenu(MouseEvent event) {
-       switchAnchor(FXMLPaths.MENU);
+       switchAnchor(FXMLPaths.HOME);
        buttonSelection(homeButton);
     }
 
