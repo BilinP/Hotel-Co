@@ -48,7 +48,10 @@ public class RHController extends BaseController {
             orderNumber.setCellValueFactory(new PropertyValueFactory<Reservation, Integer>("reservationId"));
             checkInDate.setCellValueFactory(new PropertyValueFactory<Reservation, LocalDate>("startDate"));
             checkOutDate.setCellValueFactory(new PropertyValueFactory<Reservation, LocalDate>("endDate"));
-            status.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getIsCancelled() ? "Cancelled" : "Active"));
+            status.setCellValueFactory(cell -> new SimpleStringProperty(
+                cell.getValue().getIsCancelled() ? "Cancelled" :
+                cell.getValue().getEndDate().isBefore(LocalDate.now()) ? "Completed" : 
+                "Active"));
             //unimplemented
             total.setCellValueFactory(new PropertyValueFactory<Reservation, String>(null));
             table.addEventFilter(MouseEvent.MOUSE_DRAGGED, Event::consume);
