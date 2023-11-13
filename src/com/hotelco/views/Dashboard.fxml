@@ -51,7 +51,7 @@
                         <Insets left="90.0" />
                      </padding>
                   </Button>
-                  <Button fx:id="viewBookingButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseReleased="#switchToReservationHistory" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: transparent;" text="View Booking" textFill="#f9bd1a">
+                  <Button fx:id="viewBookingButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseReleased="#switchToReservationHistory" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: transparent;" text="Reservation History" textFill="#f9bd1a">
                      <font>
                         <Font size="18.0" />
                      </font>
