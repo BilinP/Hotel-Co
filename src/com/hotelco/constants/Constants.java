@@ -50,4 +50,39 @@ public final class Constants {
      * Tax rate multiplier on the weekends
      */
     public static final BigDecimal WEEKEND_MULTIPLIER = new BigDecimal("1.2");
+    /**
+     * Flavor text for the double room
+     */
+    public static final String DblRoomFlavor = "\t- Free WiFi\n\n" +
+                                                "\t- Free Self Parking\n\n" +
+                                                "\t- Shower\n\n" +
+                                                "\t- 2 Double Beds" +
+                                                "\t- 500 sqft";
+    /**
+     * Flavor text for the queen room
+     */
+    public static final String QueenRoomFlavor = "\t- Free WiFi\n\n" +
+                                                "\t- Free Self Parking\n\n" +
+                                                "\t- Shower/Tub Combination\n\n" +
+                                                "\t- 2 Queen Beds" +
+                                                "\t- 700 sqft";
+    /**
+     * Flavor text for the king room
+     */
+    public static final String KingRoomFlavor = "\t- Free WiFi\n\n" +
+                                                "\t- Free Self Parking\n\n" +
+                                                "\t- Shower/Tub Combination\n\n" +
+                                                "\t- Foldable Couch\n\n" +
+                                                "\t- 1 King Bed" +
+                                                "\t- 950 sqft";
+    /**
+     * Flavor text for the suite room
+     */
+    public static final String SuiteRoomFlavor = "\t- Free WiFi\n\n" +
+                                                "\t- Free Self Parking\n\n" +
+                                                "\t- Shower/Tub Combination\n\n" +
+                                                "\t- Foldable Couch\n\n" +
+                                                "\t- Panoramic View\n\n" +
+                                                "\t- 1 King Beds" +
+                                                "\t- 1300 sqft";
 }
