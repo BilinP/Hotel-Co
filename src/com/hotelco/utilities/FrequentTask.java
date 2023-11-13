@@ -21,6 +21,7 @@ public class FrequentTask {
 
     class DatabaseReconnectTask extends TimerTask {
         public void run() {
+            System.out.println("Reconnecting database");
             //check if system is ready, i.e. there is no active processing
             if (ReservationSystem.isReady()){
                 Connection con = ReservationSystem.getDatabaseConnection();
