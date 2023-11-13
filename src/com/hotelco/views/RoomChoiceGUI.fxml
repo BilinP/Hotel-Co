@@ -55,7 +55,7 @@
                               <Insets />
                            </VBox.margin>
                         </Text>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="[PLACEHOLDER TEXT]">
+                        <Text fx:id="kingRate" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="[PLACEHOLDER TEXT]">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -113,7 +113,7 @@
                               <Font size="18.0" />
                            </font>
                         </Text>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="[PLACEHOLDER TEXT]">
+                        <Text fx:id="queenRate" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="[PLACEHOLDER TEXT]">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -174,7 +174,7 @@
                               <Font size="18.0" />
                            </font>
                         </Text>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="[PLACEHOLDER TEXT]">
+                        <Text fx:id="dblRate" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="[PLACEHOLDER TEXT]">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -232,7 +232,7 @@
                               <Font size="18.0" />
                            </font>
                         </Text>
-                        <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="[PLACEHOLDER TEXT]">
+                        <Text fx:id="suiteRate" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="[PLACEHOLDER TEXT]">
                            <font>
                               <Font size="14.0" />
                            </font>
