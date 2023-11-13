@@ -11,8 +11,10 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 /**
@@ -23,6 +25,12 @@ import javafx.scene.text.Text;
  * @version     %I%, %G%
  */
 public class CreateAccountController extends BaseController {
+
+        @FXML
+    private ImageView image;
+
+    @FXML
+    private ImageView imageRight;
 
     /**
      * TextField that contains the first name of the user.
@@ -77,6 +85,21 @@ public class CreateAccountController extends BaseController {
             phoneNumber.setTextFormatter(textFormatters.PHONE_NUMBER);
             firstName.setTextFormatter(textFormatters.FIRST_NAME);
             lastName.setTextFormatter(textFormatters.LAST_NAME);
+             Rectangle rectangle = new Rectangle(
+                image.getFitWidth(),
+                image.getFitHeight()
+           );
+
+            Rectangle clip = new Rectangle(
+                image.getFitWidth() / 2,
+                image.getFitHeight()
+           );
+
+            rectangle.setArcWidth(20);
+            rectangle.setArcHeight(20);
+            clip.setX(imageRight.getFitWidth() / 2);
+            image.setClip(rectangle);
+            imageRight.setClip(clip);
         });
     }
 
