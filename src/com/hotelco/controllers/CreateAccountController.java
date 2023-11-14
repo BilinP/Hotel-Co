@@ -91,13 +91,12 @@ public class CreateAccountController extends BaseController {
            );
 
             Rectangle clip = new Rectangle(
-                image.getFitWidth() / 2,
+                image.getFitWidth()/2,
                 image.getFitHeight()
            );
 
             rectangle.setArcWidth(20);
             rectangle.setArcHeight(20);
-            clip.setX(imageRight.getFitWidth() / 2);
             image.setClip(rectangle);
             imageRight.setClip(clip);
         });

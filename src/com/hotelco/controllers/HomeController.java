@@ -58,7 +58,7 @@ public class HomeController extends BaseController {
         fo.opacityProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                if(oldValue.doubleValue() > newValue.doubleValue() && newValue.doubleValue() <= 0.2) {
+                if(oldValue.doubleValue() > newValue.doubleValue() && newValue.doubleValue() <= 0.5) {
                     if (!isFadingIn) {
                         isFadingIn = true;
                         Image nextImage = images[0];
@@ -84,8 +84,9 @@ public class HomeController extends BaseController {
         fi.opacityProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                if(oldValue.doubleValue() > newValue.doubleValue() && newValue.doubleValue() <= 0.2) {
+                if(oldValue.doubleValue() > newValue.doubleValue() && newValue.doubleValue() <= 0.5) {
                     if (!isFadingIn) {
+
                         isFadingIn = true;
                         Image nextImage = images[0];
                         System.arraycopy(images, 1, images, 0, images.length - 1);

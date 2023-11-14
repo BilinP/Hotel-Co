@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #3c4149;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hotelco.controllers.HomeController">
+   <children>
+      <TextField editable="false" layoutX="135.0" layoutY="200.0" prefHeight="33.0" prefWidth="380.0" />
+      <TextField editable="false" layoutX="135.0" layoutY="265.0" prefHeight="33.0" prefWidth="380.0" />
+      <TextField editable="false" layoutX="135.0" layoutY="333.0" prefHeight="33.0" prefWidth="380.0" />
+      <TextField editable="false" layoutX="135.0" layoutY="409.0" prefHeight="33.0" prefWidth="380.0" />
+      <TextField editable="false" layoutX="135.0" layoutY="482.0" prefHeight="33.0" prefWidth="380.0" />
+      <Text fill="#f9bd1a" layoutX="21.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Reservation History">
+         <font>
+            <Font size="64.0" />
+         </font>
+      </Text>
+      <Text fill="#f9bd1a" layoutX="135.0" layoutY="196.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Full Name" />
+   </children>
+</AnchorPane>
