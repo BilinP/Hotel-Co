@@ -95,8 +95,8 @@ public class CreateAccountController extends BaseController {
                 image.getFitHeight()
            );
 
-            rectangle.setArcWidth(20);
-            rectangle.setArcHeight(20);
+            rectangle.setArcWidth(50);
+            rectangle.setArcHeight(50);
             image.setClip(rectangle);
             imageRight.setClip(clip);
         });
