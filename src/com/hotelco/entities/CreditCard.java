@@ -156,6 +156,20 @@ public class CreditCard{
         return (totalSum % 10 == 0);
     }
     /**
+     * Checks if the CVV number matches the card type's requirements, only use
+     * after credit type is set
+     * @return true if cvv card requirements are met
+     */
+    public boolean cvvCheck(){
+
+        Integer cvvNumLen = cvvNum.length();
+        if (cvvNumLen == 4 && getCreditCardType() == CreditCardType.AMEX)
+        return true;
+        else if (cvvNumLen == 3 && getCreditCardType() != CreditCardType.AMEX)
+        return true;
+        return false;
+    }
+    /**
      * Verifies the credit card is a valid type of card, passes Luhn algorithm check,
      * and is not expired
      * @return true if credit card is possibly valid, false if it cannot be valid
@@ -164,7 +178,8 @@ public class CreditCard{
         setValidCardType();
         return creditCardType != null &&
             luhnCheck() &&
-            expDate.isAfter(LocalDate.now());
+            expDate.isAfter(LocalDate.now()) &&
+            cvvCheck();
     }
     /**
      * Database push function that assigns a credit card to CreditCard's user.
