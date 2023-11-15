@@ -86,6 +86,7 @@ public class DashboardController extends BaseController {
     @FXML
     void switchToProfile(MouseEvent event) {
         buttonSelection(profileButton);
+        switchAnchor(FXMLPaths.PROFILE);
     }
 
     @FXML
