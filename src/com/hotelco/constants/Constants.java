@@ -40,12 +40,12 @@ public final class Constants {
     /**
      * Interval for closing and reopening database connection
      */
-    public static final Integer RECONNECT_INTERVAL = 1 * MsTime.MINUTE;
+    public static final Integer RECONNECT_INTERVAL = 20 * MsTime.MINUTE;
     /**
      * Interval for attempting to close and reopen database connection after
      * failed attempt to do so
      */
-    public static final Integer RETRY_INTERVAL = 30000;
+    public static final Integer RETRY_INTERVAL = 30 * MsTime.SECOND;
     /**
      * Tax rate multiplier on the weekends
      */

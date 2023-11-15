@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane prefHeight="800.0" prefWidth="1300.0" styleClass="background" stylesheets="@../stylesheets/LoginSS.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hotelco.controllers.DashboardController">
+<StackPane prefHeight="800.0" prefWidth="1300.0" styleClass="background" stylesheets="@../stylesheets/LoginSS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hotelco.controllers.DashboardController">
    <children>
       <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0">
          <right>
@@ -69,7 +69,7 @@
                   </Button>
                   <VBox alignment="BOTTOM_CENTER" VBox.vgrow="ALWAYS">
                      <children>
-                        <Button mnemonicParsing="false" onMouseReleased="#switchToLoginScene" prefHeight="30.0" prefWidth="218.0" style="-fx-cursor: HAND; -fx-background-color: #209FEE;" text="LOG OUT" textFill="WHITE">
+                        <Button mnemonicParsing="false" onMouseReleased="#switchToLoginScene" prefHeight="30.0" prefWidth="218.0" style="-fx-cursor: HAND; -fx-background-color: #FA1744;" text="LOG OUT" textFill="WHITE">
                            <font>
                               <Font name="Britannic Bold" size="12.0" />
                            </font>
