@@ -68,8 +68,8 @@ public class LoginController extends BaseController {
                 image.getFitHeight()
            );
 
-            rectangle.setArcWidth(20);
-            rectangle.setArcHeight(20);
+            rectangle.setArcWidth(50);
+            rectangle.setArcHeight(50);
             clip.setX(imageRight.getFitWidth() / 2);
             image.setClip(rectangle);
             imageRight.setClip(clip);

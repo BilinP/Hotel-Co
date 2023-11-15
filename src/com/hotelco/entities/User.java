@@ -108,6 +108,11 @@ public class User {
      */
     public String getEmail(){return email;}
     /**
+     * Gets the phone number associated with this user.
+     * @return the phone number associated with this user.
+     */
+    public String getPhone(){return phone;}
+    /**
      * Gets the employee status associated with this user.
      * @return the employee status associated with this user
      */
@@ -196,6 +201,11 @@ public class User {
      * @param newEmail email to be associated with this user
      */
     public void setEmail(String newEmail){email = newEmail;}
+    /**
+     * Sets phone number to be associated with this user.
+     * @param newPhone phone number to be associated with this user.
+     */
+    public void setPhone(String newPhone){phone = newPhone;}
     /**
      * Sets reservations to be associated with this user.
      * @param newReservations reservations to be associated with this user

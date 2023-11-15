@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 /**
@@ -146,6 +147,33 @@ public class ReservationSystem {
         ready();
         return result;
     }
+    /**
+     * Checks the database for room availability by room type, on each and every
+     * day in a range. Not very efficient, but for a maximum range of one month,
+     * it will be sufficiently fast for the user.
+     * 
+     * @param startDate beginning of desired availabilities range
+     * @param endDate end of desired availabilities range
+     * @param roomType room type for which to check availability
+     * @return an ordered array of availibitilies. Element 0 is the availibility
+     * on the startDate, element n is the availibility n days after startDate.
+     */
+    public static Boolean[] getAvailabilities(
+            LocalDate startDate, LocalDate endDate, RoomType roomType){
+        Integer periodLen = new BigDecimal(
+            ChronoUnit.DAYS.between(startDate, endDate)).intValueExact();
+        Boolean[] result = new Boolean[periodLen];
+        LocalDate checkDate = startDate;
+        LocalDate nextDate;
+
+        for (Integer i = 0; i < periodLen; i++){
+            nextDate = checkDate.plusDays(1);
+            result[i] = checkAvailability(checkDate, nextDate, roomType);
+            checkDate = nextDate;
+        }
+        return result;
+    }
+
     /**
      * Checks how many rooms are currently occupied.
      * @param startDate
@@ -400,11 +428,15 @@ public class ReservationSystem {
         Payment payment = new Payment(reservation);
         return payment.getPaymentId() != null;
     }
-
+    /**
+     * Sets the Database status as READY
+     */
     public static void ready(){
         ReservationSystem.setDatabaseStatus(DatabaseStatus.READY);
     }
-
+    /**
+     * Sets the Database status as PROCESSING
+     */
     public static void processing(){
         ReservationSystem.setDatabaseStatus(DatabaseStatus.PROCESSING);
     }

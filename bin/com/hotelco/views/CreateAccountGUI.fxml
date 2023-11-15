@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -10,11 +11,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="728.0" prefWidth="996.0" styleClass="background" stylesheets="@../stylesheets/LoginSS.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hotelco.controllers.CreateAccountController">
+<BorderPane prefHeight="728.0" prefWidth="996.0" styleClass="background" stylesheets="@../stylesheets/LoginSS.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hotelco.controllers.CreateAccountController">
    <center>
       <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0">
          <left>
-            <AnchorPane prefHeight="500.0" prefWidth="350.0" style="-fx-background-color: #3c4149;" BorderPane.alignment="CENTER">
+            <AnchorPane prefHeight="500.0" prefWidth="350.0" style="-fx-background-color: #3c4149; -fx-background-radius: 27 0 0 27;" BorderPane.alignment="CENTER">
                <children>
                   <PasswordField fx:id="password" focusTraversable="false" layoutX="68.0" layoutY="289.0" prefHeight="29.0" prefWidth="216.0" promptText="Password" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-border-color: white; -fx-border-width: 0 0 4 0;" />
                   <Text fill="#f9bd1a" layoutX="128.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Register">
@@ -60,6 +61,9 @@
                   </ImageView>
                </children></AnchorPane>
          </right>
+         <effect>
+            <DropShadow blurType="GAUSSIAN" height="67.41" radius="33.205" spread="0.06" width="67.41" />
+         </effect>
       </BorderPane>
    </center>
 </BorderPane>

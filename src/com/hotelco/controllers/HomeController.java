@@ -1,6 +1,7 @@
 package com.hotelco.controllers;
 
 import javafx.animation.FadeTransition;
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -51,14 +52,18 @@ public class HomeController extends BaseController {
         FadeTransition fadeOut = new FadeTransition(Duration.millis(3000), fo);
         fadeOut.setFromValue(1.0);
         fadeOut.setToValue(0.0);
-        fadeOut.play();
+        PauseTransition pauseTransition = new PauseTransition(Duration.millis(1800));
+        pauseTransition.setOnFinished(e -> {
+            fadeOut.play();
+        });
+        pauseTransition.play();
     }
 
     private void setChangeListeners(Image images[]) {
         fo.opacityProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                if(oldValue.doubleValue() > newValue.doubleValue() && newValue.doubleValue() <= 0.2) {
+                if(oldValue.doubleValue() > newValue.doubleValue() && newValue.doubleValue() <= 0.65) {
                     if (!isFadingIn) {
                         isFadingIn = true;
                         Image nextImage = images[0];
@@ -66,9 +71,13 @@ public class HomeController extends BaseController {
                         images[images.length - 1] = nextImage;
                         fi.setImage(nextImage);
                         FadeTransition fadeIn = new FadeTransition(Duration.millis(3000), fi);
+                        PauseTransition pauseTransition = new PauseTransition(Duration.seconds(1.65));
                         fadeIn.setFromValue(0.0);
                         fadeIn.setToValue(1.0);
                         fadeIn.setOnFinished(e -> {
+                            pauseTransition.play();
+                        });
+                        pauseTransition.setOnFinished(e -> {
                             isFadingIn = false;
                             FadeTransition fadeOut = new FadeTransition(Duration.millis(3000), fi);
                             fadeOut.setFromValue(1.0);
@@ -84,7 +93,7 @@ public class HomeController extends BaseController {
         fi.opacityProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                if(oldValue.doubleValue() > newValue.doubleValue() && newValue.doubleValue() <= 0.2) {
+                if(oldValue.doubleValue() > newValue.doubleValue() && newValue.doubleValue() <= 0.65) {
                     if (!isFadingIn) {
                         isFadingIn = true;
                         Image nextImage = images[0];
@@ -92,14 +101,18 @@ public class HomeController extends BaseController {
                         images[images.length - 1] = nextImage;
                         fo.setImage(nextImage);
                         FadeTransition fadeIn = new FadeTransition(Duration.millis(3000), fo);
+                        PauseTransition pauseTransition = new PauseTransition(Duration.seconds(1.65));
                         fadeIn.setFromValue(0.0);
                         fadeIn.setToValue(1.0);
                         fadeIn.setOnFinished(e -> {
+                            pauseTransition.play();
+                        });
+                        pauseTransition.setOnFinished(e -> {
                             isFadingIn = false;
                             FadeTransition fadeOut = new FadeTransition(Duration.millis(3000), fo);
                             fadeOut.setFromValue(1.0);
                             fadeOut.setToValue(0.0);
-                            fadeOut.play();
+                            fadeOut.play();                            
                         });
                         fadeIn.play();
                     }

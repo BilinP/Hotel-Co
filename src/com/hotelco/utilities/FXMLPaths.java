@@ -18,4 +18,5 @@ public class FXMLPaths {
     public static final String ROOMS = "/com/hotelco/views/RoomChoiceGUI.fxml";
     public static final String RHGUI = "/com/hotelco/views/ReservationHistoryGUI.fxml";
     public static final String PAYMENT=  "/com/hotelco/views/Payment.fxml";
+    public static final String PROFILE=  "/com/hotelco/views/Profile.fxml";
 }

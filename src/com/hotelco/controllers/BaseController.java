@@ -32,7 +32,9 @@ public class BaseController  {
             stage.setResizable(false);
             stage.setScene(scene);
             stage.show();
+            //stage.setFullScreen(true);
             return loader.getController();
+            
         } catch (Exception e) {
             e.printStackTrace();
         }

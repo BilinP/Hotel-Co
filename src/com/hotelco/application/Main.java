@@ -1,10 +1,13 @@
 package com.hotelco.application;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 
+import com.hotelco.constants.RoomType;
+import com.hotelco.entities.ReservationSystem;
 import com.hotelco.utilities.DailyTask;
 import com.hotelco.utilities.FXMLPaths;
 import com.hotelco.utilities.FrequentTask;
@@ -27,6 +30,7 @@ public class Main extends Application {
 		try {
 			DailyTask.scheduleDailyTasks();
 			FrequentTask.scheduleFrequentTasks();
+			ReservationSystem.getAvailabilities(LocalDate.of(2023,10,20), LocalDate.of(2023,11,25), RoomType.SUITE);
 			Parent root = FXMLLoader.load(getClass().getResource(FXMLPaths.LOGIN));
 			Scene scene = new Scene(root, Screen.getPrimary().getBounds().getWidth(), Screen.getPrimary().getBounds().getHeight());
 			primaryStage.centerOnScreen();
@@ -36,6 +40,7 @@ public class Main extends Application {
 			primaryStage.setResizable(false);
 			primaryStage.setScene(scene);
 			primaryStage.show();
+			//primaryStage.setFullScreen(true);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

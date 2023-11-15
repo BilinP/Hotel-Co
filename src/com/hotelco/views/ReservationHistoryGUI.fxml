@@ -20,7 +20,7 @@
                   <Insets left="30.0" top="30.0" />
                </VBox.margin>
             </Text>
-            <TableView fx:id="table" prefHeight="554.0" prefWidth="900.0" style="-fx-background-color: transparent;" stylesheets="@../stylesheets/ReservationHistorySS.css">
+            <TableView fx:id="table" minWidth="800.0" prefHeight="554.0" prefWidth="900.0" style="-fx-background-color: transparent;" stylesheets="@../stylesheets/ReservationHistorySS.css">
               <columns>
                 <TableColumn fx:id="orderNumber" editable="false" prefWidth="71.0" text="Reservation Number" />
                 <TableColumn fx:id="roomType" editable="false" prefWidth="79.0" text="Room Type" />
@@ -35,6 +35,9 @@
                <VBox.margin>
                   <Insets top="30.0" />
                </VBox.margin>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
             </TableView>
          </children>
       </VBox>
