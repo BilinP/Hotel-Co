@@ -36,13 +36,14 @@ public class ProfileController extends BaseController {
         TextFormatters textFormatters = new TextFormatters();
         Platform.runLater(() -> {
             user= ReservationSystem.getCurrentUser();
-            email.setTextFormatter(textFormatters.PHONE_NUMBER);
+            number.setTextFormatter(textFormatters.PHONE_NUMBER);
             first.setTextFormatter(textFormatters.FIRST_NAME);
             last.setTextFormatter(textFormatters.LAST_NAME);
            System.out.print(user.getEmail()); 
            email.setText(user.getEmail());
             first.setText(user.getFirstName());
             last.setText(user.getLastName());
+            number.setText(user.getPhone());
             
 
         });
@@ -72,6 +73,8 @@ public class ProfileController extends BaseController {
         user.setEmail(email.getText());
         user.setFirstName(first.getText());
         user.setLastName(last.getText());
+        user.setPhone(number.getText());
+        user.fetch();
         content=false;
         }
 
