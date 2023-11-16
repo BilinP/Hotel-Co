@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #3c4149;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hotelco.controllers.ProfileController">
+<AnchorPane fx:id="anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #484d54;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hotelco.controllers.ProfileController">
    <children>
       <TextField fx:id="first" editable="false" layoutX="389.0" layoutY="214.0" prefHeight="33.0" prefWidth="380.0" style="-fx-background-color: transparent; -fx-border-color: gray; -fx-border-width: 0 0 4 0; -fx-text-fill: white;" />
       <Text fill="#f9bd1a" layoutX="21.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Profile Settings">
@@ -43,7 +43,7 @@
             <Font size="36.0" />
          </font>
       </Text>
-      <Button layoutX="509.0" layoutY="619.0" mnemonicParsing="false" onMouseReleased="#editProfileContent" prefHeight="40.0" prefWidth="140.0" style="-fx-background-color: #3c4149; -fx-border-color: gray; -fx-border-radius: 20;" text="Edit Info" textFill="#f9bd1a">
+      <Button layoutX="509.0" layoutY="619.0" mnemonicParsing="false" onMouseReleased="#editProfileContent" prefHeight="40.0" prefWidth="140.0" style="-fx-background-color: #484d54; -fx-border-color: gray; -fx-border-radius: 20;" text="Edit Info" textFill="#f9bd1a">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>

@@ -81,7 +81,6 @@ public final class Constants {
     public static final String SuiteRoomFlavor = "\t- Free WiFi\n\n" +
                                                 "\t- Free Self Parking\n\n" +
                                                 "\t- Shower/Tub Combination\n\n" +
-                                                "\t- Foldable Couch\n\n" +
                                                 "\t- Panoramic View\n\n" +
                                                 "\t- 1 King Beds" +
                                                 "\t- 1300 sqft";

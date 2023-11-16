@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.shape.Rectangle;
 
 public class ProfileController extends BaseController {
 
@@ -39,13 +38,10 @@ public class ProfileController extends BaseController {
             number.setTextFormatter(textFormatters.PHONE_NUMBER);
             first.setTextFormatter(textFormatters.FIRST_NAME);
             last.setTextFormatter(textFormatters.LAST_NAME);
-           System.out.print(user.getEmail()); 
-           email.setText(user.getEmail());
+            email.setText(user.getEmail());
             first.setText(user.getFirstName());
             last.setText(user.getLastName());
             number.setText(user.getPhone());
-            
-
         });
     }
 
@@ -58,7 +54,6 @@ public class ProfileController extends BaseController {
         number.setEditable(true);
         first.setFocusTraversable(true);
         content=true;
-
     }
 
     @FXML
@@ -77,7 +72,6 @@ public class ProfileController extends BaseController {
         user.fetch();
         content=false;
         }
-
     }
 
 }
