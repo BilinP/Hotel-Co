@@ -51,7 +51,6 @@ public class RoomChoiceController extends BaseController {
 
     @FXML
     private void initialize() {
-        Platform.runLater(() -> {
             kingRate.setText("$" + DatabaseUtil.getRate(RoomType.KING).toString());
             queenRate.setText("$" + DatabaseUtil.getRate(RoomType.QUEEN).toString());
             dblRate.setText("$" + DatabaseUtil.getRate(RoomType.DBL).toString());
@@ -60,6 +59,8 @@ public class RoomChoiceController extends BaseController {
             queenFlavor.setText(Constants.QueenRoomFlavor);
             dblFlavor.setText(Constants.DblRoomFlavor);
             suiteFlavor.setText(Constants.SuiteRoomFlavor);
+        Platform.runLater(() -> {
+
 
         });
     }
