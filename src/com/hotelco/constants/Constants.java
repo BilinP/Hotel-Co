@@ -56,7 +56,7 @@ public final class Constants {
     public static final String DblRoomFlavor = "\t- Free WiFi\n\n" +
                                                 "\t- Free Self Parking\n\n" +
                                                 "\t- Shower\n\n" +
-                                                "\t- 2 Double Beds" +
+                                                "\t- 2 Double Beds\n\n" +
                                                 "\t- 500 sqft";
     /**
      * Flavor text for the queen room
@@ -64,7 +64,7 @@ public final class Constants {
     public static final String QueenRoomFlavor = "\t- Free WiFi\n\n" +
                                                 "\t- Free Self Parking\n\n" +
                                                 "\t- Shower/Tub Combination\n\n" +
-                                                "\t- 2 Queen Beds" +
+                                                "\t- 2 Queen Beds\n\n" +
                                                 "\t- 700 sqft";
     /**
      * Flavor text for the king room
@@ -73,7 +73,7 @@ public final class Constants {
                                                 "\t- Free Self Parking\n\n" +
                                                 "\t- Shower/Tub Combination\n\n" +
                                                 "\t- Foldable Couch\n\n" +
-                                                "\t- 1 King Bed" +
+                                                "\t- 1 King Bed\n\n" +
                                                 "\t- 950 sqft";
     /**
      * Flavor text for the suite room
@@ -82,6 +82,6 @@ public final class Constants {
                                                 "\t- Free Self Parking\n\n" +
                                                 "\t- Shower/Tub Combination\n\n" +
                                                 "\t- Panoramic View\n\n" +
-                                                "\t- 1 King Beds" +
+                                                "\t- 1 King Beds\n\n" +
                                                 "\t- 1300 sqft";
 }
