@@ -8,12 +8,8 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 
 public class ProfileController extends BaseController {
-
-    @FXML
-    private AnchorPane anchor;
 
     @FXML
     private TextField email;
@@ -27,14 +23,13 @@ public class ProfileController extends BaseController {
     @FXML
     private TextField number;
 
-    boolean content= false;
-    User user;
+    private User user;
 
        @FXML
     private void initialize() {     
         TextFormatters textFormatters = new TextFormatters();
         Platform.runLater(() -> {
-            user= ReservationSystem.getCurrentUser();
+            user = ReservationSystem.getCurrentUser();
             number.setTextFormatter(textFormatters.PHONE_NUMBER);
             first.setTextFormatter(textFormatters.FIRST_NAME);
             last.setTextFormatter(textFormatters.LAST_NAME);
@@ -47,31 +42,27 @@ public class ProfileController extends BaseController {
 
 
     @FXML
-    void editProfileContent(MouseEvent event) {
-        email.setEditable(true);
-        last.setEditable(true);
-        first.setEditable(true);
-        number.setEditable(true);
+    private void editProfileContent(MouseEvent event) {
+        email.setDisable(false);
+        last.setDisable(false);
+        first.setDisable(false);
+        number.setDisable(false);
         first.setFocusTraversable(true);
-        content=true;
     }
 
     @FXML
-    void saveProfileContent(MouseEvent event) {
-        if(content){
-        email.setEditable(false);
-        last.setEditable(false);
-        first.setEditable(false);
-        number.setEditable(false);
+    private void saveProfileContent(MouseEvent event) {
+        email.setDisable(true);
+        last.setDisable(true);
+        first.setDisable(true);
+        number.setDisable(true);
         first.setFocusTraversable(false);
-        User user= ReservationSystem.getCurrentUser();
+        User user = ReservationSystem.getCurrentUser();
         user.setEmail(email.getText());
         user.setFirstName(first.getText());
         user.setLastName(last.getText());
         user.setPhone(number.getText());
         user.fetch();
-        content=false;
-        }
     }
 
 }
