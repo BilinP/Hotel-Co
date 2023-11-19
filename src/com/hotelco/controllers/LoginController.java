@@ -1,14 +1,20 @@
 package com.hotelco.controllers;
 
+import com.hotelco.application.IdleTimer;
 import com.hotelco.entities.ReservationSystem;
 import com.hotelco.entities.User;
 import com.hotelco.utilities.DatabaseUtil;
 import com.hotelco.utilities.FXMLPaths;
 import com.hotelco.utilities.Verifier;
 
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -18,6 +24,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  * The LoginController class is the associated controller class of the 'LoginGUI' view. 
@@ -50,6 +59,14 @@ public class LoginController extends BaseController {
      */
     @FXML
     private PasswordField password;
+
+    private PauseTransition idleTimer;
+
+    private Scene scene;
+
+    private Stage stage;
+
+    private EventHandler<Event> handler;
 
     /**
      * Rounds the corners of the beach ImageView upon initialization of the Controller.
@@ -94,6 +111,8 @@ public class LoginController extends BaseController {
         if(DatabaseUtil.doesEmailExist(emailStr)){
             if (Verifier.verifyPassword(emailStr, password.getText()))
             {
+                idleTimer.stop();
+                scene.removeEventHandler(Event.ANY, handler);
                 ReservationSystem.setCurrentUser(new User(emailStr));
                 switchScene(FXMLPaths.DASHBOARD, event);
             }
@@ -115,6 +134,8 @@ public class LoginController extends BaseController {
      */
     @FXML
     private void switchToCreateAccount(MouseEvent event) {
+        idleTimer.stop();
+        scene.removeEventHandler(Event.ANY, handler);
         switchScene(FXMLPaths.CREATE_ACCOUNT, event);
     }
     
@@ -139,9 +160,42 @@ public class LoginController extends BaseController {
      */
     void setNotification(String s, Color color) {
         notification.setText(s);
-        if(color!=null){
-        notification.setFill(color);
+        if(color != null) {
+            notification.setFill(color);
         }
+    }
+
+    public void initializeIdleTimer(Stage stage, Scene scene) {
+        this.stage = stage;
+        this.scene = scene;
+
+        idleTimer = new PauseTransition(Duration.seconds(10));
+        idleTimer.setOnFinished(e -> {
+            switchToScreenSaver();
+        });
+
+        handler = e -> {
+            idleTimer.stop();
+            idleTimer.playFromStart();
+        };
+
+        scene.addEventHandler(Event.ANY, handler);
+    }
+
+    private void switchToScreenSaver() {
+        idleTimer.stop();
+        scene.removeEventHandler(Event.ANY, handler);
+        try {
+            FXMLLoader loader = new FXMLLoader(IdleTimer.class.getResource(FXMLPaths.SCREENSAVER));
+            Parent root = loader.load();    
+            Scene scene = new Scene(root, Screen.getPrimary().getBounds().getWidth(), Screen.getPrimary().getBounds().getHeight());
+            IdleTimer.initialize(scene, stage);
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }       
     }
 
 }

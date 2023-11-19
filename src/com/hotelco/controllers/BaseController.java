@@ -30,14 +30,22 @@ public class BaseController  {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlLocation));
             Parent root = loader.load();
+            BaseController controller = loader.getController();
+
             Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root, Screen.getPrimary().getBounds().getWidth(), Screen.getPrimary().getBounds().getHeight());
+
             IdleTimer.initialize(scene, stage);
+            if (controller instanceof LoginController) {
+                ((LoginController)controller).initializeIdleTimer(stage, scene);
+            }
+
             stage.setResizable(false);
             stage.setScene(scene);
             stage.show();
             //stage.setFullScreen(true);
-            return loader.getController();
+
+            return controller;
             
         } catch (Exception e) {
             e.printStackTrace();
