@@ -84,4 +84,9 @@ public final class Constants {
                                                 "\t- Panoramic View\n\n" +
                                                 "\t- 1 King Beds\n\n" +
                                                 "\t- 1300 sqft";
+    /**
+     * In seconds, the amount of time the system waits for automatic logout,
+     * when there is no input.
+     */
+    public static final Integer IDLE_TIMEOUT = 5;
 }

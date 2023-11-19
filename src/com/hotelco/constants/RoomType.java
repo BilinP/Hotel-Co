@@ -15,7 +15,9 @@ public enum RoomType {
 /**
  * Constructs an empty roomtype
  */
-    RoomType(){prettyName = null;}
+    RoomType(){
+        prettyName = null;
+    }
 
     RoomType(String prettyName) {
         this.prettyName = prettyName;

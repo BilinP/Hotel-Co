@@ -155,8 +155,8 @@ public class ReservationSystem {
      * @param startDate beginning of desired availabilities range
      * @param endDate end of desired availabilities range
      * @param roomType room type for which to check availability
-     * @return an ordered array of availibitilies. Element 0 is the availibility
-     * on the startDate, element n is the availibility n days after startDate.
+     * @return an ordered array of availibitilies. Element 0 is the availability
+     * on the startDate, element n is the availability n days after startDate.
      */
     public static Boolean[] getAvailabilities(
             LocalDate startDate, LocalDate endDate, RoomType roomType){

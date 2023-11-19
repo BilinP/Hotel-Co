@@ -109,29 +109,31 @@ public class CreditCard{
         user = newUser;
         }
 /**
- * Determines and sets the card type. If first character/length combination 
- * implies it is not a possibly valid card of the types in CreditCardType.java,
+ * Determines and sets the card type, can be null. If the combination of the first character
+ * and length implies it is not a possibly valid card (those in CreditCardType.java),
  * creditCardType becomes null. 
  */
-    public void setValidCardType(){
-        creditCardType = null;
+    public CreditCardType getIssuer(){
+        CreditCardType result = null;
+
         Integer cardNumLen = creditCardNum.length();
         if (cardNumLen == 15 && creditCardNum.charAt(0) == '3'){
-            creditCardType = CreditCardType.AMEX;
+            result = CreditCardType.AMEX;
         }
         if(cardNumLen == 16){
             switch(creditCardNum.charAt(0)){
                 case '4':
-                creditCardType = CreditCardType.VISA;
+                result = CreditCardType.VISA;
                 break;
                 case '5':
-                creditCardType = CreditCardType.MASTERCARD;
+                result = CreditCardType.MASTERCARD;
                 break;
                 case '6':
-                creditCardType = CreditCardType.DISCOVER;
+                result = CreditCardType.DISCOVER;
                 break;
             }
         }
+        return result;
     }
 /**
  * Uses the Luhn algorithm to check if a card is invalid.
@@ -175,11 +177,15 @@ public class CreditCard{
      * @return true if credit card is possibly valid, false if it cannot be valid
      */
     public Boolean verify(){
-        setValidCardType();
-        return creditCardType != null &&
-            luhnCheck() &&
-            expDate.isAfter(LocalDate.now()) &&
-            cvvCheck();
+        Boolean result = false;
+
+        creditCardType = getIssuer();
+        result = creditCardType != null
+            && luhnCheck()
+            && expDate.isAfter(LocalDate.now())
+            && cvvCheck();
+        
+        return result;
     }
     /**
      * Database push function that assigns a credit card to CreditCard's user.
