@@ -1,5 +1,6 @@
 package com.hotelco.application;
 
+import com.hotelco.constants.Constants;
 import com.hotelco.controllers.BaseController;
 import com.hotelco.entities.ReservationSystem;
 import com.hotelco.utilities.FXMLPaths;
@@ -19,7 +20,7 @@ public class IdleTimer {
 
         public static void initialize(Scene scene, Stage stage) {
             if (idleTimer == null) {
-                idleTimer = new PauseTransition(Duration.seconds(5));
+                idleTimer = new PauseTransition(Duration.seconds(Constants.IDLE_TIMEOUT));
             }
 
             idleTimer.setOnFinished(e -> {
