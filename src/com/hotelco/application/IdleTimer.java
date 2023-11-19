@@ -1,6 +1,5 @@
 package com.hotelco.application;
 
-import com.hotelco.controllers.BaseController;
 import com.hotelco.entities.ReservationSystem;
 import com.hotelco.utilities.FXMLPaths;
 
@@ -17,6 +16,8 @@ public class IdleTimer {
     
         private static PauseTransition idleTimer;
 
+        private IdleTimer() {}
+
         public static void initialize(Scene scene, Stage stage) {
             if (idleTimer == null) {
                 idleTimer = new PauseTransition(Duration.seconds(5));
@@ -31,13 +32,9 @@ public class IdleTimer {
 			});
 
             scene.addEventHandler(Event.ANY, e -> {
-                resetTimer();
+                idleTimer.stop();
+                idleTimer.playFromStart();                
             });
-        }
-
-        private static void resetTimer() {
-            idleTimer.stop();
-            idleTimer.playFromStart();
         }
 
         private static void resetOnIdle(Stage stage) {
