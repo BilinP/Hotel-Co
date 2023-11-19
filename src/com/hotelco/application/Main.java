@@ -28,8 +28,10 @@ public class Main extends Application {
 			DailyTask.scheduleDailyTasks();
 			FrequentTask.scheduleFrequentTasks();
 			//ReservationSystem.getAvailabilities(LocalDate.of(2023,10,20), LocalDate.of(2023,11,25), RoomType.SUITE);
-			Parent root = FXMLLoader.load(getClass().getResource(FXMLPaths.LOGIN));
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXMLPaths.LOGIN));
+			Parent root = fxmlLoader.load();
 			Scene scene = new Scene(root, Screen.getPrimary().getBounds().getWidth(), Screen.getPrimary().getBounds().getHeight());
+			IdleTimer.initialize(scene, primaryStage, fxmlLoader.getController());		
 			primaryStage.centerOnScreen();
 			primaryStage.initStyle(StageStyle.UNDECORATED);
 			primaryStage.setTitle("HotelCo");
@@ -49,5 +51,4 @@ public class Main extends Application {
 		//SendMail.startSend(testargs[0], testargs[1], testargs[2]);
 		launch(args);
 	}
-	
 }

@@ -1,5 +1,8 @@
 package com.hotelco.controllers;
 
+import com.hotelco.application.IdleTimer;
+import com.hotelco.utilities.FXMLPaths;
+
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Screen;
@@ -29,6 +32,7 @@ public class BaseController  {
             Parent root = loader.load();
             Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             Scene scene = new Scene(root, Screen.getPrimary().getBounds().getWidth(), Screen.getPrimary().getBounds().getHeight());
+            IdleTimer.initialize(scene, stage, loader.getController());
             stage.setResizable(false);
             stage.setScene(scene);
             stage.show();
@@ -39,6 +43,20 @@ public class BaseController  {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void resetOnIdle(Stage stage) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(FXMLPaths.LOGIN));
+            Parent root = loader.load();    
+            Scene scene = new Scene(root, Screen.getPrimary().getBounds().getWidth(), Screen.getPrimary().getBounds().getHeight());
+            IdleTimer.initialize(scene, stage, loader.getController());
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
 }
