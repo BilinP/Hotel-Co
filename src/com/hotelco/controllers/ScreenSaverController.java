@@ -1,5 +1,7 @@
 package com.hotelco.controllers;
 
+import com.hotelco.utilities.FXMLPaths;
+
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
@@ -8,10 +10,11 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
-public class ScreenSaverController {
+public class ScreenSaverController extends BaseController {
 
     @FXML
     private AnchorPane anchor;
@@ -121,6 +124,11 @@ public class ScreenSaverController {
                 }
             }
         });
+    }
+
+    @FXML
+    void switchToLoginScene(MouseEvent event) {
+        switchScene(FXMLPaths.LOGIN, event);
     }
 
 }
