@@ -1,6 +1,7 @@
 package com.hotelco.application;
 
 import com.hotelco.constants.Constants;
+import com.hotelco.controllers.LoginController;
 import com.hotelco.entities.ReservationSystem;
 import com.hotelco.utilities.FXMLPaths;
 
@@ -43,6 +44,8 @@ public class IdleTimer {
                 FXMLLoader loader = new FXMLLoader(IdleTimer.class.getResource(FXMLPaths.LOGIN));
                 Parent root = loader.load();    
                 Scene scene = new Scene(root, Screen.getPrimary().getBounds().getWidth(), Screen.getPrimary().getBounds().getHeight());
+                LoginController lc = (LoginController) loader.getController();
+                lc.initializeIdleTimer(stage, scene);
                 IdleTimer.initialize(scene, stage);
                 stage.setResizable(false);
                 stage.setScene(scene);
