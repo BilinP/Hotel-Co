@@ -1,7 +1,6 @@
 package com.hotelco.controllers;
 
 import com.hotelco.application.IdleTimer;
-import com.hotelco.utilities.FXMLPaths;
 
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;

@@ -26,9 +26,15 @@ import javafx.scene.text.Text;
  */
 public class CreateAccountController extends BaseController {
 
-        @FXML
+    /**
+    * ImageView that contains the whole image.
+    */
+    @FXML
     private ImageView image;
 
+    /**
+    * ImageView that contains the right half of a image.
+    */
     @FXML
     private ImageView imageRight;
 
