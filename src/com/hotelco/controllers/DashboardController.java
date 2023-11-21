@@ -113,7 +113,7 @@ public class DashboardController extends BaseController {
     }
 
     
-    private void switchAnchor(String path){
+    public void switchAnchor(String path){
         if(!path.equals(currentPath)){
          FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
 

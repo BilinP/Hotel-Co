@@ -30,6 +30,7 @@ public class ProfileController extends BaseController {
     boolean content= false;
     User user;
 
+
        @FXML
     private void initialize() {     
         TextFormatters textFormatters = new TextFormatters();

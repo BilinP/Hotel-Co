@@ -7,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-import javafx.stage.Screen;
 
 /**
  * The NEWMenuController class is the associated controller class of the 'NewMenu' view. 

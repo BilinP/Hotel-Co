@@ -11,7 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
-public class RoomChoiceController extends BaseController {
+public class RoomChoiceController extends DashboardController {
 
     @FXML
     private Text suiteFlavor;
@@ -49,6 +49,8 @@ public class RoomChoiceController extends BaseController {
     @FXML
     private Text suiteRate;
 
+    
+
     @FXML
     private void initialize() {
         Platform.runLater(() -> {
@@ -67,7 +69,7 @@ public class RoomChoiceController extends BaseController {
     @FXML
     void switchToBooking(MouseEvent event) {
          Button clickedButton = (Button) event.getSource();
-         switchScene(FXMLPaths.SEARCH,event);
+         switchAnchor(FXMLPaths.SEARCH);
          String s = clickedButton.getId();
     }
 
