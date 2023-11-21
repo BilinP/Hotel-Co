@@ -50,7 +50,7 @@ public class Verifier {
     /**
      * Verifies a credit card could be real and is not expired
      * @param creditCard credit card to be verified
-     * @return true when credit card can be valid, false, when credit card
+     * @return true when credit card can be valid, false when credit card
      * could not be valid
      */
     public static Boolean verifyCreditCard(CreditCard creditCard){

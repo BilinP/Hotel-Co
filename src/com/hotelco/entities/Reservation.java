@@ -16,7 +16,8 @@ import javax.mail.MessagingException;
 import com.hotelco.utilities.SendMail;
 
 /**
- * Maintains details of a particular reservation and facilitates database transactions.
+ * Maintains details of a particular reservation and facilitates database
+ * transactions.
  * @author Daniel Schwartz
  * @version %I%, %G%
  */
