@@ -5,8 +5,14 @@ import java.util.ArrayList;
 import com.hotelco.constants.RoomType;
 /**
  * Converts a groupsize into an array of roomtypes that best fit that size
+ * @author Daniel Schwartz
  */
 public class GroupSize {
+    
+/**
+ * Converts a groupsize into an array of roomtypes that best fit that size
+ * @parm groupSize integer number of people.
+ */
     public static RoomType[] toRoomTypes(Integer groupSize){
         ArrayList<RoomType> roomtypes = new ArrayList<RoomType>();
         switch(groupSize){

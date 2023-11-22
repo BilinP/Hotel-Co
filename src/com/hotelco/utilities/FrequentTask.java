@@ -11,6 +11,7 @@ import com.hotelco.entities.ReservationSystem;
 
 /**
  * Can create tasks that happen frequently and repeatedly.
+ * 
  */
 public class FrequentTask {
     public FrequentTask(Integer minutesFrequency){

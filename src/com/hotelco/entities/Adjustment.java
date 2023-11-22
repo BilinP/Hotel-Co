@@ -3,6 +3,7 @@ package com.hotelco.entities;
 import java.math.BigDecimal;
 /**
  * Contains an adjustment amount and associated comment.
+ * @author Daniel Schwartz
  */
 public class Adjustment {
     /**
