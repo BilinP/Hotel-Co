@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.sql.*;
 /**
  * Utility class to check if user ids or emails exist.
+ * @author Daniel Schwartz
  */
 public class DatabaseUtil{
 /**

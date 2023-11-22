@@ -7,9 +7,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 /**
- * Contains all constants
+ * Contains all constants.
  * @author Daniel Schwartz, John Lee
- * @version %I%, %G%
  */
 public final class Constants {
     /**
@@ -21,7 +20,7 @@ public final class Constants {
      */
     public static final Integer CHECK_OUT_TIME = 14;
     /**
-     * Maximum capacity of a double room
+     * Maximum capacity of a double room. 
      */
     public static final Map<RoomType,Integer> Capacities =
         new HashMap<RoomType,Integer>();
@@ -91,4 +90,10 @@ public final class Constants {
      * when there is no input.
      */
     public static final Integer IDLE_TIMEOUT = 5;
+
+    /**
+     * In seconds, the the amount of time the screen saver waits before starting
+     * after no input.
+     */
+    public static final Integer SCREENSAVER_TIMEOUT = 5;
 }
