@@ -33,6 +33,7 @@ import javafx.util.Duration;
  * It handles connection between the GUI and internal data.
  * 
  * @author      Grigor Azakian
+ * @version     %I%, %G%
  */
 public class LoginController extends BaseController {
 

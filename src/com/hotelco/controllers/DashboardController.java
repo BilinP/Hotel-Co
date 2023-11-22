@@ -17,38 +17,65 @@ import javafx.scene.layout.AnchorPane;
  * It handles connection between the GUI and internal data. 
  * 
  * @author      Bilin Pattasseril
- * @version    
+ * @version    1.0
  */
 public class DashboardController extends BaseController {
     
 
-    
+    /**
+     * Button named 'Book Room' that calls 'switchToRoomSearch()' when pressed.
+     */
     @FXML
     private Button bookRoomButton;
 
+    /**
+     * Button named 'cart' that calls 'switchToMenu()' when pressed.
+     */
     @FXML
     private Button cartButton;
 
+    /**
+     * Button named 'home' that calls 'switchToCart()' when pressed.
+     */
     @FXML
     private Button homeButton;
 
+    /**
+     * Button named 'profile' that calls 'switchToProfile()' when pressed.
+     */
     @FXML
     private Button profileButton;
 
+    /**
+     *  A AnchorPane which is the right in the screen.
+     */
     @FXML
     private AnchorPane rightAnchor;
 
+    /**
+     * Button named 'Reservation History' that calls 'switchToReservationHistory()' when pressed.
+     */
     @FXML
     private Button viewBookingButton;
 
+     /**
+     * Array of Button  that stores all the menu button.
+     */
     private final Button[] menubuttons = new Button[5];
 
+    /**
+     * String which stores the current anchor scene.
+     */
     private String currentPath;
 
 
+    /**
+     * Called immediately upon controller creation.
+     * It changes the anchor to the home and initalize each menu button
+     * 
+     */
     @FXML
     private void initialize() {
-        //add non JavaFX related code here
          switchAnchor(FXMLPaths.HOME);
          menubuttons[0] = bookRoomButton;
          menubuttons[1] = cartButton;
@@ -57,7 +84,6 @@ public class DashboardController extends BaseController {
          menubuttons[4] = viewBookingButton;
          buttonSelection(homeButton);
         Platform.runLater(() -> {
-            //add JavaFX related code here
       
         });
     }
@@ -75,7 +101,7 @@ public class DashboardController extends BaseController {
 
    /**
      * This method is called by pressing the 'home' button.
-     * It changes the right anchorpane to the menu scene
+     * It changes the right anchorpane to the home scene
      * @param event The 'mouse released' event that is triggered by pressing the 'home' button.
      */
     @FXML
@@ -86,6 +112,7 @@ public class DashboardController extends BaseController {
 
     
     /** 
+     * Method is isused by pressing the 
      * @param event
      */
     @FXML
@@ -95,27 +122,46 @@ public class DashboardController extends BaseController {
     }
 
     
-    /** 
-     * @param event
+    /**
+     * This method is called by pressing the 'Profile' button.
+     * It changes the right anchorpane to the profile scene
+     * @param event The 'mouse released' event that is triggered by pressing the 'profile' button.
      */
     @FXML
     void switchToProfile(MouseEvent event) {
         buttonSelection(profileButton);
         switchAnchor(FXMLPaths.PROFILE);
+        
     }
 
+    
+    /**
+     * This method is called by pressing the 'Reservation History' button.
+     * It changes the right anchorpane to the ReservationHistoryGUI scene
+     * @param event The 'mouse released' event that is triggered by pressing the 'Reservation History' button.
+     */
     @FXML
     void switchToReservationHistory(MouseEvent event) {
         switchAnchor(FXMLPaths.RHGUI);
         buttonSelection(viewBookingButton);
     }
 
+   /**
+     * This method is called by pressing the 'Book Room' button.
+     * It changes the right anchorpane to the RoomChoiceGUI scene
+     * @param event The 'mouse released' event that is triggered by pressing the 'Book ROom' button.
+     */
     @FXML
     void switchToRoomSearch(MouseEvent event) {
         switchAnchor(FXMLPaths.ROOMS);
         buttonSelection(bookRoomButton);
     }
 
+    /**
+     * This method is used to change the style of the button to emphasis the 
+     * * current selection and the non current selection.
+     * @param selectedButton The  button that is selected
+     */
     private void buttonSelection(Button selectedButton){
         for(Button button: menubuttons){
             if(button!= null && button.equals(selectedButton)){
@@ -127,7 +173,10 @@ public class DashboardController extends BaseController {
 
     }
 
-    
+    /**
+     * This method will switch the anchor the user is currently viewing to the provided FXML file located in 'fxmlLocation'.
+     * @param path The file path of the FXML file to switch to.
+     */
     public void switchAnchor(String path){
         if(!path.equals(currentPath)){
          FXMLLoader loader = new FXMLLoader(getClass().getResource(path));

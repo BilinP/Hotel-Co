@@ -15,7 +15,7 @@ import javafx.scene.input.MouseEvent;
  * It handles connection between the GUI and internal data.
  * 
  * @author      Bilin Pattasseril
- * @version     %I%, %G%
+ * @version     1.0
  */
 
 public class ProfileController extends BaseController {

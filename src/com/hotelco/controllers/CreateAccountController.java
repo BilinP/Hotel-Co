@@ -82,6 +82,7 @@ public class CreateAccountController extends BaseController {
     /**
      * This method is called immediately upon controller creation.
      * It assigns TextFormatters to several TextFields to handle input verification.
+     * As well makes it so the corners of the pictures are rounded.
      */
     @FXML
     private void initialize() {
@@ -108,7 +109,7 @@ public class CreateAccountController extends BaseController {
     }
 
     /**
-     * This method is called when pressing the 'Create Account' button.
+     * This method is called when pressing the 'Register' button.
      * It handles input verification and account creation. It will switch to 'LoginGUI' upon successful account creation.
      * @param event The 'mouse released' event that is triggered by pressing the 'Create Account' button.
      * @author Grigor Azakian
@@ -168,7 +169,7 @@ public class CreateAccountController extends BaseController {
 
 
     /**
-     * This method is called by pressing the 'Go Back' text on the top left corner.
+     * This method is called by pressing the 'Already Have an Account?' button  which is the blue button.
      * It exits the 'CreateAccountGUI' and enters the 'LoginGUI'.
      * @param event The 'mouse released' event that is triggered by pressing the 'Go Back' text on the top left corner.
      */

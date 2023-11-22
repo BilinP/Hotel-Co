@@ -20,6 +20,14 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
+
+/**
+ * The ReservationLookupController class is the associated controller class of the 'ReservationLookupGUI' view. 
+ * It handles connection between the GUI and internal data.
+ * 
+ * @author      Bilin pattasseril
+ * @version     1.0
+ */
 public class ReservationLookupController extends BaseController {
     /**
      * Combobox containing every type room type.

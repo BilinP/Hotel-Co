@@ -142,7 +142,12 @@ public class ReservationHistoryController extends BaseController {
         }
     }
 
-    void setNotification(String s) {
-        notification.setText(s);
+    
+    /** 
+     * Method used to set the notifcation text
+     * @param message the message used for the text.
+     */
+    void setNotification(String message) {
+        notification.setText(message);
     }
 }
