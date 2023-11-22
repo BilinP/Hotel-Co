@@ -225,8 +225,9 @@ public class ReservationSystem {
         Integer result = 0;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sqlQuery = "SELECT COUNT(room_num) AS total FROM rooms WHERE room_type = '" +
-                roomType.toString() + "'";;
+        String sqlQuery = "SELECT COUNT(room_num) " +
+            "AS total FROM rooms WHERE room_type = '" +
+            roomType.toString() + "'";;
         Connection con = getDatabaseConnection();
 
         try {
