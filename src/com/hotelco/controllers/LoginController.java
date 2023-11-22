@@ -1,5 +1,12 @@
 package com.hotelco.controllers;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalField;
+import java.util.Calendar;
+
 import com.hotelco.application.IdleTimer;
 import com.hotelco.entities.ReservationSystem;
 import com.hotelco.entities.User;
@@ -120,18 +127,25 @@ public class LoginController extends BaseController {
      */
     @FXML
     private void login(Event event) {
+        LocalDateTime start = LocalDateTime.now();
+        System.out.println("Line 131: " + (ChronoUnit.MILLIS.between(start, LocalDateTime.now())));
         if (email.getText().isEmpty() || password.getText().isEmpty()) {
             notification.setText("Please enter username and password");
             notification.setFill(Color.RED);
             return;
         }
         String emailStr = email.getText();
+        System.out.println("Line 138: " + (ChronoUnit.MILLIS.between(start, LocalDateTime.now())));
         if(DatabaseUtil.doesEmailExist(emailStr)){
-            if (Verifier.verifyPassword(emailStr, password.getText()))
-            {
+            System.out.println("Line 140: " + (ChronoUnit.MILLIS.between(start, LocalDateTime.now())));
+            if (Verifier.verifyPassword(emailStr, password.getText())){
+                System.out.println("Line 142: " + (ChronoUnit.MILLIS.between(start, LocalDateTime.now())));
                 idleTimer.stop();
+                System.out.println("Line 144: " + (ChronoUnit.MILLIS.between(start, LocalDateTime.now())));
                 scene.removeEventHandler(Event.ANY, handler);
+                System.out.println("Line 146: " + (ChronoUnit.MILLIS.between(start, LocalDateTime.now())));
                 ReservationSystem.setCurrentUser(new User(emailStr));
+                System.out.println("Line 148: " + (ChronoUnit.MILLIS.between(start, LocalDateTime.now())));
                 switchScene(FXMLPaths.DASHBOARD, event);
             }
             else{
