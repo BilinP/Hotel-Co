@@ -9,6 +9,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
 /**
@@ -117,12 +118,12 @@ public class RoomChoiceController extends DashboardController {
      * @param event The 'mouse released' event caused by pressing any of the 'BOOK' buttons.
      */
     @FXML
-    void switchToBooking(MouseEvent event) {
+     void  switchToBooking(MouseEvent event) {
          Button clickedButton = (Button) event.getSource();
-         switchAnchor(FXMLPaths.SEARCH);
+         switchAnchor(FXMLPaths.SEARCH,rightAnchor);
          RoomType roomType= RoomType.parseString(clickedButton.getId().toUpperCase());
-         System.out.print(roomType);
-         System.out.print(clickedButton.getId().toUpperCase());
+         RoomSearchController inital= new RoomSearchController();
+         inital.setRoomType(roomType); 
     }
 
 }

@@ -114,9 +114,8 @@ public class RoomSearchController extends BaseController {
         });
     }
 
-    public void setRoomType(String roomType){
-        room.parseString(roomType.toUpperCase());
-        System.out.print(room);
+    public void setRoomType(RoomType roomType){
+       room=roomType;
     }
 
     /**
