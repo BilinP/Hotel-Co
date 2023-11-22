@@ -33,13 +33,18 @@ import javafx.util.Duration;
  * It handles connection between the GUI and internal data.
  * 
  * @author      Grigor Azakian
- * @version     %I%, %G%
  */
 public class LoginController extends BaseController {
 
+    /**
+    * ImageView that contains the whole image with rounded corners.
+    */
     @FXML
     private ImageView image;
 
+    /**
+    * ImageView that contains the right half of the image.
+    */    
     @FXML
     private ImageView imageRight;
     /**
@@ -60,12 +65,25 @@ public class LoginController extends BaseController {
     @FXML
     private PasswordField password;
 
+    /**
+     * PauseTransition that is set to switch to ScreenSaverGUI
+     * after the user is idle for some amount of time
+     */
     private PauseTransition idleTimer;
 
+    /**
+     * Current instance of the Scene. Used to change views without an event.
+     */
     private Scene scene;
 
+    /**
+     * Current instance of the Stage. Used to change views without an event.
+     */
     private Stage stage;
 
+    /**
+     * EventHandler used to determine if the user is making inputs.
+     */
     private EventHandler<Event> handler;
 
     /**
@@ -165,6 +183,13 @@ public class LoginController extends BaseController {
         }
     }
 
+    /**
+     * Sets up idleTimer and the current scene's EventHandler.
+     * idleTimer will call switchToScreenSaver() when its timer reaches 0.
+     * The scene will track every event and reset the timer when an event is made.
+     * @param stage The current instance of the Stage.
+     * @param scene The current instance of the Scene.
+     */
     public void initializeIdleTimer(Stage stage, Scene scene) {
         this.stage = stage;
         this.scene = scene;
@@ -182,6 +207,10 @@ public class LoginController extends BaseController {
         scene.addEventHandler(Event.ANY, handler);
     }
 
+    /**
+     * Called if idleTimer reaches the end of its timer.
+     * Switches the scene to ScreenSaverGUI.
+     */
     private void switchToScreenSaver() {
         idleTimer.stop();
         scene.removeEventHandler(Event.ANY, handler);

@@ -14,17 +14,33 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 
+/**
+ * The ScreenSaverController class is the associated controller class of the 'ScreenSaverGUI' view. 
+ * It handles connection between the GUI and internal data.
+ * 
+ * @author      Grigor Azakian
+ */
 public class ScreenSaverController extends BaseController {
 
     @FXML
     private AnchorPane anchor;
 
+    /**
+     * ImageView that is set to kick off the initial FadeTransition out.
+     */
     @FXML
     private ImageView fo;
 
+    /**
+     * ImageView that is set to FadeTransition in first.
+     */    
     @FXML
     private ImageView fi;
 
+    /**
+     * Triggered when fo or fi's opacity reaches a certain value.
+     * Ensures the ChangeListeners do not keep triggering during one iteration of a FadeTransition.
+     */    
     private boolean isFadingIn = false;
 
     /**
@@ -53,6 +69,9 @@ public class ScreenSaverController extends BaseController {
         });
     }
 
+    /**
+     * Sets up the initital FadeTransition to be played.
+     */    
     private void playTransition() {
         FadeTransition fadeOut = new FadeTransition(Duration.millis(3000), fo);
         fadeOut.setFromValue(1.0);
@@ -64,6 +83,12 @@ public class ScreenSaverController extends BaseController {
         pauseTransition.play();
     }
 
+    /**
+     * Sets up the ChangeListeners for fo and fi.
+     * The ChangeListeners will listen to the opacity value of fo and fi
+     * which will set the next image to be shown and trigger the next FadeTransition.
+     * @param images
+     */    
     private void setChangeListeners(Image images[]) {
         fo.opacityProperty().addListener(new ChangeListener<Number>() {
             @Override
@@ -126,6 +151,10 @@ public class ScreenSaverController extends BaseController {
         });
     }
 
+    /**
+     * Switches the scene to 'LoginGUI' upon moving the mouse.
+     * @param event The 'mouse moved' event that is triggered by moving the mouse.
+     */
     @FXML
     void switchToLoginScene(MouseEvent event) {
         switchScene(FXMLPaths.LOGIN, event);
