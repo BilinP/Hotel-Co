@@ -4,7 +4,6 @@ package com.hotelco.utilities;
  * The FXMLPaths class contains the file paths for all FXML files.
  * 
  * @author      Grigor Azakian
- * @version     %I%, %G%
  */
 public class FXMLPaths {
     public static final String LOGIN = "/com/hotelco/views/LoginGUI.fxml";

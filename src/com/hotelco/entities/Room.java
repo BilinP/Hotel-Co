@@ -9,7 +9,6 @@ import com.hotelco.constants.RoomType;
 /**
  * Class that structures the details of a room 
  * @author Daniel Schwartz
- * @version %I%, %G%
  */
 public class Room {
     /**

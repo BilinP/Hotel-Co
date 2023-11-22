@@ -17,7 +17,6 @@ import javafx.scene.layout.AnchorPane;
  * It handles connection between the GUI and internal data. 
  * 
  * @author      Bilin Pattasseril
- * @version    1.0
  */
 public class DashboardController extends BaseController {
     

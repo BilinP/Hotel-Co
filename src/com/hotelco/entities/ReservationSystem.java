@@ -19,7 +19,6 @@ import java.util.ArrayList;
  * with which the overall system interacts. Aggregates most elements and
  * holds the open database connection.
  * @author Daniel Schwartz
- * @version %I%, %G%
  */
 public class ReservationSystem {
     /**

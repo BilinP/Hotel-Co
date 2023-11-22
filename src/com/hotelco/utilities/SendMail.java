@@ -15,7 +15,6 @@ import com.hotelco.constants.EmailSignature;
 /**
  * Utility class to send emails
  * @author John Lee
- * @version 1.0
  */
 public class SendMail
 {

@@ -15,7 +15,6 @@ import javafx.scene.text.Text;
  * It handles connection between the GUI and internal data.
  * 
  * @author      Grigor Azakian
- * @version     %I%, %G%
  */
 public class ThankYouController extends BaseController {
 

@@ -20,7 +20,6 @@ import javafx.util.Duration;
  * if the user has been idle for a certain period of time.
  * 
  * @author      Grigor Azakian
- * @version %I%, %G%
  */
 public class IdleTimer {
     

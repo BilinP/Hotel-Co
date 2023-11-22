@@ -15,7 +15,6 @@ import javafx.scene.Node;
  * It contains common functionality all controllers must use.
  * 
  * @author      Grigor Azakian
- * @version     %I%, %G%
  */
 public class BaseController  {
     /**

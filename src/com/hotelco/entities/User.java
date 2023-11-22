@@ -13,7 +13,6 @@ import com.hotelco.utilities.DatabaseUtil;
 /**
  * Maintains details of a users information.
  * @author Daniel Schwartz
- * @version %I%, %G%
  */
 public class User {
     /**

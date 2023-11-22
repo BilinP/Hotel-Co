@@ -23,7 +23,7 @@ import javafx.scene.image.Image;
  * Initializes the JavaFX application, setting up the primary stage, 
  * loading the login scene, and performing various tasks upon application start.
  * @author     Bilin Pattasseril, Grigor Azakian
- * @version %I%, %G%
+
  */
 public class Main extends Application {
 	
