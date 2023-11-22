@@ -29,7 +29,7 @@ import javafx.util.Callback;
  * The RoomSearchController class is the associated controller class of the 'RoomSearchGUI' view. 
  * It handles connection between the GUI and internal data.
  * 
- * @author      Grigor Azakian
+ * @author      Grigor Azakian, Bilin Pattasseril
  */
 public class RoomSearchController extends BaseController {
 
@@ -58,32 +58,19 @@ public class RoomSearchController extends BaseController {
     private Text notification;
 
     /**
-     * Button that allows a user to book a king room.
+     * Button that allows a user to book a room.
      * Calls 'createBooking()' upon being pressed.
      */
     @FXML
-    private Button king;
+    private Button book;
 
-    /**
-     * Button that allows a user to book a queen room.
-     * Calls 'createBooking()' upon being pressed.
-     */
-    @FXML
-    private Button queen;
 
-    /**
-     * Button that allows a user to book a suite.
-     * Calls 'createBooking()' upon being pressed.
-     */    
     @FXML
-    private Button suite;
+    private Text totalCost;
 
-    /**
-     * Button that allows a user to book a double.
-     * Calls 'createBooking()' upon being pressed.
-     */    
     @FXML
-    private Button dbl;
+    private Text totalDay;
+
 
     /**
      * This method is called immediately upon controller creation.
@@ -97,7 +84,7 @@ public class RoomSearchController extends BaseController {
             @Override
             public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue,
                     LocalDate newValue) {
-                disableButtons();
+                disable(true);
             }
         };
 
@@ -118,11 +105,6 @@ public class RoomSearchController extends BaseController {
         };
 
         Platform.runLater(() -> {
-            king.setUserData("king");
-            queen.setUserData("queen");
-            suite.setUserData("suite");
-            dbl.setUserData("dbl");
-
             startDate.valueProperty().addListener(changeListener);
             endDate.valueProperty().addListener(changeListener);
             startDate.setDayCellFactory(dayCellFactory);
@@ -140,7 +122,7 @@ public class RoomSearchController extends BaseController {
      */
     @FXML
     private void checkAvailability(MouseEvent event) {
-        disableButtons();
+        disable(true);
         Integer numGuests = Integer.parseInt(guests.getText());
         DatePicker[] datePickers = {startDate, endDate};
         for (DatePicker datePicker: datePickers) {
@@ -157,6 +139,7 @@ public class RoomSearchController extends BaseController {
         }
         notification.setText("");
         if(numGuests > 0 && numGuests <= Constants.CAPACITIES.get(RoomType.DBL)) {
+
             dbl.setDisable(!ReservationSystem.checkAvailability(start, end, RoomType.DBL));
         }
         if(numGuests <= Constants.CAPACITIES.get(RoomType.QUEEN)) {  
@@ -235,7 +218,7 @@ public class RoomSearchController extends BaseController {
     private void decrementGuest(MouseEvent event) {
         if (Integer.parseInt(guests.getText()) > 1) {
             guests.setText(Integer.toString(Integer.parseInt(guests.getText()) - 1));
-            disableButtons();
+            disable(true);
         }
     }
 
@@ -250,7 +233,7 @@ public class RoomSearchController extends BaseController {
     private void incrementGuest(MouseEvent event) {
         if (Integer.parseInt(guests.getText()) < Constants.MAX_CAP) {
             guests.setText(Integer.toString(Integer.parseInt(guests.getText()) + 1));
-            disableButtons();
+            disable(true);
         }
     }
 
@@ -260,17 +243,22 @@ public class RoomSearchController extends BaseController {
      * @param event The 'mouse released' event that is triggered by pressing the 'Go Back' text.
      */
     @FXML
-    private void switchToMenuScene(MouseEvent event) {
+    private void switchToRoomChoiceScene(MouseEvent event) {
         switchScene(FXMLPaths.HOME, event);
     }
     
     /**
      * This method disables all buttons.
      */
-    private void disableButtons() {
-        Button[] buttons = {king, queen, dbl, suite};
-        for (Button button: buttons) {
-            button.setDisable(true);
+    private void disable(boolean isDisable) {
+    if(isDisable){
+       book.setDisable(true);
+       totalCost.setOpacity(0.0);
+       totalDay.setOpacity(0.0);
+    }else{
+       book.setDisable(false);
+       totalCost.setOpacity(1.0);
+       totalDay.setOpacity(1.0);
         }
     }
 }
