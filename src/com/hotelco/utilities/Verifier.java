@@ -10,7 +10,6 @@ import com.hotelco.entities.User;
 /**
  * Utility class for verifications
  * @author BilinP
- * @verision 1.0
  */
 
 public class Verifier {

@@ -26,21 +26,42 @@ public class Payment {
      * Time payment is created.
      */
     private LocalDateTime timeOfPayment;
-    
+    /**
+     * Gets the amount.
+     * @return the amount
+     */
     public BigDecimal getAmount(){return amount;}
-
+    /**
+     * Gets the paymentId.
+     * @return the paymentId
+     */
     public Integer getPaymentId(){return paymentId;}
-    
+    /**
+     * Gets the time of payment
+     * @return the time of payment
+     */
     public LocalDateTime getTimeOfPayment(){return timeOfPayment;}
-
+    /**
+     * Sets the amount due by this payment
+     * @param newAmount the new amount for this payment
+     */
     public void setAmount(BigDecimal newAmount){amount = newAmount;}
-
+    /**
+     * Sets the paymentId
+     * @param newPaymentId the new paymentId
+     */
     public void setPaymentId(Integer newPaymentId){paymentId = newPaymentId;}
-
+    /**
+     * Sets the time of payment
+     * @param newTimeOfPayment the new time of payment
+     */
     public void setTimeOfPayment(LocalDateTime newTimeOfPayment){
         timeOfPayment = newTimeOfPayment;
     }
-
+    /**
+     * Attemps to pay for the active reservation
+     * @param reservation reservation to pay
+     */
     public Payment(Reservation reservation){
         Reservation temp = ReservationSystem.getCurrentReservation();
         ReservationSystem.setCurrentReservation(reservation);

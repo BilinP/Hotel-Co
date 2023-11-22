@@ -62,7 +62,7 @@ public class PaymentController extends BaseController{
 
     /**
      * Sets the amount is due for thatreservation. 
-     * @parm reservation which used to get the amount due
+     * @param reservation which used to get the amount due
      */
     public void writePayment(Reservation reservation){
         cardType.getItems().addAll(CreditCardType.values());

@@ -11,7 +11,8 @@ public class GroupSize {
     
 /**
  * Converts a groupsize into an array of roomtypes that best fit that size
- * @parm groupSize integer number of people.
+ * @param groupSize integer number of people.
+ * @return the largest RoomType(s) that a group of this size can occupy
  */
     public static RoomType[] toRoomTypes(Integer groupSize){
         ArrayList<RoomType> roomtypes = new ArrayList<RoomType>();

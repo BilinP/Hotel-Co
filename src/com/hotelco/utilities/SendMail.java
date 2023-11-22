@@ -38,7 +38,7 @@ public class SendMail
 	 */
 	public static void startSend(String emailString, String subject, String body) throws AddressException, MessagingException, IOException
 	{
-		body = body + EmailSignature.getSignature();
+		body = body + EmailSignature.SIGNATURE;
 		SendMail mail = new SendMail();
 		mail.setupServerProperties();
 		mail.draftEmail(emailString, subject, body); //(Email, EmailSubject, EmailBody)

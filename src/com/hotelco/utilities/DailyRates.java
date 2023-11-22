@@ -12,6 +12,11 @@ import com.hotelco.entities.ReservationSystem;
  * @author Daniel Schwartz
  */
 public class DailyRates {
+    /**
+     * Fetches the room rate from the database for the supplied RoomType
+     * @param roomType RoomType for which to check the rate
+     * @return the room rate for the supplied RoomType
+     */
     public static BigDecimal getRoomRate(RoomType roomType){
         BigDecimal result = null;
         PreparedStatement ps = null;

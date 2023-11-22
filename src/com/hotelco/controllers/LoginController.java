@@ -173,8 +173,8 @@ public class LoginController extends BaseController {
 
     /**
      * This method is a setter for the variable 'notification'.
-     * @param  The string to set the variable 'notification' to.
-     * @parm color sets the string color for 'notification' to specifed color and if it is null it will not set a color. 
+     * @param  s The string to set the variable 'notification' to.
+     * @param color sets the string color for 'notification' to specifed color and if it is null it will not set a color. 
      * @author Bilin P
      */
     void setNotification(String s, Color color) {

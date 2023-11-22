@@ -111,7 +111,8 @@ public class CreditCard{
 /**
  * Determines and sets the card type, can be null. If the combination of the first character
  * and length implies it is not a possibly valid card (those in CreditCardType.java),
- * creditCardType becomes null. 
+ * creditCardType becomes null.
+ * @return CreditCardType of this card
  */
     public CreditCardType getIssuer(){
         CreditCardType result = null;

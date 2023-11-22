@@ -10,14 +10,15 @@ import java.time.*;
 import com.hotelco.entities.ReservationSystem;
 
 /**
- * Maintains the manager information while giving tools for the manager to maintain a reservation
+ * Maintains the manager information while giving tools for the manager to
+ * maintain a reservation
  * @author John Lee, Daniel Schwartz
- * @version 1.0
  */
 public class Manager{
 
     /**
      * Finds the amount of vacant rooms at the current date
+     * @return the number of vacant rooms
      */
     public static Integer findVacantRoomSize(){
         

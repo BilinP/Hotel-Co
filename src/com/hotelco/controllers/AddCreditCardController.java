@@ -1,7 +1,9 @@
 package com.hotelco.controllers;
-
+/**
+ * Controller to add a credit card
+ */
 public class AddCreditCardController extends BaseController{
-    
+    Integer x = 1;
     /* Please insert this code into the add credit card controller or wherever necessary:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
         //First, appropriately fill all the parameters of
         String cardNum = ?;

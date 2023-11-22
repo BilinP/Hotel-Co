@@ -468,13 +468,18 @@ public class Reservation {
          */
         private Adjustment rateDiscount;
         /**
-         * Gets the adjustments associated with this InvoiceDetails
-         * @return the adjustments associated with this InvoiceDetails
+         * Constructs an InvoiceDetails with the supplied parameters
+         * @param newRateDiscount
+         * @param newAdjustments
          */
         public InvoiceDetails(Adjustment newRateDiscount, Adjustment[] newAdjustments){
             adjustments = newAdjustments;
             rateDiscount = newRateDiscount;
         }
+        /**
+         * Gets the adjustments associated with this InvoiceDetails
+         * @return the adjustments associated with this InvoiceDetails
+         */
         public Adjustment[] getAdjustments(){return adjustments;}
         /**
          * Gets the rate discount associated with this InvoiceDetails

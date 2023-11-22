@@ -15,7 +15,6 @@ import javafx.scene.input.MouseEvent;
  * It handles connection between the GUI and internal data.
  * 
  * @author      Bilin Pattasseril
- * @version     1.0
  */
 
 public class ProfileController extends BaseController {
@@ -75,7 +74,8 @@ public class ProfileController extends BaseController {
      * This method will setDisable() to false on all  text fields 'email','first',
      * 'last',and 'number' making it so  it is editable to the user. 
      * As well it makes the mouse cursor on the 'first' text field through the focusTraversable().
-     * @parm event is the event that triggers this function which is the button 'edit profile'.
+     * @param event is the event that triggers this function which is the button
+     * 'edit profile'.
      */
     @FXML
     private void editProfileContent(MouseEvent event) {
@@ -89,7 +89,7 @@ public class ProfileController extends BaseController {
      * This method will first setDisable to true on all the text fields, 
      * first','last','number', and 'email' to true it so these fields aren't t 
      * editable and secondly it will save the content to the database.  
-     *  @parm event is the event that triggers this function which is the button 'save profile'.
+     *  @param event is the event that triggers this function which is the button 'save profile'.
      */
 
     @FXML
