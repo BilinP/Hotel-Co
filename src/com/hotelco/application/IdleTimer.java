@@ -14,12 +14,32 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+
+/**
+ * The IdleTimer class sets up a singleton PauseTransition that logs a user out of the system
+ * if the user has been idle for a certain period of time.
+ * 
+ * @author      Grigor Azakian
+ */
 public class IdleTimer {
     
+        /**
+         * PauseTransition that logs a user out of the system after its timer ends.
+         */
         private static PauseTransition idleTimer;
 
+        /**
+         * Private constructor to ensure IdleTimer will remain a singleton.
+         */
         private IdleTimer() {}
 
+        /**
+         * Sets up idleTimer if it hasn't already been initialized and attaches an EventHandler to the current scene.
+         * idleTimer will call resetOnIdle() upon finishing.
+         * The EventHandler will reset the timer upon any Event being detected.
+         * @param scene
+         * @param stage
+         */
         public static void initialize(Scene scene, Stage stage) {
             if (idleTimer == null) {
                 idleTimer = new PauseTransition(Duration.seconds(Constants.IDLE_TIMEOUT));
@@ -39,6 +59,10 @@ public class IdleTimer {
             });
         }
 
+        /**
+         * Switches the scene to 'LoginGUI'. Called by idleTimer upon its timer finishing.
+         * @param stage Current instance of the stage.
+         */
         private static void resetOnIdle(Stage stage) {
             try {
                 FXMLLoader loader = new FXMLLoader(IdleTimer.class.getResource(FXMLPaths.LOGIN));
