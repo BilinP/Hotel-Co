@@ -21,8 +21,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 public class ReservationLookupController extends BaseController {
-
-
+    /**
+     * Combobox containing every type room type.
+     */
     @FXML
     private ComboBox<RoomType> RoomSelection;
 
@@ -68,24 +69,31 @@ public class ReservationLookupController extends BaseController {
     @FXML
     private VBox vBox;
 
+    /**
+     * Datepicker that contains the check in date or a date you want to change a reservation to.
+     */
     @FXML
     private DatePicker checkInChange;
 
+    /**
+     * Datepicker that contains the check out date or a date you want to change a reservation to.
+     */
     @FXML
     private DatePicker checkOutChange;
     
-    
-
-    //@FXML
-    //private Text guestsChange;
-
-    //@FXML
-    //private ChoiceBox roomTypeChange;
-
+    /**
+     * Button that allows the user to change a reservation.
+     */
     @FXML
     private Button change;
+    /**
+     * Button that allows checks if a reservation after change is possible.
+     */
     @FXML
     private Button check;
+    /**
+     * Text that shows the current roomtype of a reservation.
+     */
     @FXML
     private Text roomtype;
 
@@ -93,6 +101,9 @@ public class ReservationLookupController extends BaseController {
      * Instance of current Reservation being viewed.
      */
     private Reservation reservation;
+    /**
+     * Text that show the current number guest in a reservation
+     */
     private int amountOfGuest;
 
 
@@ -153,6 +164,10 @@ public class ReservationLookupController extends BaseController {
         checkOutChange.setValue(reservation.getEndDate());
     }
 
+    /**
+     * This method will change a reservation date.
+     * @param event The 'mouse released' event that is triggered by pressing the change button
+     */
     @FXML
     private void change(MouseEvent event) {
         // if (reservation.getRoom().getRoomType() == RoomType.toRoomType(roomTypeChange.getValue())){
@@ -181,6 +196,10 @@ public class ReservationLookupController extends BaseController {
         
     }
 
+    /**
+     * This method will check if a reservation is possible with a given roomtype. 
+     * @param event The 'mouse released' event that is triggered by pressing the check button
+     */
     @FXML
     private void check(MouseEvent event) {
         LocalDate start = checkInChange.getValue();
@@ -197,7 +216,10 @@ public class ReservationLookupController extends BaseController {
             change.setDisable(true);
          }
     }
-
+    /**
+     * This method increase the number of guest
+     * @param event The 'mouse released' event that is triggered by pressing the up arrow text
+     */
     @FXML
     void decreaseGuest(MouseEvent event) {
         if (amountOfGuest > 1) {
@@ -207,7 +229,10 @@ public class ReservationLookupController extends BaseController {
             change.setDisable(true);
         }
     }
-
+    /**
+     * This method decrease the number of guest
+     * @param event The 'mouse released' event that is triggered by pressing the down arrow text
+     */
     @FXML
     void increaseGuest(MouseEvent event) {
         if (amountOfGuest < Constants.MAX_CAP) {
@@ -218,6 +243,10 @@ public class ReservationLookupController extends BaseController {
         }
     }
 
+    /**
+     * This method will change the room type and push it to the database for that reservation. 
+     * @param event The 'mouse released' event that is triggered by pressing the change Room button
+     */
     @FXML
     void ChangeRoom(MouseEvent event) {
         if(!(reservation.getRoom().getRoomType().equals(RoomSelection.getValue()))){
@@ -226,7 +255,10 @@ public class ReservationLookupController extends BaseController {
          reservation.push();
         writeReservationInfo(reservation);
     }
-
+    /**
+     * This method update  he number of guest and push it to the database.
+     * @param event The 'mouse released' event that is triggered by pressing update guest button .
+     */  
     @FXML
     void updateGuest(MouseEvent event) {
         if(!(reservation.getGroupSize()==amountOfGuest)){
@@ -236,7 +268,10 @@ public class ReservationLookupController extends BaseController {
         writeReservationInfo(reservation);
     }
     
-
+    /**
+     * It exits the 'ReservationLookupGUI' and enters the 'Payment'.
+     * @param event The 'mouse released' event that is triggered by pressing the 'Payment' button.
+     */
     @FXML
     void switchToPayment(MouseEvent event) {
         PaymentController reservationLookupController =
@@ -244,11 +279,19 @@ public class ReservationLookupController extends BaseController {
         reservationLookupController.writePayment(reservation);
         switchScene(FXMLPaths.PAYMENT, event);
     }
+
+    /**
+     * Sets the change button to be disabled
+     * @param event The event is triggered when the selection box is changed. 
+     */
      @FXML
     void ChangedRoomType(ActionEvent event) {
         change.setDisable(true);
     }
 
+     /**
+     * Updates the possible room choice to the number of guests.
+     */
     public void updateRoomChoices(){
         RoomType temp = RoomSelection.getValue();
         RoomSelection.getItems().clear();
