@@ -24,25 +24,46 @@ import javafx.scene.text.Text;
  * @version     1.0
  */
 public class PaymentController extends BaseController{
-
+    /**
+     * TextField that contains the cvv of a credit card .
+     */
     @FXML
     private TextField CVV;
 
+    /**
+     * TextField that contains the credit card number of a credit card .
+     */
     @FXML
     private TextField creditCardNum;
 
+    /**
+     * Text that contains amount due.
+     */
     @FXML
     private Text due;
 
+    /**
+     * Datepicker which contains the expiration date of a credit card.
+     */
     @FXML
     private DatePicker expDate;
     
+    /**
+     * Choicebox that contain all credit card types.
+     */
     @FXML
     private ChoiceBox<CreditCardType> cardType;
 
+    /**
+     * Reservation which contain the current reservation.
+     */
     private Reservation reservation;
 
 
+    /**
+     * Sets the amount is due for thatreservation. 
+     * @parm reservation which used to get the amount due
+     */
     public void writePayment(Reservation reservation){
         cardType.getItems().addAll(CreditCardType.values());
         this.reservation=reservation;
@@ -50,7 +71,10 @@ public class PaymentController extends BaseController{
         due.setText("Totel Due: "+ pay.getAmount().toString());
 
     }
-
+    /**
+     * Verify the card and then assign it to the database
+     * @param event The 'mouse released' event that is triggered by pressing the 'Pay' text.
+     */
     @FXML
     void payment(MouseEvent event) {
         CreditCard card= new CreditCard(creditCardNum.getText(), CVV.getText(), expDate.getValue(), cardType.getValue(), reservation.getUser());
@@ -60,6 +84,11 @@ public class PaymentController extends BaseController{
         }
     }
 
+    /**
+     * This method is called by pressing the 'back' button.
+     * It exits the 'Payment Controller' and enters the 'Reserivation History GUI'.
+     * @param event The 'mouse released' event that is triggered by pressing the ' Back'  on the top left corner.
+     */
     @FXML
     void switchToBooking(MouseEvent event) {
         switchScene(FXMLPaths.SEARCH, event);
