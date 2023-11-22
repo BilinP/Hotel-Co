@@ -77,7 +77,7 @@ public class DashboardController extends BaseController {
      */
     @FXML
     private void initialize() {
-        switchAnchor(FXMLPaths.HOME,rightAnchor);
+        switchAnchor(FXMLPaths.HOME);
          menubuttons[0] = bookRoomButton;
          menubuttons[1] = cartButton;
          menubuttons[2] = homeButton;
@@ -107,7 +107,7 @@ public class DashboardController extends BaseController {
      */
     @FXML
     private void switchToMenu(MouseEvent event) {
-       switchAnchor(FXMLPaths.HOME,rightAnchor);
+       switchAnchor(FXMLPaths.HOME);
        buttonSelection(homeButton);
     }
 
@@ -131,7 +131,7 @@ public class DashboardController extends BaseController {
     @FXML
     void switchToProfile(MouseEvent event) {
         buttonSelection(profileButton);
-        switchAnchor(FXMLPaths.PROFILE,rightAnchor);
+        switchAnchor(FXMLPaths.PROFILE);
         
     }
 
@@ -143,7 +143,7 @@ public class DashboardController extends BaseController {
      */
     @FXML
     void switchToReservationHistory(MouseEvent event) {
-        switchAnchor(FXMLPaths.RHGUI,rightAnchor);
+        switchAnchor(FXMLPaths.RHGUI);
         buttonSelection(viewBookingButton);
     }
 
@@ -154,7 +154,7 @@ public class DashboardController extends BaseController {
      */
     @FXML
     void switchToRoomSearch(MouseEvent event) {
-        switchAnchor(FXMLPaths.ROOMS,rightAnchor);
+        switchAnchor(FXMLPaths.ROOMS);
         buttonSelection(bookRoomButton);
     }
 
@@ -178,8 +178,9 @@ public class DashboardController extends BaseController {
      * This method will switch the anchor the user is currently viewing to the provided FXML file located in 'fxmlLocation'.
      * @param path The file path of the FXML file to switch to.
      */
-    public static void switchAnchor(String path, AnchorPane rightAnchor) {
-        FXMLLoader loader = new FXMLLoader(DashboardController.class.getResource(path));
+     public void switchAnchor(String path){
+        if(!path.equals(currentPath)){
+         FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
 
         try {
             AnchorPane newContent = loader.load();
@@ -187,8 +188,9 @@ public class DashboardController extends BaseController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        currentPath=path;
+        }
     }
-
-    }
+}
 
 

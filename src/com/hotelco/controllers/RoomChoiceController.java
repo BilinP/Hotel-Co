@@ -120,7 +120,7 @@ public class RoomChoiceController extends DashboardController {
     @FXML
      void  switchToBooking(MouseEvent event) {
          Button clickedButton = (Button) event.getSource();
-         switchAnchor(FXMLPaths.SEARCH,rightAnchor);
+         switchAnchor(FXMLPaths.SEARCH);
          RoomType roomType= RoomType.parseString(clickedButton.getId().toUpperCase());
          RoomSearchController inital= new RoomSearchController();
          inital.setRoomType(roomType); 
