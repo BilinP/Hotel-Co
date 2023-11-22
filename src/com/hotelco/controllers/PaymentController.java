@@ -1,14 +1,14 @@
 package com.hotelco.controllers;
 
 import com.hotelco.constants.CreditCardType;
-import com.hotelco.constants.RoomType;
+
 import com.hotelco.entities.CreditCard;
 import com.hotelco.entities.Payment;
 import com.hotelco.entities.Reservation;
-import com.hotelco.entities.ReservationSystem;
+
 import com.hotelco.utilities.FXMLPaths;
 
-import javafx.application.Platform;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;

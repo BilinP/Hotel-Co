@@ -13,8 +13,8 @@ import javafx.scene.layout.AnchorPane;
 
 
 /**
- * The ThankYouController class is the associated controller class of the 'ThankYouGUI' view. 
- * It handles connection between the GUI and internal data.
+ * The Dashboard class is the associated controller class of the 'dashboard' view. 
+ * It handles connection between the GUI and internal data. 
  * 
  * @author      Bilin Pattasseril
  * @version    
@@ -42,7 +42,10 @@ public class DashboardController extends BaseController {
     private Button viewBookingButton;
 
     private final Button[] menubuttons = new Button[5];
+
     private String currentPath;
+
+
     @FXML
     private void initialize() {
         //add non JavaFX related code here
@@ -113,7 +116,7 @@ public class DashboardController extends BaseController {
     }
 
     
-    private void switchAnchor(String path){
+    public void switchAnchor(String path){
         if(!path.equals(currentPath)){
          FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
 
