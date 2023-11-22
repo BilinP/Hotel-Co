@@ -5,10 +5,13 @@ import java.io.IOException;
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 
+import com.hotelco.constants.RoomType;
 import com.hotelco.controllers.LoginController;
+import com.hotelco.entities.ReservationSystem;
 import com.hotelco.utilities.DailyTask;
 import com.hotelco.utilities.FXMLPaths;
 import com.hotelco.utilities.FrequentTask;
+import com.hotelco.utilities.Manager;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -37,7 +40,6 @@ public class Main extends Application {
 		try {
 			DailyTask.scheduleDailyTasks();
 			FrequentTask.scheduleFrequentTasks();
-			//ReservationSystem.getAvailabilities(LocalDate.of(2023,10,20), LocalDate.of(2023,11,25), RoomType.SUITE);
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXMLPaths.LOGIN));
 			Parent root = fxmlLoader.load();
 			Scene scene = new Scene(root, Screen.getPrimary().getBounds().getWidth(), Screen.getPrimary().getBounds().getHeight());
