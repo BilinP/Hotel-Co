@@ -5,13 +5,13 @@ import java.sql.*;
 * Creates and maintains a connection to a pre-defined database.
 *
 * @author      Daniel Schwartz
-* @version     %I%, %G%
 */
 public class DatabaseConnection {
 
 /**
  * Connects static member con to the database
- * @return Connection object, connected to db
+ * @return Connection object, connected to database
+ * @author Daniel Schwartz
  */
     public static Connection connectDB()
     {

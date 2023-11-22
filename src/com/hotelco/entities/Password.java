@@ -45,8 +45,7 @@ public class Password{
      * @return the hashed password, which is in hexadecimal
      * @throws NoSuchAlgorithmException 
      */
-
-
+    
     public String encrypt(String pass)throws NoSuchAlgorithmException{
     
         byte[]saltPass= genSaltWithPass(pass.getBytes());
