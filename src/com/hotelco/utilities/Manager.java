@@ -1,5 +1,6 @@
-package com.hotelco.entities;
+package com.hotelco.utilities;
 
+import java.sql.Date;
 import java.time.*;
 
 /**

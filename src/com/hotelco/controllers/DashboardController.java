@@ -64,6 +64,10 @@ public class DashboardController extends BaseController {
 
     
 
+    
+    /** 
+     * @param event
+     */
     @FXML
     void switchToCart(MouseEvent event) {
         buttonSelection(cartButton);
@@ -80,12 +84,20 @@ public class DashboardController extends BaseController {
        buttonSelection(homeButton);
     }
 
+    
+    /** 
+     * @param event
+     */
     @FXML
     void switchToLoginScene(MouseEvent event) {
         ReservationSystem.logout();
         switchScene(FXMLPaths.LOGIN, event);
     }
 
+    
+    /** 
+     * @param event
+     */
     @FXML
     void switchToProfile(MouseEvent event) {
         buttonSelection(profileButton);
