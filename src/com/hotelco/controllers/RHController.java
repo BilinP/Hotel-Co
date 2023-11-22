@@ -18,29 +18,61 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * The RHController class is the associated controller class of the 'ReservationHistoryGUI' view. 
+ * It handles connection between the GUI and internal data.
+ * 
+ * @author      Grigor Azakian
+ */
 public class RHController extends BaseController {
 
+    /**
+     * TableView that contains every TableColumn.
+     */
     @FXML
     private TableView<Reservation> table;
 
+    /**
+     * TableColumn containing information about a bookings room type.
+     */
     @FXML
     private TableColumn<Reservation, String> roomType;
 
+    /**
+     * TableColumn containing information about a bookings reservation number.
+     */
     @FXML
     private TableColumn<Reservation, Integer> orderNumber;
 
+    /**
+     * TableColumn containing information about a bookings check in date.
+     */    
     @FXML
     private TableColumn<Reservation, LocalDate> checkInDate;
 
+    /**
+     * TableColumn containing information about a bookings check out date.
+     */    
     @FXML
     private TableColumn<Reservation, LocalDate> checkOutDate;
 
+    /**
+     * TableColumn containing information about a bookings current active status.
+     */    
     @FXML
     private TableColumn<Reservation, String> status;
 
+    /**
+     * TableColumn containing information about a bookings total cost.
+     */    
     @FXML
     private TableColumn<Reservation, String> total;
 
+    /**
+     * Called immediately upon controller creation.
+     * Sets up the parameters for the data to be displayed in each TableColumn.
+     * Afterwards, it calls displayOrders().
+     */
     @FXML
     private void initialize() {
         Platform.runLater(() -> {
@@ -59,6 +91,10 @@ public class RHController extends BaseController {
         });
     }
 
+    /**
+     * Uses an array of reservations for the current user and passes it to the TableView.
+     * This will set the data in each TableColumn.
+     */
     private void displayOrders() {
         Reservation reservation[] = ReservationSystem.getCurrentUser()
             .fetchReservations(false, true, false);
