@@ -2,6 +2,8 @@ package com.hotelco.constants;
 
 /**
  * Type of room from {double, queen, king, suite}
+ * @author      Daniel Schwartz
+ * @version     %I%, %G%
  */
 public enum RoomType {
     DBL("Double"),
@@ -48,6 +50,11 @@ public enum RoomType {
         return rt;
     }
 
+    
+/**
+ * Method used to return the pretty version of a room.
+ * @return prettyName
+ */
     public String toPrettyString() {
         return prettyName;
     }

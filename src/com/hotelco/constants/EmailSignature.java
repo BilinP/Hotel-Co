@@ -1,7 +1,9 @@
 package com.hotelco.constants;
 /**
 * Contains the email signature constant for sent emails.
- */
+* @author      John Lee
+* @version     %I%, %G%
+*/
 public class EmailSignature {
    private static String signature = "Phone: 818 - 555 - 1337\r\n" + //
             "Email: HotelCoDesk@gmail.com\r\n" + //

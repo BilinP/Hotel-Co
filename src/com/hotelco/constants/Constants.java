@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 /**
  * Contains all constants
+ * @author Daniel Schwartz, John Lee
+ * @version %I%, %G%
  */
 public final class Constants {
     /**

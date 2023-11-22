@@ -19,9 +19,18 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 
-
+/**
+ * Initializes the JavaFX application, setting up the primary stage, 
+ * loading the login scene, and performing various tasks upon application start.
+ * @author     Bilin Pattasseril, Grigor Azakian
+ * @version %I%, %G%
+ */
 public class Main extends Application {
-
+	
+	/**
+	* This method performs the necessary initialization steps, such as scheduling
+ 	*  daily and frequent tasks, loading the login scene, and configuring the primary stage.
+ 	*/
 	@Override
 	public void start(Stage primaryStage) {
 		
@@ -48,10 +57,10 @@ public class Main extends Application {
 		}
 	}
 	
+	/**
+ 	* This method serves as the starting point for the application's execution.
+ 	*/
 	 public static void main(String[] args) throws AddressException, MessagingException, IOException {
-		//String[] testargs = {"bilin.pattasseril.563@my.csun.edu", "for realsy", "we won a award!"};
-		
-		//SendMail.startSend(testargs[0], testargs[1], testargs[2]);
 		launch(args);
 	}
 }

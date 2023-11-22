@@ -16,6 +16,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
+/**
+ * The PaymentController class is the associated controller class of the 'Payment' view. 
+ * It handles connection between the GUI and internal data.
+ * 
+ * @author      Bilin Pattasseril
+ * @version     1.0
+ */
 public class PaymentController extends BaseController{
 
     @FXML
