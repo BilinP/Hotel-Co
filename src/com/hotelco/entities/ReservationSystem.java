@@ -376,8 +376,8 @@ public class ReservationSystem {
         ResultSet rs = null;
         String sqlQuery = "SELECT * " + 
             "FROM reservations " + 
-            "WHERE start_date = '" + Date.valueOf(LocalDate.now()) +
-            "' AND is_checked_in = 0";
+            "WHERE start_date = '" + Date.valueOf(LocalDate.now()) + "' " +
+            "AND is_checked_in = 0";
         Connection con = getDatabaseConnection();
 
         try {

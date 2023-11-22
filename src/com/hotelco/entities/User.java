@@ -299,7 +299,9 @@ public class User {
         }
     }
     /**
-     * Fetches all reservations associated with a user from the database by user id
+     * Fetches all reservations associated with a user from the database by user
+     * id. Uses an arraylist to build the list and when it is full, pushes it to
+     * an array.
      * @param user 
      * @param fetchOnlyFuture
      * @return the reservation results.

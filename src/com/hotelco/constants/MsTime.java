@@ -1,11 +1,7 @@
 package com.hotelco.constants;
-
 /**
- * Defines constants representing various time units in milliseconds. 
- * It serves as a convenient reference for converting between different time 
- * intervals and their equivalent values in milliseconds.
- * @author      Daniel Schwartz
- * @version     %I%, %G%
+ * Converts common small units of time to milliseconds.
+ * @author Daniel Schwartz
  */
 public class MsTime{
     /**

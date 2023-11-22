@@ -2,9 +2,9 @@ package com.hotelco.constants;
 /**
  * Represents database statuses. NOT_CONNECTED relates that the database is not
  * currently connected. READY relates that the database is ready for
- * processing, but not currently processing. PROCESSING
- * @author      Daniel Schwartz
- * @version     %I%, %G%
+ * processing, but not currently processing. PROCESSING relates that the database
+ * is currently processing, and not ready for other transactions.
+ * @author Daniel Schwartz
  */
 public enum DatabaseStatus {
     /**

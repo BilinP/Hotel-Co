@@ -1,7 +1,13 @@
 package com.hotelco.utilities;
 
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.*;
+
+import com.hotelco.entities.ReservationSystem;
 
 /**
  * Maintains the manager information while giving tools for the manager to maintain a reservation
@@ -13,7 +19,7 @@ public class Manager{
     /**
      * Finds the amount of vacant rooms at the current date
      */
-    public static findVacantRoomSize(){
+    public static Integer findVacantRoomSize(){
         
         Integer result = 0;
         PreparedStatement ps = null;
@@ -23,9 +29,9 @@ public class Manager{
             "WHERE room_num NOT IN (" + 
                 "SELECT room_num " + 
                 "FROM reservations " + 
-                "WHERE start_date <= '" + Date.valueOf(LocalDate.now) +
-                "' OR end_date >= '" + Date.valueOf(LocalDate.now) + "') " 
-        Connection con = getDatabaseConnection();
+                "WHERE start_date <= '" + Date.valueOf(LocalDate.now()) +
+                "' OR end_date >= '" + Date.valueOf(LocalDate.now()) + "') "; 
+        Connection con = ReservationSystem.getDatabaseConnection();
 
         try {
             ps = con.prepareStatement(sqlQuery);
@@ -40,8 +46,8 @@ public class Manager{
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
-        ready();
+        ReservationSystem.ready();
         return result;
 
-    
+    }
 }
