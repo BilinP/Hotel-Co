@@ -47,10 +47,11 @@ public class DashboardController extends BaseController {
     private Button profileButton;
 
     /**
-     *  A AnchorPane which is the right in the screen.
+     *  A AnchorPane which is the right of the dashboard.
      */
     @FXML
-    private AnchorPane rightAnchor;
+    public  AnchorPane rightAnchor;
+
 
     /**
      * Button named 'Reservation History' that calls 'switchToReservationHistory()' when pressed.
@@ -76,7 +77,7 @@ public class DashboardController extends BaseController {
      */
     @FXML
     private void initialize() {
-         switchAnchor(FXMLPaths.HOME);
+        switchAnchor(FXMLPaths.HOME,rightAnchor);
          menubuttons[0] = bookRoomButton;
          menubuttons[1] = cartButton;
          menubuttons[2] = homeButton;
@@ -106,7 +107,7 @@ public class DashboardController extends BaseController {
      */
     @FXML
     private void switchToMenu(MouseEvent event) {
-       switchAnchor(FXMLPaths.HOME);
+       switchAnchor(FXMLPaths.HOME,rightAnchor);
        buttonSelection(homeButton);
     }
 
@@ -130,7 +131,7 @@ public class DashboardController extends BaseController {
     @FXML
     void switchToProfile(MouseEvent event) {
         buttonSelection(profileButton);
-        switchAnchor(FXMLPaths.PROFILE);
+        switchAnchor(FXMLPaths.PROFILE,rightAnchor);
         
     }
 
@@ -142,7 +143,7 @@ public class DashboardController extends BaseController {
      */
     @FXML
     void switchToReservationHistory(MouseEvent event) {
-        switchAnchor(FXMLPaths.RHGUI);
+        switchAnchor(FXMLPaths.RHGUI,rightAnchor);
         buttonSelection(viewBookingButton);
     }
 
@@ -153,7 +154,7 @@ public class DashboardController extends BaseController {
      */
     @FXML
     void switchToRoomSearch(MouseEvent event) {
-        switchAnchor(FXMLPaths.ROOMS);
+        switchAnchor(FXMLPaths.ROOMS,rightAnchor);
         buttonSelection(bookRoomButton);
     }
 
@@ -177,17 +178,14 @@ public class DashboardController extends BaseController {
      * This method will switch the anchor the user is currently viewing to the provided FXML file located in 'fxmlLocation'.
      * @param path The file path of the FXML file to switch to.
      */
-    public void switchAnchor(String path){
-        if(!path.equals(currentPath)){
-         FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
+    public static void switchAnchor(String path, AnchorPane rightAnchor) {
+        FXMLLoader loader = new FXMLLoader(DashboardController.class.getResource(path));
 
         try {
             AnchorPane newContent = loader.load();
             rightAnchor.getChildren().setAll(newContent);
         } catch (IOException e) {
             e.printStackTrace();
-        }
-        currentPath=path;
         }
     }
 
