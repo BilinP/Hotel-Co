@@ -1,7 +1,6 @@
 package com.hotelco.controllers;
 
 import com.hotelco.application.IdleTimer;
-import com.hotelco.utilities.FXMLPaths;
 
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
@@ -16,8 +15,6 @@ import javafx.scene.Node;
  * It contains common functionality all controllers must use.
  * 
  * @author      Grigor Azakian
- * @author      Bilin Pattasseril
- * @version     %I%, %G%
  */
 public class BaseController  {
     /**
