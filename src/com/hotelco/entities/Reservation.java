@@ -19,7 +19,6 @@ import com.hotelco.utilities.SendMail;
  * Maintains details of a particular reservation and facilitates database
  * transactions.
  * @author Daniel Schwartz
- * @version %I%, %G%
  */
 public class Reservation {
     /**
@@ -554,7 +553,10 @@ public class Reservation {
         // System.out.println("Reservation " + reservationId +
         //     "'s isCheckedIn = " + this.getIsCheckedIn().toString());
     }
-
+    /**
+     * Cancels this reservation, making payment appropriately
+     * @param payNow whether or not to pay the reservation while cancelling
+     */
     public void cancel(Boolean payNow){
         isCancelled = true;
         if (isCheckedIn){

@@ -9,7 +9,9 @@ import java.util.TimerTask;
 import com.hotelco.constants.Constants;
 import com.hotelco.entities.ReservationSystem;
 
-
+/**
+ * Can create tasks that happen frequently and repeatedly.
+ */
 public class FrequentTask {
     public FrequentTask(Integer minutesFrequency){
         Timer timer = new Timer(true);
@@ -18,7 +20,11 @@ public class FrequentTask {
             new Date(new Date().getTime() + minutesFrequency),
             minutesFrequency);
     }
-
+/**
+ * Reconnects the database frequently. Uses DatabaseStatus to determine if there
+ * already a current transaction. If there is, the reconnect task is rescheduled
+ * for RETRY_INTERVAL seconds later.
+ */
     class DatabaseReconnectTask extends TimerTask {
         public void run() {
             System.out.println("Reconnecting database");
@@ -47,7 +53,9 @@ public class FrequentTask {
             }
         }
     }
-
+    /**
+     * Schedules the frequent task(s).
+     */
     public static void scheduleFrequentTasks(){
         new FrequentTask(Constants.RECONNECT_INTERVAL);
     }

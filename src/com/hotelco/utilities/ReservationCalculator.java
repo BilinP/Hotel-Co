@@ -10,6 +10,11 @@ import com.hotelco.entities.Reservation;
  * @author Daniel Schwartz
  */
 public class ReservationCalculator {
+    /**
+     * Calculates the total price of a reservation.
+     * @param reservation the reservation to be considered
+     * @return the total price of the supplied reservation
+     */
 
     public static BigDecimal calcTotal(Reservation reservation){
         LocalDate i;
