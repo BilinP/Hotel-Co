@@ -71,6 +71,8 @@ public class RoomSearchController extends BaseController {
     @FXML
     private Text totalDay;
 
+    private RoomType room;
+
 
     /**
      * This method is called immediately upon controller creation.
@@ -112,6 +114,11 @@ public class RoomSearchController extends BaseController {
         });
     }
 
+    public void setRoomType(String roomType){
+        room.parseString(roomType.toUpperCase());
+        System.out.print(room);
+    }
+
     /**
      * This method is called when pressing the 'Check Availability' button.
      * It handles input verification and checks for available rooms with the given parameters.
@@ -140,16 +147,16 @@ public class RoomSearchController extends BaseController {
         notification.setText("");
         if(numGuests > 0 && numGuests <= Constants.CAPACITIES.get(RoomType.DBL)) {
 
-            dbl.setDisable(!ReservationSystem.checkAvailability(start, end, RoomType.DBL));
+          //  dbl.setDisable(!ReservationSystem.checkAvailability(start, end, RoomType.DBL));
         }
         if(numGuests <= Constants.CAPACITIES.get(RoomType.QUEEN)) {  
-            queen.setDisable(!ReservationSystem.checkAvailability(start, end, RoomType.QUEEN));
+           // queen.setDisable(!ReservationSystem.checkAvailability(start, end, RoomType.QUEEN));
         }
         if(numGuests <= Constants.CAPACITIES.get(RoomType.KING)) {
-            king.setDisable(!ReservationSystem.checkAvailability(start, end, RoomType.KING));
+           // king.setDisable(!ReservationSystem.checkAvailability(start, end, RoomType.KING));
         }
         if(numGuests <= Constants.CAPACITIES.get(RoomType.SUITE)) {
-            suite.setDisable(!ReservationSystem.checkAvailability(start, end, RoomType.SUITE));
+            //suite.setDisable(!ReservationSystem.checkAvailability(start, end, RoomType.SUITE));
         }
     }
 
