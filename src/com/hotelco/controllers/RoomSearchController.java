@@ -70,8 +70,12 @@ public class RoomSearchController extends BaseController {
 
     @FXML
     private Text totalDay;
+    @FXML
+    private Text title;
 
     private RoomType room;
+
+
 
 
     /**
@@ -114,8 +118,9 @@ public class RoomSearchController extends BaseController {
         });
     }
 
-    public void setRoomType(RoomType roomType){
+    public void initalwrite(RoomType roomType){
        room=roomType;
+       title.setText("Booking -"+room.toPrettyString());
     }
 
     /**

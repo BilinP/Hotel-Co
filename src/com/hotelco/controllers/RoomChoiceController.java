@@ -18,7 +18,7 @@ import javafx.scene.text.Text;
  * 
  * @author      Grigor Azakian
  */
-public class RoomChoiceController extends DashboardController {
+public class RoomChoiceController extends BaseController {
 
     /**
      * Text that contains the benefits of booking a suite.
@@ -120,10 +120,11 @@ public class RoomChoiceController extends DashboardController {
     @FXML
      void  switchToBooking(MouseEvent event) {
          Button clickedButton = (Button) event.getSource();
-         switchAnchor(FXMLPaths.SEARCH);
          RoomType roomType= RoomType.parseString(clickedButton.getId().toUpperCase());
          RoomSearchController inital= new RoomSearchController();
-         inital.setRoomType(roomType); 
+         inital.initalwrite(roomType); 
+         switchScene(FXMLPaths.SEARCH,event);
+         
     }
 
 }

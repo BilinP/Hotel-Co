@@ -68,7 +68,6 @@ public class PaymentController extends BaseController{
         this.reservation=reservation;
         Payment pay= new Payment(reservation);
         due.setText("Totel Due: "+ pay.getAmount().toString());
-
     }
     /**
      * Verify the card and then assign it to the database
