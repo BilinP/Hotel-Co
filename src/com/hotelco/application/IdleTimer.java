@@ -12,7 +12,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Screen;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 
@@ -38,8 +37,6 @@ public class IdleTimer {
          * Sets up idleTimer if it hasn't already been initialized and attaches an EventHandler to the current scene.
          * idleTimer will call resetOnIdle() upon finishing.
          * The EventHandler will reset the timer upon any Event being detected.
-         * @param scene
-         * @param stage
          */
         public static void initialize() {
             if (idleTimer == null) {
@@ -49,7 +46,7 @@ public class IdleTimer {
             idleTimer.setOnFinished(e -> {
 				if (ReservationSystem.getCurrentUser() != null) {
                     ReservationSystem.logout();
-					resetOnIdle(Instances.getStage());
+					resetOnIdle();
 					idleTimer.playFromStart();
 				}
 			});
@@ -62,9 +59,8 @@ public class IdleTimer {
 
         /**
          * Switches the scene to 'LoginGUI'. Called by idleTimer upon its timer finishing.
-         * @param stage Current instance of the stage.
          */
-        private static void resetOnIdle(Stage stage) {
+        private static void resetOnIdle() {
             try {
                 FXMLLoader loader = new FXMLLoader(IdleTimer.class.getResource(FXMLPaths.LOGIN));
                 Parent root = loader.load();    
@@ -73,9 +69,9 @@ public class IdleTimer {
                 LoginController lc = (LoginController) loader.getController();
                 lc.initializeIdleTimer();
                 IdleTimer.initialize();
-                stage.setResizable(false);
-                stage.setScene(scene);
-                stage.show();
+                Instances.getStage().setResizable(false);
+                Instances.getStage().setScene(scene);
+                Instances.getStage().show();
             } catch (Exception e) {
                 e.printStackTrace();
             }
