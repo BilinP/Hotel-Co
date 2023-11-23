@@ -178,18 +178,19 @@ public class DashboardController extends BaseController {
      * This method will switch the anchor the user is currently viewing to the provided FXML file located in 'fxmlLocation'.
      * @param path The file path of the FXML file to switch to.
      */
-     public void switchAnchor(String path){
+     public BaseController switchAnchor(String path){
         if(!path.equals(currentPath)){
-         FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
-
-        try {
-            AnchorPane newContent = loader.load();
-            rightAnchor.getChildren().setAll(newContent);
-        } catch (IOException e) {
-            e.printStackTrace();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
+            try {
+                AnchorPane newContent = loader.load();
+                rightAnchor.getChildren().setAll(newContent);
+                return loader.getController();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            currentPath = path;
         }
-        currentPath=path;
-        }
+        return null;
     }
 }
 
