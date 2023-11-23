@@ -117,13 +117,11 @@ public class RoomChoiceController extends BaseController {
      * @param event The 'mouse released' event caused by pressing any of the 'BOOK' buttons.
      */
     @FXML
-     void  switchToBooking(MouseEvent event) {
-         //Button clickedButton = (Button) event.getSource();
-         //RoomType roomType= RoomType.parseString(clickedButton.getId().toUpperCase());
-         //RoomSearchController inital= new RoomSearchController();
-         //inital.initalwrite(roomType); 
-         Instances.getDashboardController().switchAnchor(FXMLPaths.SEARCH);
-         //switchScene(FXMLPaths.SEARCH);
+     void switchToBooking(MouseEvent event) {
+         Button clickedButton = (Button) event.getSource();
+         RoomType roomType = RoomType.parseString(clickedButton.getId().toUpperCase());
+         RoomSearchController rsc = (RoomSearchController) Instances.getDashboardController().switchAnchor(FXMLPaths.SEARCH);
+         rsc.initalwrite(roomType);
     }
 
 }
