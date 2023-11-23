@@ -6,6 +6,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 
 import com.hotelco.constants.RoomType;
+import com.hotelco.controllers.Instances;
 import com.hotelco.controllers.LoginController;
 import com.hotelco.entities.ReservationSystem;
 import com.hotelco.utilities.DailyTask;
@@ -43,9 +44,11 @@ public class Main extends Application {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXMLPaths.LOGIN));
 			Parent root = fxmlLoader.load();
 			Scene scene = new Scene(root, Screen.getPrimary().getBounds().getWidth(), Screen.getPrimary().getBounds().getHeight());
-			IdleTimer.initialize(scene, primaryStage);
+			Instances.setScene(scene);
+			Instances.setStage(primaryStage);
+			IdleTimer.initialize();
 			LoginController lc = (LoginController) fxmlLoader.getController();
-			lc.initializeIdleTimer(primaryStage, scene);
+			lc.initializeIdleTimer();
 			primaryStage.centerOnScreen();
 			primaryStage.initStyle(StageStyle.UNDECORATED);
 			primaryStage.setTitle("HotelCo");

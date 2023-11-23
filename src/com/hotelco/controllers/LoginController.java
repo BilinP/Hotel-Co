@@ -28,7 +28,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
@@ -73,16 +72,6 @@ public class LoginController extends BaseController {
      * after the user is idle for some amount of time
      */
     private PauseTransition idleTimer;
-
-    /**
-     * Current instance of the Scene. Used to change views without an event.
-     */
-    private Scene scene;
-
-    /**
-     * Current instance of the Stage. Used to change views without an event.
-     */
-    private Stage stage;
 
     /**
      * EventHandler used to determine if the user is making inputs.
@@ -138,11 +127,11 @@ public class LoginController extends BaseController {
                 System.out.println("Line 142: " + (ChronoUnit.MILLIS.between(start, LocalDateTime.now())));
                 idleTimer.stop();
                 System.out.println("Line 144: " + (ChronoUnit.MILLIS.between(start, LocalDateTime.now())));
-                scene.removeEventHandler(Event.ANY, handler);
+                Instances.getScene().removeEventHandler(Event.ANY, handler);
                 System.out.println("Line 146: " + (ChronoUnit.MILLIS.between(start, LocalDateTime.now())));
                 ReservationSystem.setCurrentUser(new User(emailStr));
                 System.out.println("Line 148: " + (ChronoUnit.MILLIS.between(start, LocalDateTime.now())));
-                switchScene(FXMLPaths.DASHBOARD, event);
+                switchScene(FXMLPaths.DASHBOARD);
             }
             else{
                 notification.setText("Invalid Username/Password!");
@@ -163,8 +152,8 @@ public class LoginController extends BaseController {
     @FXML
     private void switchToCreateAccount(MouseEvent event) {
         idleTimer.stop();
-        scene.removeEventHandler(Event.ANY, handler);
-        switchScene(FXMLPaths.CREATE_ACCOUNT, event);
+        Instances.getScene().removeEventHandler(Event.ANY, handler);
+        switchScene(FXMLPaths.CREATE_ACCOUNT);
     }
     
     /**
@@ -200,10 +189,7 @@ public class LoginController extends BaseController {
      * @param stage The current instance of the Stage.
      * @param scene The current instance of the Scene.
      */
-    public void initializeIdleTimer(Stage stage, Scene scene) {
-        this.stage = stage;
-        this.scene = scene;
-
+    public void initializeIdleTimer() {
         idleTimer = new PauseTransition(Duration.seconds(10));
         idleTimer.setOnFinished(e -> {
             switchToScreenSaver();
@@ -214,7 +200,7 @@ public class LoginController extends BaseController {
             idleTimer.playFromStart();
         };
 
-        scene.addEventHandler(Event.ANY, handler);
+        Instances.getScene().addEventHandler(Event.ANY, handler);
     }
 
     /**
@@ -223,15 +209,16 @@ public class LoginController extends BaseController {
      */
     private void switchToScreenSaver() {
         idleTimer.stop();
-        scene.removeEventHandler(Event.ANY, handler);
+        Instances.getScene().removeEventHandler(Event.ANY, handler);
         try {
             FXMLLoader loader = new FXMLLoader(IdleTimer.class.getResource(FXMLPaths.SCREENSAVER));
             Parent root = loader.load();    
             Scene scene = new Scene(root, Screen.getPrimary().getBounds().getWidth(), Screen.getPrimary().getBounds().getHeight());
-            IdleTimer.initialize(scene, stage);
-            stage.setResizable(false);
-            stage.setScene(scene);
-            stage.show();
+            Instances.setScene(scene);
+            IdleTimer.initialize();
+            Instances.getStage().setResizable(false);
+            Instances.getStage().setScene(scene);
+            Instances.getStage().show();
         } catch (Exception e) {
             e.printStackTrace();
         }       

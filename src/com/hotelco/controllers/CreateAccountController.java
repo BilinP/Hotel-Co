@@ -156,7 +156,7 @@ public class CreateAccountController extends BaseController {
             return;
         }
 
-        LoginController loginController = (LoginController) switchScene(FXMLPaths.LOGIN, event);
+        LoginController loginController = (LoginController) switchScene(FXMLPaths.LOGIN);
 
         User newUser = new User(firstName.getText(), lastName.getText(),email.getText(), phoneNumber.getText());
         newUser.push(password.getText());
@@ -175,7 +175,7 @@ public class CreateAccountController extends BaseController {
      */
     @FXML
     private void switchToLoginScene(MouseEvent event) {
-        switchScene(FXMLPaths.LOGIN, event);
+        switchScene(FXMLPaths.LOGIN);
     }
 
 }

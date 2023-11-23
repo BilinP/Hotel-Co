@@ -216,7 +216,7 @@ public class RoomSearchController extends BaseController {
             }
         reservation = ReservationSystem.getCurrentReservation();
         ThankYouController thankYouController =
-            (ThankYouController) switchScene(FXMLPaths.THANK_YOU, event);
+            (ThankYouController) switchScene(FXMLPaths.THANK_YOU);
         thankYouController.writeReservationInfo(reservation);
     }
 
@@ -255,7 +255,7 @@ public class RoomSearchController extends BaseController {
      */
     @FXML
     private void switchToRoomChoiceScene(MouseEvent event) {
-        switchScene(FXMLPaths.HOME, event);
+        switchScene(FXMLPaths.HOME);
     }
     
     /**

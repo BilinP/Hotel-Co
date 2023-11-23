@@ -9,7 +9,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
 /**
@@ -119,12 +118,12 @@ public class RoomChoiceController extends BaseController {
      */
     @FXML
      void  switchToBooking(MouseEvent event) {
-         Button clickedButton = (Button) event.getSource();
-         RoomType roomType= RoomType.parseString(clickedButton.getId().toUpperCase());
-         RoomSearchController inital= new RoomSearchController();
-         inital.initalwrite(roomType); 
-         switchScene(FXMLPaths.SEARCH,event);
-         
+         //Button clickedButton = (Button) event.getSource();
+         //RoomType roomType= RoomType.parseString(clickedButton.getId().toUpperCase());
+         //RoomSearchController inital= new RoomSearchController();
+         //inital.initalwrite(roomType); 
+         Instances.getDashboardController().switchAnchor(FXMLPaths.SEARCH);
+         //switchScene(FXMLPaths.SEARCH);
     }
 
 }

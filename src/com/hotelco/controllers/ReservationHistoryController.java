@@ -101,7 +101,7 @@ public class ReservationHistoryController extends BaseController {
      */
     @FXML
     private void switchToMenuScene(MouseEvent event) {
-        switchScene(FXMLPaths.HOME, event);
+        switchScene(FXMLPaths.HOME);
     }
 
     /**
@@ -134,7 +134,7 @@ public class ReservationHistoryController extends BaseController {
             map.put(text, reservations[i]);
             text.setOnMouseReleased(event -> {
                 ReservationLookupController reservationLookupController =
-                (ReservationLookupController) switchScene(FXMLPaths.RESERVATION_LOOKUP, event);
+                (ReservationLookupController) switchScene(FXMLPaths.RESERVATION_LOOKUP);
                 reservationLookupController.writeReservationInfo(map.get(text));
             });
             reservationsContainer.getChildren().add(text);

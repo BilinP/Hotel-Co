@@ -1,6 +1,7 @@
 package com.hotelco.application;
 
 import com.hotelco.constants.Constants;
+import com.hotelco.controllers.Instances;
 import com.hotelco.controllers.LoginController;
 import com.hotelco.entities.ReservationSystem;
 import com.hotelco.utilities.FXMLPaths;
@@ -40,7 +41,7 @@ public class IdleTimer {
          * @param scene
          * @param stage
          */
-        public static void initialize(Scene scene, Stage stage) {
+        public static void initialize() {
             if (idleTimer == null) {
                 idleTimer = new PauseTransition(Duration.seconds(Constants.IDLE_TIMEOUT));
             }
@@ -48,12 +49,12 @@ public class IdleTimer {
             idleTimer.setOnFinished(e -> {
 				if (ReservationSystem.getCurrentUser() != null) {
                     ReservationSystem.logout();
-					resetOnIdle(stage);
+					resetOnIdle(Instances.getStage());
 					idleTimer.playFromStart();
 				}
 			});
 
-            scene.addEventHandler(Event.ANY, e -> {
+            Instances.getScene().addEventHandler(Event.ANY, e -> {
                 idleTimer.stop();
                 idleTimer.playFromStart();                
             });
@@ -68,9 +69,10 @@ public class IdleTimer {
                 FXMLLoader loader = new FXMLLoader(IdleTimer.class.getResource(FXMLPaths.LOGIN));
                 Parent root = loader.load();    
                 Scene scene = new Scene(root, Screen.getPrimary().getBounds().getWidth(), Screen.getPrimary().getBounds().getHeight());
+                Instances.setScene(scene);
                 LoginController lc = (LoginController) loader.getController();
-                lc.initializeIdleTimer(stage, scene);
-                IdleTimer.initialize(scene, stage);
+                lc.initializeIdleTimer();
+                IdleTimer.initialize();
                 stage.setResizable(false);
                 stage.setScene(scene);
                 stage.show();

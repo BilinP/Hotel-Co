@@ -125,7 +125,7 @@ public class ReservationLookupController extends BaseController {
     private void cancel(MouseEvent event) {
         reservation.setIsCancelled(true);
         reservation.push();
-        ReservationHistoryController rhc = (ReservationHistoryController) switchScene(FXMLPaths.ORDER_LOOKUP, event);
+        ReservationHistoryController rhc = (ReservationHistoryController) switchScene(FXMLPaths.ORDER_LOOKUP);
         rhc.setNotification("Reservation successfully canceled.");
     }
 
@@ -136,7 +136,7 @@ public class ReservationLookupController extends BaseController {
      */
     @FXML
     private void switchToMenuScene(MouseEvent event) {
-        switchScene(FXMLPaths.ORDER_LOOKUP, event);
+        switchScene(FXMLPaths.ORDER_LOOKUP);
     }
 
     /**
@@ -282,9 +282,9 @@ public class ReservationLookupController extends BaseController {
     @FXML
     void switchToPayment(MouseEvent event) {
         PaymentController reservationLookupController =
-        (PaymentController) switchScene(FXMLPaths.PAYMENT, event);
+        (PaymentController) switchScene(FXMLPaths.PAYMENT);
         reservationLookupController.writePayment(reservation);
-        switchScene(FXMLPaths.PAYMENT, event);
+        switchScene(FXMLPaths.PAYMENT);
     }
 
     /**

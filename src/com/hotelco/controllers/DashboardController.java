@@ -120,7 +120,7 @@ public class DashboardController extends BaseController {
     @FXML
     void switchToLoginScene(MouseEvent event) {
         ReservationSystem.logout();
-        switchScene(FXMLPaths.LOGIN, event);
+        switchScene(FXMLPaths.LOGIN);
     }
 
     
@@ -133,7 +133,6 @@ public class DashboardController extends BaseController {
     void switchToProfile(MouseEvent event) {
         buttonSelection(profileButton);
         switchAnchor(FXMLPaths.PROFILE);
-        
     }
 
     

@@ -78,7 +78,7 @@ public class PaymentController extends BaseController{
         CreditCard card= new CreditCard(creditCardNum.getText(), CVV.getText(), expDate.getValue(), cardType.getValue(), reservation.getUser());
         if(card.verify()){
         card.assign();
-        switchScene(FXMLPaths.THANK_YOU, event);
+        switchScene(FXMLPaths.THANK_YOU);
         }
     }
 
@@ -89,7 +89,7 @@ public class PaymentController extends BaseController{
      */
     @FXML
     void switchToBooking(MouseEvent event) {
-        switchScene(FXMLPaths.SEARCH, event);
+        switchScene(FXMLPaths.SEARCH);
     }
 
 }

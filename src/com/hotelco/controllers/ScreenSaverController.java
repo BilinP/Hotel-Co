@@ -157,7 +157,7 @@ public class ScreenSaverController extends BaseController {
      */
     @FXML
     void switchToLoginScene(MouseEvent event) {
-        switchScene(FXMLPaths.LOGIN, event);
+        switchScene(FXMLPaths.LOGIN);
     }
 
 }
