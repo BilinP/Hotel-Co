@@ -3,7 +3,6 @@ package com.hotelco.controllers;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
-import com.hotelco.application.IdleTimer;
 import com.hotelco.entities.ReservationSystem;
 import com.hotelco.entities.User;
 import com.hotelco.utilities.DatabaseUtil;
@@ -15,9 +14,6 @@ import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -27,7 +23,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import javafx.stage.Screen;
 import javafx.util.Duration;
 
 /**
@@ -210,18 +205,7 @@ public class LoginController extends BaseController {
     private void switchToScreenSaver() {
         idleTimer.stop();
         Instances.getScene().removeEventHandler(Event.ANY, handler);
-        try {
-            FXMLLoader loader = new FXMLLoader(IdleTimer.class.getResource(FXMLPaths.SCREENSAVER));
-            Parent root = loader.load();    
-            Scene scene = new Scene(root, Screen.getPrimary().getBounds().getWidth(), Screen.getPrimary().getBounds().getHeight());
-            Instances.setScene(scene);
-            IdleTimer.initialize();
-            Instances.getStage().setResizable(false);
-            Instances.getStage().setScene(scene);
-            Instances.getStage().show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }       
+        switchScene(FXMLPaths.SCREENSAVER);
     }
 
 }
