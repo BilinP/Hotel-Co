@@ -181,8 +181,6 @@ public class LoginController extends BaseController {
      * Sets up idleTimer and the current scene's EventHandler.
      * idleTimer will call switchToScreenSaver() when its timer reaches 0.
      * The scene will track every event and reset the timer when an event is made.
-     * @param stage The current instance of the Stage.
-     * @param scene The current instance of the Scene.
      */
     public void initializeIdleTimer() {
         idleTimer = new PauseTransition(Duration.seconds(10));
@@ -196,6 +194,7 @@ public class LoginController extends BaseController {
         };
 
         Instances.getScene().addEventHandler(Event.ANY, handler);
+        idleTimer.play();
     }
 
     /**
