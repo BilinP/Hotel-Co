@@ -22,7 +22,7 @@ import javafx.scene.text.Text;
  * 
  * @author      Bilin Pattasseril
  */
-public class PaymentController extends BaseController{
+public class PENDINGPaymentController extends BaseController{
     /**
      * TextField that contains the cvv of a credit card .
      */

@@ -16,7 +16,7 @@ import javafx.scene.text.Text;
  * 
  * @author      Grigor Azakian
  */
-public class ThankYouController extends BaseController {
+public class PENDINGThankYouController extends BaseController {
 
     /**
      * Text that will display a Reservation objects reservation ID.
