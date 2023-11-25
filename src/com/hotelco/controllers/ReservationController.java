@@ -16,6 +16,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
@@ -46,20 +47,43 @@ public class ReservationController extends BaseController {
     @FXML
     private Text guests;
 
-    /**
-     * Text that can be displayed to notify the user of any potential invalid inputs.
-     */    
     @FXML
-    private Text notification;
+    private Text paymentNotification;
 
     @FXML
-    private Text title;
+    private TextField cardNumber;
+
+    @FXML
+    private TextField expDate;
+
+    @FXML
+    private TextField CVC;
+
+    @FXML
+    private TextField address;
+
+    @FXML
+    private TextField address2;
+
+    @FXML
+    private TextField zipCode;
+
+    @FXML
+    private TextField state;
+
+    @FXML
+    private TextField city;
+
+    @FXML
+    private Text nights;
+
+    @FXML
+    private Text tax;
+
+    @FXML
+    private Text total;
 
     private RoomType room;
-
-	//titledpane keep
-    @FXML
-    private Text totalCost;
 
 
 
@@ -116,9 +140,11 @@ public class ReservationController extends BaseController {
             startDate.valueProperty().addListener(changeListener);
             startDate.setDayCellFactory(startDayCellFactory);
             endDate.setDayCellFactory(endDayCellFactory);
+            /*
             if (room != null) {
                 title.setText("Booking - " + room.toPrettyString());
             }
+            */
         });
     }
 
