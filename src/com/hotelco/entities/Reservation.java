@@ -538,13 +538,8 @@ public class Reservation {
             "your payment could not be processed at the time of checkout. " +
             "Please ensure that payment is promptly issued to Hotel Co. to avoid " +
             "further charges.\n\t\tSincerely, Hotel Co.";
-            try {
-                SendMail.startSend(
+            SendMail.startSend(
                     ReservationSystem.getCurrentUser().getEmail(), subject, message);
-            }
-            catch(MessagingException | IOException e){
-                System.out.println(e);
-            }
         }
     }
     /**
