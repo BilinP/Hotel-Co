@@ -87,7 +87,7 @@
                               </HBox>
                            </children>
                         </VBox>
-                        <VBox alignment="TOP_CENTER" prefHeight="525.0" prefWidth="705.0" stylesheets="@../stylesheets/TextFieldSS.css">
+                        <VBox alignment="TOP_CENTER" prefHeight="525.0" prefWidth="705.0">
                            <children>
                               <Text fill="#f9bd1a" strokeType="OUTSIDE" strokeWidth="0.0" text="Payment Details">
                                  <font>
@@ -104,48 +104,48 @@
                               </Text>
                               <HBox alignment="CENTER">
                                  <children>
-                                    <TextField fx:id="cardNumber" prefHeight="25.0" prefWidth="280.0" promptText="Card Number">
+                                    <TextField fx:id="cardNumber" prefHeight="25.0" prefWidth="280.0" promptText="Card Number" stylesheets="@../stylesheets/TextFieldSS.css">
                                        <HBox.margin>
                                           <Insets right="10.0" />
                                        </HBox.margin>
                                     </TextField>
-                                    <TextField fx:id="expDate" prefHeight="25.0" prefWidth="75.0" promptText="MM / YY ">
+                                    <TextField fx:id="expDate" prefHeight="25.0" prefWidth="75.0" promptText="MM / YY " stylesheets="@../stylesheets/TextFieldSS.css">
                                        <HBox.margin>
                                           <Insets right="10.0" />
                                        </HBox.margin>
                                     </TextField>
-                                    <TextField fx:id="CVC" prefHeight="25.0" prefWidth="50.0" promptText="CVC" />
+                                    <TextField fx:id="CVC" prefHeight="25.0" prefWidth="50.0" promptText="CVC" stylesheets="@../stylesheets/TextFieldSS.css" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER">
                                  <children>
-                                    <TextField fx:id="address" prefHeight="30.0" prefWidth="280.0" promptText="Street Address">
+                                    <TextField fx:id="address" prefHeight="30.0" prefWidth="280.0" promptText="Street Address" stylesheets="@../stylesheets/TextFieldSS.css">
                                        <HBox.margin>
                                           <Insets right="10.0" />
                                        </HBox.margin>
                                     </TextField>
-                                    <TextField fx:id="address2" promptText="Apt, unit, etc. (optional)" />
+                                    <TextField fx:id="address2" promptText="Apt, unit, etc. (optional)" stylesheets="@../stylesheets/TextFieldSS.css" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER">
                                  <children>
-                                    <TextField fx:id="zipCode" promptText="Zip Code">
+                                    <TextField fx:id="zipCode" promptText="Zip Code" stylesheets="@../stylesheets/TextFieldSS.css">
                                        <HBox.margin>
                                           <Insets right="10.0" />
                                        </HBox.margin>
                                     </TextField>
-                                    <ComboBox fx:id="state" prefWidth="150.0" promptText="State" stylesheets="@../stylesheets/ComboBoxSS.css" />
+                                    <ComboBox fx:id="stateBox" prefWidth="150.0" promptText="State" stylesheets="@../stylesheets/ComboBoxSS.css" />
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER">
                                  <children>
-                                    <TextField fx:id="city" promptText="City">
+                                    <TextField fx:id="city" promptText="City" stylesheets="@../stylesheets/TextFieldSS.css">
                                        <HBox.margin>
                                           <Insets right="10.0" />
                                        </HBox.margin>
                                     </TextField>
-                                    <TextField fx:id="state" promptText="State" />
-                                    <TextField fx:id="zipCode" promptText="Zip Code">
+                                    <TextField fx:id="state" promptText="State" stylesheets="@../stylesheets/TextFieldSS.css" />
+                                    <TextField fx:id="zipCode" promptText="Zip Code" stylesheets="@../stylesheets/TextFieldSS.css">
                                        <HBox.margin>
                                           <Insets left="10.0" />
                                        </HBox.margin>

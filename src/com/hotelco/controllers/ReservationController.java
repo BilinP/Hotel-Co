@@ -14,6 +14,7 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -51,6 +52,9 @@ public class ReservationController extends BaseController {
     private Text paymentNotification;
 
     @FXML
+    private Text dateNotification;
+
+    @FXML
     private TextField cardNumber;
 
     @FXML
@@ -69,7 +73,7 @@ public class ReservationController extends BaseController {
     private TextField zipCode;
 
     @FXML
-    private TextField state;
+    private TextField state;    
 
     @FXML
     private TextField city;
@@ -82,6 +86,9 @@ public class ReservationController extends BaseController {
 
     @FXML
     private Text total;
+
+    @FXML
+    private ComboBox stateBox;
 
     private RoomType room;
 
