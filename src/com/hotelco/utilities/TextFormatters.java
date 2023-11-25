@@ -44,5 +44,48 @@ public class TextFormatters {
         }
     });
 
+    public final TextFormatter<String> CREDIT_CARD = new TextFormatter<>(changed -> {
+        if (changed.getControlNewText().length() > 12) {
+            return null;
+        }
+        else {
+            return changed;
+        }
+    });
 
+    public final TextFormatter<String> EXP_DATE_MONTH = new TextFormatter<>(changed -> {
+        if (changed.getControlNewText().length() > 2) {
+            return null;
+        }
+        else {
+            return changed;
+        }
+    });    
+
+    public final TextFormatter<String> EXP_DATE_YEAR = new TextFormatter<>(changed -> {
+        if (changed.getControlNewText().length() > 2) {
+            return null;
+        }
+        else {
+            return changed;
+        }
+    });      
+
+    public final TextFormatter<String> CVC = new TextFormatter<>(changed -> {
+        if (changed.getControlNewText().length() > 3) {
+            return null;
+        }
+        else {
+            return changed;
+        }
+    });    
+
+    public final TextFormatter<String> ZIP_CODE = new TextFormatter<>(changed -> {
+        if (changed.getControlNewText().length() > 5) {
+            return null;
+        }
+        else {
+            return changed;
+        }
+    });    
 }
