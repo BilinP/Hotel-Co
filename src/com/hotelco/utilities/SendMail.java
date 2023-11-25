@@ -10,8 +10,6 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import com.hotelco.constants.EmailSignature;
-
 /**
  * Utility class to send emails
  * @author John Lee
@@ -35,29 +33,36 @@ public class SendMail
 	 * @throws MessagingException
 	 * @throws IOException
 	 */
-	public static void startSend(String emailString, String subject, String body) throws AddressException, MessagingException, IOException
-	{
-		body = body + EmailSignature.SIGNATURE;
-		SendMail mail = new SendMail();
-		mail.setupServerProperties();
-		mail.draftEmail(emailString, subject, body); //(Email, EmailSubject, EmailBody)
-		mail.sendEmail();
+	public static void startSend(String emailString, String subject, String body) {
+		try {
+			body = body + EmailGenerator.SIGNATURE;
+			SendMail mail = new SendMail();
+			mail.setupServerProperties();
+			mail.draftEmail(emailString, subject, body); //(Email, EmailSubject, EmailBody)
+			mail.sendEmail();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
 	 * The method that inputs the login information to access an email account
 	 * @throws MessagingException
 	 */
-	private void sendEmail() throws MessagingException {
-		/**the string you should use */
-		String fromUser = "hotelcodesk@gmail.com";  //Enter sender email id
-		String fromUserPassword = "bhyt bqgl fwbd tpav";  //Enter sender gmail password , this will be authenticated by gmail smtp server
-		String emailHost = "smtp.gmail.com";
-		Transport transport = newSession.getTransport("smtp");
-		transport.connect(emailHost, fromUser, fromUserPassword);
-		transport.sendMessage(mimeMessage, mimeMessage.getAllRecipients());
-		transport.close();
-		System.out.println("\nEmail successfully sent!\n");
+	private void sendEmail() {
+		try {
+			/**the string you should use */
+			String fromUser = "hotelcodesk@gmail.com";  //Enter sender email id
+			String fromUserPassword = "bhyt bqgl fwbd tpav";  //Enter sender gmail password , this will be authenticated by gmail smtp server
+			String emailHost = "smtp.gmail.com";
+			Transport transport = newSession.getTransport("smtp");
+			transport.connect(emailHost, fromUser, fromUserPassword);
+			transport.sendMessage(mimeMessage, mimeMessage.getAllRecipients());
+			transport.close();
+			System.out.println("\nEmail successfully sent!\n");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	//Add user email and info for room
