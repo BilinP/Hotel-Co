@@ -1,6 +1,7 @@
 package com.hotelco.controllers;
 
-import com.hotelco.application.IdleTimer;
+import com.hotelco.utilities.IdleTimer;
+import com.hotelco.utilities.Instances;
 
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Screen;
