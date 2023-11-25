@@ -7,6 +7,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -109,11 +110,25 @@
                                           <Insets right="10.0" />
                                        </HBox.margin>
                                     </TextField>
-                                    <TextField fx:id="expDate" prefHeight="25.0" prefWidth="75.0" promptText="MM / YY " stylesheets="@../stylesheets/TextFieldSS.css">
-                                       <HBox.margin>
-                                          <Insets right="10.0" />
-                                       </HBox.margin>
-                                    </TextField>
+                                    <StackPane>
+                                       <children>
+                                          <HBox>
+                                             <children>
+                                                <TextField fx:id="expDateMonth" prefHeight="25.0" prefWidth="35.0" promptText="MM" stylesheets="@../stylesheets/TextFieldSS.css" />
+                                                <TextField fx:id="expDateYear" prefHeight="25.0" prefWidth="35.0" promptText="YY " stylesheets="@../stylesheets/TextFieldSS.css">
+                                                   <HBox.margin>
+                                                      <Insets right="10.0" />
+                                                   </HBox.margin>
+                                                </TextField>
+                                             </children>
+                                          </HBox>
+                                          <Text fx:id="slash" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="/" visible="false" wrappingWidth="13.67578125">
+                                             <StackPane.margin>
+                                                <Insets bottom="6.0" right="6.0" />
+                                             </StackPane.margin>
+                                          </Text>
+                                       </children>
+                                    </StackPane>
                                     <TextField fx:id="CVC" prefHeight="25.0" prefWidth="50.0" promptText="CVC" stylesheets="@../stylesheets/TextFieldSS.css" />
                                  </children>
                               </HBox>
@@ -129,27 +144,17 @@
                               </HBox>
                               <HBox alignment="CENTER">
                                  <children>
+                                    <TextField fx:id="city" promptText="City" stylesheets="@../stylesheets/TextFieldSS.css">
+                                       <HBox.margin>
+                                          <Insets right="10.0" />
+                                       </HBox.margin>
+                                    </TextField>
                                     <TextField fx:id="zipCode" promptText="Zip Code" stylesheets="@../stylesheets/TextFieldSS.css">
                                        <HBox.margin>
                                           <Insets right="10.0" />
                                        </HBox.margin>
                                     </TextField>
                                     <ComboBox fx:id="stateBox" prefWidth="150.0" promptText="State" stylesheets="@../stylesheets/ComboBoxSS.css" />
-                                 </children>
-                              </HBox>
-                              <HBox alignment="CENTER">
-                                 <children>
-                                    <TextField fx:id="city" promptText="City" stylesheets="@../stylesheets/TextFieldSS.css">
-                                       <HBox.margin>
-                                          <Insets right="10.0" />
-                                       </HBox.margin>
-                                    </TextField>
-                                    <TextField fx:id="state" promptText="State" stylesheets="@../stylesheets/TextFieldSS.css" />
-                                    <TextField fx:id="zipCode" promptText="Zip Code" stylesheets="@../stylesheets/TextFieldSS.css">
-                                       <HBox.margin>
-                                          <Insets left="10.0" />
-                                       </HBox.margin>
-                                    </TextField>
                                  </children>
                               </HBox>
                            </children>

@@ -9,6 +9,7 @@ import com.hotelco.entities.*;
 import com.hotelco.utilities.FXMLPaths;
 import com.hotelco.utilities.Instances;
 import com.hotelco.utilities.OrderSession;
+import com.hotelco.utilities.TextFormatters;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -18,6 +19,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
@@ -58,7 +60,10 @@ public class ReservationController extends BaseController {
     private TextField cardNumber;
 
     @FXML
-    private TextField expDate;
+    private TextField expDateMonth;
+
+    @FXML
+    private TextField expDateYear;
 
     @FXML
     private TextField CVC;
@@ -88,6 +93,9 @@ public class ReservationController extends BaseController {
     private Text total;
 
     @FXML
+    private Text slash;
+
+    @FXML
     private ComboBox stateBox;
 
     private RoomType room;
@@ -107,6 +115,29 @@ public class ReservationController extends BaseController {
             public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue,
                     LocalDate newValue) {
                 endDate.setDisable(false);
+            }
+        };
+
+        final ChangeListener<String> mmCL = new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                    String newValue) {
+                if (newValue.length() == 2 && oldValue.length() == 1) {
+                    expDateYear.requestFocus();
+                    slash.setVisible(true);
+                }        
+            }
+        };
+
+        final ChangeListener<String> yyCL = new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                    String newValue) {
+                if (newValue.length() == 0 && oldValue.length() == 1) {
+                    expDateMonth.requestFocus();
+                    expDateMonth.positionCaret(expDateMonth.getLength() + 1);
+                    slash.setVisible(false);
+                }        
             }
         };
 
@@ -141,12 +172,19 @@ public class ReservationController extends BaseController {
                 };
             }
 
-        };        
+        };      
+        
+        TextFormatters textFormatters = new TextFormatters();
 
         Platform.runLater(() -> {
             startDate.valueProperty().addListener(changeListener);
             startDate.setDayCellFactory(startDayCellFactory);
             endDate.setDayCellFactory(endDayCellFactory);
+            expDateMonth.setTextFormatter(textFormatters.EXP_DATE_MONTH);
+            expDateYear.setTextFormatter(textFormatters.EXP_DATE_YEAR);
+            expDateMonth.textProperty().addListener(mmCL);
+            expDateYear.textProperty().addListener(yyCL);
+
             /*
             if (room != null) {
                 title.setText("Booking - " + room.toPrettyString());
