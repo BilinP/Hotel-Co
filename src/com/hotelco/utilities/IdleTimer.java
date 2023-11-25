@@ -1,10 +1,8 @@
-package com.hotelco.application;
+package com.hotelco.utilities;
 
 import com.hotelco.constants.Constants;
-import com.hotelco.controllers.Instances;
 import com.hotelco.controllers.LoginController;
 import com.hotelco.entities.ReservationSystem;
-import com.hotelco.utilities.FXMLPaths;
 
 import javafx.animation.PauseTransition;
 import javafx.event.Event;
