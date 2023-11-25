@@ -62,6 +62,7 @@ public class ProfileController extends BaseController {
             user = ReservationSystem.getCurrentUser();
             number.setTextFormatter(textFormatters.PHONE_NUMBER);
             first.setTextFormatter(textFormatters.FIRST_NAME);
+            first.setFocusTraversable(true);
             last.setTextFormatter(textFormatters.LAST_NAME);
             email.setText(user.getEmail());
             first.setText(user.getFirstName());
@@ -70,35 +71,8 @@ public class ProfileController extends BaseController {
         });
     }
 
-     /**
-     * This method will setDisable() to false on all  text fields 'email','first',
-     * 'last',and 'number' making it so  it is editable to the user. 
-     * As well it makes the mouse cursor on the 'first' text field through the focusTraversable().
-     * @param event is the event that triggers this function which is the button
-     * 'edit profile'.
-     */
-    @FXML
-    private void editProfileContent(MouseEvent event) {
-        email.setDisable(false);
-        last.setDisable(false);
-        first.setDisable(false);
-        number.setDisable(false);
-        first.setFocusTraversable(true);
-    }
-     /**
-     * This method will first setDisable to true on all the text fields, 
-     * first','last','number', and 'email' to true it so these fields aren't t 
-     * editable and secondly it will save the content to the database.  
-     *  @param event is the event that triggers this function which is the button 'save profile'.
-     */
-
     @FXML
     private void saveProfileContent(MouseEvent event) {
-        email.setDisable(true);
-        last.setDisable(true);
-        first.setDisable(true);
-        number.setDisable(true);
-        first.setFocusTraversable(false);
         User user = ReservationSystem.getCurrentUser();
         user.setEmail(email.getText());
         user.setFirstName(first.getText());
