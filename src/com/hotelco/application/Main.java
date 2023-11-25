@@ -5,11 +5,12 @@ import java.io.IOException;
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 
-import com.hotelco.controllers.Instances;
 import com.hotelco.controllers.LoginController;
 import com.hotelco.utilities.DailyTask;
 import com.hotelco.utilities.FXMLPaths;
 import com.hotelco.utilities.FrequentTask;
+import com.hotelco.utilities.IdleTimer;
+import com.hotelco.utilities.Instances;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
