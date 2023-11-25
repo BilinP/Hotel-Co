@@ -1,12 +1,10 @@
 package com.hotelco.controllers;
 
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-
 import com.hotelco.entities.ReservationSystem;
 import com.hotelco.entities.User;
 import com.hotelco.utilities.DatabaseUtil;
 import com.hotelco.utilities.FXMLPaths;
+import com.hotelco.utilities.Instances;
 import com.hotelco.utilities.Verifier;
 
 import javafx.animation.PauseTransition;
@@ -107,26 +105,18 @@ public class LoginController extends BaseController {
      */
     @FXML
     private void login(Event event) {
-        LocalDateTime start = LocalDateTime.now();
-        System.out.println("Line 131: " + (ChronoUnit.MILLIS.between(start, LocalDateTime.now())));
         if (email.getText().isEmpty() || password.getText().isEmpty()) {
             notification.setText("Please enter username and password");
             notification.setFill(Color.RED);
             return;
         }
         String emailStr = email.getText();
-        System.out.println("Line 138: " + (ChronoUnit.MILLIS.between(start, LocalDateTime.now())));
         if(DatabaseUtil.doesEmailExist(emailStr)){
-            System.out.println("Line 140: " + (ChronoUnit.MILLIS.between(start, LocalDateTime.now())));
             if (Verifier.verifyPassword(emailStr, password.getText())){
-                System.out.println("Line 142: " + (ChronoUnit.MILLIS.between(start, LocalDateTime.now())));
                 idleTimer.stop();
-                System.out.println("Line 144: " + (ChronoUnit.MILLIS.between(start, LocalDateTime.now())));
                 Instances.getScene().removeEventHandler(Event.ANY, handler);
-                System.out.println("Line 146: " + (ChronoUnit.MILLIS.between(start, LocalDateTime.now())));
                 ReservationSystem.setCurrentUser(new User(emailStr));
-                System.out.println("Line 148: " + (ChronoUnit.MILLIS.between(start, LocalDateTime.now())));
-                switchScene(FXMLPaths.DASHBOARD);
+                switchScene(FXMLPaths.DASHBOARD);   
             }
             else{
                 notification.setText("Invalid Username/Password!");
@@ -178,6 +168,7 @@ public class LoginController extends BaseController {
     }
 
     /**
+     * Must be called upon initializing LoginController.
      * Sets up idleTimer and the current scene's EventHandler.
      * idleTimer will call switchToScreenSaver() when its timer reaches 0.
      * The scene will track every event and reset the timer when an event is made.
