@@ -1,8 +1,11 @@
-package com.hotelco.controllers;
+package com.hotelco.OLDFILES;
+
+import com.hotelco.controllers.BaseController;
+
 /**
  * Controller to add a credit card
  */
-public class AddCreditCardController extends BaseController{
+public class OLDAddCreditCardController extends BaseController{
     Integer x = 1;
     /* Please insert this code into the add credit card controller or wherever necessary:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
         //First, appropriately fill all the parameters of

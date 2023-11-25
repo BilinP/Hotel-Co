@@ -1,4 +1,4 @@
-package com.hotelco.controllers;
+package com.hotelco.OLDFILES;
 
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.hotelco.controllers.BaseController;
 import com.hotelco.entities.Reservation;
 import com.hotelco.entities.ReservationSystem;
 import com.hotelco.utilities.FXMLPaths;
@@ -133,8 +134,8 @@ public class OLDReservationHistoryController extends BaseController {
             if(reservations[i].getIsCancelled()){text.setFill(Color.GRAY);}
             map.put(text, reservations[i]);
             text.setOnMouseReleased(event -> {
-                ReservationLookupController reservationLookupController =
-                (ReservationLookupController) switchScene(FXMLPaths.RESERVATION_LOOKUP);
+                OLDReservationLookupController reservationLookupController =
+                (OLDReservationLookupController) switchScene(FXMLPaths.RESERVATION_LOOKUP);
                 reservationLookupController.writeReservationInfo(map.get(text));
             });
             reservationsContainer.getChildren().add(text);
