@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import javax.mail.MessagingException;
 
+import com.hotelco.utilities.EmailGenerator;
 import com.hotelco.utilities.SendMail;
 
 /**
@@ -532,14 +533,7 @@ public class Reservation {
             //System.out.println(reservationId + " checked out");
         }
         else {
-            String subject = "Reservation " + getReservationId() + " payment";
-            String message = "Dear " + user.getFirstName() + " " +
-            user.getLastName() + ", it has come to our attention that " +
-            "your payment could not be processed at the time of checkout. " +
-            "Please ensure that payment is promptly issued to Hotel Co. to avoid " +
-            "further charges.\n\t\tSincerely, Hotel Co.";
-            SendMail.startSend(
-                    ReservationSystem.getCurrentUser().getEmail(), subject, message);
+            EmailGenerator.paymentWarning(getReservationId(), user);
         }
     }
     /**

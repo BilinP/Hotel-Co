@@ -3,6 +3,8 @@ package com.hotelco.utilities;
 import java.time.format.DateTimeFormatter;
 
 import com.hotelco.entities.Reservation;
+import com.hotelco.entities.ReservationSystem;
+import com.hotelco.entities.User;
 
 /**
 * Contains the email signature constant for sent emails.
@@ -34,5 +36,16 @@ public class EmailGenerator {
             "\n\nWe hope you thoroughly enjoy your stay with us." +
             "\n\n\t\tSincerely,\n\t\t\tHotel Co.";
         SendMail.startSend(reservation.getUser().getEmail(), subject, message);
+    }
+
+    public static void paymentWarning(Integer reservationID, User user) {
+            String subject = "Reservation " + reservationID + " payment";
+            String message = "Dear " + user.getFirstName() + " " +
+            user.getLastName() + ", it has come to our attention that " +
+            "your payment could not be processed at the time of checkout. " +
+            "Please ensure that payment is promptly issued to Hotel Co. to avoid " +
+            "further charges.\n\t\tSincerely, Hotel Co.";
+            SendMail.startSend(
+                    ReservationSystem.getCurrentUser().getEmail(), subject, message);
     }
 }
