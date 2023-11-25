@@ -1,4 +1,6 @@
-package com.hotelco.controllers;
+package com.hotelco.utilities;
+
+import com.hotelco.controllers.DashboardController;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -10,16 +12,16 @@ public class Instances {
 
     private static DashboardController dbc;
 
-    public static void setScene(Scene sc) {
-        scene = sc;
+    public static void setScene(Scene scene) {
+        Instances.scene = scene;
     }
 
-    public static void setStage(Stage st) {
-        stage = st;
+    public static void setStage(Stage stage) {
+        Instances.stage = stage;
     }
 
-    public static void setDashboardController(DashboardController d) {
-        dbc = d;
+    public static void setDashboardController(DashboardController dbc) {
+        Instances.dbc = dbc;
     }
 
     public static Scene getScene() {
