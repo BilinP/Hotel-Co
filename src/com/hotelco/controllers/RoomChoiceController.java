@@ -4,6 +4,7 @@ import com.hotelco.constants.Constants;
 import com.hotelco.constants.RoomType;
 import com.hotelco.utilities.DatabaseUtil;
 import com.hotelco.utilities.FXMLPaths;
+import com.hotelco.utilities.Instances;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -120,8 +121,8 @@ public class RoomChoiceController extends BaseController {
      void switchToBooking(MouseEvent event) {
          Button clickedButton = (Button) event.getSource();
          RoomType roomType = RoomType.parseString(clickedButton.getId().toUpperCase());
-         RoomSearchController rsc = (RoomSearchController) Instances.getDashboardController().switchAnchor(FXMLPaths.SEARCH);
-         rsc.initalwrite(roomType);
+         ReservationController rc = (ReservationController) Instances.getDashboardController().switchAnchor(FXMLPaths.SEARCH);
+         rc.setRoomType(roomType);
     }
 
 }
