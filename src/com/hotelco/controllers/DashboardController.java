@@ -97,7 +97,7 @@ public class DashboardController extends BaseController {
      */
     @FXML
     void switchToCart(MouseEvent event) {
-        switchAnchor(FXMLPaths.SEARCH);
+        switchAnchor(FXMLPaths.RESERVATION);
         buttonSelection(cartButton);
     }
 

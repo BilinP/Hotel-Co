@@ -89,7 +89,7 @@ public class PENDINGPaymentController extends BaseController{
      */
     @FXML
     void switchToBooking(MouseEvent event) {
-        switchScene(FXMLPaths.SEARCH);
+        switchScene(FXMLPaths.RESERVATION);
     }
 
 }
