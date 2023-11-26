@@ -141,6 +141,7 @@ public class ResetPasswordController extends BaseController {
      * This method is called by pressing the 'Return to Login?' button.
      * It exits the 'ResetPasswordGUI' and enters the 'LoginGUI'.
      * @param event The 'mouse released' event that is triggered by pressing the 'Return to Login?' button.
+     * @author Bilin Pattasseril
      */
     @FXML
     private void switchToLogin(MouseEvent event) {
@@ -153,7 +154,7 @@ public class ResetPasswordController extends BaseController {
      * This method is a setter for the variable 'notification'.
      * @param text The string to set the variable 'notification' to.
      * @param color sets the string color for 'notification' to specifed color and if it is null it will not set a color. 
-     * @author Bilin P
+     * @author Bilin Pattasseril
      */
     void setNotification(String text, Color color) {
         notification.setText(text);
@@ -163,10 +164,11 @@ public class ResetPasswordController extends BaseController {
     }
 
     /**
-     * Must be called upon initializing LoginController.
+     * Must be called upon initializing ResetPasswordController.
      * Sets up idleTimer and the current scene's EventHandler.
      * idleTimer will call switchToScreenSaver() when its timer reaches 0.
      * The scene will track every event and reset the timer when an event is made.
+     * @author Grigor Azakian
      */
     public void initializeIdleTimer() {
         idleTimer = new PauseTransition(Duration.seconds(10));
@@ -186,6 +188,7 @@ public class ResetPasswordController extends BaseController {
     /**
      * Called if idleTimer reaches the end of its timer.
      * Switches the scene to ScreenSaverGUI.
+     * @author Grigor Azakian
      */
     private void switchToScreenSaver() {
         idleTimer.stop();
