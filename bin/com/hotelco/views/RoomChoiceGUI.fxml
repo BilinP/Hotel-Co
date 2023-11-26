@@ -63,7 +63,7 @@
                               <Insets bottom="25.0" />
                            </VBox.margin>
                         </Text>
-                        <Button fx:id="suite" mnemonicParsing="false" onMouseReleased="#switchToBooking" prefHeight="30.0" prefWidth="200.0" style="-fx-cursor: HAND; -fx-background-color: #209FEE;" text="BOOK" textFill="WHITE">
+                        <Button fx:id="suite" mnemonicParsing="false" onMouseReleased="#switchToBooking" prefHeight="30.0" prefWidth="200.0" styleClass="blueButton" stylesheets="@../stylesheets/ButtonSS.css" text="BOOK" textFill="WHITE">
                            <font>
                               <Font name="Britannic Bold" size="12.0" />
                            </font>
@@ -127,7 +127,7 @@
                               <Insets bottom="25.0" />
                            </VBox.margin>
                         </Text>
-                        <Button fx:id="king" mnemonicParsing="false" onMouseReleased="#switchToBooking" prefHeight="30.0" prefWidth="200.0" style="-fx-cursor: HAND; -fx-background-color: #209FEE;" text="BOOK" textFill="WHITE">
+                        <Button fx:id="king" mnemonicParsing="false" onMouseReleased="#switchToBooking" prefHeight="30.0" prefWidth="200.0" styleClass="blueButton" stylesheets="@../stylesheets/ButtonSS.css" text="BOOK" textFill="WHITE">
                            <font>
                               <Font name="Britannic Bold" size="12.0" />
                            </font>
@@ -188,7 +188,7 @@
                               <Insets bottom="25.0" />
                            </VBox.margin>
                         </Text>
-                        <Button fx:id="queen" mnemonicParsing="false" onMouseReleased="#switchToBooking" prefHeight="30.0" prefWidth="200.0" style="-fx-cursor: HAND; -fx-background-color: #209FEE;" text="BOOK" textFill="WHITE">
+                        <Button fx:id="queen" mnemonicParsing="false" onMouseReleased="#switchToBooking" prefHeight="30.0" prefWidth="200.0" styleClass="blueButton" stylesheets="@../stylesheets/ButtonSS.css" text="BOOK" textFill="WHITE">
                            <font>
                               <Font name="Britannic Bold" size="12.0" />
                            </font>
@@ -255,7 +255,7 @@
                               <Insets bottom="25.0" />
                            </VBox.margin>
                         </Text>
-                        <Button fx:id="dbl" mnemonicParsing="false" onMouseReleased="#switchToBooking" prefHeight="30.0" prefWidth="200.0" style="-fx-cursor: HAND; -fx-background-color: #209FEE;" text="BOOK" textFill="WHITE">
+                        <Button fx:id="dbl" mnemonicParsing="false" onMouseReleased="#switchToBooking" prefHeight="30.0" prefWidth="200.0" styleClass="blueButton" stylesheets="@../stylesheets/ButtonSS.css" text="BOOK" textFill="WHITE">
                            <font>
                               <Font name="Britannic Bold" size="12.0" />
                            </font>

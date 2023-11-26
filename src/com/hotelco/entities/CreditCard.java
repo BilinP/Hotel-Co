@@ -164,13 +164,14 @@ public class CreditCard{
      * @return true if cvv card requirements are met
      */
     public boolean cvvCheck(){
-
+        Boolean result = false;
         Integer cvvNumLen = cvvNum.length();
-        if (cvvNumLen == 4 && getCreditCardType() == CreditCardType.AMEX)
-        return true;
-        else if (cvvNumLen == 3 && getCreditCardType() != CreditCardType.AMEX)
-        return true;
-        return false;
+
+        if (cvvNumLen == 4 && getCreditCardType() == CreditCardType.AMEX ||
+            cvvNumLen == 3 && getCreditCardType() != CreditCardType.AMEX){
+            result = true;
+        }
+        return result;
     }
     /**
      * Verifies the credit card is a valid type of card, passes Luhn algorithm check,

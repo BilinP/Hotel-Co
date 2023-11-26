@@ -34,11 +34,7 @@ public class FrequentTask {
                 Connection con = ReservationSystem.getDatabaseConnection();
                 try{
                     con.close();
-                    if (con.isClosed()){
-                    }
                     con = ReservationSystem.getDatabaseConnection();
-                    if (con.isValid(0)){
-                    }
                     ReservationSystem.ready();
                 }
                 catch (SQLException e){
@@ -50,7 +46,7 @@ public class FrequentTask {
                 System.out.println("Rescheduling reconnection attempt");
                 Timer timer = new Timer(true);
                 timer.schedule(
-                    new DatabaseReconnectTask(),Constants.RETRY_INTERVAL);
+                    new DatabaseReconnectTask(), Constants.RETRY_INTERVAL);
             }
         }
     }
