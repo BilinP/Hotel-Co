@@ -39,16 +39,33 @@
                                     <Font size="18.0" />
                                  </font>
                               </Text>
-                              <DatePicker fx:id="startDate" editable="false" prefHeight="25.0" prefWidth="230.0" promptText="Check In" style="-fx-background-color: transparent;" stylesheets="@../stylesheets/TextFieldSS.css">
-                                 <VBox.margin>
-                                    <Insets />
-                                 </VBox.margin>
-                              </DatePicker>
-                              <DatePicker fx:id="endDate" editable="false" prefHeight="25.0" prefWidth="230.0" promptText="Check Out" style="-fx-background-color: transparent;" stylesheets="@../stylesheets/TextFieldSS.css">
+                              <HBox alignment="CENTER">
+                                 <children>
+                                    <DatePicker fx:id="startDate" editable="false" prefHeight="25.0" prefWidth="230.0" promptText="Check In" style="-fx-background-color: transparent;" stylesheets="@../stylesheets/TextFieldSS.css" />
+                                    <Button mnemonicParsing="false" onMousePressed="#resetDates" styleClass="transparentButton" stylesheets="@../stylesheets/ButtonSS.css" text="x">
+                                       <HBox.margin>
+                                          <Insets left="5.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER">
+                                 <children>
+                                    <DatePicker fx:id="endDate" editable="false" prefHeight="25.0" prefWidth="230.0" promptText="Check Out" style="-fx-background-color: transparent;" stylesheets="@../stylesheets/TextFieldSS.css">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </DatePicker>
+                                    <Button mnemonicParsing="false" styleClass="transparentButton" stylesheets="@../stylesheets/ButtonSS.css" text="x" visible="false">
+                                       <HBox.margin>
+                                          <Insets left="5.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                 </children>
                                  <VBox.margin>
                                     <Insets top="15.0" />
                                  </VBox.margin>
-                              </DatePicker>
+                              </HBox>
                               <HBox alignment="CENTER">
                                  <children>
                                     <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Number of guests:">
@@ -231,7 +248,7 @@
                                     </HBox>
                                     <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
                                        <children>
-                                          <Text fx:id="rate" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                                          <Text fx:id="rate" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="\$0.00">
                                              <HBox.margin>
                                                 <Insets />
                                              </HBox.margin>
@@ -262,7 +279,7 @@
                                     </HBox>
                                     <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
                                        <children>
-                                          <Text fx:id="tax" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                                          <Text fx:id="tax" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="\$0.00">
                                              <HBox.margin>
                                                 <Insets />
                                              </HBox.margin>
@@ -293,7 +310,7 @@
                                     </HBox>
                                     <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
                                        <children>
-                                          <Text fx:id="total" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                                          <Text fx:id="total" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="\$0.00">
                                              <font>
                                                 <Font name="System Bold" size="18.0" />
                                              </font>
