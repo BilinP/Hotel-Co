@@ -1,11 +1,10 @@
-package com.hotelco.OLDFILES;
+package com.hotelco.controllers;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import com.hotelco.constants.Constants;
 import com.hotelco.constants.RoomType;
-import com.hotelco.controllers.BaseController;
 import com.hotelco.entities.Reservation;
 import com.hotelco.entities.ReservationSystem;
 import com.hotelco.utilities.FXMLPaths;
@@ -28,7 +27,7 @@ import javafx.scene.text.Text;
  * 
  * @author      Bilin pattasseril
  */
-public class OLDReservationLookupController extends BaseController {
+public class ReservationLookupController extends BaseController {
     /**
      * Combobox containing every type room type.
      */
@@ -282,8 +281,8 @@ public class OLDReservationLookupController extends BaseController {
      */
     @FXML
     void switchToPayment(MouseEvent event) {
-        PENDINGPaymentController reservationLookupController =
-        (PENDINGPaymentController) switchScene(FXMLPaths.PAYMENT);
+        PaymentController reservationLookupController =
+        (PaymentController) switchScene(FXMLPaths.PAYMENT);
         reservationLookupController.writePayment(reservation);
         switchScene(FXMLPaths.PAYMENT);
     }

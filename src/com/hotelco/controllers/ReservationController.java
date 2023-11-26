@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import com.hotelco.constants.Constants;
 import com.hotelco.constants.RoomType;
 import com.hotelco.entities.*;
+import com.hotelco.utilities.DatabaseUtil;
 import com.hotelco.utilities.FXMLPaths;
 import com.hotelco.utilities.Instances;
 import com.hotelco.utilities.OrderSession;
@@ -149,7 +150,7 @@ public class ReservationController extends BaseController {
                     @Override
                     public void updateItem(LocalDate item, boolean empty) {
                         super.updateItem(item, empty);
-                        Boolean availability = ReservationSystem.checkAvailability(item, item, room);
+                        Boolean availability = DatabaseUtil.checkAvailability(item, item, room);
                         LocalDate currentDate = LocalDate.now();
                         setDisable(empty || item.compareTo(currentDate) < 0 || !availability);
                     }
@@ -166,7 +167,7 @@ public class ReservationController extends BaseController {
                     @Override
                     public void updateItem(LocalDate item, boolean empty) {
                         super.updateItem(item, empty);
-                        Boolean availability = ReservationSystem.checkAvailability(startDate.getValue(), item, room);
+                        Boolean availability = DatabaseUtil.checkAvailability(startDate.getValue(), item, room);
                         setDisable(empty || item.compareTo(startDate.getValue()) < 0 || !availability);
                     }
                 };

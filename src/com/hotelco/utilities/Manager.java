@@ -136,7 +136,7 @@ public class Manager{
             }
         }
         catch (SQLException e){
-            System.out.println("ReservationSystem.countAvailableRooms()");
+            System.out.println("DatabaseUtil.countAvailableRooms()");
             System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
