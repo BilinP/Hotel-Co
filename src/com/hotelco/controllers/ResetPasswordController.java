@@ -23,7 +23,7 @@ import javafx.util.Duration;
 import java.security.SecureRandom;
 
 /**
- * The LoginController class is the associated controller class of the 'LoginGUI' view. 
+ * The ResetPasswordController class is the associated controller class of the 'ResetPasswordGUI' view. 
  * It handles connection between the GUI and internal data.
  * 
  * @author      Bilin Pattasseril
@@ -90,11 +90,11 @@ public class ResetPasswordController extends BaseController {
     }
 
     /**
-     * This method is called when pressing the 'Login' button.
-     * It handles input verification and user login. It will enter 'MenuGUI' upon successful login.
+     * This method is called when pressing the 'Reset Password' button.
+     * It handles input verification,reset current password, and sends email of new password.
+     * It will enter 'Login GUI' upon successful reset.
      * @param event The 'mouse released' event that is triggered by pressing the 'Login' button.
-     * @author Grigor Azakian
-     * @author Daniel Schwartz
+     * @author Bilin Pattasseril
      */
     @FXML
     private void resetPassword(MouseEvent event) {
@@ -109,14 +109,19 @@ public class ResetPasswordController extends BaseController {
            String password= generateTempPassword();
            user.push(password);
            user.fetch();
-           EmailGenerator passwordEmail= new EmailGenerator();
-           passwordEmail.resetPassword(password, user);
+           EmailGenerator.resetPassword(password, user);
+           switchScene(FXMLPaths.LOGIN);
         }
         else {
             notification.setText("Email does not exisit");
             notification.setFill(Color.RED);
         }
     }
+
+    /**
+     * This method is called  to get a temp password with length 10 which is randomize.
+     * @author Bilin Pattasseril
+     */
 
     public static String generateTempPassword(){
         String characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
@@ -133,9 +138,9 @@ public class ResetPasswordController extends BaseController {
     }
 
     /**
-     * This method is called by pressing the 'Don't have an account? Create an account.' text.
-     * It exits the 'LoginGUI' and enters the 'CreateAccountGUI'.
-     * @param event The 'mouse released' event that is triggered by pressing the 'Don't have an account? Create an account.' text.
+     * This method is called by pressing the 'Return to Login?' button.
+     * It exits the 'ResetPasswordGUI' and enters the 'LoginGUI'.
+     * @param event The 'mouse released' event that is triggered by pressing the 'Return to Login?' button.
      */
     @FXML
     private void switchToLogin(MouseEvent event) {
@@ -146,12 +151,12 @@ public class ResetPasswordController extends BaseController {
 
     /**
      * This method is a setter for the variable 'notification'.
-     * @param  s The string to set the variable 'notification' to.
+     * @param text The string to set the variable 'notification' to.
      * @param color sets the string color for 'notification' to specifed color and if it is null it will not set a color. 
      * @author Bilin P
      */
-    void setNotification(String s, Color color) {
-        notification.setText(s);
+    void setNotification(String text, Color color) {
+        notification.setText(text);
         if(color != null) {
             notification.setFill(color);
         }
