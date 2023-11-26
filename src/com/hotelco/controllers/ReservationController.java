@@ -15,6 +15,7 @@ import com.hotelco.entities.Room;
 import com.hotelco.utilities.DatabaseUtil;
 import com.hotelco.utilities.FXMLPaths;
 import com.hotelco.utilities.Instances;
+import com.hotelco.utilities.ReservationCalculator;
 import com.hotelco.utilities.TaxRate;
 import com.hotelco.utilities.TextFormatters;
 
@@ -112,11 +113,10 @@ public class ReservationController extends BaseController {
                 if (endDate.getValue() != null) {
                     long nightsLong = ChronoUnit.DAYS.between(startDate.getValue(), endDate.getValue());
                     nights.setText(Long.toString(nightsLong));
-                    BigDecimal rateMultiplier = new BigDecimal(nightsLong);
-                    rate.setText("$" + DatabaseUtil.getRate(room).multiply(rateMultiplier).toString());
+                    ReservationCalculator.calcTotal(startDate.getValue(), endDate.getValue(), room);
+                    rate.setText("$" + ReservationCalculator.calcTotal(startDate.getValue(), endDate.getValue(), room).toString());
                     tax.setText("$" + TaxRate.getTaxRate().toString());
-                    BigDecimal totalBigDecimal = DatabaseUtil.getRate(room).multiply(rateMultiplier).add(TaxRate.getTaxRate());
-                    total.setText("$" + totalBigDecimal.toString());
+                    total.setText("$" + ReservationCalculator.calcTotal(startDate.getValue(), endDate.getValue(), room).add(TaxRate.getTaxRate()).toString());
                 }
             }
         };
@@ -127,11 +127,10 @@ public class ReservationController extends BaseController {
                     LocalDate newValue) {
                 long nightsLong = ChronoUnit.DAYS.between(startDate.getValue(), endDate.getValue());
                 nights.setText(Long.toString(nightsLong));
-                BigDecimal rateMultiplier = new BigDecimal(nightsLong);
-                rate.setText("$" + DatabaseUtil.getRate(room).multiply(rateMultiplier).toString());
+                ReservationCalculator.calcTotal(startDate.getValue(), endDate.getValue(), room);
+                rate.setText("$" + ReservationCalculator.calcTotal(startDate.getValue(), endDate.getValue(), room).toString());
                 tax.setText("$" + TaxRate.getTaxRate().toString());
-                BigDecimal totalBigDecimal = DatabaseUtil.getRate(room).multiply(rateMultiplier).add(TaxRate.getTaxRate());
-                total.setText("$" + totalBigDecimal.toString());
+                total.setText("$" + ReservationCalculator.calcTotal(startDate.getValue(), endDate.getValue(), room).add(TaxRate.getTaxRate()).toString());
             }
             
         };
@@ -169,7 +168,20 @@ public class ReservationController extends BaseController {
                         super.updateItem(item, empty);
                         Boolean availability = DatabaseUtil.checkAvailability(item, item, room);
                         LocalDate currentDate = LocalDate.now();
-                        setDisable(empty || item.compareTo(currentDate) < 0 || !availability);
+                        setDisable(empty || item.compareTo(currentDate) < 0 || 
+                            !availability || checkConflict(item));
+                    }
+
+                    private boolean checkConflict(LocalDate item) {
+                        if (endDate.getValue() != null) {
+                            if (item.isEqual(endDate.getValue())) {
+                                return true;
+                            }
+                            return item.isAfter(endDate.getValue());
+                        }
+                        else {
+                            return false;
+                        }
                     }
                 };
             }
@@ -185,7 +197,8 @@ public class ReservationController extends BaseController {
                     public void updateItem(LocalDate item, boolean empty) {
                         super.updateItem(item, empty);
                         Boolean availability = DatabaseUtil.checkAvailability(startDate.getValue(), item, room);
-                        setDisable(empty || item.compareTo(startDate.getValue()) < 0 || !availability || item.isEqual(LocalDate.now()));
+                        setDisable(empty || item.compareTo(startDate.getValue()) < 0 || !availability 
+                            || item.isEqual(LocalDate.now()) || item.isEqual(startDate.getValue()));
                     }
                 };
             }
