@@ -65,7 +65,7 @@ public class Verifier {
      * requested 
      * @return CreditCardType of this credit card number
      */
-    public CreditCardType getIssuer(String creditCardNum){
+    public static CreditCardType getIssuer(String creditCardNum){
         CreditCardType result = null;
 
         Integer cardNumLen = creditCardNum.length();
@@ -92,7 +92,7 @@ public class Verifier {
  * @param creditCardNum the credit card number to verify
  * @return true if passes Luhn algorithm check, false if it fails
  */
-    public Boolean luhnCheck(String creditCardNum){
+    public static Boolean luhnCheck(String creditCardNum){
         Integer cardNumLen = creditCardNum.length();
         Boolean isSecond = false;
         Integer totalSum = 0;
@@ -117,7 +117,7 @@ public class Verifier {
      * @param creditCardType credit card type against which to check the cvv
      * @return true if cvv card requirements are met, false otherwise
      */
-    public boolean cvvCheck(String cvvNum, CreditCardType creditCardType){
+    public static boolean cvvCheck(String cvvNum, CreditCardType creditCardType){
         Boolean result = false;
         Integer cvvNumLen = cvvNum.length();
 
