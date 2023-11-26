@@ -7,6 +7,7 @@ import com.hotelco.constants.Constants;
 import com.hotelco.constants.RoomType;
 import com.hotelco.entities.Reservation;
 import com.hotelco.entities.ReservationSystem;
+import com.hotelco.utilities.DatabaseUtil;
 import com.hotelco.utilities.FXMLPaths;
 import com.hotelco.utilities.GroupSize;
 
