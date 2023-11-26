@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -132,31 +131,6 @@
                                     <TextField fx:id="CVC" prefHeight="25.0" prefWidth="50.0" promptText="CVC" stylesheets="@../stylesheets/TextFieldSS.css" />
                                  </children>
                               </HBox>
-                              <HBox alignment="CENTER">
-                                 <children>
-                                    <TextField fx:id="address" prefHeight="30.0" prefWidth="280.0" promptText="Street Address" stylesheets="@../stylesheets/TextFieldSS.css">
-                                       <HBox.margin>
-                                          <Insets right="10.0" />
-                                       </HBox.margin>
-                                    </TextField>
-                                    <TextField fx:id="address2" promptText="Apt, unit, etc. (optional)" stylesheets="@../stylesheets/TextFieldSS.css" />
-                                 </children>
-                              </HBox>
-                              <HBox alignment="CENTER">
-                                 <children>
-                                    <TextField fx:id="city" promptText="City" stylesheets="@../stylesheets/TextFieldSS.css">
-                                       <HBox.margin>
-                                          <Insets right="10.0" />
-                                       </HBox.margin>
-                                    </TextField>
-                                    <TextField fx:id="zipCode" promptText="Zip Code" stylesheets="@../stylesheets/TextFieldSS.css">
-                                       <HBox.margin>
-                                          <Insets right="10.0" />
-                                       </HBox.margin>
-                                    </TextField>
-                                    <ComboBox fx:id="stateBox" prefWidth="150.0" promptText="State" stylesheets="@../stylesheets/ComboBoxSS.css" />
-                                 </children>
-                              </HBox>
                            </children>
                         </VBox>
                      </children>
@@ -173,6 +147,37 @@
                                     <Insets bottom="5.0" />
                                  </VBox.margin>
                               </Text>
+                              <HBox>
+                                 <children>
+                                    <HBox>
+                                       <children>
+                                          <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Room:">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </HBox>
+                                    <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Text fx:id="roomText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </HBox>
                               <HBox>
                                  <children>
                                     <HBox>
@@ -211,6 +216,37 @@
                                  <children>
                                     <HBox>
                                        <children>
+                                          <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Rate:">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </HBox>
+                                    <HBox alignment="CENTER_RIGHT" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Text fx:id="rate" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Text>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </HBox>
+                              <HBox>
+                                 <children>
+                                    <HBox>
+                                       <children>
                                           <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Tax:">
                                              <HBox.margin>
                                                 <Insets />
@@ -242,7 +278,7 @@
                                  <children>
                                     <HBox>
                                        <children>
-                                          <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Cost:">
+                                          <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Total:">
                                              <HBox.margin>
                                                 <Insets />
                                              </HBox.margin>

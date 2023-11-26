@@ -1,26 +1,31 @@
 package com.hotelco.controllers;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
-
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 import com.hotelco.constants.Constants;
 import com.hotelco.constants.RoomType;
-import com.hotelco.entities.*;
+import com.hotelco.entities.CreditCard;
+import com.hotelco.entities.Reservation;
+import com.hotelco.entities.ReservationSystem;
+import com.hotelco.entities.Room;
 import com.hotelco.utilities.DatabaseUtil;
 import com.hotelco.utilities.FXMLPaths;
 import com.hotelco.utilities.Instances;
-import com.hotelco.utilities.OrderSession;
+import com.hotelco.utilities.TaxRate;
 import com.hotelco.utilities.TextFormatters;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.Control;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
@@ -70,21 +75,6 @@ public class ReservationController extends BaseController {
     private TextField CVC;
 
     @FXML
-    private TextField address;
-
-    @FXML
-    private TextField address2;
-
-    @FXML
-    private TextField zipCode;
-
-    @FXML
-    private TextField state;    
-
-    @FXML
-    private TextField city;
-
-    @FXML
     private Text nights;
 
     @FXML
@@ -97,7 +87,10 @@ public class ReservationController extends BaseController {
     private Text slash;
 
     @FXML
-    private ComboBox stateBox;
+    private Text roomText;
+
+    @FXML
+    private Text rate;
 
     private RoomType room;
 
@@ -111,12 +104,32 @@ public class ReservationController extends BaseController {
     private void initialize() {
         endDate.setDisable(true);
         //This lets a DatePicker tell when its value has changed, and disables all Button variables if it has.
-        final ChangeListener<LocalDate> changeListener = new ChangeListener<LocalDate>() {
+        final ChangeListener<LocalDate> startChangeListener = new ChangeListener<LocalDate>() {
             @Override
             public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue,
                     LocalDate newValue) {
                 endDate.setDisable(false);
+                if (endDate.getValue() != null) {
+                    nights.setText(Long.toString(ChronoUnit.DAYS.between(startDate.getValue(), endDate.getValue())));
+                    rate.setText("$" + DatabaseUtil.getRate(room).toString());
+                    tax.setText("$" + TaxRate.getTaxRate().toString());
+                    BigDecimal totalBigDecimal = DatabaseUtil.getRate(room).add(TaxRate.getTaxRate());
+                    total.setText("$" + totalBigDecimal.toString());
+                }
             }
+        };
+
+        final ChangeListener<LocalDate> endChangeListener = new ChangeListener<LocalDate>() {
+            @Override
+            public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue,
+                    LocalDate newValue) {
+                nights.setText(Long.toString(ChronoUnit.DAYS.between(startDate.getValue(), endDate.getValue())));
+                rate.setText("$" + DatabaseUtil.getRate(room).toString());
+                tax.setText("$" + TaxRate.getTaxRate().toString());
+                BigDecimal totalBigDecimal = DatabaseUtil.getRate(room).add(TaxRate.getTaxRate());
+                total.setText("$" + totalBigDecimal.toString());
+            }
+            
         };
 
         final ChangeListener<String> mmCL = new ChangeListener<String>() {
@@ -168,7 +181,7 @@ public class ReservationController extends BaseController {
                     public void updateItem(LocalDate item, boolean empty) {
                         super.updateItem(item, empty);
                         Boolean availability = DatabaseUtil.checkAvailability(startDate.getValue(), item, room);
-                        setDisable(empty || item.compareTo(startDate.getValue()) < 0 || !availability);
+                        setDisable(empty || item.compareTo(startDate.getValue()) < 0 || !availability || item.isEqual(LocalDate.now()));
                     }
                 };
             }
@@ -178,13 +191,16 @@ public class ReservationController extends BaseController {
         TextFormatters textFormatters = new TextFormatters();
 
         Platform.runLater(() -> {
-            startDate.valueProperty().addListener(changeListener);
+            startDate.valueProperty().addListener(startChangeListener);
             startDate.setDayCellFactory(startDayCellFactory);
             endDate.setDayCellFactory(endDayCellFactory);
+            endDate.valueProperty().addListener(endChangeListener);
             expDateMonth.setTextFormatter(textFormatters.EXP_DATE_MONTH);
             expDateYear.setTextFormatter(textFormatters.EXP_DATE_YEAR);
             expDateMonth.textProperty().addListener(mmCL);
             expDateYear.textProperty().addListener(yyCL);
+            CVC.setTextFormatter(textFormatters.CVC);
+            cardNumber.setTextFormatter(textFormatters.CREDIT_CARD);
 
             /*
             if (room != null) {
@@ -202,28 +218,55 @@ public class ReservationController extends BaseController {
      */
     @FXML
     private void createBooking(MouseEvent event) {
-        OrderSession.setStartDate(startDate.getValue());
-        OrderSession.setEndDate(endDate.getValue());
-        OrderSession.setGuests(Integer.parseInt(guests.getText()));
-        OrderSession.setRoomType(room);
-        Instances.getDashboardController().switchAnchor("/com/hotelco/views/NEWPayment.fxml");
-        /*
+        boolean datePickerEmpty = isDatePickersEmpty();
+        boolean paymentEmpty = isPaymentEmpty();
+        if (datePickerEmpty && paymentEmpty) {
+            dateNotification.setText("Please fill out reservation details");
+            paymentNotification.setText("Please fill out payment information");
+            return;
+        }
+        else if (datePickerEmpty) {
+            dateNotification.setText("Please fill out reservation details");
+            paymentNotification.setText("");
+            return;
+        }
+        else if (paymentEmpty) {
+            dateNotification.setText("");
+            paymentNotification.setText("Please fill out payment information");
+            return;
+        }
+
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM yy");
+        YearMonth yearMonth = YearMonth.parse(expDateMonth + " " + expDateYear, dateFormatter);
+        LocalDate expDate = yearMonth.atDay(1);
+        CreditCard card = new CreditCard(
+            cardNumber.getText(), CVC.getText(), expDate,
+            null, ReservationSystem.getCurrentUser()
+        );
+
+        if (!card.verify()) {
+            paymentNotification.setText("Incorrect payment details");
+            return;            
+        }
+        card.assign();
+        
         Room room = new Room(
-            ReservationSystem.findEmptyRoom(
+            DatabaseUtil.findEmptyRoom(
                 startDate.getValue(), endDate.getValue(),
                 this.room));
         Reservation reservation = new Reservation(
             room, startDate.getValue(), endDate.getValue(),
             ReservationSystem.getCurrentUser(), Integer.parseInt(guests.getText()));
         ReservationSystem.setCurrentReservation(reservation);
-        */
-        //ReservationSystem.book();
-        //reservation = ReservationSystem.getCurrentReservation();
+        ReservationSystem.book();
+        reservation = ReservationSystem.getCurrentReservation();
         /*
-        ThankYouController thankYouController =
-            (ThankYouController) switchScene(FXMLPaths.THANK_YOU);
-        thankYouController.writeReservationInfo(reservation);
+        OrderSession.setStartDate(startDate.getValue());
+        OrderSession.setEndDate(endDate.getValue());
+        OrderSession.setGuests(Integer.parseInt(guests.getText()));
+        OrderSession.setRoomType(room);
         */
+        //Instances.getDashboardController().switchAnchor("/com/hotelco/views/ThankYouGUI.fxml");
     }
 
     /**
@@ -260,7 +303,45 @@ public class ReservationController extends BaseController {
         Instances.getDashboardController().switchAnchor(FXMLPaths.ROOMS);
     }
 
+    private boolean isPaymentEmpty() {
+        Control[] controls = new Control[] {
+            cardNumber, expDateMonth, 
+            expDateYear, CVC
+        };
+        for (Control control: controls) {
+            if (control instanceof TextField) {
+                TextField textField = (TextField) control;
+                if (textField.getText().isEmpty()) {
+                    return true;
+                }
+            }       
+        }
+        if (cardNumber.getLength() != 12) {
+            return true;
+        }
+        if (expDateMonth.getLength() != 2 || expDateYear.getLength() != 2) {
+            return true;
+        }
+        if (CVC.getLength() != 3) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isDatePickersEmpty() {
+        DatePicker[] datePickers = new DatePicker[] {
+            startDate, endDate
+        };
+        for (DatePicker datePicker: datePickers) {
+            if (datePicker.getValue() == null) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void setRoomType(RoomType roomType) {
         this.room = roomType;
+        roomText.setText(roomType.toPrettyString());
     }
 }
