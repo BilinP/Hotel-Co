@@ -45,11 +45,14 @@ public class TextFormatters {
     });
 
     public final TextFormatter<String> CREDIT_CARD = new TextFormatter<>(changed -> {
-        if (changed.getControlNewText().length() > 12) {
+        if (changed.getControlNewText().length() > 16) {
             return null;
         }
-        else {
+        if (changed.getControlNewText().matches("\\d*")) {
             return changed;
+        }
+        else {
+            return null;
         }
     });
 
@@ -57,8 +60,11 @@ public class TextFormatters {
         if (changed.getControlNewText().length() > 2) {
             return null;
         }
-        else {
+        if (changed.getControlNewText().matches("\\d*")) {
             return changed;
+        }
+        else {
+            return null;
         }
     });    
 
@@ -66,26 +72,23 @@ public class TextFormatters {
         if (changed.getControlNewText().length() > 2) {
             return null;
         }
-        else {
+        if (changed.getControlNewText().matches("\\d*")) {
             return changed;
+        }
+        else {
+            return null;
         }
     });      
 
     public final TextFormatter<String> CVC = new TextFormatter<>(changed -> {
-        if (changed.getControlNewText().length() > 3) {
+        if (changed.getControlNewText().length() > 4) {
             return null;
         }
-        else {
+        if (changed.getControlNewText().matches("\\d*")) {
             return changed;
         }
-    });    
-
-    public final TextFormatter<String> ZIP_CODE = new TextFormatter<>(changed -> {
-        if (changed.getControlNewText().length() > 5) {
+        else {
             return null;
         }
-        else {
-            return changed;
-        }
-    });    
+    });      
 }
