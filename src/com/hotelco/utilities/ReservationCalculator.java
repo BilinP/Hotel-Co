@@ -66,7 +66,6 @@ public class ReservationCalculator {
         for (i = startDate; i.isBefore(endDate); i = i.plusDays(1)){
             sum = sum.add(calcDailyTotal(baseRate, i));
         }
-        sum = sum.multiply(TaxRate.getTaxMultiplier());
         sum = sum.setScale(2, RoundingMode.CEILING);
         return sum;
     }
