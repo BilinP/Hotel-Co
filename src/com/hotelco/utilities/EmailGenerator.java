@@ -48,4 +48,13 @@ public class EmailGenerator {
             SendMail.startSend(
                     ReservationSystem.getCurrentUser().getEmail(), subject, message);
     }
+    public static void resetPassword(String tempPassword, User user) {
+        String subject = "Password Reset";
+        String message = "Hello," + user.getFirstName()+" "+ user.getLastName()+","+
+            "\n\nYou have requested a password reset for your account. Your new password is:\n\n" +
+            tempPassword +
+            "\n\nPlease use this  password to log in" +
+             "\n\n\t\tSincerely,\n\t\t\tHotel Co.";
+        SendMail.startSend(user.getEmail(), subject, message);
+    }
 }
