@@ -17,7 +17,6 @@ public class ReservationCalculator {
      * @param reservation the reservation to be considered
      * @return the total price of the supplied reservation
      */
-
     public static BigDecimal calcTotal(Reservation reservation){
         LocalDate i;
         BigDecimal sum = new BigDecimal(0);
@@ -38,6 +37,7 @@ public class ReservationCalculator {
     }
     /**
      * Calculates the cost of a reserved room within a certain day.
+     * @param roomRate the base rate for the roomtype to be calculated
      * @param date the single day being considered in the calculation
      * @return the calculated daily rate
      */
@@ -50,13 +50,13 @@ public class ReservationCalculator {
         }
         return dailyRate;
     }
-
     /**
      * Calculates the total price of a reservation.
-     * @param reservation the reservation to be considered
-     * @return the total price of the supplied reservation
+     * @param startDate start date of potential reservation
+     * @param endDate end date of potential reservation
+     * @param roomType the room type of the potential reservation
+     * @return the total price of the potential reservation
      */
-
     public static BigDecimal calcTotal(LocalDate startDate, LocalDate endDate,
     RoomType roomtype){
         LocalDate i;
@@ -70,5 +70,4 @@ public class ReservationCalculator {
         sum = sum.setScale(2, RoundingMode.CEILING);
         return sum;
     }
-    
 }
