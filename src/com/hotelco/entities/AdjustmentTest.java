@@ -8,7 +8,7 @@ import static org.junit.Assert.assertNotNull;
 
 public class AdjustmentTest {
     Adjustment adjustment1 = new Adjustment();
-    Adjustment adjustment2 = new Adjustment("Pillow underfluff credit", new BigDecimal(-25.50));
+    Adjustment adjustment2 = new Adjustment("Pillow underfluff credit", new BigDecimal("-25.50"));
 
     @Test
     public void testAdjustment(){
@@ -24,7 +24,7 @@ public class AdjustmentTest {
 
     @Test
     public void testGetAmount() {
-        assertEquals(new BigDecimal(-25.50), adjustment2.getAmount());
+        assertEquals(new BigDecimal("-25.50"), adjustment2.getAmount());
     }
 
     @Test
@@ -34,8 +34,8 @@ public class AdjustmentTest {
 
     @Test
     public void testSetAmount() {
-       adjustment2.setAmount(new BigDecimal(47.31));
-       assertEquals(new BigDecimal(47.31), adjustment2.getAmount());
+       adjustment2.setAmount(new BigDecimal("47.31"));
+       assertEquals(new BigDecimal("47.31"), adjustment2.getAmount());
     }
 
     @Test
