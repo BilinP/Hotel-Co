@@ -140,6 +140,11 @@ public class LoginController extends BaseController {
         Instances.getScene().removeEventHandler(Event.ANY, handler);
         switchScene(FXMLPaths.CREATE_ACCOUNT);
     }
+
+    @FXML
+    void switchToResetPassword(MouseEvent event) {
+        switchScene(FXMLPaths.RESET_PASSWORD);
+    }
     
     /**
      * This method is called by pressing any key on the keyboard.
