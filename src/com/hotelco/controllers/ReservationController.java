@@ -313,6 +313,15 @@ public class ReservationController extends BaseController {
      *                                                                         *
      **************************************************************************/  
 
+     /**
+      * DayCellFactory associated with startDate.<p>
+      * Disables the ability to choose a date if:<ul>
+      * <li>Day is before the current date
+      * <li>Selected room type is fully booked on that day
+      * <li>If endDate has been chosen, the day is not the same as the date selected in endDate
+      * <li>If endDate has been chosen, the day is not after the date selected in endDate
+      * </ul>
+      */
     final Callback<DatePicker, DateCell> startDayCellFactory = new Callback<DatePicker, DateCell>() {
         @Override
         public DateCell call(DatePicker param) {
@@ -341,6 +350,15 @@ public class ReservationController extends BaseController {
         }
     };
 
+     /**
+      * DayCellFactory associated with endDate.<p>
+      * Disables the ability to choose a date if:<ul>
+      * <li>Day is before the current date
+      * <li>Day is today.
+      * <li>Day is before the day selected in startDate.
+      * <li>Selected room type is fully booked on that day
+      * </ul>
+      */    
     final Callback<DatePicker, DateCell> endDayCellFactory = new Callback<DatePicker, DateCell>() {
         @Override
         public DateCell call(DatePicker param) {
