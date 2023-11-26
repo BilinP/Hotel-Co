@@ -110,10 +110,12 @@ public class ReservationController extends BaseController {
                     LocalDate newValue) {
                 endDate.setDisable(false);
                 if (endDate.getValue() != null) {
-                    nights.setText(Long.toString(ChronoUnit.DAYS.between(startDate.getValue(), endDate.getValue())));
-                    rate.setText("$" + DatabaseUtil.getRate(room).toString());
+                    long nightsLong = ChronoUnit.DAYS.between(startDate.getValue(), endDate.getValue());
+                    nights.setText(Long.toString(nightsLong));
+                    BigDecimal rateMultiplier = new BigDecimal(nightsLong);
+                    rate.setText("$" + DatabaseUtil.getRate(room).multiply(rateMultiplier).toString());
                     tax.setText("$" + TaxRate.getTaxRate().toString());
-                    BigDecimal totalBigDecimal = DatabaseUtil.getRate(room).add(TaxRate.getTaxRate());
+                    BigDecimal totalBigDecimal = DatabaseUtil.getRate(room).multiply(rateMultiplier).add(TaxRate.getTaxRate());
                     total.setText("$" + totalBigDecimal.toString());
                 }
             }
@@ -123,10 +125,12 @@ public class ReservationController extends BaseController {
             @Override
             public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue,
                     LocalDate newValue) {
-                nights.setText(Long.toString(ChronoUnit.DAYS.between(startDate.getValue(), endDate.getValue())));
-                rate.setText("$" + DatabaseUtil.getRate(room).toString());
+                long nightsLong = ChronoUnit.DAYS.between(startDate.getValue(), endDate.getValue());
+                nights.setText(Long.toString(nightsLong));
+                BigDecimal rateMultiplier = new BigDecimal(nightsLong);
+                rate.setText("$" + DatabaseUtil.getRate(room).multiply(rateMultiplier).toString());
                 tax.setText("$" + TaxRate.getTaxRate().toString());
-                BigDecimal totalBigDecimal = DatabaseUtil.getRate(room).add(TaxRate.getTaxRate());
+                BigDecimal totalBigDecimal = DatabaseUtil.getRate(room).multiply(rateMultiplier).add(TaxRate.getTaxRate());
                 total.setText("$" + totalBigDecimal.toString());
             }
             
