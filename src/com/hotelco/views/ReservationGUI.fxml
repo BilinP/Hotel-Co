@@ -51,7 +51,7 @@
                               </HBox>
                               <HBox alignment="CENTER">
                                  <children>
-                                    <DatePicker fx:id="endDate" editable="false" prefHeight="25.0" prefWidth="230.0" promptText="Check Out" style="-fx-background-color: transparent;" stylesheets="@../stylesheets/TextFieldSS.css">
+                                    <DatePicker fx:id="endDate" disable="true" editable="false" prefHeight="25.0" prefWidth="230.0" promptText="Check Out" style="-fx-background-color: transparent;" stylesheets="@../stylesheets/TextFieldSS.css">
                                        <HBox.margin>
                                           <Insets />
                                        </HBox.margin>
