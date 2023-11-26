@@ -2,17 +2,11 @@ package com.hotelco.entities;
 
 import com.hotelco.connections.DatabaseConnection;
 import com.hotelco.constants.DatabaseStatus;
-import com.hotelco.constants.RoomType;
+import com.hotelco.utilities.DatabaseUtil;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 
 /**
  * Main system that drives the application and holds the active elements
@@ -104,188 +98,6 @@ public class ReservationSystem {
         return connection;
     }
     /**
-     * Checks the availability of a room type within a given date.
-     * @param startDate start date to check
-     * @param endDate end date to check
-     * @param roomType room type to check
-     * @return the availability of a room with supplied parameters
-     */
-    public static Boolean checkAvailability(
-            LocalDate startDate, LocalDate endDate, RoomType roomType){
-        Boolean result = false;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        String sqlQuery =
-            "SELECT COUNT(room_num) as total " +
-            "FROM (" +
-                "SELECT room_num " +
-                "FROM rooms " +
-                "WHERE room_num " +
-                "NOT IN (" +
-                    "SELECT room_num " + 
-                    "FROM reservations " +
-                    "WHERE start_date <= '" + Date.valueOf(endDate) + "' " +
-                    "AND end_date >= '" + Date.valueOf(startDate) + "')" +
-                "AND room_type = '" + roomType.toString() + "' " +
-                "LIMIT 1) AS T";
-        Connection con = getDatabaseConnection();
-
-        try {
-            ps = con.prepareStatement(sqlQuery);
-            rs = ps.executeQuery();
-            if(rs.next()){
-                result = rs.getBoolean("total");
-            }
-        }
-        catch (SQLException e){
-            System.out.println("ReservationSystem.checkAvailability()");
-            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
-            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
-            System.out.println(e);
-        }
-        ready();
-        return result;
-    }
-    /**
-     * Checks the database for room availability by room type, on each and every
-     * day in a range. Not very efficient, but for a maximum range of one month,
-     * it will be sufficiently fast for the user.
-     * 
-     * @param startDate beginning of desired availabilities range
-     * @param endDate end of desired availabilities range
-     * @param roomType room type for which to check availability
-     * @return an ordered array of availibitilies. Element 0 is the availability
-     * on the startDate, element n is the availability n days after startDate.
-     */
-    public static Boolean[] getAvailabilities(
-            LocalDate startDate, LocalDate endDate, RoomType roomType){
-        Integer periodLen = new BigDecimal(
-            ChronoUnit.DAYS.between(startDate, endDate)).intValueExact();
-        Boolean[] result = new Boolean[periodLen];
-        LocalDate checkDate = startDate;
-        LocalDate nextDate;
-
-        for (Integer i = 0; i < periodLen; i++){
-            nextDate = checkDate.plusDays(1);
-            result[i] = checkAvailability(checkDate, nextDate, roomType);
-            checkDate = nextDate;
-        }
-        return result;
-    }
-
-    /**
-     * Checks how many rooms are currently occupied.
-     * @param startDate
-     * @param endDate
-     * @param roomType
-     * @return the number of occupied rooms.
-     */
-    public static Integer countOccupiedRooms(
-        LocalDate startDate, LocalDate endDate, RoomType roomType){
-        Integer result = 0;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        String sqlQuery = "SELECT COUNT(reservations.room_num)" + 
-            "AS total FROM reservations " + 
-            "INNER JOIN rooms ON reservations.room_num = rooms.room_num " + 
-            "WHERE ('" + Date.valueOf(startDate) + "' >= start_date AND '" +
-                Date.valueOf(startDate) + "' <= end_date) " +
-            "OR ('" + Date.valueOf(endDate) + "' >= start_date AND '" +
-                Date.valueOf(endDate) + "' <= end_date) " +
-            "OR (start_date >= '" + Date.valueOf(startDate) +
-                "' AND start_date <= '" + Date.valueOf(endDate) + "') " +
-            "OR (end_date >= '" + Date.valueOf(startDate) +
-                "' AND end_date <= '" + Date.valueOf(endDate) + "') " +
-            "AND room_type = '" + roomType.toString() + "' " +
-            "AND is_cancelled = 0";;
-        Connection con = getDatabaseConnection();
-        
-        try {
-            ps = con.prepareStatement(sqlQuery);
-            rs = ps.executeQuery();
-            if(rs.next()){
-                result = rs.getInt("total");
-            }
-        }
-        catch (SQLException e){
-            System.out.println("ReservationSystem.countOccupiedRooms()");
-            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
-            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
-            System.out.println(e);
-        }
-        ready();
-        return result;
-    }
-    /**
-     * Gets an Integer for the total amount of rooms in the database by room type
-     * @param roomType the room type to count
-     * @return the total amount of rooms of the supplied room type
-     */
-    public static Integer countRooms(RoomType roomType){
-        Integer result = 0;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        String sqlQuery = "SELECT COUNT(room_num) " +
-            "AS total FROM rooms WHERE room_type = '" +
-            roomType.toString() + "'";;
-        Connection con = getDatabaseConnection();
-
-        try {
-            ps = con.prepareStatement(sqlQuery);
-            rs = ps.executeQuery();
-            if(rs.next()){
-                result = rs.getInt("total");
-            }
-        }
-        catch (SQLException e){
-            System.out.println("ReservationSystem.countRooms()");
-            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
-            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
-            System.out.println(e);
-        }
-        ready();
-        return result;
-    }
-    /**
-     * Finds the next empty room of the supplied type.
-     * @param startDate start date to check
-     * @param endDate end date to check
-     * @param roomType room type to check
-     * @return gives a room number of an empty room.
-     */
-    public static Integer findEmptyRoom(
-        LocalDate startDate, LocalDate endDate, RoomType roomType){
-        Integer result = 0;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        String sqlQuery = "SELECT room_num " + 
-            "FROM rooms " + 
-            "WHERE room_num NOT IN (" + 
-                "SELECT room_num " + 
-                "FROM reservations " + 
-                "WHERE start_date <= '" + Date.valueOf(endDate) +
-                "' AND end_date >= '" + Date.valueOf(startDate) + "') " + 
-            "AND room_type = '" + roomType.toString() + "'" + 
-            "LIMIT 1";
-        Connection con = getDatabaseConnection();
-
-        try {
-            ps = con.prepareStatement(sqlQuery);
-            rs = ps.executeQuery();
-            if(rs.next()){
-                result = rs.getInt("room_num");
-            }
-        }
-        catch (SQLException e){
-            System.out.println("ReservationSystem.findEmptyRoom()");
-            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
-            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
-            System.out.println(e);
-        }
-        ready();
-        return result;
-    }
-    /**
      * Inserts a reservation into the database, associated with the
      * logged in user.
      */
@@ -305,7 +117,7 @@ public class ReservationSystem {
      */
     public static void dailyCheckOut(){
         int i;
-        Reservation[] todayCheckOuts = getTodayCheckouts();
+        Reservation[] todayCheckOuts = DatabaseUtil.getTodayCheckouts();
         if(todayCheckOuts != null){
             for(i = 0; i < todayCheckOuts.length; i++){
                 todayCheckOuts[i].checkOut();
@@ -321,7 +133,7 @@ public class ReservationSystem {
      */
     public static void dailyCheckIn(){
         int i;
-        Reservation[] todayCheckIns = getTodayCheckIns();
+        Reservation[] todayCheckIns = DatabaseUtil.getTodayCheckIns();
         if (todayCheckIns != null){
             for(i = 0; i < todayCheckIns.length; i++){
                 // System.out.println("Checking in Reservation " +
@@ -329,76 +141,6 @@ public class ReservationSystem {
                 todayCheckIns[i].checkIn();            
             }
         }
-    }
-    /**
-     * Gets all the reservations with today as their check out date.
-     * @return the reservations with today as their check out date
-     */
-    public static Reservation[] getTodayCheckouts(){
-        //FIXME: What to do when the daily check out doesn't run?
-        ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
-        Reservation[] result = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        String sqlQuery = "SELECT * " + 
-            "FROM reservations " + 
-            "WHERE end_date <= '" + Date.valueOf(LocalDate.now()) +
-            "' AND is_checked_in = 1";
-        Connection con = getDatabaseConnection();
-        try {
-            ps = con.prepareStatement(sqlQuery);
-            rs = ps.executeQuery();
-            while(rs.next()){
-                reservationList.add(
-                    new Reservation(rs.getInt("reservation_id")));
-                processing();
-            }
-            result = new Reservation[reservationList.size()];
-            reservationList.toArray(result);
-        }
-        catch (SQLException e){
-            System.out.println("ReservationSystem.getTodayCheckouts()");
-            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
-            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
-            System.out.println(e);
-        }
-        ready();
-        return result;
-    }
-    /**
-     * Gets all the reservations with today as their check in date.
-     * @return the reservations with today as their check in date
-     */
-    public static Reservation[] getTodayCheckIns(){
-        ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
-        Reservation[] result = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        String sqlQuery = "SELECT * " + 
-            "FROM reservations " + 
-            "WHERE start_date = '" + Date.valueOf(LocalDate.now()) + "' " +
-            "AND is_checked_in = 0";
-        Connection con = getDatabaseConnection();
-
-        try {
-            ps = con.prepareStatement(sqlQuery);
-            rs = ps.executeQuery();
-            while(rs.next()){
-                reservationList.add(
-                    new Reservation(rs.getInt("reservation_id")));
-                processing();
-            }
-            result = new Reservation[reservationList.size()];
-            reservationList.toArray(result);
-        }
-        catch (SQLException e){
-            System.out.println("ReservationSystem.getTodayCheckIns()");
-            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
-            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
-            System.out.println(e);
-        }
-        ready();
-        return result;
     }
     /**
      * Updates the current user and reservation from the database.
