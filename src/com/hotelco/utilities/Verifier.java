@@ -4,12 +4,13 @@ import java.security.NoSuchAlgorithmException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.hotelco.constants.CreditCardType;
 import com.hotelco.entities.CreditCard;
 import com.hotelco.entities.Password;
 import com.hotelco.entities.User;
 /**
  * Utility class for verifications
- * @author BilinP
+ * @author BilinP, Daniel Schwartz
  */
 
 public class Verifier {
@@ -54,5 +55,76 @@ public class Verifier {
      */
     public static Boolean verifyCreditCard(CreditCard creditCard){
             return creditCard.verify();
+    }
+
+    /**
+     * Returns the card type, which can be null. If the combination of the
+     * first character and length implies it is not a possibly valid card (those
+     * in CreditCardType.java), returns null.
+     * @param creditCardNum credit card number for which the issuer is being
+     * requested 
+     * @return CreditCardType of this credit card number
+     */
+    public CreditCardType getIssuer(String creditCardNum){
+        CreditCardType result = null;
+
+        Integer cardNumLen = creditCardNum.length();
+        if (cardNumLen == 15 && creditCardNum.charAt(0) == '3'){
+            result = CreditCardType.AMEX;
+        }
+        if(cardNumLen == 16){
+            switch(creditCardNum.charAt(0)){
+                case '4':
+                result = CreditCardType.VISA;
+                break;
+                case '5':
+                result = CreditCardType.MASTERCARD;
+                break;
+                case '6':
+                result = CreditCardType.DISCOVER;
+                break;
+            }
+        }
+        return result;
+    }
+/**
+ * Uses the Luhn algorithm to check if a card is invalid.
+ * @param creditCardNum the credit card number to verify
+ * @return true if passes Luhn algorithm check, false if it fails
+ */
+    public Boolean luhnCheck(String creditCardNum){
+        Integer cardNumLen = creditCardNum.length();
+        Boolean isSecond = false;
+        Integer totalSum = 0;
+        for (int i = cardNumLen - 1; i >= 0; --i){ 
+
+                int currDigit = creditCardNum.charAt(i) - '0';
+
+                if (isSecond == true){
+                    currDigit = currDigit * 2;
+                }
+                totalSum += currDigit / 10;
+                totalSum += currDigit % 10;
+
+                isSecond = !isSecond;
+            }
+        return (totalSum % 10 == 0);
+    }
+    /**
+     * Checks if the CVV number matches the card type's requirements, only use
+     * after credit type is set
+     * @param cvvNum CVV number to check
+     * @param creditCardType credit card type against which to check the cvv
+     * @return true if cvv card requirements are met, false otherwise
+     */
+    public boolean cvvCheck(String cvvNum, CreditCardType creditCardType){
+        Boolean result = false;
+        Integer cvvNumLen = cvvNum.length();
+
+        if (cvvNumLen == 4 && creditCardType == CreditCardType.AMEX ||
+            cvvNumLen == 3 && creditCardType != CreditCardType.AMEX){
+            result = true;
+        }
+        return result;
     }
 }

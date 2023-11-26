@@ -10,7 +10,6 @@ import com.hotelco.entities.ReservationSystem;
 /**
  * Uses the tax rate from the database to generate relevant Tax BigDecimals.
  * @author Daniel Schwartz
- *  @author Daniel Schwartz
  */
 public class TaxRate {
     /**

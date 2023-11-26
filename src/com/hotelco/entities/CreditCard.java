@@ -82,38 +82,41 @@ public class CreditCard{
     public void setCreditCardType(CreditCardType newCreditCardType){
         creditCardType = newCreditCardType;
     }
-/**
- * Creates CreditCard by fetching from database by userId.
- * @param owner user to be associated with this credit card
- */
+    /**
+     * Creates CreditCard by fetching from database by userId.
+     * @param owner user to be associated with this credit card
+     */
     public CreditCard(User owner){
         user = owner;
         fetch();
     }
-/**
- * Creates a credit card by explicitly defining every member
- * @param newCreditCardNum
- * @param newCVVNum
- * @param newExpDate
- * @param newCreditCardType
- * @param newUser
- */
+    /**
+     * Creates a credit card by explicitly defining every member except
+     * creditCardType. creditCardType is determined inside the constructor
+     * algorithmically.
+     * @param newCreditCardNum
+     * @param newCVVNum
+     * @param newExpDate
+     * @param newUser
+     */
     public CreditCard(
         String newCreditCardNum, String newCVVNum,
-        LocalDate newExpDate,  CreditCardType newCreditCardType, User newUser){
+        LocalDate newExpDate, User newUser){
         
         creditCardNum = newCreditCardNum;
         cvvNum = newCVVNum;
         expDate = newExpDate;
-        creditCardType = newCreditCardType;
         user = newUser;
+        creditCardType = getIssuer();
         }
-/**
- * Determines and sets the card type, can be null. If the combination of the first character
- * and length implies it is not a possibly valid card (those in CreditCardType.java),
- * creditCardType becomes null.
- * @return CreditCardType of this card
- */
+
+        
+    /**
+     * Returns the card type, which can be null. If the combination of the
+     * first character and length implies it is not a possibly valid card (those
+     * in CreditCardType.java), returns null.
+     * @return CreditCardType of this card
+     */
     public CreditCardType getIssuer(){
         CreditCardType result = null;
 
@@ -181,7 +184,6 @@ public class CreditCard{
     public Boolean verify(){
         Boolean result = false;
 
-        creditCardType = getIssuer();
         result = creditCardType != null
             && luhnCheck()
             && expDate.isAfter(LocalDate.now())
