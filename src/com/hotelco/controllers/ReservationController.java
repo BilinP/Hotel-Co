@@ -1,6 +1,5 @@
 package com.hotelco.controllers;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
@@ -18,6 +17,7 @@ import com.hotelco.utilities.Instances;
 import com.hotelco.utilities.ReservationCalculator;
 import com.hotelco.utilities.TaxRate;
 import com.hotelco.utilities.TextFormatters;
+import com.hotelco.utilities.Verifier;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -109,15 +109,18 @@ public class ReservationController extends BaseController {
             @Override
             public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue,
                     LocalDate newValue) {
-                endDate.setDisable(false);
-                if (endDate.getValue() != null) {
-                    long nightsLong = ChronoUnit.DAYS.between(startDate.getValue(), endDate.getValue());
-                    nights.setText(Long.toString(nightsLong));
-                    ReservationCalculator.calcTotal(startDate.getValue(), endDate.getValue(), room);
-                    rate.setText("$" + ReservationCalculator.calcTotal(startDate.getValue(), endDate.getValue(), room).toString());
-                    tax.setText("$" + TaxRate.getTaxRate().toString());
-                    total.setText("$" + ReservationCalculator.calcTotal(startDate.getValue(), endDate.getValue(), room).add(TaxRate.getTaxRate()).toString());
-                }
+                        if (newValue == null) {
+                            return;
+                        }
+                        endDate.setDisable(false);
+                        if (endDate.getValue() != null) {
+                            long nightsLong = ChronoUnit.DAYS.between(startDate.getValue(), endDate.getValue());
+                            nights.setText(Long.toString(nightsLong));
+                            ReservationCalculator.calcTotal(startDate.getValue(), endDate.getValue(), room);
+                            rate.setText("$" + ReservationCalculator.calcTotal(startDate.getValue(), endDate.getValue(), room).toString());
+                            tax.setText("$" + TaxRate.getTaxRate().toString());
+                            total.setText("$" + ReservationCalculator.calcTotal(startDate.getValue(), endDate.getValue(), room).add(TaxRate.getTaxRate()).toString());
+                        }
             }
         };
 
@@ -125,12 +128,15 @@ public class ReservationController extends BaseController {
             @Override
             public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue,
                     LocalDate newValue) {
-                long nightsLong = ChronoUnit.DAYS.between(startDate.getValue(), endDate.getValue());
-                nights.setText(Long.toString(nightsLong));
-                ReservationCalculator.calcTotal(startDate.getValue(), endDate.getValue(), room);
-                rate.setText("$" + ReservationCalculator.calcTotal(startDate.getValue(), endDate.getValue(), room).toString());
-                tax.setText("$" + TaxRate.getTaxRate().toString());
-                total.setText("$" + ReservationCalculator.calcTotal(startDate.getValue(), endDate.getValue(), room).add(TaxRate.getTaxRate()).toString());
+                        if (newValue == null) {
+                            return;
+                        }
+                        long nightsLong = ChronoUnit.DAYS.between(startDate.getValue(), endDate.getValue());
+                        nights.setText(Long.toString(nightsLong));
+                        ReservationCalculator.calcTotal(startDate.getValue(), endDate.getValue(), room);
+                        rate.setText("$" + ReservationCalculator.calcTotal(startDate.getValue(), endDate.getValue(), room).toString());
+                        tax.setText("$" + TaxRate.getTaxRate().toString());
+                        total.setText("$" + ReservationCalculator.calcTotal(startDate.getValue(), endDate.getValue(), room).add(TaxRate.getTaxRate()).toString());
             }
             
         };
@@ -139,10 +145,26 @@ public class ReservationController extends BaseController {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue,
                     String newValue) {
-                if (newValue.length() == 2 && oldValue.length() == 1) {
-                    expDateYear.requestFocus();
-                    slash.setVisible(true);
-                }        
+                        if (newValue.length() == 2) {
+                            expDateYear.requestFocus();
+                            slash.setVisible(true);
+                        }    
+                        if ((expDateMonth.getLength() == 2 || expDateMonth.getLength() == 2)) {
+                            expDateMonth.setStyle("-fx-border-color: white;");
+                            expDateYear.setStyle("-fx-border-color: white;");
+                            paymentNotification.setText("");
+                        } 
+                        if (expDateMonth.getLength() == 2 && expDateYear.getLength() == 2) {
+                            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM yy");
+                            YearMonth yearMonth = YearMonth.parse(expDateMonth.getText() + " " + expDateYear.getText(), dateFormatter);
+                            LocalDate expDate = yearMonth.atDay(1);
+                            if (expDate.isBefore(LocalDate.now())) {
+                                expDateMonth.setStyle("-fx-border-color: #FF0000;");
+                                expDateYear.setStyle("-fx-border-color: #FF0000;");
+                                paymentNotification.setText("Please enter a valid expiry date");    
+                            }
+                        }
+
             }
         };
 
@@ -150,13 +172,94 @@ public class ReservationController extends BaseController {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue,
                     String newValue) {
-                if (newValue.length() == 0 && oldValue.length() == 1) {
-                    expDateMonth.requestFocus();
-                    expDateMonth.positionCaret(expDateMonth.getLength() + 1);
-                    slash.setVisible(false);
-                }        
+                        if (newValue.length() == 0 && oldValue.length() == 1) {
+                            expDateMonth.requestFocus();
+                            expDateMonth.positionCaret(expDateMonth.getLength() + 1);
+                            slash.setVisible(false);
+                        }      
+                        if (expDateMonth.getLength() == 2 || expDateMonth.getLength() == 2) {
+                            expDateMonth.setStyle("-fx-border-color: white;");
+                            expDateYear.setStyle("-fx-border-color: white;");
+                            paymentNotification.setText("");
+                        }                        
+                        if (expDateMonth.getLength() == 2 && expDateYear.getLength() == 2) {
+                            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM yy");
+                            YearMonth yearMonth = YearMonth.parse(expDateMonth.getText() + " " + expDateYear.getText(), dateFormatter);
+                            LocalDate expDate = yearMonth.atDay(1);
+                            if (expDate.isBefore(LocalDate.now())) {
+                                expDateMonth.setStyle("-fx-border-color: #FF0000;");
+                                expDateYear.setStyle("-fx-border-color: #FF0000;");
+                                paymentNotification.setText("Please enter a valid expiry date");    
+                            }
+                        }
             }
         };
+
+        final ChangeListener<Boolean> ccFocusListener = new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue && (cardNumber.getLength() != 16 && cardNumber.getLength() != 15)) {
+                    cardNumber.setStyle("-fx-border-color: #FF0000;");
+                    paymentNotification.setText("Please enter a valid credit card number");
+                }
+            }
+        };
+
+        final ChangeListener<String> ccStringListener = new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (cardNumber.getLength() == 16 || cardNumber.getLength() == 15) {
+                    cardNumber.setStyle("-fx-border-color: white;");
+                    paymentNotification.setText("");
+                }
+            }  
+        };
+
+        final ChangeListener<Boolean> mmFocusListener = new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue && (expDateMonth.getLength() != 2 || expDateYear.getLength() != 2)) {
+                    expDateMonth.setStyle("-fx-border-color: #FF0000;");
+                    expDateYear.setStyle("-fx-border-color: #FF0000;");
+                    paymentNotification.setText("Please enter a valid expiry date");
+                }
+                if (!newValue && expDateMonth.getLength() == 2) {
+                    slash.setVisible(true);
+                }
+            }
+        };     
+        
+        final ChangeListener<Boolean> yyFocusListener = new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue && (expDateMonth.getLength() != 2 || expDateYear.getLength() != 2)) {
+                    expDateMonth.setStyle("-fx-border-color: #FF0000;");
+                    expDateYear.setStyle("-fx-border-color: #FF0000;");
+                    paymentNotification.setText("Please enter a valid expiry date");
+                }
+            }
+        };      
+        
+        final ChangeListener<Boolean> CVCFocusListener = new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                if (!newValue && (CVC.getLength() != 3 && CVC.getLength() != 4)) {
+                    CVC.setStyle("-fx-border-color: #FF0000;");
+                    paymentNotification.setText("Please enter a valid CVC");
+                }
+            }
+        };          
+
+        final ChangeListener<String> CVCStringListener = new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (CVC.getLength() == 3 || CVC.getLength() == 4) {
+                    CVC.setStyle("-fx-border-color: white;");
+                    paymentNotification.setText("");
+                }
+            }  
+        };        
+
 
         //This sets up the DatePicker to not allow a user to choose a date before the current date.
         final Callback<DatePicker, DateCell> startDayCellFactory = new Callback<DatePicker, DateCell>() {
@@ -216,14 +319,14 @@ public class ReservationController extends BaseController {
             expDateYear.setTextFormatter(textFormatters.EXP_DATE_YEAR);
             expDateMonth.textProperty().addListener(mmCL);
             expDateYear.textProperty().addListener(yyCL);
+            expDateMonth.focusedProperty().addListener(mmFocusListener);
+            expDateYear.focusedProperty().addListener(yyFocusListener);
             CVC.setTextFormatter(textFormatters.CVC);
             cardNumber.setTextFormatter(textFormatters.CREDIT_CARD);
-
-            /*
-            if (room != null) {
-                title.setText("Booking - " + room.toPrettyString());
-            }
-            */
+            cardNumber.focusedProperty().addListener(ccFocusListener);
+            cardNumber.textProperty().addListener(ccStringListener);
+            CVC.textProperty().addListener(CVCStringListener);
+            CVC.focusedProperty().addListener(CVCFocusListener);
         });
     }
 
@@ -254,15 +357,15 @@ public class ReservationController extends BaseController {
         }
 
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM yy");
-        YearMonth yearMonth = YearMonth.parse(expDateMonth + " " + expDateYear, dateFormatter);
+        YearMonth yearMonth = YearMonth.parse(expDateMonth.getText() + " " + expDateYear.getText(), dateFormatter);
         LocalDate expDate = yearMonth.atDay(1);
         CreditCard card = new CreditCard(
             cardNumber.getText(), CVC.getText(), expDate,
             ReservationSystem.getCurrentUser()
         );
 
-        if (!card.verify()) {
-            paymentNotification.setText("Incorrect payment details");
+        if (!card.verify() || !Verifier.cvvCheck(CVC.getText(), Verifier.getIssuer(card.getCreditCardNum()))) {
+            paymentNotification.setText("Please check your payment details");
             return;            
         }
         card.assign();
@@ -318,6 +421,17 @@ public class ReservationController extends BaseController {
     @FXML
     private void switchToRoomChoiceScene(MouseEvent event) {
         Instances.getDashboardController().switchAnchor(FXMLPaths.ROOMS);
+    }
+
+    @FXML
+    private void resetDates(MouseEvent event) {
+        endDate.setValue(null);
+        startDate.setValue(null);
+        endDate.setDisable(true);
+        nights.setText("0");
+        rate.setText("$0.00");
+        tax.setText("$0.00");
+        total.setText("$0.00");
     }
 
     private boolean isPaymentEmpty() {
