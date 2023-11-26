@@ -241,7 +241,7 @@ public class ReservationController extends BaseController {
         LocalDate expDate = yearMonth.atDay(1);
         CreditCard card = new CreditCard(
             cardNumber.getText(), CVC.getText(), expDate,
-            null, ReservationSystem.getCurrentUser()
+            ReservationSystem.getCurrentUser()
         );
 
         if (!card.verify()) {

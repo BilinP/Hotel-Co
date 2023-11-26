@@ -75,7 +75,7 @@ public class PENDINGPaymentController extends BaseController{
      */
     @FXML
     void payment(MouseEvent event) {
-        CreditCard card= new CreditCard(creditCardNum.getText(), CVV.getText(), expDate.getValue(), cardType.getValue(), reservation.getUser());
+        CreditCard card= new CreditCard(creditCardNum.getText(), CVV.getText(), expDate.getValue(), reservation.getUser());
         if(card.verify()){
         card.assign();
         switchScene(FXMLPaths.THANK_YOU);
