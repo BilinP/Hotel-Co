@@ -558,9 +558,9 @@ public class ReservationController extends BaseController {
     private void updateTotals() {
         long nightsLong = ChronoUnit.DAYS.between(startDate.getValue(), endDate.getValue());
         nights.setText(Long.toString(nightsLong));
-        BigDecimal subTotal = ReservationCalculator.calcTotal(startDate.getValue(), endDate.getValue(), room);
+        BigDecimal subTotal = ReservationCalculator.calcSubTotal(startDate.getValue(), endDate.getValue(), room);
         rate.setText("$" + subTotal.toString());
-        BigDecimal totalCost = ReservationCalculator.calcTotal(startDate.getValue(), endDate.getValue(), room).multiply(TaxRate.getTaxMultiplier()).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal totalCost = ReservationCalculator.calcSubTotal(startDate.getValue(), endDate.getValue(), room).multiply(TaxRate.getTaxMultiplier()).setScale(2, RoundingMode.HALF_UP);
         total.setText("$" + totalCost.toString());
         tax.setText("$" + totalCost.subtract(subTotal).toString());
     }
