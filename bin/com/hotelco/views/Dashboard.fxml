@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane prefHeight="800.0" prefWidth="1300.0" styleClass="background" stylesheets="@../stylesheets/BackgroundSS.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hotelco.controllers.DashboardController">
+<StackPane prefHeight="800.0" prefWidth="1300.0" styleClass="background" stylesheets="@../stylesheets/BackgroundSS.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hotelco.controllers.DashboardController">
    <children>
       <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0">
          <right>
@@ -43,7 +43,7 @@
                         <Insets left="90.0" />
                      </padding>
                   </Button>
-                  <Button fx:id="cartButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseReleased="#switchToCart" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: transparent;" text="Cart" textFill="#f9bd1a">
+                  <Button fx:id="cartButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseReleased="#switchToCart" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: transparent;" text="Check-In" textFill="#f9bd1a">
                      <font>
                         <Font size="18.0" />
                      </font>

@@ -27,7 +27,7 @@
                         <Insets bottom="30.0" top="30.0" />
                      </VBox.margin>
                   </ImageView>
-                  <Button fx:id="revenueButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseReleased="#switchToMenu" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: transparent;" text="Revenue" textAlignment="CENTER" textFill="#f9bd1a">
+                  <Button fx:id="revenueButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseReleased="#switchToRevenue" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: transparent;" text="Revenue" textAlignment="CENTER" textFill="#f9bd1a">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -35,7 +35,7 @@
                         <Insets left="90.0" />
                      </padding>
                   </Button>
-                  <Button fx:id="vacancyButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseReleased="#switchToRoomSearch" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: transparent;" text="Room Vacancy" textFill="#f9bd1a">
+                  <Button fx:id="vacancyButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseReleased="#switchToRoomVacancy" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: transparent;" text="Room Vacancy" textFill="#f9bd1a">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -43,7 +43,7 @@
                         <Insets left="90.0" />
                      </padding>
                   </Button>
-                  <Button fx:id="reservationsButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseReleased="#switchToCart" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: transparent;" text="All Reservations" textFill="#f9bd1a">
+                  <Button fx:id="reservationsButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseReleased="#switchToReservactions" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: transparent;" text="All Reservations" textFill="#f9bd1a">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -51,7 +51,7 @@
                         <Insets left="90.0" />
                      </padding>
                   </Button>
-                  <Button fx:id="exportButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseReleased="#switchToReservationHistory" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: transparent;" text="Export" textFill="#f9bd1a">
+                  <Button fx:id="exportButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseReleased="#switchToExport" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: transparent;" text="Export" textFill="#f9bd1a">
                      <font>
                         <Font size="18.0" />
                      </font>

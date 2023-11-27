@@ -26,25 +26,25 @@ public class ManagerDashboardController extends BaseController {
      * Button named 'Book Room' that calls 'switchToRoomSearch()' when pressed.
      */
     @FXML
-    private Button bookRoomButton;
+    private Button revenueButton;
 
     /**
      * Button named 'cart' that calls 'switchToMenu()' when pressed.
      */
     @FXML
-    private Button cartButton;
+    private Button vacancyButton;
 
     /**
      * Button named 'home' that calls 'switchToCart()' when pressed.
      */
     @FXML
-    private Button homeButton;
+    private Button reservationsButton;
 
     /**
      * Button named 'profile' that calls 'switchToProfile()' when pressed.
      */
     @FXML
-    private Button profileButton;
+    private Button exportButton;
 
     /**
      *  A AnchorPane which is the right of the dashboard.
@@ -53,16 +53,10 @@ public class ManagerDashboardController extends BaseController {
     public  AnchorPane rightAnchor;
 
 
-    /**
-     * Button named 'Reservation History' that calls 'switchToReservationHistory()' when pressed.
-     */
-    @FXML
-    private Button viewBookingButton;
-
      /**
      * Array of Button  that stores all the menu button.
      */
-    private final Button[] menubuttons = new Button[5];
+    private final Button[] menubuttons = new Button[4];
 
     /**
      * String which stores the current anchor scene.
@@ -78,12 +72,11 @@ public class ManagerDashboardController extends BaseController {
     @FXML
     private void initialize() {
         switchAnchor(FXMLPaths.HOME);
-         menubuttons[0] = bookRoomButton;
-         menubuttons[1] = cartButton;
-         menubuttons[2] = homeButton;
-         menubuttons[3] = profileButton;
-         menubuttons[4] = viewBookingButton;
-         buttonSelection(homeButton);
+         menubuttons[0] = revenueButton;
+         menubuttons[1] = vacancyButton;
+         menubuttons[2] = reservationsButton;
+         menubuttons[3] = exportButton;
+         buttonSelection(revenueButton);
         Platform.runLater(() -> {
       
         });
@@ -96,9 +89,9 @@ public class ManagerDashboardController extends BaseController {
      * @param event
      */
     @FXML
-    void switchToCart(MouseEvent event) {
+    void switchToReservactions(MouseEvent event) {
         switchAnchor(FXMLPaths.RESERVATION);
-        buttonSelection(cartButton);
+        buttonSelection(reservationsButton);
     }
 
    /**
@@ -107,9 +100,9 @@ public class ManagerDashboardController extends BaseController {
      * @param event The 'mouse released' event that is triggered by pressing the 'home' button.
      */
     @FXML
-    private void switchToMenu(MouseEvent event) {
+    private void switchToRevenue(MouseEvent event) {
        switchAnchor(FXMLPaths.HOME);
-       buttonSelection(homeButton);
+       buttonSelection(revenueButton);
     }
 
     
@@ -123,28 +116,15 @@ public class ManagerDashboardController extends BaseController {
         switchScene(FXMLPaths.LOGIN);
     }
 
-    
-    /**
-     * This method is called by pressing the 'Profile' button.
-     * It changes the right anchorpane to the profile scene
-     * @param event The 'mouse released' event that is triggered by pressing the 'profile' button.
-     */
-    @FXML
-    void switchToProfile(MouseEvent event) {
-        buttonSelection(profileButton);
-        switchAnchor(FXMLPaths.PROFILE);
-    }
-
-    
     /**
      * This method is called by pressing the 'Reservation History' button.
      * It changes the right anchorpane to the ReservationHistoryGUI scene
      * @param event The 'mouse released' event that is triggered by pressing the 'Reservation History' button.
      */
     @FXML
-    void switchToReservationHistory(MouseEvent event) {
+    void switchToRoomVacancy(MouseEvent event) {
         switchAnchor(FXMLPaths.RHGUI);
-        buttonSelection(viewBookingButton);
+        buttonSelection(vacancyButton);
     }
 
    /**
@@ -153,9 +133,9 @@ public class ManagerDashboardController extends BaseController {
      * @param event The 'mouse released' event that is triggered by pressing the 'Book ROom' button.
      */
     @FXML
-    void switchToRoomSearch(MouseEvent event) {
+    void switchToExport(MouseEvent event) {
         switchAnchor(FXMLPaths.ROOMS);
-        buttonSelection(bookRoomButton);
+        buttonSelection(exportButton);
     }
 
     /**
