@@ -126,8 +126,7 @@ public class CheckInController extends BaseController {
         if (index != -1) {
             int rowIndex = index + 1; 
                 System.out.print(rowIndex);
-            table.lookup(".table-row-cell:filled-cell:index(" + rowIndex + ")")
-                 .getStyleClass().add("table-row-cell-selectedtoggle");
+            table.lookup(".table-row-cell:index(" + rowIndex + ")").getStyleClass().add("table-row-cell-selectedtoggle");
         }
     }
 
