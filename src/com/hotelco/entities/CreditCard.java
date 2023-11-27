@@ -197,7 +197,7 @@ public class CreditCard{
      * the user already has a credit card. It is recommended to use verify()
      * before assign().
      */
-    public void assign(){
+    private void assignToUser(){
         PreparedStatement ps = null;
         String sqlQuery = null;
         Connection con = null;
@@ -231,6 +231,15 @@ public class CreditCard{
                 System.out.println(e);
             }
             ReservationSystem.ready();
+        }
+    }
+    /**
+     * Conditionally assigns a card to a User upon verification. See
+     * assignToUser() for it's implementation details.
+     */
+    public void assign(){
+        if (verify()){
+            assignToUser();
         }
     }
     /**
