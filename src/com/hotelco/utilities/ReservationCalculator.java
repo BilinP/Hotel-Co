@@ -51,13 +51,13 @@ public class ReservationCalculator {
         return dailyRate;
     }
     /**
-     * Calculates the total price of a reservation.
+     * Calculates the subtotal price of a period, based on RoomType.
      * @param startDate start date of potential reservation
      * @param endDate end date of potential reservation
      * @param roomType the room type of the potential reservation
      * @return the total price of the potential reservation
      */
-    public static BigDecimal calcTotal(LocalDate startDate, LocalDate endDate,
+    public static BigDecimal calcSubTotal(LocalDate startDate, LocalDate endDate,
     RoomType roomtype){
         LocalDate i;
         BigDecimal sum = new BigDecimal(0);
