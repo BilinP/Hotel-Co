@@ -120,7 +120,7 @@ public class LoginController extends BaseController {
                     switchScene(FXMLPaths.MANAGER_DASHBOARD);
                 }else{
                      switchScene(FXMLPaths.DASHBOARD);  
-                }
+                } 
                 
             }
             else{
