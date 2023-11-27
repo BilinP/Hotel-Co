@@ -556,10 +556,10 @@ public class ReservationController extends BaseController {
     private void updateTotals() {
         long nightsLong = ChronoUnit.DAYS.between(startDate.getValue(), endDate.getValue());
         nights.setText(Long.toString(nightsLong));
-        ReservationCalculator.calcTotal(startDate.getValue(), endDate.getValue(), room);
-        rate.setText("$" + ReservationCalculator.calcTotal(startDate.getValue(), endDate.getValue(), room).toString());
+        ReservationCalculator.calcSubTotal(startDate.getValue(), endDate.getValue(), room);
+        rate.setText("$" + ReservationCalculator.calcSubTotal(startDate.getValue(), endDate.getValue(), room).toString());
         tax.setText("$" + TaxRate.getTaxRate().toString());
-        total.setText("$" + ReservationCalculator.calcTotal(startDate.getValue(), endDate.getValue(), room).add(TaxRate.getTaxRate()).toString());
+        total.setText("$" + ReservationCalculator.calcSubTotal(startDate.getValue(), endDate.getValue(), room).add(TaxRate.getTaxRate()).toString());
     }
 
     /**
