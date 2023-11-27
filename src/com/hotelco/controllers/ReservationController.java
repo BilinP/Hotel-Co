@@ -147,7 +147,7 @@ public class ReservationController extends BaseController {
 
     /***************************************************************************
      *                                                                         *
-     * DatePickers                                                             *
+     * ChangeListeners                                                         *
      *                                                                         *
      **************************************************************************/
 
