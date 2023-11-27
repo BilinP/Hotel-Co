@@ -668,6 +668,9 @@ public class ReservationController extends BaseController {
         if (Integer.parseInt(expDateMonth.getText()) > 12) {
             return false;
         }
+        if (parseExpDate().isBefore(LocalDate.now())) {
+            return false;
+        }
         CreditCard card = new CreditCard(
             cardNumber.getText(), CVC.getText(), parseExpDate(),
             ReservationSystem.getCurrentUser()
