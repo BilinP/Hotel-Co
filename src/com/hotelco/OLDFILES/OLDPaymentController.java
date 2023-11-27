@@ -1,7 +1,7 @@
-package com.hotelco.controllers;
+package com.hotelco.OLDFILES;
 
 import com.hotelco.constants.CreditCardType;
-
+import com.hotelco.controllers.BaseController;
 import com.hotelco.entities.CreditCard;
 import com.hotelco.entities.Payment;
 import com.hotelco.entities.Reservation;
@@ -22,7 +22,7 @@ import javafx.scene.text.Text;
  * 
  * @author      Bilin Pattasseril
  */
-public class PENDINGPaymentController extends BaseController{
+public class OLDPaymentController extends BaseController{
     /**
      * TextField that contains the cvv of a credit card .
      */
