@@ -356,7 +356,7 @@ public class ReservationController extends BaseController {
       * DayCellFactory associated with endDate.<p>
       * Disables the ability to choose a date if:<ul>
       * <li>Day is before the current date
-      * <li>Day is today.
+      * <li>Day is today
       * <li>Day is before the day selected in startDate.
       * <li>Selected room type is fully booked on that day
       * </ul>
@@ -418,10 +418,10 @@ public class ReservationController extends BaseController {
      */
     @FXML
     private void createBooking(MouseEvent event) {
-        if (displayErrorOnEmptyField(isDatePickersEmpty(), isPaymentEmpty())) {
+        if (displayErrorOnEmptyField(isAnyDatePickerEmpty(), isAnyPaymentFieldEmpty())) {
             return;
         }
-        if (!verifyCard()) {
+        if (!assignCard()) {
             return;
         }
 
@@ -489,7 +489,7 @@ public class ReservationController extends BaseController {
      * Marks all empty TextFields with a red border.
      * @return true if any of the payment TextFields are empty, false if they are all filled
      */
-    private boolean isPaymentEmpty() {
+    private boolean isAnyPaymentFieldEmpty() {
         TextField[] textFields = new TextField[] {
             cardNumber, expDateMonth, 
             expDateYear, CVC
@@ -522,7 +522,7 @@ public class ReservationController extends BaseController {
      * Marks all empty DatePickers with a red border.
      * @return true if any of the DatePickers are empty, false if they are all filled
      */    
-    private boolean isDatePickersEmpty() {
+    private boolean isAnyDatePickerEmpty() {
         DatePicker[] datePickers = new DatePicker[] {
             startDate, endDate
         };
@@ -627,7 +627,7 @@ public class ReservationController extends BaseController {
      * Displays relevant error message(s) if DatePicker(s) or payment TextField(s) are empty.
      * @param datePickerEmpty Boolean status of filled DatePicker fields.
      * @param paymentEmpty Boolean status of filled payment TextFields.
-     * @return true if either datePickerEmpty or paymentEmpty are true, false otherwise
+     * @return true if an error message is written, false otherwise
      */
     private boolean displayErrorOnEmptyField(Boolean datePickerEmpty, Boolean paymentEmpty) {
         if (datePickerEmpty && paymentEmpty) {
@@ -660,11 +660,11 @@ public class ReservationController extends BaseController {
     }
 
     /**
-     * Verifies a users credit card information.
+     * Verifies a users credit card information, and assigns CreditCard to a User if valid.
      * If any details are inaccurate, sets payment TextField borders to red and displays an error message.
      * @return true if card details are accurate, false otherwise
      */
-    private boolean verifyCard() {
+    private boolean assignCard() {
         if (!checkInvalidExpDate()) {
             return false;
         }
