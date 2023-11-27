@@ -90,7 +90,7 @@ public class ManagerDashboardController extends BaseController {
      */
     @FXML
     void switchToReservactions(MouseEvent event) {
-        switchAnchor(FXMLPaths.RESERVATION);
+        switchAnchor(FXMLPaths.All_RESERVATION);
         buttonSelection(reservationsButton);
     }
 
