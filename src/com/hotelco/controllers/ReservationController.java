@@ -157,16 +157,22 @@ public class ReservationController extends BaseController {
       * ChangeListener associated with startDate.<p>
       * If startDate isn't set to null:<ul>
       * <li>Enables the ability to set endDate after making a selection.
-      * <li>If endDate is already set, calls updateTotals().
+      * <li>Resets error status.
+      * <li>If endDate is already set, updates total cost.
       * </ul>
       */
     final ChangeListener<LocalDate> startDateChangeListener = new ChangeListener<LocalDate>() {
         @Override
         public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue,
-                LocalDate newValue) {
-            if (newValue == null) {
+                LocalDate newValue) {  
+            if (newValue == null) {   
                 return;
             }
+            if (startDate.getStyleClass().contains("red-date-picker")) {
+                startDate.getStyleClass().remove("red-date-picker");
+                startDate.getStyleClass().add("normal-date-picker");
+            }
+
             endDate.setDisable(false);
             if (endDate.getValue() != null) {
                 updateTotals();
@@ -176,7 +182,9 @@ public class ReservationController extends BaseController {
 
      /**
       * ChangeListener associated with endDate.<p>
-      * If endDate isn't set to null, calls updateTotals().
+      * If endDate isn't set to null, resets error status and updates total costs.<p>
+      * Since endDate is associated with an expiry date check, a change in endDate will
+      * retrigger the expiry date check. 
       */    
     final ChangeListener<LocalDate> endDateChangeListener = new ChangeListener<LocalDate>() {
         @Override
@@ -185,7 +193,13 @@ public class ReservationController extends BaseController {
             if (newValue == null) {
                 return;
             }
+            if (endDate.getStyleClass().contains("red-date-picker")) {
+                endDate.getStyleClass().remove("red-date-picker");
+                endDate.getStyleClass().add("normal-date-picker");
+                dateNotification.setText("");
+            }
             updateTotals();
+            checkInvalidExpDate();
         }
     };
 
@@ -501,7 +515,7 @@ public class ReservationController extends BaseController {
                 empty = true;
             } 
         }
-        if (cardNumber.getLength() != 15 || cardNumber.getLength() != 16) {
+        if (cardNumber.getLength() < 15) {
             setRedBorder(cardNumber);
             empty = true;
         }
@@ -510,7 +524,7 @@ public class ReservationController extends BaseController {
             setRedBorder(expDateYear);
             empty = true;
         }
-        if (CVC.getLength() != 3 || CVC.getLength() != 4) {
+        if (CVC.getLength() < 3) {
             setRedBorder(CVC);
             empty = true;
         }
@@ -530,7 +544,9 @@ public class ReservationController extends BaseController {
         for (DatePicker datePicker: datePickers) {
             if (datePicker.getValue() == null) {
                 empty = true;
-                datePicker.setStyle("-fx-border-color: #FF0000;");
+                if (!datePicker.getStyleClass().contains("red-date-picker")) {
+                    datePicker.getStyleClass().add("red-date-picker");
+                }
             }
         }
         return empty;
@@ -612,7 +628,15 @@ public class ReservationController extends BaseController {
                 paymentNotification.setText("Please enter a valid expiry date");  
                 return false;
             }
-            if (parseExpDate().isBefore(LocalDate.now())) {
+            if (endDate.getValue() != null) {
+                if (parseExpDate().plusMonths(1).isBefore(endDate.getValue())) {
+                    setRedBorder(expDateMonth);
+                    setRedBorder(expDateYear);
+                    paymentNotification.setText("Please enter a valid expiry date");
+                    return false;                    
+                }
+            }            
+            if (parseExpDate().plusMonths(1).isBefore(LocalDate.now())) {
                 setRedBorder(expDateMonth);
                 setRedBorder(expDateYear);
                 paymentNotification.setText("Please enter a valid expiry date");
@@ -711,5 +735,9 @@ public class ReservationController extends BaseController {
     public void setRoomType(RoomType roomType) {
         this.room = roomType;
         roomText.setText(roomType.toPrettyString());
+    }
+
+    public String hel() {
+        return FXMLPaths.CREATE_ACCOUNT;
     }
 }
