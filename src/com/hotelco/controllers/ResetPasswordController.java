@@ -145,6 +145,8 @@ public class ResetPasswordController extends BaseController {
      */
     @FXML
     private void switchToLogin(MouseEvent event) {
+        idleTimer.stop();
+        Instances.getScene().removeEventHandler(Event.ANY, handler);
         switchScene(FXMLPaths.LOGIN);
     }
     
