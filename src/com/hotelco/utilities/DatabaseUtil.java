@@ -352,4 +352,75 @@ public class DatabaseUtil{
         ReservationSystem.ready();
         return result;
     };
+
+    /**
+     * Gets all reservations in the database.
+     * @return all reservations in the database.
+     */
+    public static Reservation[] getAllReservations(){
+        ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
+        Reservation[] result = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sqlQuery = "SELECT * FROM reservations";
+        Connection con = ReservationSystem.getDatabaseConnection();
+        try {
+            ps = con.prepareStatement(sqlQuery);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                reservationList.add(
+                    new Reservation(rs.getInt("reservation_id")));
+                ReservationSystem.processing();
+            }
+            result = new Reservation[reservationList.size()];
+            reservationList.toArray(result);
+        }
+        catch (SQLException e){
+            System.out.println("DatabaseUtil.getAllReservations()");
+            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
+            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
+            System.out.println(e);
+        }
+        ReservationSystem.ready();
+        return result;
+    }
+
+    /**
+     * Gets all active reservations in the database. This includes reservations
+     * where the date is >= today, reservations not marked as cancelled, and
+     * reservations not marked as checked out.
+     * @return all active reservations in the database
+     */
+    public static Reservation[] getActiveReservations(){
+        ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
+        Reservation[] result = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sqlQuery = "SELECT * "
+        + "FROM reservations "
+        + "WHERE end_date >= '" + Date.valueOf(LocalDate.now())
+        + "' AND is_cancelled = 0 "
+        + "AND is_checked_out = 0";
+        Connection con = ReservationSystem.getDatabaseConnection();
+        try {
+            ps = con.prepareStatement(sqlQuery);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                reservationList.add(
+                    new Reservation(rs.getInt("reservation_id")));
+                ReservationSystem.processing();
+            }
+            result = new Reservation[reservationList.size()];
+            reservationList.toArray(result);
+        }
+        catch (SQLException e){
+            System.out.println("DatabaseUtil.getAllReservations()");
+            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
+            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
+            System.out.println(e);
+        }
+        ReservationSystem.ready();
+        return result;
+    }
+
 }
