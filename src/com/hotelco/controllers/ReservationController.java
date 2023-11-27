@@ -201,7 +201,7 @@ public class ReservationController extends BaseController {
                 slash.setVisible(true);
             }    
             processCompleteExpDate();
-            processInvalidExpDate();
+            checkInvalidExpDate();
         }
     };
 
@@ -220,7 +220,7 @@ public class ReservationController extends BaseController {
                 slash.setVisible(false);
             }
             processCompleteExpDate();                 
-            processInvalidExpDate();
+            checkInvalidExpDate();
         }
     };
 
@@ -606,28 +606,32 @@ public class ReservationController extends BaseController {
      * Sets expiration date TextField borders to red and displays error message if
      * entered expiration date has already passed.
      * @param newValue The focus state of any expiration date TextField.
+     * @return true if expDate is valid, false otherwise
      */
-    private void processInvalidExpDate() {
+    private boolean checkInvalidExpDate() {
         if (expDateMonth.getLength() == 2 && expDateYear.getLength() == 2) {
             if (Integer.parseInt(expDateMonth.getText()) > 12) {
                 setRedBorder(expDateMonth);
                 setRedBorder(expDateYear);
                 paymentNotification.setText("Please enter a valid expiry date");  
-                return;
+                return false;
             }
             if (parseExpDate().isBefore(LocalDate.now())) {
                 setRedBorder(expDateMonth);
                 setRedBorder(expDateYear);
-                paymentNotification.setText("Please enter a valid expiry date");    
+                paymentNotification.setText("Please enter a valid expiry date");
+                return false;    
             }
+            return true;
         }
+        return false;
     }
 
     /**
      * Displays relevant error message(s) if DatePicker(s) or payment TextField(s) are empty.
      * @param datePickerEmpty Boolean status of filled DatePicker fields.
      * @param paymentEmpty Boolean status of filled payment TextFields.
-     * @return
+     * @return true if either datePickerEmpty or paymentEmpty are true, false otherwise
      */
     private boolean handleErrorMessage(Boolean datePickerEmpty, Boolean paymentEmpty) {
         if (datePickerEmpty && paymentEmpty) {
@@ -662,15 +666,13 @@ public class ReservationController extends BaseController {
     /**
      * Verifies a users credit card information.
      * If any details are inaccurate, sets payment TextField borders to red and displays an error message.
-     * @return
+     * @return true if card details are accurate, false otherwise
      */
     private boolean verifyCard() {
-        if (Integer.parseInt(expDateMonth.getText()) > 12) {
+        if (!checkInvalidExpDate()) {
             return false;
         }
-        if (parseExpDate().isBefore(LocalDate.now())) {
-            return false;
-        }
+
         CreditCard card = new CreditCard(
             cardNumber.getText(), CVC.getText(), parseExpDate(),
             ReservationSystem.getCurrentUser()
