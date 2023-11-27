@@ -1,5 +1,7 @@
 package com.hotelco.controllers;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
@@ -158,7 +160,7 @@ public class ReservationController extends BaseController {
       * <li>If endDate is already set, calls updateTotals().
       * </ul>
       */
-    final ChangeListener<LocalDate> startChangeListener = new ChangeListener<LocalDate>() {
+    final ChangeListener<LocalDate> startDateChangeListener = new ChangeListener<LocalDate>() {
         @Override
         public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue,
                 LocalDate newValue) {
@@ -176,7 +178,7 @@ public class ReservationController extends BaseController {
       * ChangeListener associated with endDate.<p>
       * If endDate isn't set to null, calls updateTotals().
       */    
-    final ChangeListener<LocalDate> endChangeListener = new ChangeListener<LocalDate>() {
+    final ChangeListener<LocalDate> endDateChangeListener = new ChangeListener<LocalDate>() {
         @Override
         public void changed(ObservableValue<? extends LocalDate> observable, LocalDate oldValue,
                 LocalDate newValue) {
@@ -188,11 +190,11 @@ public class ReservationController extends BaseController {
     };
 
     /**
-     * ChangeListener associated with expDateMonth.<p>
+     * ChangeListener associated with the String property of expDateMonth.<p>
      * Creates a '/' and jumps to expDateYear upon field completion.
      * Manages if field properties are correct or false, and displays relevant error message.
      */
-    final ChangeListener<String> mmCL = new ChangeListener<String>() {
+    final ChangeListener<String> expDateMonthStringChangeListener = new ChangeListener<String>() {
         @Override
         public void changed(ObservableValue<? extends String> observable, String oldValue,
                 String newValue) {
@@ -200,7 +202,7 @@ public class ReservationController extends BaseController {
                 expDateYear.requestFocus();
                 slash.setVisible(true);
             }    
-            processCompleteExpDate();
+            refreshExpDateErrorStatus();
             checkInvalidExpDate();
         }
     };
@@ -210,7 +212,7 @@ public class ReservationController extends BaseController {
      * Removes the '/' and jumps to expDateMonth upon field deletion.
      * Manages if field properties are correct or false, and displays relevant error message.
      */
-    final ChangeListener<String> yyCL = new ChangeListener<String>() {
+    final ChangeListener<String> expDateYearStringChangeListener = new ChangeListener<String>() {
         @Override
         public void changed(ObservableValue<? extends String> observable, String oldValue,
                 String newValue) {
@@ -219,7 +221,7 @@ public class ReservationController extends BaseController {
                 expDateMonth.positionCaret(expDateMonth.getLength() + 1);
                 slash.setVisible(false);
             }
-            processCompleteExpDate();                 
+            refreshExpDateErrorStatus();                 
             checkInvalidExpDate();
         }
     };
@@ -229,7 +231,7 @@ public class ReservationController extends BaseController {
      * Displays error message if user leaves focus without finishing entering MM field.
      * Sets a '/' if MM field is successfully entered.
      */
-    final ChangeListener<Boolean> mmFocusListener = new ChangeListener<Boolean>() {
+    final ChangeListener<Boolean> expDateMonthFocusChangeListener = new ChangeListener<Boolean>() {
         @Override
         public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
             if (!newValue && expDateMonth.getLength() == 2) {
@@ -243,7 +245,7 @@ public class ReservationController extends BaseController {
      * ChangeListener associated with the focus property of expDateMonth.<p>
      * Displays error message if user leaves focus without finishing entering YY field.
      */    
-    final ChangeListener<Boolean> yyFocusListener = new ChangeListener<Boolean>() {
+    final ChangeListener<Boolean> expDateYearFocusChangeListener = new ChangeListener<Boolean>() {
         @Override
         public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
             processIncompleteExpDate(newValue);
@@ -254,7 +256,7 @@ public class ReservationController extends BaseController {
      * ChangeListener associated with the focus property of cardNumber.<p>
      * Displays error message if user leaves focus without finishing entering credit card field.
      */       
-    final ChangeListener<Boolean> ccFocusListener = new ChangeListener<Boolean>() {
+    final ChangeListener<Boolean> cardNumberFocusChangeListener = new ChangeListener<Boolean>() {
         @Override
         public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
             if (!newValue && (cardNumber.getLength() != 16 && cardNumber.getLength() != 15)) {
@@ -268,7 +270,7 @@ public class ReservationController extends BaseController {
      * ChangeListener associated with the String property of cardNumber.<p>
      * Resets error status if user successfully finishes entering credit card information.
      */           
-    final ChangeListener<String> ccStringListener = new ChangeListener<String>() {
+    final ChangeListener<String> cardNumberStringChangeListener = new ChangeListener<String>() {
         @Override
         public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
             if (cardNumber.getLength() == 16 || cardNumber.getLength() == 15) {
@@ -283,7 +285,7 @@ public class ReservationController extends BaseController {
      * ChangeListener associated with the focus property of CVC.<p>
      * Displays error message if user leaves focus without finishing entering CVC field.
      */          
-    final ChangeListener<Boolean> CVCFocusListener = new ChangeListener<Boolean>() {
+    final ChangeListener<Boolean> CVCFocusChangeListener = new ChangeListener<Boolean>() {
         @Override
         public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
             if (!newValue && (CVC.getLength() != 3 && CVC.getLength() != 4)) {
@@ -297,7 +299,7 @@ public class ReservationController extends BaseController {
      * ChangeListener associated with the String property of CVC.<p>
      * Resets error status if user successfully finishes entering CVC information.
      */          
-    final ChangeListener<String> CVCStringListener = new ChangeListener<String>() {
+    final ChangeListener<String> CVCStringChangeListener = new ChangeListener<String>() {
         @Override
         public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
             if (CVC.getLength() == 3 || CVC.getLength() == 4) {
@@ -382,21 +384,21 @@ public class ReservationController extends BaseController {
     private void initialize() {
         TextFormatters textFormatters = new TextFormatters();
         Platform.runLater(() -> {
-            startDate.valueProperty().addListener(startChangeListener);
+            startDate.valueProperty().addListener(startDateChangeListener);
             startDate.setDayCellFactory(startDayCellFactory);
             endDate.setDayCellFactory(endDayCellFactory);
-            endDate.valueProperty().addListener(endChangeListener);
+            endDate.valueProperty().addListener(endDateChangeListener);
             expDateMonth.setTextFormatter(textFormatters.EXP_DATE_MONTH);
-            expDateMonth.textProperty().addListener(mmCL);
-            expDateMonth.focusedProperty().addListener(mmFocusListener); 
+            expDateMonth.textProperty().addListener(expDateMonthStringChangeListener);
+            expDateMonth.focusedProperty().addListener(expDateMonthFocusChangeListener); 
             expDateYear.setTextFormatter(textFormatters.EXP_DATE_YEAR);          
-            expDateYear.textProperty().addListener(yyCL);
-            expDateYear.focusedProperty().addListener(yyFocusListener);
+            expDateYear.textProperty().addListener(expDateYearStringChangeListener);
+            expDateYear.focusedProperty().addListener(expDateYearFocusChangeListener);
             cardNumber.setTextFormatter(textFormatters.CREDIT_CARD);
-            cardNumber.focusedProperty().addListener(ccFocusListener);
-            cardNumber.textProperty().addListener(ccStringListener);
-            CVC.textProperty().addListener(CVCStringListener);
-            CVC.focusedProperty().addListener(CVCFocusListener);
+            cardNumber.focusedProperty().addListener(cardNumberFocusChangeListener);
+            cardNumber.textProperty().addListener(cardNumberStringChangeListener);
+            CVC.textProperty().addListener(CVCStringChangeListener);
+            CVC.focusedProperty().addListener(CVCFocusChangeListener);
             CVC.setTextFormatter(textFormatters.CVC);
         });
     }
@@ -416,7 +418,7 @@ public class ReservationController extends BaseController {
      */
     @FXML
     private void createBooking(MouseEvent event) {
-        if (handleErrorMessage(isDatePickersEmpty(), isPaymentEmpty())) {
+        if (displayErrorOnEmptyField(isDatePickersEmpty(), isPaymentEmpty())) {
             return;
         }
         if (!verifyCard()) {
@@ -556,10 +558,11 @@ public class ReservationController extends BaseController {
     private void updateTotals() {
         long nightsLong = ChronoUnit.DAYS.between(startDate.getValue(), endDate.getValue());
         nights.setText(Long.toString(nightsLong));
-        ReservationCalculator.calcTotal(startDate.getValue(), endDate.getValue(), room);
-        rate.setText("$" + ReservationCalculator.calcTotal(startDate.getValue(), endDate.getValue(), room).toString());
-        tax.setText("$" + TaxRate.getTaxRate().toString());
-        total.setText("$" + ReservationCalculator.calcTotal(startDate.getValue(), endDate.getValue(), room).add(TaxRate.getTaxRate()).toString());
+        BigDecimal subTotal = ReservationCalculator.calcTotal(startDate.getValue(), endDate.getValue(), room);
+        rate.setText("$" + subTotal.toString());
+        BigDecimal totalCost = ReservationCalculator.calcTotal(startDate.getValue(), endDate.getValue(), room).multiply(TaxRate.getTaxMultiplier()).setScale(2, RoundingMode.HALF_UP);
+        total.setText("$" + totalCost.toString());
+        tax.setText("$" + totalCost.subtract(subTotal).toString());
     }
 
     /**
@@ -578,23 +581,16 @@ public class ReservationController extends BaseController {
     /**
      * Sets expiration date TextField borders to white and clears error message if
      * user finished entering either MM or YY, or if the user deletes either the MM or YY fields. 
-     * Used to refresh the error status if user is retrying to enter a valid expiration date.<p>
-     * If user enters an invalid number in the MM field, displays an error instead.
+     * Used to refresh the error status if user is retrying to enter a valid expiration date.
      * @param newValue The focus state of any expiration date TextField.
      */    
-    private void processCompleteExpDate() {
+    private void refreshExpDateErrorStatus() {
         if (expDateMonth.getText().isEmpty() || expDateMonth.getText().isEmpty()) {
             setWhiteBorder(expDateMonth);
             setWhiteBorder(expDateYear);
             paymentNotification.setText("");            
             return;
-        }
-        if (Integer.parseInt(expDateMonth.getText()) > 12) {
-            setRedBorder(expDateMonth);
-            setRedBorder(expDateYear);
-            paymentNotification.setText("Please enter a valid expiry date");  
-            return;
-        }        
+        }    
         if (expDateMonth.getLength() == 2 || expDateMonth.getLength() == 2) {
             setWhiteBorder(expDateMonth);
             setWhiteBorder(expDateYear);
@@ -633,7 +629,7 @@ public class ReservationController extends BaseController {
      * @param paymentEmpty Boolean status of filled payment TextFields.
      * @return true if either datePickerEmpty or paymentEmpty are true, false otherwise
      */
-    private boolean handleErrorMessage(Boolean datePickerEmpty, Boolean paymentEmpty) {
+    private boolean displayErrorOnEmptyField(Boolean datePickerEmpty, Boolean paymentEmpty) {
         if (datePickerEmpty && paymentEmpty) {
             dateNotification.setText("Please fill out reservation details");
             paymentNotification.setText("Please fill out payment information");
