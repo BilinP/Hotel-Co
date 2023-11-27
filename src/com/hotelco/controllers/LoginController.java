@@ -116,7 +116,12 @@ public class LoginController extends BaseController {
                 idleTimer.stop();
                 Instances.getScene().removeEventHandler(Event.ANY, handler);
                 ReservationSystem.setCurrentUser(new User(emailStr));
-                switchScene(FXMLPaths.DASHBOARD);   
+                if(ReservationSystem.getCurrentUser().getIsManager()){
+                    switchScene(FXMLPaths.MANAGER_DASHBOARD);
+                }else{
+                     switchScene(FXMLPaths.DASHBOARD);  
+                }
+                
             }
             else{
                 notification.setText("Invalid Username/Password!");
