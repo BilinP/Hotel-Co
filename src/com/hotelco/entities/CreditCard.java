@@ -206,7 +206,7 @@ public class CreditCard{
         if(user != null){
             if (userHasOneCard()){
                 ReservationSystem.processing();
-                sqlQuery = "UPDATE credit_cards" +
+                sqlQuery = "UPDATE credit_cards " +
                 "SET card_num = '" + creditCardNum +
                 "', cvv = '" + cvvNum +
                 "', exp_date = '" + Date.valueOf(expDate) +
@@ -214,12 +214,13 @@ public class CreditCard{
             }
             else {
                 ReservationSystem.processing();
-                sqlQuery = "INSERT INTO credit_cards" +
+                sqlQuery = "INSERT INTO credit_cards " +
                 "SET card_num = '" + creditCardNum +
                 "', cvv = '" + cvvNum +
                 "', exp_date = '" + Date.valueOf(expDate) +
                 "', user_id = " + user.getUserId();
             }
+            System.out.println(sqlQuery);
             con = ReservationSystem.getDatabaseConnection();
             try {
                 ps = con.prepareStatement(sqlQuery);
