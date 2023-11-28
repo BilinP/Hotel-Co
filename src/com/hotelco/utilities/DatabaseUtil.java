@@ -7,6 +7,7 @@ import com.hotelco.entities.ReservationSystem;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 /**
@@ -415,6 +416,28 @@ public class DatabaseUtil{
         }
         catch (SQLException e){
             System.out.println("DatabaseUtil.getAllReservations()");
+            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
+            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
+            System.out.println(e);
+        }
+        ReservationSystem.ready();
+        return result;
+    }
+    public static ResultSet getActiveReservationsRS(){
+        PreparedStatement ps = null;
+        ResultSet result = null;
+        String sqlQuery = "SELECT * "
+        + "FROM reservations "
+        + "WHERE end_date >= '" + Date.valueOf(LocalDate.now())
+        + "' AND is_cancelled = 0 "
+        + "AND is_checked_out = 0";
+        Connection con = ReservationSystem.getDatabaseConnection();
+        try {
+            ps = con.prepareStatement(sqlQuery);
+            result = ps.executeQuery();
+        }
+        catch (SQLException e){
+            System.out.println("DatabaseUtil.getAllReservationsRS()");
             System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
