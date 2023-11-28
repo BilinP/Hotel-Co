@@ -356,7 +356,8 @@ public class DatabaseUtil{
 
     /**
      * Gets all reservations in the database.
- * @param withReservations TODO
+     * @param withReservations whether the fetch should populate each user's
+     * reservations
      * @return all reservations in the database.
      */
     public static Reservation[] getAllReservations(Boolean withReservations){

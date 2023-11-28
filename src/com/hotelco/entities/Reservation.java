@@ -96,6 +96,7 @@ public class Reservation {
             endDate = newEndDate;
             user = newUser;
             groupSize = newGroupSize;
+            invoiceDetails = new InvoiceDetails();
     }
     /**
      * Creates a reservation with most fields explicitly defined.
@@ -482,6 +483,13 @@ public class Reservation {
         public InvoiceDetails(Adjustment newRateDiscount, Adjustment[] newAdjustments){
             adjustments = newAdjustments;
             rateDiscount = newRateDiscount;
+        }
+        /**
+         * Constructs an empty InvoiceDetails
+         */
+        public InvoiceDetails(){
+            adjustments = new Adjustment[0];
+            rateDiscount = new Adjustment("Rate discount",new BigDecimal(0));
         }
         /**
          * Gets the adjustments associated with this InvoiceDetails
