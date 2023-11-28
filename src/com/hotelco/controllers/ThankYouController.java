@@ -85,7 +85,7 @@ public class ThankYouController extends BaseController {
         checkOut.setText(reservation.getEndDate().format(dateTimeFormatter));
         room.setText(reservation.getRoom().getRoomType().toPrettyString());
         thankYou.setText("Thank you, " + reservation.getUser().getFirstName());
-        total.setText("$" + ReservationCalculator.calcTotal(reservation));
+        total.setText("$" + ReservationCalculator.calcTotal(reservation).toString());
     }
 
 }
