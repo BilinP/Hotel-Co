@@ -220,7 +220,6 @@ public class CreditCard{
                 "', exp_date = '" + Date.valueOf(expDate) +
                 "', user_id = " + user.getUserId();
             }
-            System.out.println(sqlQuery);
             con = ReservationSystem.getDatabaseConnection();
             try {
                 ps = con.prepareStatement(sqlQuery);
