@@ -4,6 +4,7 @@ import java.time.format.DateTimeFormatter;
 
 import com.hotelco.entities.Reservation;
 import com.hotelco.utilities.FXMLPaths;
+import com.hotelco.utilities.Instances;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -16,7 +17,7 @@ import javafx.scene.text.Text;
  * 
  * @author      Grigor Azakian
  */
-public class PENDINGThankYouController extends BaseController {
+public class ThankYouController extends BaseController {
 
     /**
      * Text that will display a Reservation objects reservation ID.
@@ -51,7 +52,7 @@ public class PENDINGThankYouController extends BaseController {
      */
     @FXML
     private void switchToMenuScene(MouseEvent event) {
-        switchScene(FXMLPaths.HOME);
+        Instances.getDashboardController().switchAnchor(FXMLPaths.HOME);
     }
 
     /**
