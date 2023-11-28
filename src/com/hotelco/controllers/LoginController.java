@@ -91,9 +91,10 @@ public class LoginController extends BaseController {
             rectangle.setArcHeight(50);
             clip.setX(imageRight.getFitWidth() / 2);
             image.setClip(rectangle);
-            imageRight.setClip(clip);        
+            imageRight.setClip(clip);   
+             
         Platform.runLater(() -> {
-
+            email.getScene().getRoot().requestFocus(); 
         });
     }
 
