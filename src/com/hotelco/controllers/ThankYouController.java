@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 import com.hotelco.entities.Reservation;
 import com.hotelco.utilities.FXMLPaths;
 import com.hotelco.utilities.Instances;
+import com.hotelco.utilities.ReservationCalculator;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -29,13 +30,31 @@ public class ThankYouController extends BaseController {
      * Text that will display a Reservation objects check-in date. 
      */
     @FXML
-    private Text checkInDate;
+    private Text checkIn;
 
     /**
      * Text that will display a Reservation objects check-out date.
      */
     @FXML
-    private Text checkOutDate;
+    private Text checkOut;
+
+    /**
+     * Text that will display the room type of a Reservation.
+     */
+    @FXML
+    private Text room;
+    
+    /**
+     * Text that will display the Users first name.
+     */
+    @FXML
+    private Text thankYou;
+    
+    /**
+     * Text that will display the total cost of the Reservation.
+     */
+    @FXML
+    private Text total;    
 
     @FXML
     private void initialize() {
@@ -46,12 +65,12 @@ public class ThankYouController extends BaseController {
     }
 
     /**
-     * This method is called by pressing the 'Return to Main Menu' text.
-     * It exits the 'SearchGUI' and enters the 'MenuGUI'.
-     * @param event The 'mouse released' event that is triggered by pressing the 'Return to Main Menu' text.
+     * This method is called by pressing the 'BACK TO HOME' button.
+     * It exits the 'ThankYouGUI' and enters the 'HomeGUI'.
+     * @param event The 'mouse released' event that is triggered by pressing the 'BACK TO HOME' button.
      */
     @FXML
-    private void switchToMenuScene(MouseEvent event) {
+    private void switchToHomeScene(MouseEvent event) {
         Instances.getDashboardController().switchAnchor(FXMLPaths.HOME);
     }
 
@@ -62,8 +81,11 @@ public class ThankYouController extends BaseController {
     void writeReservationInfo(Reservation reservation) {
         reservationNumber.setText(Integer.toString(reservation.getReservationId()));
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
-        checkInDate.setText(reservation.getStartDate().format(dateTimeFormatter));
-        checkOutDate.setText(reservation.getEndDate().format(dateTimeFormatter));
+        checkIn.setText(reservation.getStartDate().format(dateTimeFormatter));
+        checkOut.setText(reservation.getEndDate().format(dateTimeFormatter));
+        room.setText(reservation.getRoom().getRoomType().toPrettyString());
+        thankYou.setText("Thank you, " + reservation.getUser().getFirstName());
+        total.setText("$" + ReservationCalculator.calcTotal(reservation));
     }
 
 }
