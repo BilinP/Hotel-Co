@@ -14,7 +14,7 @@
    <children>
       <HBox prefHeight="700.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #484d54; -fx-border-width: 0 2 0 0; -fx-border-color: white;">
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #484d54; -fx-border-width: 0 2 0 0; -fx-border-color: #3c4149;">
                <children>
                   <Text fill="#f9bd1a" strokeType="OUTSIDE" strokeWidth="0.0" text="Suite">
                      <font>
@@ -139,7 +139,7 @@
                   </VBox>
                </children>
             </VBox>
-            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #484d54; -fx-border-color: white; -fx-border-width: 0 0 0 2;">
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #484d54; -fx-border-color: #3c4149; -fx-border-width: 0 0 0 2;">
                <children>
                   <Text fill="#f9bd1a" strokeType="OUTSIDE" strokeWidth="0.0" text="Queen">
                      <font>
@@ -206,7 +206,7 @@
                   <Insets />
                </HBox.margin>
             </VBox>
-            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #484d54; -fx-border-color: white; -fx-border-width: 0 0 0 2;">
+            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #484d54; -fx-border-color: #3c4149; -fx-border-width: 0 0 0 2;">
                <children>
                   <Text fill="#f9bd1a" strokeType="OUTSIDE" strokeWidth="0.0" text="Double">
                      <font>
