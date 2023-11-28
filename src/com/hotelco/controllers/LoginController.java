@@ -77,7 +77,6 @@ public class LoginController extends BaseController {
      */
     @FXML
     private void initialize() {     
-        Platform.runLater(() -> {
            Rectangle rectangle = new Rectangle(
                 image.getFitWidth(),
                 image.getFitHeight()
@@ -92,7 +91,9 @@ public class LoginController extends BaseController {
             rectangle.setArcHeight(50);
             clip.setX(imageRight.getFitWidth() / 2);
             image.setClip(rectangle);
-            imageRight.setClip(clip);
+            imageRight.setClip(clip);        
+        Platform.runLater(() -> {
+
         });
     }
 
