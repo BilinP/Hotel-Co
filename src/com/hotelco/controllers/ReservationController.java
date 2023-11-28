@@ -205,7 +205,9 @@ public class ReservationController extends BaseController {
                 dateNotification.setText("");
             }
             updateTotals();
-            setExpDateErrorStatus();
+            if (expDateIsInteractedWith) {
+                setExpDateErrorStatus();   
+            }
         }
     };
 
@@ -267,7 +269,7 @@ public class ReservationController extends BaseController {
             if (!newValue && expDateMonth.getLength() == 2) {
                 slash.setVisible(true);
             }
-            if (expDateIsInteractedWith) {
+            if (expDateIsInteractedWith && !expDateYear.getText().isEmpty()) {
                 processIncompleteExpDate(newValue);
             }
         }
@@ -303,7 +305,6 @@ public class ReservationController extends BaseController {
      * ChangeListener associated with the String property of cardNumber.<p>
      * Resets error status if user successfully finishes entering credit card information.
      */           
-    //TODO: Buggy
     final ChangeListener<String> cardNumberStringChangeListener = new ChangeListener<String>() {
         @Override
         public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -334,7 +335,6 @@ public class ReservationController extends BaseController {
      * ChangeListener associated with the String property of CVC.<p>
      * Resets error status if user successfully finishes entering CVC information.
      */        
-    //TODO: Buggy  
     final ChangeListener<String> CVCStringChangeListener = new ChangeListener<String>() {
         @Override
         public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -469,13 +469,8 @@ public class ReservationController extends BaseController {
         }
 
         Reservation reservation = createReservation();
-        /*
-        OrderSession.setStartDate(startDate.getValue());
-        OrderSession.setEndDate(endDate.getValue());
-        OrderSession.setGuests(Integer.parseInt(guests.getText()));
-        OrderSession.setRoomType(room);
-        */
-        //Instances.getDashboardController().switchAnchor("/com/hotelco/views/ThankYouGUI.fxml");
+        ThankYouController tyc = (ThankYouController) Instances.getDashboardController().switchAnchor(FXMLPaths.THANK_YOU);
+        tyc.writeReservationInfo(reservation);
     }
 
     /**
