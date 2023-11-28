@@ -464,9 +464,11 @@ public class ReservationController extends BaseController {
         if (datePickerStatus || paymentFieldStatus) {
             return;
         }
+        
         if (!assignCard()) {
             return;
         }
+        
 
         Reservation reservation = createReservation();
         ThankYouController tyc = (ThankYouController) Instances.getDashboardController().switchAnchor(FXMLPaths.THANK_YOU);
@@ -492,7 +494,7 @@ public class ReservationController extends BaseController {
      */
     @FXML
     private void incrementGuest(MouseEvent event) {
-        if (Integer.parseInt(guests.getText()) < Constants.MAX_CAP) {
+        if (Integer.parseInt(guests.getText()) < Constants.CAPACITIES.get(room)) {
             guests.setText(Integer.toString(Integer.parseInt(guests.getText()) + 1));
         }
     }

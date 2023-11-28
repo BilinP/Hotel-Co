@@ -87,7 +87,6 @@ public class CreateAccountController extends BaseController {
     @FXML
     private void initialize() {
         TextFormatters textFormatters = new TextFormatters();
-        Platform.runLater(() -> {
             phoneNumber.setTextFormatter(textFormatters.PHONE_NUMBER);
             firstName.setTextFormatter(textFormatters.FIRST_NAME);
             lastName.setTextFormatter(textFormatters.LAST_NAME);
@@ -104,7 +103,9 @@ public class CreateAccountController extends BaseController {
             rectangle.setArcWidth(50);
             rectangle.setArcHeight(50);
             image.setClip(rectangle);
-            imageRight.setClip(clip);
+            imageRight.setClip(clip);        
+        Platform.runLater(() -> {
+
         });
     }
 
