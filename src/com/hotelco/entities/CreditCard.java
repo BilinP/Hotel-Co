@@ -238,10 +238,13 @@ public class CreditCard{
      * Conditionally assigns a card to a User upon verification. See
      * assignToUser() for it's implementation details.
      */
-    public void assign(){
+    public Boolean assign(){
+        Boolean result = false;
         if (verify()){
             assignToUser();
+            result = true;
         }
+        return result;
     }
     /**
      * Fetches a credit card from the database by user.
