@@ -123,7 +123,7 @@ public class DatabaseUtil{
                 "NOT IN (" +
                     "SELECT room_num " + 
                     "FROM reservations " +
-                    "WHERE start_date <= '" + Date.valueOf(endDate) + "' " +
+                    "WHERE start_date < '" + Date.valueOf(endDate) + "' " +
                     "AND end_date >= '" + Date.valueOf(startDate) + "')" +
                 "AND room_type = '" + roomType.toString() + "' " +
                 "LIMIT 1) AS T";
@@ -261,7 +261,7 @@ public class DatabaseUtil{
             "WHERE room_num NOT IN (" + 
                 "SELECT room_num " + 
                 "FROM reservations " + 
-                "WHERE start_date <= '" + Date.valueOf(endDate) +
+                "WHERE start_date < '" + Date.valueOf(endDate) +
                 "' AND end_date >= '" + Date.valueOf(startDate) + "') " + 
             "AND room_type = '" + roomType.toString() + "'" + 
             "LIMIT 1";
@@ -462,7 +462,7 @@ public class DatabaseUtil{
             "WHERE room_num NOT IN (" + 
                 "SELECT room_num " + 
                 "FROM reservations " + 
-                "WHERE start_date <= '" + Date.valueOf(LocalDate.now()) +
+                "WHERE start_date < '" + Date.valueOf(LocalDate.now()) +
                 "' OR end_date >= '" + Date.valueOf(LocalDate.now()) + "') "; 
         Connection con = ReservationSystem.getDatabaseConnection();
 
@@ -563,7 +563,7 @@ public class DatabaseUtil{
                     "SELECT room_num " + 
                     "FROM reservations " +
                     "WHERE start_date <= '" + Date.valueOf(today) + "' " +
-                    "AND end_date >= '" + Date.valueOf(today) + "') " +
+                    "AND end_date > '" + Date.valueOf(today) + "') " +
                 "AND room_type = '" + roomType.toString() + "') " +
                 "AS T";
         Connection con = ReservationSystem.getDatabaseConnection();
