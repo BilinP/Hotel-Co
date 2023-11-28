@@ -12,6 +12,7 @@
     -fx-background-radius: 7px 7px 7px 7px;
 }
 
+
 .table-view .column-header-background .filler {
     -fx-background-color: transparent;
 }
@@ -43,11 +44,11 @@
     -fx-background-color: white;
 }
 
-#specificRow .table-row-cell-selectedtoggle {
+.table-row-cell-selectedtoggle {
     -fx-background-color: #4cbb17;
     -fx-text-background-color: white;
 }
-#specificRow .table-row-cell-deselectedtoggle {
-    -fx-background-color: #494e57;
-    -fx-text-background-color: white;
+.table-row-cell.table-row-cell-selectedtoggle:hover {
+    -fx-background-color: #4cbb17;
+    -fx-background-radius: 7px 7px 7px 7px;
 }

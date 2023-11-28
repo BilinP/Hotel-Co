@@ -17,6 +17,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.control.IndexedCell;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
@@ -86,12 +88,6 @@ public class CheckInController extends BaseController {
                 return new SimpleStringProperty("$" + ReservationCalculator.calcTotal(reservation).toString());
             });
 
-            table.addEventFilter(MouseEvent.MOUSE_DRAGGED, Event::consume);
-            table.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-                if (newSelection != null) {
-                    toggle(newSelection);
-                }
-            });        
         Platform.runLater(() -> {
             displayOrders();
         });
@@ -106,29 +102,44 @@ public class CheckInController extends BaseController {
         Collections.reverse(Arrays.asList(reservation));
         ObservableList<Reservation> reservations = FXCollections.observableArrayList(Arrays.asList(reservation));
         table.setItems(reservations);
+      
+    }
+
+    @FXML
+    void toggleSelection(MouseEvent event) {
+        Reservation res=table.getSelectionModel().getSelectedItem();
+        if (res != null) {
+            toggle(res);
+        }
+        table.getSelectionModel().clearSelection();
     }
 
     private void toggle(Reservation reservation) {
         if (selectedReservations.contains(reservation)) {
             selectedReservations.remove(reservation);
+
         } else {
             selectedReservations.add(reservation);
         }
-        updateRowStyles();
+        table.setRowFactory(tv -> new TableRow<Reservation>() {
+            @Override
+            protected void updateItem(Reservation item, boolean empty) {
+                super.updateItem(item, empty);
+                if (selectedReservations.contains(item)) {
+                    getStyleClass().add("table-row-cell-selectedtoggle");
+                } 
+            }
+        });
+        table.refresh();
+      
     }
 
-    private void updateRowStyles() {
-        table.getStyleClass().removeAll("table-row-cell-selectedtoggle");
-    
-    for (Reservation selectedReservation : selectedReservations) {
-        int index = table.getItems().indexOf(selectedReservation);
-    
-        if (index != -1) {
-            int rowIndex = index + 1; 
-                System.out.print(rowIndex);
-            table.lookup(".table-row-cell:index(" + rowIndex + ")").getStyleClass().add("table-row-cell-selectedtoggle");
+    @FXML
+    void checkIn(MouseEvent event) {
+        for (Reservation reservation : selectedReservations) {
+             reservation.setIsCheckedIn(true);
+             reservation.push();
         }
     }
-
-}
+    
 }

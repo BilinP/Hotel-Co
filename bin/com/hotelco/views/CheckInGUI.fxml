@@ -30,7 +30,7 @@
                   </Text>
                </children>
             </VBox>
-            <TableView fx:id="table" minWidth="800.0" prefHeight="399.0" prefWidth="900.0" style="-fx-background-color: transparent;" stylesheets="@../stylesheets/TableViewSS.css">
+            <TableView fx:id="table" minWidth="800.0" onMousePressed="#toggleSelection" prefHeight="399.0" prefWidth="900.0" style="-fx-background-color: transparent;" stylesheets="@../stylesheets/TableViewSS.css">
               <columns>
                 <TableColumn fx:id="orderNumber" editable="false" prefWidth="71.0" text="Reservation Number" />
                 <TableColumn fx:id="roomType" editable="false" prefWidth="79.0" text="Room Type" />
