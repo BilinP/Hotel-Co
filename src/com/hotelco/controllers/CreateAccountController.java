@@ -105,7 +105,7 @@ public class CreateAccountController extends BaseController {
             image.setClip(rectangle);
             imageRight.setClip(clip);        
         Platform.runLater(() -> {
-
+            email.getScene().getRoot().requestFocus(); 
         });
     }
 

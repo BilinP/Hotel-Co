@@ -18,6 +18,7 @@
          <right>
             <AnchorPane prefHeight="500.0" prefWidth="350.0" style="-fx-background-color: #3c4149; -fx-background-radius: 0 27 27 0;" BorderPane.alignment="CENTER">
                <children>
+                  <TextField fx:id="email" layoutX="68.0" layoutY="257.0" onKeyReleased="#enter" prefHeight="29.0" prefWidth="216.0" promptText="Email" stylesheets="@../stylesheets/TextFieldSS.css" />
                   <PasswordField fx:id="password" layoutX="68.0" layoutY="310.0" onKeyReleased="#enter" prefHeight="29.0" prefWidth="216.0" promptText="Password" stylesheets="@../stylesheets/TextFieldSS.css" />
                   <Text fill="#f9bd1a" layoutX="110.0" layoutY="219.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User Login">
                      <font>
@@ -45,7 +46,6 @@
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <TextField fx:id="email" layoutX="68.0" layoutY="257.0" onKeyReleased="#enter" prefHeight="29.0" prefWidth="216.0" promptText="Email" stylesheets="@../stylesheets/TextFieldSS.css" />
                </children>
             </AnchorPane>
          </right>

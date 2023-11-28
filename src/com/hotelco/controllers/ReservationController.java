@@ -461,15 +461,10 @@ public class ReservationController extends BaseController {
         CVCIsInteractedWith = true;      
         boolean datePickerStatus = isAnyDatePickerEmpty();
         boolean paymentFieldStatus = setAllPaymentFieldErrorStatus();
-        if (datePickerStatus || paymentFieldStatus) {
+        if (datePickerStatus || paymentFieldStatus || !assignCard()) {
             return;
         }
         
-        if (!assignCard()) {
-            return;
-        }
-        
-
         Reservation reservation = createReservation();
         ThankYouController tyc = (ThankYouController) Instances.getDashboardController().switchAnchor(FXMLPaths.THANK_YOU);
         tyc.writeReservationInfo(reservation);
@@ -703,7 +698,7 @@ public class ReservationController extends BaseController {
             ReservationSystem.getCurrentUser()
         );
 
-        if (!card.verify() || !Verifier.cvvCheck(CVC.getText(), Verifier.getIssuer(card.getCreditCardNum()))) {
+        if (!card.assign()) {
             paymentNotification.setText("Please check your payment details");
             setRedBorder(CVC);
             setRedBorder(cardNumber);
@@ -711,7 +706,6 @@ public class ReservationController extends BaseController {
             setRedBorder(expDateYear);
             return false;            
         }
-        card.assign();
         return true;
     }
 
