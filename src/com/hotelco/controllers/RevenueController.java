@@ -78,7 +78,7 @@ public class RevenueController extends BaseController {
         user.setFirstName(first.getText());
         user.setLastName(last.getText());
         user.setPhone(number.getText());
-        user.fetch();
+        user.push();
     }
 
 }
