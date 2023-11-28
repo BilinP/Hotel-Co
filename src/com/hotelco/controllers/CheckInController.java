@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import com.hotelco.entities.Reservation;
 import com.hotelco.entities.ReservationSystem;
 import com.hotelco.utilities.DatabaseUtil;
+import com.hotelco.utilities.ReservationCalculator;
 
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
@@ -76,23 +77,22 @@ public class CheckInController extends BaseController {
      */
     @FXML
     private void initialize() {
-        Platform.runLater(() -> {
             roomType.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getRoom().getRoomType().toPrettyString()));
             orderNumber.setCellValueFactory(new PropertyValueFactory<Reservation, Integer>("reservationId"));
             checkInDate.setCellValueFactory(new PropertyValueFactory<Reservation, LocalDate>("startDate"));
             checkOutDate.setCellValueFactory(new PropertyValueFactory<Reservation, LocalDate>("endDate"));
-            //unimplemented
-            total.setCellValueFactory(new PropertyValueFactory<Reservation, String>(null));
+            total.setCellValueFactory(cell -> {
+                Reservation reservation = cell.getValue();
+                return new SimpleStringProperty("$" + ReservationCalculator.calcTotal(reservation).toString());
+            });
 
             table.addEventFilter(MouseEvent.MOUSE_DRAGGED, Event::consume);
             table.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
                 if (newSelection != null) {
                     toggle(newSelection);
                 }
-            });
-
-
-
+            });        
+        Platform.runLater(() -> {
             displayOrders();
         });
     }
