@@ -324,7 +324,6 @@ public class User {
      */
     public Reservation[] fetchReservations(
         Boolean onlyFuture, Boolean byDate, Boolean onlyNotCancelled){
-            System.out.println("fetching reservations");
         Reservation tempReservation = null;
         Room tempRoom = null;
         LocalDate tempStartDate = null;
