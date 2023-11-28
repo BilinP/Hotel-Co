@@ -7,6 +7,7 @@ import javax.mail.internet.AddressException;
 
 import com.hotelco.controllers.LoginController;
 import com.hotelco.utilities.DailyTask;
+import com.hotelco.utilities.DatabaseUtil;
 import com.hotelco.utilities.FXMLPaths;
 import com.hotelco.utilities.FrequentTask;
 import com.hotelco.utilities.IdleTimer;

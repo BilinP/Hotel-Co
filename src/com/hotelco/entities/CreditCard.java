@@ -121,10 +121,11 @@ public class CreditCard{
         CreditCardType result = null;
 
         Integer cardNumLen = creditCardNum.length();
-        if (cardNumLen == 15 && creditCardNum.charAt(0) == '3'){
+        if (cardNumLen == 15
+            && creditCardNum.charAt(0) == '3'){
             result = CreditCardType.AMEX;
         }
-        if(cardNumLen == 16){
+        else if(cardNumLen == 16){
             switch(creditCardNum.charAt(0)){
                 case '4':
                 result = CreditCardType.VISA;
