@@ -147,6 +147,12 @@ public class ReservationController extends BaseController {
       */
     private RoomType room;
 
+    private boolean cardNumberIsInteractedWith = false;
+
+    private boolean expDateIsInteractedWith = false;
+
+    private boolean CVCIsInteractedWith = false;
+
     /***************************************************************************
      *                                                                         *
      * ChangeListeners                                                         *
@@ -199,7 +205,7 @@ public class ReservationController extends BaseController {
                 dateNotification.setText("");
             }
             updateTotals();
-            checkInvalidExpDate();
+            setExpDateErrorStatus();
         }
     };
 
@@ -212,17 +218,22 @@ public class ReservationController extends BaseController {
         @Override
         public void changed(ObservableValue<? extends String> observable, String oldValue,
                 String newValue) {
+            expDateIsInteractedWith = true;
             if (newValue.length() == 2) {
                 expDateYear.requestFocus();
                 slash.setVisible(true);
             }    
             refreshExpDateErrorStatus();
-            checkInvalidExpDate();
+            if ((expDateMonth.getLength() == 2 && expDateYear.getLength() == 2)
+            && setExpDateErrorStatus()) {
+                paymentNotification.setText("");
+                setAllPaymentFieldErrorStatus();
+            }
         }
     };
 
     /**
-     * ChangeListener associated with expDateYear.<p>
+     * ChangeListener associated with the String property of expDateYear.<p>
      * Removes the '/' and jumps to expDateMonth upon field deletion.
      * Manages if field properties are correct or false, and displays relevant error message.
      */
@@ -230,13 +241,18 @@ public class ReservationController extends BaseController {
         @Override
         public void changed(ObservableValue<? extends String> observable, String oldValue,
                 String newValue) {
+            expDateIsInteractedWith = true;
             if (newValue.length() == 0 && oldValue.length() == 1) {
                 expDateMonth.requestFocus();
                 expDateMonth.positionCaret(expDateMonth.getLength() + 1);
                 slash.setVisible(false);
             }
-            refreshExpDateErrorStatus();                 
-            checkInvalidExpDate();
+            refreshExpDateErrorStatus();  
+            if ((expDateMonth.getLength() == 2 && expDateYear.getLength() == 2)
+            && setExpDateErrorStatus()) {
+                paymentNotification.setText("");
+                setAllPaymentFieldErrorStatus();
+            }               
         }
     };
 
@@ -251,7 +267,9 @@ public class ReservationController extends BaseController {
             if (!newValue && expDateMonth.getLength() == 2) {
                 slash.setVisible(true);
             }
-            processIncompleteExpDate(newValue);
+            if (expDateIsInteractedWith) {
+                processIncompleteExpDate(newValue);
+            }
         }
     };
   
@@ -262,7 +280,9 @@ public class ReservationController extends BaseController {
     final ChangeListener<Boolean> expDateYearFocusChangeListener = new ChangeListener<Boolean>() {
         @Override
         public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-            processIncompleteExpDate(newValue);
+            if (expDateIsInteractedWith) {
+                processIncompleteExpDate(newValue);
+            }
         }
     };     
 
@@ -273,9 +293,8 @@ public class ReservationController extends BaseController {
     final ChangeListener<Boolean> cardNumberFocusChangeListener = new ChangeListener<Boolean>() {
         @Override
         public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-            if (!newValue && (cardNumber.getLength() != 16 && cardNumber.getLength() != 15)) {
-                setRedBorder(cardNumber);
-                paymentNotification.setText("Please enter a valid credit card number");
+            if (!newValue && cardNumberIsInteractedWith) {
+                setCardNumberErrorStatus();
             }
         }
     };
@@ -284,12 +303,15 @@ public class ReservationController extends BaseController {
      * ChangeListener associated with the String property of cardNumber.<p>
      * Resets error status if user successfully finishes entering credit card information.
      */           
+    //TODO: Buggy
     final ChangeListener<String> cardNumberStringChangeListener = new ChangeListener<String>() {
         @Override
         public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-            if (cardNumber.getLength() == 16 || cardNumber.getLength() == 15) {
+            cardNumberIsInteractedWith = true;
+            if (cardNumber.getLength() >= 15 && !setCardNumberErrorStatus()) {
                 setWhiteBorder(cardNumber);
                 paymentNotification.setText("");
+                setAllPaymentFieldErrorStatus();
             }
         }  
     };
@@ -302,9 +324,8 @@ public class ReservationController extends BaseController {
     final ChangeListener<Boolean> CVCFocusChangeListener = new ChangeListener<Boolean>() {
         @Override
         public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-            if (!newValue && (CVC.getLength() != 3 && CVC.getLength() != 4)) {
-                setRedBorder(CVC);
-                paymentNotification.setText("Please enter a valid CVC");
+            if (!newValue && CVCIsInteractedWith) {
+                setCVCErrorStatus();
             }
         }
     };          
@@ -312,13 +333,16 @@ public class ReservationController extends BaseController {
     /**
      * ChangeListener associated with the String property of CVC.<p>
      * Resets error status if user successfully finishes entering CVC information.
-     */          
+     */        
+    //TODO: Buggy  
     final ChangeListener<String> CVCStringChangeListener = new ChangeListener<String>() {
         @Override
         public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-            if (CVC.getLength() == 3 || CVC.getLength() == 4) {
+            CVCIsInteractedWith = true;
+            if (CVC.getLength() >= 3 && !setCVCErrorStatus()) {
                 setWhiteBorder(CVC);
                 paymentNotification.setText("");
+                setAllPaymentFieldErrorStatus();
             }
         }  
     };
@@ -432,7 +456,12 @@ public class ReservationController extends BaseController {
      */
     @FXML
     private void createBooking(MouseEvent event) {
-        if (displayErrorOnEmptyField(isAnyDatePickerEmpty(), isAnyPaymentFieldEmpty())) {
+        cardNumberIsInteractedWith = true;
+        expDateIsInteractedWith = true;  
+        CVCIsInteractedWith = true;      
+        boolean datePickerStatus = isAnyDatePickerEmpty();
+        boolean paymentFieldStatus = setAllPaymentFieldErrorStatus();
+        if (datePickerStatus || paymentFieldStatus) {
             return;
         }
         if (!assignCard()) {
@@ -503,32 +532,35 @@ public class ReservationController extends BaseController {
      * Marks all empty TextFields with a red border.
      * @return true if any of the payment TextFields are empty, false if they are all filled
      */
-    private boolean isAnyPaymentFieldEmpty() {
-        TextField[] textFields = new TextField[] {
-            cardNumber, expDateMonth, 
-            expDateYear, CVC
-        };
-        boolean empty = false;
-        for (TextField textField: textFields) {
-            if (textField.getText().isEmpty()) {
-                setRedBorder(textField);
-                empty = true;
-            } 
+    private boolean setAllPaymentFieldErrorStatus() {
+        boolean CVCStatus = CVCIsInteractedWith && setCVCErrorStatus();
+        boolean expDateStatus = expDateIsInteractedWith && setExpDateErrorStatus();
+        boolean cardNumberStatus = cardNumberIsInteractedWith && setCardNumberErrorStatus();
+        boolean result = CVCStatus || expDateStatus || cardNumberStatus;
+        if (result = false) {
+            paymentNotification.setText("");
         }
-        if (cardNumber.getLength() < 15) {
-            setRedBorder(cardNumber);
-            empty = true;
-        }
-        if (expDateMonth.getLength() != 2 || expDateYear.getLength() != 2) {
-            setRedBorder(expDateMonth);
-            setRedBorder(expDateYear);
-            empty = true;
-        }
+        return result;
+    }
+
+    private boolean setCVCErrorStatus() {
         if (CVC.getLength() < 3) {
             setRedBorder(CVC);
-            empty = true;
+            paymentNotification.setText("Please enter a valid CVC");
+            return true;
         }
-        return empty;
+        setWhiteBorder(CVC);
+        return false;
+    }
+
+    private boolean setCardNumberErrorStatus() {
+        if (cardNumber.getLength() < 15) {
+            setRedBorder(cardNumber);
+            paymentNotification.setText("Please enter a valid credit card number");
+            return true;
+        }
+        setWhiteBorder(cardNumber);
+        return false;
     }
 
     /**
@@ -547,6 +579,7 @@ public class ReservationController extends BaseController {
                 if (!datePicker.getStyleClass().contains("red-date-picker")) {
                     datePicker.getStyleClass().add("red-date-picker");
                 }
+                dateNotification.setText("Please fill out reservation details");
             }
         }
         return empty;
@@ -588,9 +621,7 @@ public class ReservationController extends BaseController {
      */
     private void processIncompleteExpDate(Boolean newValue) {
         if (!newValue && !(expDateMonth.getLength() == 2 && expDateYear.getLength() == 2)) {
-            setRedBorder(expDateMonth);
-            setRedBorder(expDateYear);
-            paymentNotification.setText("Please enter a valid expiry date");
+            setErrorOnExpDateFields();
         }
     }
 
@@ -601,17 +632,8 @@ public class ReservationController extends BaseController {
      * @param newValue The focus state of any expiration date TextField.
      */    
     private void refreshExpDateErrorStatus() {
-        if (expDateMonth.getText().isEmpty() || expDateMonth.getText().isEmpty()) {
             setWhiteBorder(expDateMonth);
             setWhiteBorder(expDateYear);
-            paymentNotification.setText("");            
-            return;
-        }    
-        if (expDateMonth.getLength() == 2 || expDateMonth.getLength() == 2) {
-            setWhiteBorder(expDateMonth);
-            setWhiteBorder(expDateYear);
-            paymentNotification.setText("");
-        } 
     }
 
     /**
@@ -620,55 +642,39 @@ public class ReservationController extends BaseController {
      * @param newValue The focus state of any expiration date TextField.
      * @return true if expDate is valid, false otherwise
      */
-    private boolean checkInvalidExpDate() {
+    private boolean setExpDateErrorStatus() {
+        /*
+        if (!(expDateMonth.getLength() == 2 && expDateYear.getLength() == 2) ||
+            Integer.parseInt(expDateMonth.getText()) > 12 ||
+            (endDate.getValue() != null && parseExpDate().plusMonths(1).isBefore(endDate.getValue()) ||
+            parseExpDate().plusMonths(1).isBefore(LocalDate.now()))) {
+                setErrorOnExpDateFields();
+                return false;
+            }
+        return true;
+        */
+
+
         if (expDateMonth.getLength() == 2 && expDateYear.getLength() == 2) {
             if (Integer.parseInt(expDateMonth.getText()) > 12) {
-                setRedBorder(expDateMonth);
-                setRedBorder(expDateYear);
-                paymentNotification.setText("Please enter a valid expiry date");  
+                setErrorOnExpDateFields();
                 return false;
             }
             if (endDate.getValue() != null) {
                 if (parseExpDate().plusMonths(1).isBefore(endDate.getValue())) {
-                    setRedBorder(expDateMonth);
-                    setRedBorder(expDateYear);
-                    paymentNotification.setText("Please enter a valid expiry date");
+                    setErrorOnExpDateFields();
                     return false;                    
                 }
             }            
             if (parseExpDate().plusMonths(1).isBefore(LocalDate.now())) {
-                setRedBorder(expDateMonth);
-                setRedBorder(expDateYear);
-                paymentNotification.setText("Please enter a valid expiry date");
+                setErrorOnExpDateFields();
                 return false;    
             }
+            setWhiteBorder(expDateMonth);
+            setWhiteBorder(expDateYear);
             return true;
         }
-        return false;
-    }
-
-    /**
-     * Displays relevant error message(s) if DatePicker(s) or payment TextField(s) are empty.
-     * @param datePickerEmpty Boolean status of filled DatePicker fields.
-     * @param paymentEmpty Boolean status of filled payment TextFields.
-     * @return true if an error message is written, false otherwise
-     */
-    private boolean displayErrorOnEmptyField(Boolean datePickerEmpty, Boolean paymentEmpty) {
-        if (datePickerEmpty && paymentEmpty) {
-            dateNotification.setText("Please fill out reservation details");
-            paymentNotification.setText("Please fill out payment information");
-            return true;
-        }
-        else if (datePickerEmpty) {
-            dateNotification.setText("Please fill out reservation details");
-            paymentNotification.setText("");
-            return true;
-        }
-        else if (paymentEmpty) {
-            dateNotification.setText("");
-            paymentNotification.setText("Please fill out payment information");
-            return true;
-        }
+        setErrorOnExpDateFields();
         return false;
     }
 
@@ -683,16 +689,18 @@ public class ReservationController extends BaseController {
         return expDate;
     }
 
+    private void setErrorOnExpDateFields() {
+        setRedBorder(expDateMonth);
+        setRedBorder(expDateYear);        
+        paymentNotification.setText("Please enter a valid expiry date");        
+    }
+
     /**
      * Verifies a users credit card information, and assigns CreditCard to a User if valid.
      * If any details are inaccurate, sets payment TextField borders to red and displays an error message.
      * @return true if card details are accurate, false otherwise
      */
     private boolean assignCard() {
-        if (!checkInvalidExpDate()) {
-            return false;
-        }
-
         CreditCard card = new CreditCard(
             cardNumber.getText(), CVC.getText(), parseExpDate(),
             ReservationSystem.getCurrentUser()
@@ -737,7 +745,6 @@ public class ReservationController extends BaseController {
         roomText.setText(roomType.toPrettyString());
     }
 
-    public String hel() {
-        return FXMLPaths.CREATE_ACCOUNT;
-    }
+
+
 }
