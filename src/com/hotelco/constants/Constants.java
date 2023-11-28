@@ -89,11 +89,11 @@ public final class Constants {
      * In seconds, the amount of time the system waits for automatic logout,
      * when there is no input.
      */
-    public static final Integer IDLE_TIMEOUT = 30;
+    public static final Integer IDLE_TIMEOUT = 9000;
 
     /**
      * In seconds, the the amount of time the screen saver waits before starting
      * after no input.
      */
-    public static final Integer SCREENSAVER_TIMEOUT = 5;
+    public static final Integer SCREENSAVER_TIMEOUT = 100;
 }
