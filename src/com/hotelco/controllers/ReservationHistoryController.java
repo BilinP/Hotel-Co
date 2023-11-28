@@ -6,6 +6,7 @@ import java.util.Collections;
 
 import com.hotelco.entities.Reservation;
 import com.hotelco.entities.ReservationSystem;
+import com.hotelco.utilities.ReservationCalculator;
 
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
@@ -84,8 +85,10 @@ public class ReservationHistoryController extends BaseController {
                 cell.getValue().getIsCancelled() ? "Cancelled" :
                 cell.getValue().getEndDate().isBefore(LocalDate.now()) ? "Completed" : 
                 "Active"));
-            //unimplemented
-            total.setCellValueFactory(new PropertyValueFactory<Reservation, String>(null));
+            total.setCellValueFactory(cell -> {
+                Reservation reservation = cell.getValue();
+                return new SimpleStringProperty("$" + ReservationCalculator.calcTotal(reservation).toString());
+            });
             table.addEventFilter(MouseEvent.MOUSE_DRAGGED, Event::consume);
             displayOrders();
         });
