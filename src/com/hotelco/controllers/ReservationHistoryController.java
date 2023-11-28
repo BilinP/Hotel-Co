@@ -76,7 +76,6 @@ public class ReservationHistoryController extends BaseController {
      */
     @FXML
     private void initialize() {
-        Platform.runLater(() -> {
             roomType.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getRoom().getRoomType().toPrettyString()));
             orderNumber.setCellValueFactory(new PropertyValueFactory<Reservation, Integer>("reservationId"));
             checkInDate.setCellValueFactory(new PropertyValueFactory<Reservation, LocalDate>("startDate"));
@@ -90,6 +89,7 @@ public class ReservationHistoryController extends BaseController {
                 return new SimpleStringProperty("$" + ReservationCalculator.calcTotal(reservation).toString());
             });
             table.addEventFilter(MouseEvent.MOUSE_DRAGGED, Event::consume);
+        Platform.runLater(() -> {
             displayOrders();
         });
     }
@@ -99,8 +99,7 @@ public class ReservationHistoryController extends BaseController {
      * This will set the data in each TableColumn.
      */
     private void displayOrders() {
-        Reservation reservation[] = ReservationSystem.getCurrentUser()
-            .fetchReservations(false, true, false);
+        Reservation reservation[] = ReservationSystem.getCurrentUser().getReservations();
         Collections.reverse(Arrays.asList(reservation));
         ObservableList<Reservation> reservations = FXCollections.observableArrayList(Arrays.asList(reservation));
         table.setItems(reservations);
