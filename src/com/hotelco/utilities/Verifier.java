@@ -20,7 +20,7 @@ public class Verifier {
     */
     public static Boolean verifyPassword(String email, String password)
     {
-            User temp = new User(email);
+            User temp = new User(email, false);
             Password pass = new Password(temp.getSalt());
             Boolean isVerified = false;
             try {

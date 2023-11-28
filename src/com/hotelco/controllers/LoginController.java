@@ -117,7 +117,7 @@ public class LoginController extends BaseController {
             if (Verifier.verifyPassword(emailStr, password.getText())){
                 idleTimer.stop();
                 Instances.getScene().removeEventHandler(Event.ANY, handler);
-                ReservationSystem.setCurrentUser(new User(emailStr));
+                ReservationSystem.setCurrentUser(new User(emailStr, true));
                 if(ReservationSystem.getCurrentUser().getIsManager()){
                     switchScene(FXMLPaths.MANAGER_DASHBOARD);
                 }else{

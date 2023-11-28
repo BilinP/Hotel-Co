@@ -55,22 +55,26 @@ public class User {
     /**
      * Constructs and fetches a user data through their ID.
      * @param id user id with which to fetch user
+     * @param withReservations whether the fetch should populate the user's
+     * reservations
      */
-    public User(Integer id){
+    public User(Integer id, Boolean withReservations){
         if (DatabaseUtil.doesIdExist(id)){
             userId = id;
-            fetch();
+            fetch(withReservations);
         }
     }
     /**
      * Creates and fetches the user data through their email.
      * @param emailStr email with which to fetch user
+     * @param withReservations whether the fetch should populate the user's
+     * reservations
      */
-    public User(String emailStr){
+    public User(String emailStr, Boolean withReservations){
         if (DatabaseUtil.doesEmailExist(emailStr))
         {
             email = emailStr;
-            fetch();
+            fetch(withReservations);
         }
     }
     /**
@@ -230,8 +234,10 @@ public class User {
     /**
      * Fetches user from database through email.
      * @param emailStr email with which to fetch user
+     * @param withReservations whether the fetch should populate the user's
+     * reservations
      */
-    public void fetchByEmail(String emailStr){
+    public void fetchByEmail(String emailStr, Boolean withReservations){
         PreparedStatement ps = null;
         ResultSet rs = null;
         String sqlQuery = "SELECT * FROM users WHERE email = '" + emailStr + "'";
@@ -247,7 +253,9 @@ public class User {
                 phone = rs.getString("phone");
                 isEmployee = rs.getBoolean("is_employee");
                 isManager = rs.getBoolean("is_manager");
-                reservations = fetchReservations(false, false, false);
+                reservations = withReservations ?
+                    fetchReservations(false, false, false)
+                    : null;
             }
         }
         catch (SQLException e){
@@ -261,8 +269,10 @@ public class User {
     /**
      * Fetches User from database through user ID.
      * @param userIdToFetch ID with which to fetch user
+     * @param withReservations whether the fetch should populate the user's
+     * reservations
      */
-    public void fetchById(Integer userIdToFetch){
+    public void fetchById(Integer userIdToFetch, Boolean withReservations){
         PreparedStatement ps = null;
         ResultSet rs = null;
         String sqlQuery = "SELECT * FROM users WHERE user_id = " + userIdToFetch;
@@ -278,7 +288,9 @@ public class User {
                 phone = rs.getString("phone");
                 isEmployee = rs.getBoolean("is_employee");
                 isManager = rs.getBoolean("is_manager");
-                reservations = fetchReservations(false, false, false);
+                reservations = withReservations ?
+                    fetchReservations(false, false, false)
+                    : null;
             }
         }
         catch (SQLException e){
@@ -292,13 +304,15 @@ public class User {
     /**
      * Fetches user from database by email or id. Assumes user has one of
      * those valid members already.
+     * @param withReservations whether the fetch should populate the user's
+     * reservations
      */
-    public void fetch(){
+    public void fetch(Boolean withReservations){
         if (userId == null) {
-            fetchByEmail(email);
+            fetchByEmail(email, withReservations);
         }
         else{
-            fetchById(userId);
+            fetchById(userId, withReservations);
         }
     }
     /**
@@ -310,6 +324,7 @@ public class User {
      */
     public Reservation[] fetchReservations(
         Boolean onlyFuture, Boolean byDate, Boolean onlyNotCancelled){
+            System.out.println("fetching reservations");
         Reservation tempReservation = null;
         Room tempRoom = null;
         LocalDate tempStartDate = null;

@@ -303,7 +303,7 @@ public class DatabaseUtil{
             rs = ps.executeQuery();
             while(rs.next()){
                 reservationList.add(
-                    new Reservation(rs.getInt("reservation_id")));
+                    new Reservation(rs.getInt("reservation_id"), true));
                 ReservationSystem.processing();
             }
             result = new Reservation[reservationList.size()];
@@ -338,7 +338,7 @@ public class DatabaseUtil{
             rs = ps.executeQuery();
             while(rs.next()){
                 reservationList.add(
-                    new Reservation(rs.getInt("reservation_id")));
+                    new Reservation(rs.getInt("reservation_id"), true));
                 ReservationSystem.processing();
             }
             result = new Reservation[reservationList.size()];
@@ -356,9 +356,10 @@ public class DatabaseUtil{
 
     /**
      * Gets all reservations in the database.
+ * @param withReservations TODO
      * @return all reservations in the database.
      */
-    public static Reservation[] getAllReservations(){
+    public static Reservation[] getAllReservations(Boolean withReservations){
         ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
         Reservation[] result = null;
         PreparedStatement ps = null;
@@ -370,7 +371,7 @@ public class DatabaseUtil{
             rs = ps.executeQuery();
             while(rs.next()){
                 reservationList.add(
-                    new Reservation(rs.getInt("reservation_id")));
+                    new Reservation(rs.getInt("reservation_id"), withReservations));
                 ReservationSystem.processing();
             }
             result = new Reservation[reservationList.size()];
@@ -390,9 +391,11 @@ public class DatabaseUtil{
      * Gets all active reservations in the database. This includes reservations
      * where the date is >= today, reservations not marked as cancelled, and
      * reservations not marked as checked out.
+     * @param withUserReservations whether the fetch should populate the user's
+     * reservations
      * @return all active reservations in the database
      */
-    public static Reservation[] getActiveReservations(){
+    public static Reservation[] getActiveReservations(Boolean withUserReservations){
         ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
         Reservation[] result = null;
         PreparedStatement ps = null;
@@ -408,7 +411,7 @@ public class DatabaseUtil{
             rs = ps.executeQuery();
             while(rs.next()){
                 reservationList.add(
-                    new Reservation(rs.getInt("reservation_id")));
+                    new Reservation(rs.getInt("reservation_id"), true));
                 ReservationSystem.processing();
             }
             result = new Reservation[reservationList.size()];

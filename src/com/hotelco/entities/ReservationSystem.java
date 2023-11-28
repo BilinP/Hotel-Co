@@ -147,10 +147,10 @@ public class ReservationSystem {
      */
     public static void update(){
         if (ReservationSystem.getCurrentUser() != null){
-            ReservationSystem.getCurrentUser().fetch();
+            ReservationSystem.getCurrentUser().fetch(true);
         }
         if (ReservationSystem.getCurrentReservation() != null){
-            ReservationSystem.getCurrentReservation().fetch();
+            ReservationSystem.getCurrentReservation().fetch(true);
         }
     }
     /**

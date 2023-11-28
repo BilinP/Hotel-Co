@@ -70,11 +70,13 @@ public class Reservation {
      * Constructs a reservation and fills it with details from the database.
      * Looks up the reservation in the database based on the supplied parameter
      * @param reservationIdNum Unique reservation id
+     * @param withUserReservations whether the fetch should populate the user's
+     * reservations
      */
     
-    public Reservation(Integer reservationIdNum)
+    public Reservation(Integer reservationIdNum, Boolean withUserReservations)
     {
-        fetch(reservationIdNum);
+        fetch(reservationIdNum, withUserReservations);
     }
 
     /**
@@ -249,15 +251,19 @@ public class Reservation {
     /**
      * Fetches a reservation's data from the database by reservationId.
      * @param reservationIdToFetch unique reservation id
+     * @param withUserReservations whether the fetch should populate the user's
+     * reservations
      */
-    public void fetch(Integer reservationIdToFetch){
+    public void fetch(Integer reservationIdToFetch, Boolean withUserReservations){
         reservationId = reservationIdToFetch;
-        fetch();
+        fetch(withUserReservations);
     }
     /**
      * Fetches a reservation's data from the database.
+     * @param withUserReservations whether the fetch should populate the user's
+     * reservations
      */
-    public void fetch(){
+    public void fetch(Boolean withUserReservations){
         PreparedStatement ps = null;
         ResultSet rs = null;
         String sqlQuery = "SELECT * FROM reservations WHERE reservation_id = "
@@ -272,7 +278,7 @@ public class Reservation {
                 ReservationSystem.processing();
                 startDate = rs.getDate("start_date").toLocalDate();
                 endDate = rs.getDate("end_date").toLocalDate();
-                user = new User(rs.getInt("user_id"));
+                user = new User(rs.getInt("user_id"), withUserReservations);
                 ReservationSystem.processing();
                 isCancelled = rs.getBoolean("is_cancelled");
                 isCheckedIn = rs.getBoolean("is_checked_in");
@@ -454,7 +460,7 @@ public class Reservation {
     }
     public void createNewAdjustment(Adjustment adjustment){
         pushNewAdjustment(adjustment);
-        fetch();
+        fetch(true);
     }
     /**
      * Holds various payment details in one object. Inner class of Reservation

@@ -99,11 +99,10 @@ public class AllReservationController extends BaseController {
      */
     private void displayOrders() {
         TimerTool timer = new TimerTool(101);
-        Reservation reservation[] =DatabaseUtil.getAllReservations();
+        Reservation reservation[] = DatabaseUtil.getAllReservations(false);
         timer.print(103);
         Collections.reverse(Arrays.asList(reservation));
         ObservableList<Reservation> reservations = FXCollections.observableArrayList(Arrays.asList(reservation));
         table.setItems(reservations);
     }
-
 }

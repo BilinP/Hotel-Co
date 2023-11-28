@@ -106,10 +106,10 @@ public class ResetPasswordController extends BaseController {
         }
         String emailStr = email.getText();
         if(DatabaseUtil.doesEmailExist(emailStr)){
-           User user= new User(emailStr);
+           User user= new User(emailStr, true);
            String password= generateTempPassword();
            user.push(password);
-           user.fetch();
+           user.fetch(true);
            EmailGenerator.resetPassword(password, user);
            switchScene(FXMLPaths.LOGIN);
         }
