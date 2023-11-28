@@ -89,9 +89,8 @@ public class ReservationHistoryController extends BaseController {
                 return new SimpleStringProperty("$" + ReservationCalculator.calcTotal(reservation).toString());
             });
             table.addEventFilter(MouseEvent.MOUSE_DRAGGED, Event::consume);
-            displayOrders();        
         Platform.runLater(() -> {
-
+            displayOrders();
         });
     }
 
