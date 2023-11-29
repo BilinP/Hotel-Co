@@ -584,7 +584,10 @@ public class DatabaseUtil{
         ReservationSystem.ready();
         return result;
     }
-
+    /**
+     * Gets the lifetime revenue of the hotel
+     * @return the lifetime revenue of the hotel
+     */
     public static BigDecimal getLifetimeRevenue(){   
         BigDecimal result = new BigDecimal(0);
         PreparedStatement ps = null;
@@ -606,5 +609,65 @@ public class DatabaseUtil{
         }
         ReservationSystem.ready();
         return result;
+    }
+
+    /**
+     * Gets the revenue based on the number of days in the past. Ex: For daily 
+     * revenue report, numDays should be 1, 7 for a weekly report, etc.
+     * @param numDays the number of days for which to generate this report
+     * @return revenue during the supplied period
+     */
+    public static BigDecimal getRevenue(Integer numDays){   
+        BigDecimal result = new BigDecimal(0);
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        LocalDate startDate = LocalDate.now().minusDays(numDays);
+        String sqlQuery = "SELECT SUM(amount) AS total FROM payments " +
+            "WHERE DATE(time) > '" + Date.valueOf(startDate) + "'";
+        Connection con = ReservationSystem.getDatabaseConnection();
+        try {
+            ps = con.prepareStatement(sqlQuery);
+            rs = ps.executeQuery();
+            if(rs.next())
+            result = rs.getBigDecimal("total");
+        }
+        catch (SQLException e){
+            System.out.println("DatabaseUtil.getRevenue()");
+            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
+            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
+            System.out.println(e);
+        }
+        ReservationSystem.ready();
+        return result;
+    }
+
+    /**
+     * Gets the daily revenue of the hotel collected thus far
+     * @return the daily revenue of the hotel collected thus far
+     */
+    public static BigDecimal getDailyRevenue(){
+        return getRevenue(1);
+    }
+
+    /**
+     * Gets the weekly revenue of the hotel collected thus far
+     * @return the weekly revenue of the hotel collected thus far
+     */
+    public static BigDecimal getWeeklyRevenue(){
+        return getRevenue(LocalDate.now().getDayOfWeek().getValue());
+    }
+    /**
+     * Gets the monthly revenue of the hotel collected thus far
+     * @return the monthly revenue of the hotel collected thus far
+     */
+    public static BigDecimal getMonthlyRevenue(){
+        return getRevenue(LocalDate.now().getDayOfMonth());
+    }
+    /**
+     * Gets the annual revenue of the hotel collected thus far
+     * @return the annual revenue of the hotel collected thus far
+     */
+    public static BigDecimal getYearlyRevenue(){
+        return getRevenue(LocalDate.now().getDayOfYear());
     }
 }
