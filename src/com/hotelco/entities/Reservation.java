@@ -1,7 +1,5 @@
 package com.hotelco.entities;
 
-
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,10 +9,8 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import javax.mail.MessagingException;
 
 import com.hotelco.utilities.EmailGenerator;
-import com.hotelco.utilities.SendMail;
 
 /**
  * Maintains details of a particular reservation and facilitates database

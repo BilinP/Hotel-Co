@@ -19,7 +19,6 @@ import com.hotelco.utilities.Instances;
 import com.hotelco.utilities.ReservationCalculator;
 import com.hotelco.utilities.TaxRate;
 import com.hotelco.utilities.TextFormatters;
-import com.hotelco.utilities.Verifier;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -369,7 +368,8 @@ public class ReservationController extends BaseController {
                 @Override
                 public void updateItem(LocalDate item, boolean empty) {
                     super.updateItem(item, empty);
-                    Boolean availability = DatabaseUtil.checkAvailability(item, item, room);
+                    LocalDate nextDay = item.plusDays(1);
+                    Boolean availability = DatabaseUtil.checkAvailability(item, nextDay, room);
                     LocalDate currentDate = LocalDate.now();
                     setDisable(empty || item.compareTo(currentDate) < 0 || 
                         !availability || checkConflict(item));

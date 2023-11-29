@@ -1,7 +1,5 @@
 package com.hotelco.devtools;
 
-import java.time.LocalDateTime;
-
 /**
  * Tool to easily and repeatedly report execution time between lines of code.
  */
