@@ -7,7 +7,6 @@ import com.hotelco.entities.ReservationSystem;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 /**
@@ -578,6 +577,29 @@ public class DatabaseUtil{
         }
         catch (SQLException e){
             System.out.println("DatabaseUtil.countAvailableRooms()");
+            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
+            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
+            System.out.println(e);
+        }
+        ReservationSystem.ready();
+        return result;
+    }
+
+    public static BigDecimal getLifetimeRevenue(){   
+        BigDecimal result = new BigDecimal(0);
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sqlQuery = "SELECT SUM(amount) AS total FROM payments";
+        Connection con = ReservationSystem.getDatabaseConnection();
+
+        try {
+            ps = con.prepareStatement(sqlQuery);
+            rs = ps.executeQuery();
+            if(rs.next())
+            result = rs.getBigDecimal("total");
+        }
+        catch (SQLException e){
+            System.out.println("DatabaseUtil.getLifetimeRevenue()");
             System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
