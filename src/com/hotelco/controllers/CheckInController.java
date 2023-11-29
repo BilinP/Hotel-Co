@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import com.hotelco.entities.Reservation;
-import com.hotelco.entities.ReservationSystem;
+
 import com.hotelco.utilities.DatabaseUtil;
 import com.hotelco.utilities.ReservationCalculator;
 
@@ -15,16 +15,12 @@ import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.control.IndexedCell;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 
 /**
  * The RHController class is the associated controller class of the 'ReservationHistoryGUI' view. 

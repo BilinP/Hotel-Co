@@ -6,7 +6,6 @@ import java.util.Collections;
 
 import com.hotelco.devtools.TimerTool;
 import com.hotelco.entities.Reservation;
-import com.hotelco.entities.ReservationSystem;
 import com.hotelco.utilities.DatabaseUtil;
 import com.hotelco.utilities.ReservationCalculator;
 
