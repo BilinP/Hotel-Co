@@ -329,6 +329,7 @@ public class DatabaseUtil{
         String sqlQuery = "SELECT * " + 
             "FROM reservations " + 
             "WHERE start_date = '" + Date.valueOf(LocalDate.now()) + "' " +
+            "AND user_id = " + ReservationSystem.getCurrentUser().getUserId() + " " +
             "AND is_checked_in = 0";
         Connection con = ReservationSystem.getDatabaseConnection();
     
