@@ -49,11 +49,13 @@ public class HomeController extends BaseController {
             new Image("/com/hotelco/images/rocks.jpg"),
             new Image("/com/hotelco/images/zanzibar.jpg"),
         };
+
+            setChangeListeners(images);
+            playTransition();        
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                setChangeListeners(images);
-                playTransition();
+
             }
         });
     }

@@ -58,16 +58,17 @@ public class ProfileController extends BaseController {
     @FXML
     private void initialize() {     
         TextFormatters textFormatters = new TextFormatters();
+        user = ReservationSystem.getCurrentUser();
+        number.setTextFormatter(textFormatters.PHONE_NUMBER);
+        first.setTextFormatter(textFormatters.FIRST_NAME);
+        first.setFocusTraversable(true);
+        last.setTextFormatter(textFormatters.LAST_NAME);
+        email.setText(user.getEmail());
+        first.setText(user.getFirstName());
+        last.setText(user.getLastName());
+        number.setText(user.getPhone());        
         Platform.runLater(() -> {
-            user = ReservationSystem.getCurrentUser();
-            number.setTextFormatter(textFormatters.PHONE_NUMBER);
-            first.setTextFormatter(textFormatters.FIRST_NAME);
-            first.setFocusTraversable(true);
-            last.setTextFormatter(textFormatters.LAST_NAME);
-            email.setText(user.getEmail());
-            first.setText(user.getFirstName());
-            last.setText(user.getLastName());
-            number.setText(user.getPhone());
+
         });
     }
 

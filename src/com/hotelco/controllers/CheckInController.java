@@ -15,6 +15,7 @@ import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
@@ -83,9 +84,9 @@ public class CheckInController extends BaseController {
                 Reservation reservation = cell.getValue();
                 return new SimpleStringProperty("$" + ReservationCalculator.calcTotal(reservation).toString());
             });
-
-        Platform.runLater(() -> {
             displayOrders();
+        Platform.runLater(() -> {
+            
         });
     }
 
@@ -94,11 +95,20 @@ public class CheckInController extends BaseController {
      * This will set the data in each TableColumn.
      */
     private void displayOrders() {
-        Reservation reservation[] = DatabaseUtil.getTodayCheckIns();
-        Collections.reverse(Arrays.asList(reservation));
-        ObservableList<Reservation> reservations = FXCollections.observableArrayList(Arrays.asList(reservation));
-        table.setItems(reservations);
-      
+        Task<ObservableList<Reservation>> task = new Task<ObservableList<Reservation>>() {
+            @Override
+            protected ObservableList<Reservation> call() throws Exception {
+                Reservation reservation[] = DatabaseUtil.getTodayCheckIns();
+                Collections.reverse(Arrays.asList(reservation));
+                return FXCollections.observableArrayList(Arrays.asList(reservation));                
+            }  
+        };
+
+        task.setOnSucceeded(e -> {
+            table.setItems(task.getValue());
+        });
+        
+        new Thread(task).start();
     }
 
     @FXML

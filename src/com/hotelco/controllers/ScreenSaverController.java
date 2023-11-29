@@ -56,15 +56,16 @@ public class ScreenSaverController extends BaseController {
             new Image("/com/hotelco/images/rocks.jpg"),
             new Image("/com/hotelco/images/zanzibar.jpg"),
         };
+        fo.fitHeightProperty().bind(anchor.heightProperty());
+        fo.fitWidthProperty().bind(anchor.widthProperty());
+        fi.fitHeightProperty().bind(anchor.heightProperty());
+        fi.fitWidthProperty().bind(anchor.widthProperty());                
+        setChangeListeners(images);
+        playTransition();        
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                fo.fitHeightProperty().bind(anchor.heightProperty());
-                fo.fitWidthProperty().bind(anchor.widthProperty());
-                fi.fitHeightProperty().bind(anchor.heightProperty());
-                fi.fitWidthProperty().bind(anchor.widthProperty());                
-                setChangeListeners(images);
-                playTransition();
+
             }
         });
     }

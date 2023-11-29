@@ -12,6 +12,7 @@ import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -76,21 +77,22 @@ public class ReservationHistoryController extends BaseController {
      */
     @FXML
     private void initialize() {
-            roomType.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getRoom().getRoomType().toPrettyString()));
-            orderNumber.setCellValueFactory(new PropertyValueFactory<Reservation, Integer>("reservationId"));
-            checkInDate.setCellValueFactory(new PropertyValueFactory<Reservation, LocalDate>("startDate"));
-            checkOutDate.setCellValueFactory(new PropertyValueFactory<Reservation, LocalDate>("endDate"));
-            status.setCellValueFactory(cell -> new SimpleStringProperty(
-                cell.getValue().getIsCancelled() ? "Cancelled" :
-                cell.getValue().getEndDate().isBefore(LocalDate.now()) ? "Completed" : 
-                "Active"));
-            total.setCellValueFactory(cell -> {
-                Reservation reservation = cell.getValue();
-                return new SimpleStringProperty("$" + ReservationCalculator.calcTotal(reservation).toString());
-            });
-            table.addEventFilter(MouseEvent.MOUSE_DRAGGED, Event::consume);
+        roomType.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getRoom().getRoomType().toPrettyString()));
+        orderNumber.setCellValueFactory(new PropertyValueFactory<Reservation, Integer>("reservationId"));
+        checkInDate.setCellValueFactory(new PropertyValueFactory<Reservation, LocalDate>("startDate"));
+        checkOutDate.setCellValueFactory(new PropertyValueFactory<Reservation, LocalDate>("endDate"));
+        status.setCellValueFactory(cell -> new SimpleStringProperty(
+            cell.getValue().getIsCancelled() ? "Cancelled" :
+            cell.getValue().getEndDate().isBefore(LocalDate.now()) ? "Completed" : 
+            "Active"));
+        total.setCellValueFactory(cell -> {
+            Reservation reservation = cell.getValue();
+            return new SimpleStringProperty("$" + ReservationCalculator.calcTotal(reservation).toString());
+        });
+        table.addEventFilter(MouseEvent.MOUSE_DRAGGED, Event::consume);
+        displayOrders();
         Platform.runLater(() -> {
-            displayOrders();
+            
         });
     }
 
@@ -99,10 +101,19 @@ public class ReservationHistoryController extends BaseController {
      * This will set the data in each TableColumn.
      */
     private void displayOrders() {
-        Reservation reservation[] = ReservationSystem.getCurrentUser().getReservations();
-        Collections.reverse(Arrays.asList(reservation));
-        ObservableList<Reservation> reservations = FXCollections.observableArrayList(Arrays.asList(reservation));
-        table.setItems(reservations);
-    }
+        Task<ObservableList<Reservation>> task = new Task<ObservableList<Reservation>>() {
+            @Override
+            protected ObservableList<Reservation> call() throws Exception {
+                Reservation reservation[] = ReservationSystem.getCurrentUser().getReservations();
+                Collections.reverse(Arrays.asList(reservation));
+                return FXCollections.observableArrayList(Arrays.asList(reservation));                
+            }  
+        };
 
+        task.setOnSucceeded(e -> {
+            table.setItems(task.getValue());
+        });
+        
+        new Thread(task).start();
+    }
 }

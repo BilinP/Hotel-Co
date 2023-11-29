@@ -421,23 +421,24 @@ public class ReservationController extends BaseController {
     @FXML
     private void initialize() {
         TextFormatters textFormatters = new TextFormatters();
+        startDate.valueProperty().addListener(startDateChangeListener);
+        startDate.setDayCellFactory(startDayCellFactory);
+        endDate.setDayCellFactory(endDayCellFactory);
+        endDate.valueProperty().addListener(endDateChangeListener);
+        expDateMonth.setTextFormatter(textFormatters.EXP_DATE_MONTH);
+        expDateMonth.textProperty().addListener(expDateMonthStringChangeListener);
+        expDateMonth.focusedProperty().addListener(expDateMonthFocusChangeListener); 
+        expDateYear.setTextFormatter(textFormatters.EXP_DATE_YEAR);          
+        expDateYear.textProperty().addListener(expDateYearStringChangeListener);
+        expDateYear.focusedProperty().addListener(expDateYearFocusChangeListener);
+        cardNumber.setTextFormatter(textFormatters.CREDIT_CARD);
+        cardNumber.focusedProperty().addListener(cardNumberFocusChangeListener);
+        cardNumber.textProperty().addListener(cardNumberStringChangeListener);
+        CVC.textProperty().addListener(CVCStringChangeListener);
+        CVC.focusedProperty().addListener(CVCFocusChangeListener);
+        CVC.setTextFormatter(textFormatters.CVC);        
         Platform.runLater(() -> {
-            startDate.valueProperty().addListener(startDateChangeListener);
-            startDate.setDayCellFactory(startDayCellFactory);
-            endDate.setDayCellFactory(endDayCellFactory);
-            endDate.valueProperty().addListener(endDateChangeListener);
-            expDateMonth.setTextFormatter(textFormatters.EXP_DATE_MONTH);
-            expDateMonth.textProperty().addListener(expDateMonthStringChangeListener);
-            expDateMonth.focusedProperty().addListener(expDateMonthFocusChangeListener); 
-            expDateYear.setTextFormatter(textFormatters.EXP_DATE_YEAR);          
-            expDateYear.textProperty().addListener(expDateYearStringChangeListener);
-            expDateYear.focusedProperty().addListener(expDateYearFocusChangeListener);
-            cardNumber.setTextFormatter(textFormatters.CREDIT_CARD);
-            cardNumber.focusedProperty().addListener(cardNumberFocusChangeListener);
-            cardNumber.textProperty().addListener(cardNumberStringChangeListener);
-            CVC.textProperty().addListener(CVCStringChangeListener);
-            CVC.focusedProperty().addListener(CVCFocusChangeListener);
-            CVC.setTextFormatter(textFormatters.CVC);
+
         });
     }
 
