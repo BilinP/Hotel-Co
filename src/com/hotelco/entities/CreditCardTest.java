@@ -57,7 +57,21 @@ public class CreditCardTest {
     }
 
     @Test
-    public void testLuhnCheck() {
-
+    public void testLuhnCheck0() {
+        cc.setCreditCardNum("4282802419498738");
+        assertEquals(cc.luhnCheck(), true);
     }
+
+        @Test
+    public void testLuhnCheck1() {
+        cc.setCreditCardNum("4282809844631544");
+        assertEquals(true, cc.luhnCheck());
+    }
+
+        @Test
+    public void testLuhnCheck2() {
+        cc.setCreditCardNum("");
+        assertEquals(true, cc.luhnCheck());
+    }
+    
 }
