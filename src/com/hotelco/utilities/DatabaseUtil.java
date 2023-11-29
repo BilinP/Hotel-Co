@@ -411,7 +411,7 @@ public class DatabaseUtil{
             rs = ps.executeQuery();
             while(rs.next()){
                 reservationList.add(
-                    new Reservation(rs.getInt("reservation_id"), true));
+                    new Reservation(rs.getInt("reservation_id"), withUserReservations));
                 ReservationSystem.processing();
             }
             result = new Reservation[reservationList.size()];
