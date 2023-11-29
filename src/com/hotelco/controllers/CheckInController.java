@@ -121,7 +121,7 @@ public class CheckInController extends BaseController {
         } else {
             selectedReservations.add(reservation);
         }
-        table.setRowFactory(tv -> new TableRow<Reservation>() {
+        table.setRowFactory(view -> new TableRow<Reservation>() {
             @Override
             protected void updateItem(Reservation item, boolean empty) {
                 super.updateItem(item, empty);

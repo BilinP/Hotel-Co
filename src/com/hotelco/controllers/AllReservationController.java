@@ -4,9 +4,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 
-import com.hotelco.devtools.TimerTool;
 import com.hotelco.entities.Reservation;
-import com.hotelco.entities.ReservationSystem;
 import com.hotelco.utilities.DatabaseUtil;
 import com.hotelco.utilities.ReservationCalculator;
 
@@ -102,9 +100,7 @@ public class AllReservationController extends BaseController {
      * This will set the data in each TableColumn.
      */
     private void displayOrders() {
-        TimerTool timer = new TimerTool(101);
-        Reservation reservation[] = DatabaseUtil.getAllReservations(false);
-        timer.print(103);
+        Reservation reservation[] = DatabaseUtil.getActiveReservations(false);
         Collections.reverse(Arrays.asList(reservation));
         ObservableList<Reservation> reservations = FXCollections.observableArrayList(Arrays.asList(reservation));
         table.setItems(reservations);
