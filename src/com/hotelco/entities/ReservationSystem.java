@@ -170,16 +170,14 @@ public class ReservationSystem {
         Payment payment = new Payment(reservation);
         return payment.getPaymentId() != null;
     }
-    /**
-     * Sets the Database status as READY
-     */
-    public static void ready(){
-        ReservationSystem.setDatabaseStatus(DatabaseStatus.READY);
-    }
-    /**
-     * Sets the Database status as PROCESSING
-     */
-    public static void processing(){
-        ReservationSystem.setDatabaseStatus(DatabaseStatus.PROCESSING);
+
+    public static void changeUserReservation(Reservation oldReservation, Reservation newReservation){
+        Reservation temp = ReservationSystem.getCurrentReservation();
+
+        oldReservation.cancel(true);
+        ReservationSystem.setCurrentReservation(newReservation);
+        ReservationSystem.book();
+
+        ReservationSystem.setCurrentReservation(temp);
     }
 }
