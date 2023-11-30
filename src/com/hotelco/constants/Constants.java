@@ -97,5 +97,8 @@ public final class Constants {
      */
     public static final Integer SCREENSAVER_TIMEOUT = 100;
 
-    public static final Boolean DEBUG_MODE = true;
+    /**
+     * Whether to enter developer mode or not
+     */
+    public static final Boolean DEV_MODE = false;
 }

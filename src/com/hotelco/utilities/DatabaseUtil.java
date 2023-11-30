@@ -553,7 +553,7 @@ public class DatabaseUtil{
             reservationList.toArray(result);
         }
         catch (SQLException e){
-            System.out.println("DatabaseUtil.getAllReservations()");
+            System.out.println("DatabaseUtil.getActiveReservations()");
             System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
@@ -580,7 +580,7 @@ public class DatabaseUtil{
             result = ps.executeQuery();
         }
         catch (SQLException e){
-            System.out.println("DatabaseUtil.getAllReservationsRS()");
+            System.out.println("DatabaseUtil.getActiveReservationsRS()");
             System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);

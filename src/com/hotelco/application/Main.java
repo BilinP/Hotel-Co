@@ -41,27 +41,29 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		
 		try {
-			if (Constants.DEBUG_MODE){
-				DebugMode.sandbox();
+			if (Constants.DEV_MODE){
+				DevMode.run();
 			}
-			DailyTask.scheduleDailyTasks();
-			FrequentTask.scheduleFrequentTasks();
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXMLPaths.LOGIN));
-			Parent root = fxmlLoader.load();
-			Scene scene = new Scene(root, Screen.getPrimary().getBounds().getWidth(), Screen.getPrimary().getBounds().getHeight());
-			Instances.setScene(scene);
-			Instances.setStage(primaryStage);
-			IdleTimer.initialize();
-			LoginController lc = (LoginController) fxmlLoader.getController();
-			lc.initializeIdleTimer();
-			primaryStage.centerOnScreen();
-			primaryStage.initStyle(StageStyle.UNDECORATED);
-			primaryStage.setTitle("HotelCo");
-			primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/com/hotelco/images/hotelco.png")));
-			primaryStage.setResizable(false);
-			primaryStage.setScene(scene);
-			primaryStage.show();
-			//primaryStage.setFullScreen(true);
+			else {
+				DailyTask.scheduleDailyTasks();
+				FrequentTask.scheduleFrequentTasks();
+				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXMLPaths.LOGIN));
+				Parent root = fxmlLoader.load();
+				Scene scene = new Scene(root, Screen.getPrimary().getBounds().getWidth(), Screen.getPrimary().getBounds().getHeight());
+				Instances.setScene(scene);
+				Instances.setStage(primaryStage);
+				IdleTimer.initialize();
+				LoginController lc = (LoginController) fxmlLoader.getController();
+				lc.initializeIdleTimer();
+				primaryStage.centerOnScreen();
+				primaryStage.initStyle(StageStyle.UNDECORATED);
+				primaryStage.setTitle("HotelCo");
+				primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/com/hotelco/images/hotelco.png")));
+				primaryStage.setResizable(false);
+				primaryStage.setScene(scene);
+				primaryStage.show();
+				//primaryStage.setFullScreen(true);
+			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
