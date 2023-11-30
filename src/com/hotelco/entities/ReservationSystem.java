@@ -103,6 +103,7 @@ public class ReservationSystem {
      */
     public static void book(){
         currentReservation.create();
+        currentUser.fetch(true);
     }
     /**
      * Cancels the "current reservation" by setting isCancelled. See
@@ -170,8 +171,13 @@ public class ReservationSystem {
         Payment payment = new Payment(reservation);
         return payment.getPaymentId() != null;
     }
-
-    public static void changeUserReservation(Reservation oldReservation, Reservation newReservation){
+    
+    /**
+     * "Changes" a reservation by cancelling it and generating a new one.
+     * @param oldReservation reservation to be cancelled
+     * @param newReservation reservation to book
+     */
+    public static void changeReservation(Reservation oldReservation, Reservation newReservation){
         Reservation temp = ReservationSystem.getCurrentReservation();
 
         oldReservation.cancel(true);
