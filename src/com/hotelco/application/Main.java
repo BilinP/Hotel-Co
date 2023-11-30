@@ -5,12 +5,12 @@ import java.io.IOException;
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 
+import com.hotelco.controllers.Instances;
 import com.hotelco.controllers.LoginController;
 import com.hotelco.utilities.DailyTask;
 import com.hotelco.utilities.FXMLPaths;
 import com.hotelco.utilities.FrequentTask;
 import com.hotelco.utilities.IdleTimer;
-import com.hotelco.utilities.Instances;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -39,6 +39,7 @@ public class Main extends Application {
 		try {
 			DailyTask.scheduleDailyTasks();
 			FrequentTask.scheduleFrequentTasks();
+			/*
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXMLPaths.LOGIN));
 			Parent root = fxmlLoader.load();
 			Scene scene = new Scene(root, Screen.getPrimary().getBounds().getWidth(), Screen.getPrimary().getBounds().getHeight());
@@ -47,13 +48,17 @@ public class Main extends Application {
 			IdleTimer.initialize();
 			LoginController lc = (LoginController) fxmlLoader.getController();
 			lc.initializeIdleTimer();
+			*/
+			Instances.setStage(primaryStage);
+			Instances.initializeScenes();
 			primaryStage.centerOnScreen();
 			primaryStage.initStyle(StageStyle.UNDECORATED);
 			primaryStage.setTitle("HotelCo");
 			primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/com/hotelco/images/hotelco.png")));
 			primaryStage.setResizable(false);
-			primaryStage.setScene(scene);
-			primaryStage.show();
+			Instances.switchScene(FXMLPaths.LOGIN);
+			//primaryStage.setScene();
+			//primaryStage.show();
 			//primaryStage.setFullScreen(true);
 		} catch(Exception e) {
 			e.printStackTrace();

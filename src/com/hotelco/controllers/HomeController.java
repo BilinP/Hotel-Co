@@ -40,25 +40,29 @@ public class HomeController extends BaseController {
      * Called immediately upon controller creation.
      * It creates an array of images and sets up the fade in and out transitions of images.
      */
-    @FXML
-    private void initialize() {
+    @Override
+    void initialize() {
         Image images[] = {
             new Image("/com/hotelco/images/boracay.jpg"),
             new Image("/com/hotelco/images/pool.jpg"),
             new Image("/com/hotelco/images/resort.jpg"),
             new Image("/com/hotelco/images/rocks.jpg"),
             new Image("/com/hotelco/images/zanzibar.jpg"),
-        };
-
-            setChangeListeners(images);
-            playTransition();        
+        };      
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-
+                    setChangeListeners(images);
+                    playTransition();  
             }
         });
     }
+
+	@Override
+	void cleanup() {
+        fo.setImage(new Image("/com/hotelco/images/zanzibar.jpg"));
+        fi.setImage(null);
+	}    
 
     /**
      * Sets up the initital FadeTransition to be played.

@@ -15,7 +15,6 @@ import com.hotelco.entities.ReservationSystem;
 import com.hotelco.entities.Room;
 import com.hotelco.utilities.DatabaseUtil;
 import com.hotelco.utilities.FXMLPaths;
-import com.hotelco.utilities.Instances;
 import com.hotelco.utilities.ReservationCalculator;
 import com.hotelco.utilities.TaxRate;
 import com.hotelco.utilities.TextFormatters;
@@ -418,30 +417,34 @@ public class ReservationController extends BaseController {
      * This method is called immediately upon controller creation.
      * It applies the DayCellFactories and ChangeListeners to all relevant DatePicker and TextField variables.
      */
-    @FXML
-    private void initialize() {
-        TextFormatters textFormatters = new TextFormatters();
-        startDate.valueProperty().addListener(startDateChangeListener);
-        startDate.setDayCellFactory(startDayCellFactory);
-        endDate.setDayCellFactory(endDayCellFactory);
-        endDate.valueProperty().addListener(endDateChangeListener);
-        expDateMonth.setTextFormatter(textFormatters.EXP_DATE_MONTH);
-        expDateMonth.textProperty().addListener(expDateMonthStringChangeListener);
-        expDateMonth.focusedProperty().addListener(expDateMonthFocusChangeListener); 
-        expDateYear.setTextFormatter(textFormatters.EXP_DATE_YEAR);          
-        expDateYear.textProperty().addListener(expDateYearStringChangeListener);
-        expDateYear.focusedProperty().addListener(expDateYearFocusChangeListener);
-        cardNumber.setTextFormatter(textFormatters.CREDIT_CARD);
-        cardNumber.focusedProperty().addListener(cardNumberFocusChangeListener);
-        cardNumber.textProperty().addListener(cardNumberStringChangeListener);
-        CVC.textProperty().addListener(CVCStringChangeListener);
-        CVC.focusedProperty().addListener(CVCFocusChangeListener);
-        CVC.setTextFormatter(textFormatters.CVC);        
+    @Override
+    void initialize() {
         Platform.runLater(() -> {
-
+            TextFormatters textFormatters = new TextFormatters();
+            startDate.valueProperty().addListener(startDateChangeListener);
+            startDate.setDayCellFactory(startDayCellFactory);
+            endDate.setDayCellFactory(endDayCellFactory);
+            endDate.valueProperty().addListener(endDateChangeListener);
+            expDateMonth.setTextFormatter(textFormatters.EXP_DATE_MONTH);
+            expDateMonth.textProperty().addListener(expDateMonthStringChangeListener);
+            expDateMonth.focusedProperty().addListener(expDateMonthFocusChangeListener); 
+            expDateYear.setTextFormatter(textFormatters.EXP_DATE_YEAR);          
+            expDateYear.textProperty().addListener(expDateYearStringChangeListener);
+            expDateYear.focusedProperty().addListener(expDateYearFocusChangeListener);
+            cardNumber.setTextFormatter(textFormatters.CREDIT_CARD);
+            cardNumber.focusedProperty().addListener(cardNumberFocusChangeListener);
+            cardNumber.textProperty().addListener(cardNumberStringChangeListener);
+            CVC.textProperty().addListener(CVCStringChangeListener);
+            CVC.focusedProperty().addListener(CVCFocusChangeListener);
+            CVC.setTextFormatter(textFormatters.CVC); 
         });
     }
 
+	@Override
+	void cleanup() {
+        
+	}
+        
     /**
      * Called when pressing the 'Book' button.<p> 
      * Starts by performing a series of checks:<p>
@@ -462,9 +465,9 @@ public class ReservationController extends BaseController {
         CVCIsInteractedWith = true;      
         boolean datePickerStatus = isAnyDatePickerEmpty();
         boolean paymentFieldStatus = setAllPaymentFieldErrorStatus();
-        if (datePickerStatus || paymentFieldStatus || !assignCard()) {
-            return;
-        }
+        //if (datePickerStatus || paymentFieldStatus || !assignCard()) {
+        //    return;
+        //}
         
         Reservation reservation = createReservation();
         ThankYouController tyc = (ThankYouController) Instances.getDashboardController().switchAnchor(FXMLPaths.THANK_YOU);
@@ -736,7 +739,4 @@ public class ReservationController extends BaseController {
         this.room = roomType;
         roomText.setText(roomType.toPrettyString());
     }
-
-
-
 }

@@ -5,8 +5,6 @@ import com.hotelco.entities.User;
 import com.hotelco.utilities.DatabaseUtil;
 import com.hotelco.utilities.EmailGenerator;
 import com.hotelco.utilities.FXMLPaths;
-import com.hotelco.utilities.Instances;
-
 
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
@@ -68,8 +66,10 @@ public class ResetPasswordController extends BaseController {
      * Rounds the corners of the beach ImageView upon initialization of the Controller.
      * @author Grigor Azakian
      */
-    @FXML
-    private void initialize() {     
+    @Override
+    void initialize() {     
+        
+        Platform.runLater(() -> {
            Rectangle rectangle = new Rectangle(
                 image.getFitWidth(),
                 image.getFitHeight()
@@ -84,11 +84,17 @@ public class ResetPasswordController extends BaseController {
             rectangle.setArcHeight(50);
             clip.setX(imageRight.getFitWidth() / 2);
             image.setClip(rectangle);
-            imageRight.setClip(clip);        
-        Platform.runLater(() -> {
-
+            imageRight.setClip(clip);
+            initializeIdleTimer();
         });
     }
+
+	@Override
+	void cleanup() {
+        idleTimer.stop();
+        Instances.getScene().removeEventHandler(Event.ANY, handler);
+        email.setText("");
+	}
 
     /**
      * This method is called when pressing the 'Reset Password' button.
@@ -111,7 +117,7 @@ public class ResetPasswordController extends BaseController {
            user.push(password);
            user.fetch(true);
            EmailGenerator.resetPassword(password, user);
-           switchScene(FXMLPaths.LOGIN);
+           Instances.switchScene(FXMLPaths.LOGIN);
         }
         else {
             notification.setText("Email does not exisit");
@@ -146,9 +152,7 @@ public class ResetPasswordController extends BaseController {
      */
     @FXML
     private void switchToLogin(MouseEvent event) {
-        idleTimer.stop();
-        Instances.getScene().removeEventHandler(Event.ANY, handler);
-        switchScene(FXMLPaths.LOGIN);
+        Instances.switchScene(FXMLPaths.LOGIN);
     }
     
    
@@ -194,9 +198,9 @@ public class ResetPasswordController extends BaseController {
      * @author Grigor Azakian
      */
     private void switchToScreenSaver() {
-        idleTimer.stop();
-        Instances.getScene().removeEventHandler(Event.ANY, handler);
-        switchScene(FXMLPaths.SCREENSAVER);
+        Instances.switchScene(FXMLPaths.SCREENSAVER);
     }
+
+
 
 }

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 
+import com.hotelco.devtools.TimerTool;
 import com.hotelco.entities.Reservation;
 import com.hotelco.entities.ReservationSystem;
 import com.hotelco.utilities.ReservationCalculator;
@@ -75,44 +76,52 @@ public class ReservationHistoryController extends BaseController {
      * Sets up the parameters for the data to be displayed in each TableColumn.
      * Afterwards, it calls displayOrders().
      */
-    @FXML
-    private void initialize() {
-        roomType.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getRoom().getRoomType().toPrettyString()));
-        orderNumber.setCellValueFactory(new PropertyValueFactory<Reservation, Integer>("reservationId"));
-        checkInDate.setCellValueFactory(new PropertyValueFactory<Reservation, LocalDate>("startDate"));
-        checkOutDate.setCellValueFactory(new PropertyValueFactory<Reservation, LocalDate>("endDate"));
-        status.setCellValueFactory(cell -> new SimpleStringProperty(
-            cell.getValue().getIsCancelled() ? "Cancelled" :
-            cell.getValue().getEndDate().isBefore(LocalDate.now()) ? "Completed" : 
-            "Active"));
-        total.setCellValueFactory(cell -> {
-            Reservation reservation = cell.getValue();
-            return new SimpleStringProperty("$" + ReservationCalculator.calcTotal(reservation).toString());
-        });
-        table.addEventFilter(MouseEvent.MOUSE_DRAGGED, Event::consume);
-        displayOrders();
+    @Override
+    void initialize() {
+            roomType.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getRoom().getRoomType().toPrettyString()));
+            orderNumber.setCellValueFactory(new PropertyValueFactory<Reservation, Integer>("reservationId"));
+            checkInDate.setCellValueFactory(new PropertyValueFactory<Reservation, LocalDate>("startDate"));
+            checkOutDate.setCellValueFactory(new PropertyValueFactory<Reservation, LocalDate>("endDate"));
+            status.setCellValueFactory(cell -> new SimpleStringProperty(
+                cell.getValue().getIsCancelled() ? "Cancelled" :
+                cell.getValue().getEndDate().isBefore(LocalDate.now()) ? "Completed" : 
+                "Active"));
+            total.setCellValueFactory(cell -> {
+                Reservation reservation = cell.getValue();
+                return new SimpleStringProperty("$" + ReservationCalculator.calcTotal(reservation).toString());
+            });
+            table.addEventFilter(MouseEvent.MOUSE_DRAGGED, Event::consume);      
+            TimerTool timerTool = new TimerTool(94);      
+            displayOrders();        
+            timerTool.print(96);
         Platform.runLater(() -> {
-            
+
         });
     }
+
+	@Override
+	void cleanup() {
+        table.getItems().clear();
+	}
 
     /**
      * Uses an array of reservations for the current user and passes it to the TableView.
      * This will set the data in each TableColumn.
      */
     private void displayOrders() {
-        Task<ObservableList<Reservation>> task = new Task<ObservableList<Reservation>>() {
+        Task<Void> task = new Task<Void>() {
             @Override
-            protected ObservableList<Reservation> call() throws Exception {
+            protected Void call() throws Exception {
                 Reservation reservation[] = ReservationSystem.getCurrentUser().getReservations();
                 Collections.reverse(Arrays.asList(reservation));
-                return FXCollections.observableArrayList(Arrays.asList(reservation));                
+                table.setItems(FXCollections.observableArrayList(Arrays.asList(reservation)));
+                return null;             
             }  
         };
 
-        task.setOnSucceeded(e -> {
-            table.setItems(task.getValue());
-        });
+        //TimerTool timerTool = new TimerTool(113);
+
+        //timerTool.print(118);
         
         new Thread(task).start();
     }

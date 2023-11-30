@@ -1,6 +1,7 @@
 package com.hotelco.utilities;
 
 import com.hotelco.constants.Constants;
+import com.hotelco.controllers.Instances;
 import com.hotelco.controllers.LoginController;
 import com.hotelco.entities.ReservationSystem;
 

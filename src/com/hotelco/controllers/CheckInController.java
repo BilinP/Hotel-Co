@@ -74,8 +74,9 @@ public class CheckInController extends BaseController {
      * Sets up the parameters for the data to be displayed in each TableColumn.
      * Afterwards, it calls displayOrders().
      */
-    @FXML
-    private void initialize() {
+    @Override
+    void initialize() {
+        Platform.runLater(() -> {
             roomType.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getRoom().getRoomType().toPrettyString()));
             orderNumber.setCellValueFactory(new PropertyValueFactory<Reservation, Integer>("reservationId"));
             checkInDate.setCellValueFactory(new PropertyValueFactory<Reservation, LocalDate>("startDate"));
@@ -83,11 +84,14 @@ public class CheckInController extends BaseController {
             total.setCellValueFactory(cell -> {
                 Reservation reservation = cell.getValue();
                 return new SimpleStringProperty("$" + ReservationCalculator.calcTotal(reservation).toString());
-            });
-            displayOrders();
-        Platform.runLater(() -> {
-            
+            });     
+            displayOrders();                   
         });
+    }
+
+    @Override
+    void cleanup(){
+        table.getItems().clear();
     }
 
     /**

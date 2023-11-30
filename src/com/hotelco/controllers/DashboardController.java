@@ -75,21 +75,21 @@ public class DashboardController extends BaseController {
      * It changes the anchor to the home and initalize each menu button
      * 
      */
-    @FXML
-    private void initialize() {
-        switchAnchor(FXMLPaths.HOME);
-         menubuttons[0] = bookRoomButton;
-         menubuttons[1] = cartButton;
-         menubuttons[2] = homeButton;
-         menubuttons[3] = profileButton;
-         menubuttons[4] = viewBookingButton;
-         buttonSelection(homeButton);
+    @Override
+    void initialize() {
         Platform.runLater(() -> {
-      
+            switchAnchor(FXMLPaths.HOME);
+            menubuttons[0] = bookRoomButton;
+            menubuttons[1] = cartButton;
+            menubuttons[2] = homeButton;
+            menubuttons[3] = profileButton;
+            menubuttons[4] = viewBookingButton;
+            buttonSelection(homeButton);      
         });
     }
 
-    
+    @Override
+    void cleanup() {}    
 
     
     /** 
@@ -120,7 +120,7 @@ public class DashboardController extends BaseController {
     @FXML
     void switchToLoginScene(MouseEvent event) {
         ReservationSystem.logout();
-        switchScene(FXMLPaths.LOGIN);
+        Instances.switchScene(FXMLPaths.LOGIN);
     }
 
     
@@ -163,7 +163,7 @@ public class DashboardController extends BaseController {
      * * current selection and the non current selection.
      * @param selectedButton The  button that is selected
      */
-    private void buttonSelection(Button selectedButton){
+    void buttonSelection(Button selectedButton){
         for(Button button: menubuttons){
             if(button!= null && button.equals(selectedButton)){
                 button.setStyle("-fx-text-fill: #3c4149;-fx-background-color:#f9bd1a;-fx-border-color: transparent;");
@@ -180,18 +180,15 @@ public class DashboardController extends BaseController {
      */
      public BaseController switchAnchor(String path){
         if(!path.equals(currentPath)){
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
-            try {
-                AnchorPane newContent = loader.load();
-                rightAnchor.getChildren().setAll(newContent);
-                return loader.getController();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            currentPath = path;
+            return Instances.switchAnchor(path, currentPath, rightAnchor);
         }
         return null;
     }
+
+
+
+
+
 }
 
 

@@ -69,22 +69,22 @@ public class ManagerDashboardController extends BaseController {
      * It changes the anchor to the home and initalize each menu button
      * 
      */
-    @FXML
-    private void initialize() {
-        switchAnchor(FXMLPaths.HOME);
-         menubuttons[0] = revenueButton;
-         menubuttons[1] = vacancyButton;
-         menubuttons[2] = reservationsButton;
-         menubuttons[3] = exportButton;
-         buttonSelection(revenueButton);
+    @Override
+    void initialize() {
+
         Platform.runLater(() -> {
-      
+            switchAnchor(FXMLPaths.HOME);
+            menubuttons[0] = revenueButton;
+            menubuttons[1] = vacancyButton;
+            menubuttons[2] = reservationsButton;
+            menubuttons[3] = exportButton;
+            buttonSelection(revenueButton);      
         });
     }
 
-    
+	@Override
+	void cleanup() {}
 
-    
     /** 
      * @param event
      */
@@ -113,7 +113,7 @@ public class ManagerDashboardController extends BaseController {
     @FXML
     void switchToLoginScene(MouseEvent event) {
         ReservationSystem.logout();
-        switchScene(FXMLPaths.LOGIN);
+        Instances.switchScene(FXMLPaths.LOGIN);
     }
 
     /**

@@ -4,7 +4,6 @@ import java.time.format.DateTimeFormatter;
 
 import com.hotelco.entities.Reservation;
 import com.hotelco.utilities.FXMLPaths;
-import com.hotelco.utilities.Instances;
 import com.hotelco.utilities.ReservationCalculator;
 
 import javafx.application.Platform;
@@ -56,13 +55,23 @@ public class ThankYouController extends BaseController {
     @FXML
     private Text total;    
 
-    @FXML
-    private void initialize() {
+    @Override
+    void initialize() {
         //add non JavaFX related code here
         Platform.runLater(() -> {
             //add JavaFX related code here
         });
     }
+
+	@Override
+	void cleanup() {
+        reservationNumber.setText("");
+        checkIn.setText("");
+        checkOut.setText("");
+        room.setText("");
+        thankYou.setText("");
+        total.setText("");
+	}
 
     /**
      * This method is called by pressing the 'BACK TO HOME' button.
@@ -89,5 +98,7 @@ public class ThankYouController extends BaseController {
         //TODO:Enable this for release version
         //EmailGenerator.reservationConfirmation(reservation);
     }
+
+
 
 }

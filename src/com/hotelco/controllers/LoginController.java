@@ -4,7 +4,6 @@ import com.hotelco.entities.ReservationSystem;
 import com.hotelco.entities.User;
 import com.hotelco.utilities.DatabaseUtil;
 import com.hotelco.utilities.FXMLPaths;
-import com.hotelco.utilities.Instances;
 import com.hotelco.utilities.Verifier;
 
 import javafx.animation.PauseTransition;
@@ -75,8 +74,9 @@ public class LoginController extends BaseController {
      * Rounds the corners of the beach ImageView upon initialization of the Controller.
      * @author Grigor Azakian
      */
-    @FXML
-    private void initialize() {     
+    @Override
+    void initialize() { 
+        Platform.runLater(() -> {
            Rectangle rectangle = new Rectangle(
                 image.getFitWidth(),
                 image.getFitHeight()
@@ -92,9 +92,19 @@ public class LoginController extends BaseController {
             clip.setX(imageRight.getFitWidth() / 2);
             image.setClip(rectangle);
             imageRight.setClip(clip);   
-             
-        Platform.runLater(() -> {
             email.getScene().getRoot().requestFocus(); 
+            initializeIdleTimer();
+        });
+    }
+
+    @Override
+    void cleanup() {
+        Platform.runLater(() -> {
+            notification.setText("");
+            email.setText("");
+            password.setText("");
+            idleTimer.stop();
+            Instances.getScene().removeEventHandler(Event.ANY, handler);            
         });
     }
 
@@ -115,13 +125,11 @@ public class LoginController extends BaseController {
         String emailStr = email.getText();
         if(DatabaseUtil.doesEmailExist(emailStr)){
             if (Verifier.verifyPassword(emailStr, password.getText())){
-                idleTimer.stop();
-                Instances.getScene().removeEventHandler(Event.ANY, handler);
                 ReservationSystem.setCurrentUser(new User(emailStr, true));
                 if(ReservationSystem.getCurrentUser().getIsManager()){
-                    switchScene(FXMLPaths.MANAGER_DASHBOARD);
+                    Instances.switchScene(FXMLPaths.MANAGER_DASHBOARD);
                 }else{
-                     switchScene(FXMLPaths.DASHBOARD);  
+                     Instances.switchScene(FXMLPaths.DASHBOARD);  
                 } 
                 
             }
@@ -143,15 +151,14 @@ public class LoginController extends BaseController {
      */
     @FXML
     private void switchToCreateAccount(MouseEvent event) {
-        idleTimer.stop();
-        Instances.getScene().removeEventHandler(Event.ANY, handler);
-        switchScene(FXMLPaths.CREATE_ACCOUNT);
+        //idleTimer.stop();
+        //Instances.getScene().removeEventHandler(Event.ANY, handler);
+        Instances.switchScene(FXMLPaths.CREATE_ACCOUNT);
     }
 
     @FXML
     void switchToResetPassword(MouseEvent event) {
-        ResetPasswordController rpc = (ResetPasswordController) switchScene(FXMLPaths.RESET_PASSWORD);
-        rpc.initializeIdleTimer();
+        Instances.switchScene(FXMLPaths.RESET_PASSWORD);
     }
     
     /**
@@ -208,7 +215,8 @@ public class LoginController extends BaseController {
     private void switchToScreenSaver() {
         idleTimer.stop();
         Instances.getScene().removeEventHandler(Event.ANY, handler);
-        switchScene(FXMLPaths.SCREENSAVER);
+        Instances.switchScene(FXMLPaths.SCREENSAVER);
     }
+
 
 }

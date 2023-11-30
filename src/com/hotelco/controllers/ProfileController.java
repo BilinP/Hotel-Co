@@ -55,22 +55,30 @@ public class ProfileController extends BaseController {
      * 'first','last','number' to what is stored in the database.It as well sets 
      * a formatter for the 'number', 'first', and 'email'.
      */
-    @FXML
-    private void initialize() {     
-        TextFormatters textFormatters = new TextFormatters();
-        user = ReservationSystem.getCurrentUser();
-        number.setTextFormatter(textFormatters.PHONE_NUMBER);
-        first.setTextFormatter(textFormatters.FIRST_NAME);
-        first.setFocusTraversable(true);
-        last.setTextFormatter(textFormatters.LAST_NAME);
-        email.setText(user.getEmail());
-        first.setText(user.getFirstName());
-        last.setText(user.getLastName());
-        number.setText(user.getPhone());        
+    @Override
+    void initialize() {   
+        TextFormatters textFormatters = new TextFormatters();  
         Platform.runLater(() -> {
-
+            user = ReservationSystem.getCurrentUser();
+            number.setTextFormatter(textFormatters.PHONE_NUMBER);
+            first.setTextFormatter(textFormatters.FIRST_NAME);
+            first.setFocusTraversable(true);
+            last.setTextFormatter(textFormatters.LAST_NAME);
+            email.setText(user.getEmail());
+            first.setText(user.getFirstName());
+            last.setText(user.getLastName());
+            number.setText(user.getPhone()); 
         });
     }
+
+	@Override
+	void cleanup() {
+        user = null;
+        number.setText("");
+        first.setText("");
+        last.setText("");
+        email.setText("");
+	}
 
     @FXML
     private void saveProfileContent(MouseEvent event) {
@@ -81,5 +89,7 @@ public class ProfileController extends BaseController {
         user.setPhone(number.getText());
         user.push();
     }
+
+
 
 }

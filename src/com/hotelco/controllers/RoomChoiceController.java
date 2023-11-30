@@ -4,7 +4,6 @@ import com.hotelco.constants.Constants;
 import com.hotelco.constants.RoomType;
 import com.hotelco.utilities.DatabaseUtil;
 import com.hotelco.utilities.FXMLPaths;
-import com.hotelco.utilities.Instances;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -96,8 +95,9 @@ public class RoomChoiceController extends BaseController {
      * Called upon controller creation.
      * Sets up various text fields.
      */
-    @FXML
-    private void initialize() {
+    @Override
+    void initialize() {
+        Platform.runLater(() -> {
             kingRate.setText("$" + DatabaseUtil.getRate(RoomType.KING).toString());
             queenRate.setText("$" + DatabaseUtil.getRate(RoomType.QUEEN).toString());
             dblRate.setText("$" + DatabaseUtil.getRate(RoomType.DBL).toString());
@@ -106,11 +106,14 @@ public class RoomChoiceController extends BaseController {
             queenFlavor.setText(Constants.QueenRoomFlavor);
             dblFlavor.setText(Constants.DblRoomFlavor);
             suiteFlavor.setText(Constants.SuiteRoomFlavor);
-        Platform.runLater(() -> {
-
-
         });
     }
+
+	@Override
+	void cleanup() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'cleanup'");
+	}
 
     /**
      * This method is called by pressing any of the 'BOOK' buttons.
@@ -124,5 +127,7 @@ public class RoomChoiceController extends BaseController {
          ReservationController rc = (ReservationController) Instances.getDashboardController().switchAnchor(FXMLPaths.RESERVATION);
          rc.setRoomType(roomType);
     }
+
+
 
 }

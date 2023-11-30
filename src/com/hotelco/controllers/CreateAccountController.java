@@ -84,9 +84,10 @@ public class CreateAccountController extends BaseController {
      * It assigns TextFormatters to several TextFields to handle input verification.
      * As well makes it so the corners of the pictures are rounded.
      */
-    @FXML
-    private void initialize() {
+    @Override
+    void initialize() {
         TextFormatters textFormatters = new TextFormatters();
+        Platform.runLater(() -> { 
             phoneNumber.setTextFormatter(textFormatters.PHONE_NUMBER);
             firstName.setTextFormatter(textFormatters.FIRST_NAME);
             lastName.setTextFormatter(textFormatters.LAST_NAME);
@@ -103,11 +104,21 @@ public class CreateAccountController extends BaseController {
             rectangle.setArcWidth(50);
             rectangle.setArcHeight(50);
             image.setClip(rectangle);
-            imageRight.setClip(clip);        
-        Platform.runLater(() -> {
+            imageRight.setClip(clip);               
             email.getScene().getRoot().requestFocus(); 
         });
     }
+
+    @Override
+	void cleanup() {
+        phoneNumber.setText("");
+        firstName.setText("");
+        lastName.setText("");
+        email.setText("");
+        password.setText("");
+        confirmPassword.setText("");
+        notification.setText("");
+	}
 
     /**
      * This method is called when pressing the 'Register' button.
@@ -157,13 +168,13 @@ public class CreateAccountController extends BaseController {
             return;
         }
 
-        LoginController loginController = (LoginController) switchScene(FXMLPaths.LOGIN);
+        Instances.switchScene(FXMLPaths.LOGIN);
 
         User newUser = new User(firstName.getText(), lastName.getText(),email.getText(), phoneNumber.getText());
         newUser.push(password.getText());
         newUser.fetch(false);
         ReservationSystem.setCurrentUser(newUser);
-        loginController.setNotification("Account successfully created!", Color.GREEN);
+        //loginController.setNotification("Account successfully created!", Color.GREEN);
 
     }
     
@@ -176,7 +187,7 @@ public class CreateAccountController extends BaseController {
      */
     @FXML
     private void switchToLoginScene(MouseEvent event) {
-        switchScene(FXMLPaths.LOGIN);
+        Instances.switchScene(FXMLPaths.LOGIN);
     }
 
 }
