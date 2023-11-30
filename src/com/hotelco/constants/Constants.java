@@ -96,4 +96,6 @@ public final class Constants {
      * after no input.
      */
     public static final Integer SCREENSAVER_TIMEOUT = 100;
+
+    public static final Boolean DEBUG_MODE = true;
 }

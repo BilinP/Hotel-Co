@@ -1,12 +1,16 @@
 package com.hotelco.application;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 
+import com.hotelco.constants.Constants;
+import com.hotelco.constants.RoomType;
 import com.hotelco.controllers.LoginController;
 import com.hotelco.utilities.DailyTask;
+import com.hotelco.utilities.DatabaseUtil;
 import com.hotelco.utilities.FXMLPaths;
 import com.hotelco.utilities.FrequentTask;
 import com.hotelco.utilities.IdleTimer;
@@ -37,6 +41,9 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		
 		try {
+			if (Constants.DEBUG_MODE){
+				DebugMode.sandbox();
+			}
 			DailyTask.scheduleDailyTasks();
 			FrequentTask.scheduleFrequentTasks();
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXMLPaths.LOGIN));
