@@ -1,5 +1,6 @@
 package com.hotelco.utilities;
 
+import com.hotelco.constants.DatabaseStatus;
 import com.hotelco.constants.RoomType;
 import com.hotelco.entities.Reservation;
 import com.hotelco.entities.ReservationSystem;
@@ -40,7 +41,7 @@ public class DatabaseUtil{
             System.out.println("doesIdExist()");
             System.out.println(e);
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
         return result;
     }
     /**
@@ -69,7 +70,7 @@ public class DatabaseUtil{
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
         return result;
     };
 
@@ -99,7 +100,7 @@ public class DatabaseUtil{
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
         return rate;
     }
 
@@ -239,7 +240,7 @@ public class DatabaseUtil{
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
         return result;
     }
     /**
@@ -308,7 +309,7 @@ public class DatabaseUtil{
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
         return result;
     }
     /**
@@ -347,7 +348,7 @@ public class DatabaseUtil{
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
         return result;
     }
     /**
@@ -371,7 +372,7 @@ public class DatabaseUtil{
             while(rs.next()){
                 reservationList.add(
                     new Reservation(rs.getInt("reservation_id"), true));
-                ReservationSystem.processing();
+                DatabaseUtil.processing();
             }
             result = new Reservation[reservationList.size()];
             reservationList.toArray(result);
@@ -382,7 +383,7 @@ public class DatabaseUtil{
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
         return result;
     }
     /**
@@ -406,7 +407,7 @@ public class DatabaseUtil{
             while(rs.next()){
                 reservationList.add(
                     new Reservation(rs.getInt("reservation_id"), true));
-                ReservationSystem.processing();
+                DatabaseUtil.processing();
             }
             result = new Reservation[reservationList.size()];
             reservationList.toArray(result);
@@ -417,7 +418,7 @@ public class DatabaseUtil{
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
         return result;
     };
 
@@ -440,7 +441,7 @@ public class DatabaseUtil{
             while(rs.next()){
                 reservationList.add(
                     new Reservation(rs.getInt("reservation_id"), withReservations));
-                ReservationSystem.processing();
+                DatabaseUtil.processing();
             }
             result = new Reservation[reservationList.size()];
             reservationList.toArray(result);
@@ -451,7 +452,7 @@ public class DatabaseUtil{
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
         return result;
     }
 
@@ -477,7 +478,7 @@ public class DatabaseUtil{
             while(rs.next()){
                 reservationList.add(
                     new Reservation(rs.getInt("reservation_id"), true));
-                ReservationSystem.processing();
+                DatabaseUtil.processing();
             }
             result = new Reservation[reservationList.size()];
             reservationList.toArray(result);
@@ -488,7 +489,7 @@ public class DatabaseUtil{
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
         return result;
     };
 
@@ -517,7 +518,7 @@ public class DatabaseUtil{
             while(rs.next()){
                 reservationList.add(
                     new Reservation(rs.getInt("reservation_id"), withUserReservations));
-                ReservationSystem.processing();
+                DatabaseUtil.processing();
             }
             result = new Reservation[reservationList.size()];
             reservationList.toArray(result);
@@ -528,7 +529,7 @@ public class DatabaseUtil{
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
         return result;
     }
 
@@ -555,7 +556,19 @@ public class DatabaseUtil{
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
         return result;
+    }
+    /**
+     * Sets the Database status as READY
+     */
+    public static void ready(){
+        ReservationSystem.setDatabaseStatus(DatabaseStatus.READY);
+    }
+    /**
+     * Sets the Database status as PROCESSING
+     */
+    public static void processing(){
+        ReservationSystem.setDatabaseStatus(DatabaseStatus.PROCESSING);
     }
 }

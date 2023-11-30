@@ -9,7 +9,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-
+import com.hotelco.utilities.DatabaseUtil;
 import com.hotelco.utilities.EmailGenerator;
 
 /**
@@ -272,17 +272,17 @@ public class Reservation {
             rs = ps.executeQuery();
             if(rs.next()){
                 room = new Room(rs.getInt("room_num"));
-                ReservationSystem.processing();
+                DatabaseUtil.processing();
                 startDate = rs.getDate("start_date").toLocalDate();
                 endDate = rs.getDate("end_date").toLocalDate();
                 user = new User(rs.getInt("user_id"), withUserReservations);
-                ReservationSystem.processing();
+                DatabaseUtil.processing();
                 isCancelled = rs.getBoolean("is_cancelled");
                 isCheckedIn = rs.getBoolean("is_checked_in");
                 isCheckedOut = rs.getBoolean("is_checked_out");
                 groupSize = rs.getInt("group_size");
                 fetchInvoiceDetails();
-                ReservationSystem.processing();
+                DatabaseUtil.processing();
                 comments = rs.getString("comments");
             }
         }
@@ -292,7 +292,7 @@ public class Reservation {
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
     }
     /**
      * Populates this reservations' invoice details from the database
@@ -328,7 +328,7 @@ public class Reservation {
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
     }
 
     /**
@@ -362,7 +362,7 @@ public class Reservation {
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
     }
     /**
      * Updates the reservation object's data in the database.
@@ -394,7 +394,7 @@ public class Reservation {
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
     }
     /**
      * Fetches the adjustments associated with this reservation from the
@@ -428,7 +428,7 @@ public class Reservation {
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
         return result;
     }
     /**
@@ -453,7 +453,7 @@ public class Reservation {
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
     }
     public void createNewAdjustment(Adjustment adjustment){
         pushNewAdjustment(adjustment);
@@ -570,5 +570,6 @@ public class Reservation {
             }
             isCheckedOut = true;
         }
+        push();
     }
 }
