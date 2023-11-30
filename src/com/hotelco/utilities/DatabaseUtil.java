@@ -1,8 +1,10 @@
 package com.hotelco.utilities;
 
+import com.hotelco.constants.DatabaseStatus;
 import com.hotelco.constants.RoomType;
 import com.hotelco.entities.Reservation;
 import com.hotelco.entities.ReservationSystem;
+import com.hotelco.entities.User;
 
 import java.math.BigDecimal;
 import java.sql.*;
@@ -39,7 +41,7 @@ public class DatabaseUtil{
             System.out.println("doesIdExist()");
             System.out.println(e);
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
         return result;
     }
     /**
@@ -68,12 +70,12 @@ public class DatabaseUtil{
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
         return result;
     };
 
     /**
-     * Gets the rate from the database for the supplied RoomType
+     * Gets the rate from the database for the supplied RoomType.
      * @param roomType the room type for this rate request 
      * @return the rate of this room type
      */
@@ -98,8 +100,105 @@ public class DatabaseUtil{
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
         return rate;
+    }
+
+    /**
+     * Helper function that starts a recursive search for availability ranges
+     * @param startDate start date to check, inclusive
+     * @param endDate end date to check, exclusive
+     * @param roomtype room type  for which to check availabilities
+     * @return a start-date-based array of availabilities for the supplied range
+     */
+    public static Boolean[] binaryAvailabilitySearch(
+        LocalDate startDate, LocalDate endDate, RoomType roomtype){
+        Boolean result[] = new Boolean[0];
+        Long left = startDate.toEpochDay();
+        Long right = endDate.toEpochDay() - 1;
+
+        ArrayList<Boolean> availabilities = getAvailableDays(left, right, roomtype);
+
+        result = new Boolean[availabilities.size()];
+        availabilities.toArray(result);
+
+        return result;
+    }
+
+    /**
+     * Gets a today-based array of availabilities for the supplied number of days
+     * and {@link RoomType}. For just today's availability, set numDays = 0.
+     * @param numDays number of days into the future for which to retreive
+     * availabilities
+     * @param roomType room type for which to check availabilities
+     * @return a today-based array of availabilities for the supplied number of
+     * days
+     */
+    public static Boolean[] getAvailabilities(Integer numDays, RoomType roomType){
+        LocalDate today = LocalDate.now();
+
+        return binaryAvailabilitySearch(today, today.plusDays(numDays), roomType);
+    }
+
+    /**
+     * Recursive check for availabilities.
+     * @param left epoch day of leftmost date to check
+     * @param right epoch day of rightmost date to check
+     * @param roomType room type for which to check availabilities
+     * @return a list of availabilities for the supplied range
+     */
+    public static ArrayList<Boolean> getAvailableDays(
+        Long left, Long right, RoomType roomType){
+        ArrayList<Boolean> result = new ArrayList<Boolean>();
+        ArrayList<Boolean> lowList = new ArrayList<Boolean>();
+        ArrayList<Boolean> highList = new ArrayList<Boolean>();
+        Long numDays = right - left + 1;
+        Long low, high, lowLen, highLen;
+
+        if(checkAvailability(
+            LocalDate.ofEpochDay(left), LocalDate.ofEpochDay(right + 1), roomType)){
+                System.out.println(
+                    LocalDate.ofEpochDay(left) + " - " + LocalDate.ofEpochDay(right));
+            for (int i = 0; i <= numDays; i++){
+                result.add(true);
+            }
+            return result;
+        }
+        else if (numDays == 1){
+            result.add(false);
+            return result;
+        }
+        
+        high = left + numDays/2;
+        low = high - 1;
+        
+
+        if (checkAvailability(
+            LocalDate.ofEpochDay(left), LocalDate.ofEpochDay(low + 1), roomType)){
+            lowLen = low - left + 1;
+            for (int i = 0; i < lowLen; i++){
+                lowList.add(true);
+            }
+        }
+        else {
+            lowList.addAll(getAvailableDays(left, low, roomType));
+        }
+
+        if (checkAvailability(
+            LocalDate.ofEpochDay(high), LocalDate.ofEpochDay(left + numDays), roomType)){
+            highLen = right - high + 1;
+            for (int i = 0; i < highLen; i++){
+                highList.add(true);
+            }
+        }
+        else {
+            highList.addAll(getAvailableDays(high, left + numDays - 1, roomType));
+        }
+
+        result.addAll(lowList);
+        result.addAll(highList);
+        
+        return result;
     }
     /**
      * Checks the availability of a room type within a given date.
@@ -141,7 +240,7 @@ public class DatabaseUtil{
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
         return result;
     }
     /**
@@ -210,37 +309,7 @@ public class DatabaseUtil{
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
-        ReservationSystem.ready();
-        return result;
-    }
-    /**
-     * Gets an Integer for the total amount of rooms in the database by room type
-     * @param roomType the room type to count
-     * @return the total amount of rooms of the supplied room type
-     */
-    public static Integer countRooms(RoomType roomType){
-        Integer result = 0;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        String sqlQuery = "SELECT COUNT(room_num) " +
-            "AS total FROM rooms WHERE room_type = '" +
-            roomType.toString() + "'";;
-        Connection con = ReservationSystem.getDatabaseConnection();
-    
-        try {
-            ps = con.prepareStatement(sqlQuery);
-            rs = ps.executeQuery();
-            if(rs.next()){
-                result = rs.getInt("total");
-            }
-        }
-        catch (SQLException e){
-            System.out.println("DatabaseUtil.countRooms()");
-            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
-            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
-            System.out.println(e);
-        }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
         return result;
     }
     /**
@@ -279,7 +348,7 @@ public class DatabaseUtil{
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
         return result;
     }
     /**
@@ -303,7 +372,7 @@ public class DatabaseUtil{
             while(rs.next()){
                 reservationList.add(
                     new Reservation(rs.getInt("reservation_id"), true));
-                ReservationSystem.processing();
+                DatabaseUtil.processing();
             }
             result = new Reservation[reservationList.size()];
             reservationList.toArray(result);
@@ -314,7 +383,7 @@ public class DatabaseUtil{
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
         return result;
     }
     /**
@@ -338,7 +407,7 @@ public class DatabaseUtil{
             while(rs.next()){
                 reservationList.add(
                     new Reservation(rs.getInt("reservation_id"), true));
-                ReservationSystem.processing();
+                DatabaseUtil.processing();
             }
             result = new Reservation[reservationList.size()];
             reservationList.toArray(result);
@@ -349,7 +418,7 @@ public class DatabaseUtil{
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
         return result;
     };
 
@@ -372,7 +441,7 @@ public class DatabaseUtil{
             while(rs.next()){
                 reservationList.add(
                     new Reservation(rs.getInt("reservation_id"), withReservations));
-                ReservationSystem.processing();
+                DatabaseUtil.processing();
             }
             result = new Reservation[reservationList.size()];
             reservationList.toArray(result);
@@ -383,9 +452,46 @@ public class DatabaseUtil{
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
         return result;
     }
+
+    /**
+     * Gets the current user's potential check-ins.
+     * @return the current user's reservations from today.
+     */
+    public static Reservation[] getUserCheckIns(User user){
+        ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
+        Reservation[] result = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sqlQuery = "SELECT * " + 
+            "FROM reservations " + 
+            "WHERE start_date = '" + Date.valueOf(LocalDate.now()) + "' " +
+            "AND user_id = " + user.getUserId() + " " +
+            "AND is_checked_in = 0";
+        Connection con = ReservationSystem.getDatabaseConnection();
+    
+        try {
+            ps = con.prepareStatement(sqlQuery);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                reservationList.add(
+                    new Reservation(rs.getInt("reservation_id"), true));
+                DatabaseUtil.processing();
+            }
+            result = new Reservation[reservationList.size()];
+            reservationList.toArray(result);
+        }
+        catch (SQLException e){
+            System.out.println("DatabaseUtil.getTodayCheckIns()");
+            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
+            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
+            System.out.println(e);
+        }
+        DatabaseUtil.ready();
+        return result;
+    };
 
     /**
      * Gets all active reservations in the database. This includes reservations
@@ -412,20 +518,25 @@ public class DatabaseUtil{
             while(rs.next()){
                 reservationList.add(
                     new Reservation(rs.getInt("reservation_id"), withUserReservations));
-                ReservationSystem.processing();
+                DatabaseUtil.processing();
             }
             result = new Reservation[reservationList.size()];
             reservationList.toArray(result);
         }
         catch (SQLException e){
-            System.out.println("DatabaseUtil.getAllReservations()");
+            System.out.println("DatabaseUtil.getActiveReservations()");
             System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
         return result;
     }
+
+    /**
+     * Gets all active reservations from the database
+     * @return all active reservations in the databse
+     */
     public static ResultSet getActiveReservationsRS(){
         PreparedStatement ps = null;
         ResultSet result = null;
@@ -440,234 +551,24 @@ public class DatabaseUtil{
             result = ps.executeQuery();
         }
         catch (SQLException e){
-            System.out.println("DatabaseUtil.getAllReservationsRS()");
+            System.out.println("DatabaseUtil.getActiveReservationsRS()");
             System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
         return result;
     }
     /**
-     * Finds the amount of vacant rooms at the current date
-     * @return the number of vacant rooms
+     * Sets the Database status as READY
      */
-    public static Integer findVacantRoomSize(){
-        
-        Integer result = 0;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        String sqlQuery = "SELECT room_num " + 
-            "FROM rooms " + 
-            "WHERE room_num NOT IN (" + 
-                "SELECT room_num " + 
-                "FROM reservations " + 
-                "WHERE start_date < '" + Date.valueOf(LocalDate.now()) +
-                "' OR end_date >= '" + Date.valueOf(LocalDate.now()) + "') "; 
-        Connection con = ReservationSystem.getDatabaseConnection();
-
-        try {
-            ps = con.prepareStatement(sqlQuery);
-            rs = ps.executeQuery();
-            if(rs.next()){
-                result++;
-            }
-        }
-        catch (SQLException e){
-            System.out.println("ReservationSystem.findEmptyRoom()");
-            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
-            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
-            System.out.println(e);
-        }
-        ReservationSystem.ready();
-        return result;
-
+    public static void ready(){
+        ReservationSystem.setDatabaseStatus(DatabaseStatus.READY);
     }
     /**
-     * Gives the amount of revenue made within the current day
-     * @return revenue
+     * Sets the Database status as PROCESSING
      */
-    public static BigDecimal getTodayRevenue(){
-        
-        BigDecimal result = new BigDecimal(0);
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        String sqlQuery = "SELECT amount " + 
-            "FROM payments " + 
-            "WHERE time > '" + Date.valueOf(LocalDate.now()) + "'";
-            System.out.println(sqlQuery);
-        Connection con = ReservationSystem.getDatabaseConnection();
-
-        try {
-            ps = con.prepareStatement(sqlQuery);
-            rs = ps.executeQuery();
-            while(rs.next()){
-                result = result.add(rs.getBigDecimal("amount"));
-            }
-        }
-        catch (SQLException e){
-            System.out.println("DatabaseUtil.getTodayRevenue()");
-            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
-            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
-            System.out.println(e);
-        }
-        ReservationSystem.ready();
-        return result;
-    }
-    /**
-     * Gives an integer for the number of check-ins within the current day
-     * @return number of check-ins
-     */
-    public static Integer countTodayCheckIns(){   
-        Integer result = 0;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        String sqlQuery = "SELECT COUNT(*) AS total " + 
-            "FROM reservations " + 
-            "WHERE startDate = '" + Date.valueOf(LocalDate.now()) + "'";
-            System.out.println(sqlQuery);
-        Connection con = ReservationSystem.getDatabaseConnection();
-
-        try {
-            ps = con.prepareStatement(sqlQuery);
-            rs = ps.executeQuery();
-            if(rs.next()){
-                result = rs.getInt("total");
-            }
-        }
-        catch (SQLException e){
-            System.out.println("DatabaseUtil.countTodayCheckIns()");
-            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
-            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
-            System.out.println(e);
-        }
-        ReservationSystem.ready();
-        return result;
-    }
-    /**
-     * Counts the amount of available rooms within the current day
-     * @return number of available rooms
-     */
-    public static Integer countAvailableRooms(RoomType roomType){
-        Integer result = 0;
-        LocalDate today = LocalDate.now();
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        String sqlQuery =
-            "SELECT COUNT(room_num) as total " +
-            "FROM (" +
-                "SELECT room_num " +
-                "FROM rooms " +
-                "WHERE room_num " +
-                "NOT IN (" +
-                    "SELECT room_num " + 
-                    "FROM reservations " +
-                    "WHERE start_date <= '" + Date.valueOf(today) + "' " +
-                    "AND end_date > '" + Date.valueOf(today) + "') " +
-                "AND room_type = '" + roomType.toString() + "') " +
-                "AS T";
-        Connection con = ReservationSystem.getDatabaseConnection();
-
-        try {
-            ps = con.prepareStatement(sqlQuery);
-            rs = ps.executeQuery();
-            if(rs.next()){
-                result = rs.getInt("total");
-            }
-        }
-        catch (SQLException e){
-            System.out.println("DatabaseUtil.countAvailableRooms()");
-            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
-            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
-            System.out.println(e);
-        }
-        ReservationSystem.ready();
-        return result;
-    }
-    /**
-     * Gets the lifetime revenue of the hotel
-     * @return the lifetime revenue of the hotel
-     */
-    public static BigDecimal getLifetimeRevenue(){   
-        BigDecimal result = new BigDecimal(0);
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        String sqlQuery = "SELECT SUM(amount) AS total FROM payments";
-        Connection con = ReservationSystem.getDatabaseConnection();
-
-        try {
-            ps = con.prepareStatement(sqlQuery);
-            rs = ps.executeQuery();
-            if(rs.next())
-            result = rs.getBigDecimal("total");
-        }
-        catch (SQLException e){
-            System.out.println("DatabaseUtil.getLifetimeRevenue()");
-            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
-            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
-            System.out.println(e);
-        }
-        ReservationSystem.ready();
-        return result;
-    }
-
-    /**
-     * Gets the revenue based on the number of days in the past. Ex: For daily 
-     * revenue report, numDays should be 1, 7 for a weekly report, etc.
-     * @param numDays the number of days for which to generate this report
-     * @return revenue during the supplied period
-     */
-    public static BigDecimal getRevenue(Integer numDays){   
-        BigDecimal result = new BigDecimal(0);
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        LocalDate startDate = LocalDate.now().minusDays(numDays);
-        String sqlQuery = "SELECT SUM(amount) AS total FROM payments " +
-            "WHERE DATE(time) > '" + Date.valueOf(startDate) + "'";
-        Connection con = ReservationSystem.getDatabaseConnection();
-        try {
-            ps = con.prepareStatement(sqlQuery);
-            rs = ps.executeQuery();
-            if(rs.next())
-            result = rs.getBigDecimal("total");
-        }
-        catch (SQLException e){
-            System.out.println("DatabaseUtil.getRevenue()");
-            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
-            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
-            System.out.println(e);
-        }
-        ReservationSystem.ready();
-        return result;
-    }
-
-    /**
-     * Gets the daily revenue of the hotel collected thus far
-     * @return the daily revenue of the hotel collected thus far
-     */
-    public static BigDecimal getDailyRevenue(){
-        return getRevenue(1);
-    }
-
-    /**
-     * Gets the weekly revenue of the hotel collected thus far
-     * @return the weekly revenue of the hotel collected thus far
-     */
-    public static BigDecimal getWeeklyRevenue(){
-        return getRevenue(LocalDate.now().getDayOfWeek().getValue());
-    }
-    /**
-     * Gets the monthly revenue of the hotel collected thus far
-     * @return the monthly revenue of the hotel collected thus far
-     */
-    public static BigDecimal getMonthlyRevenue(){
-        return getRevenue(LocalDate.now().getDayOfMonth());
-    }
-    /**
-     * Gets the annual revenue of the hotel collected thus far
-     * @return the annual revenue of the hotel collected thus far
-     */
-    public static BigDecimal getYearlyRevenue(){
-        return getRevenue(LocalDate.now().getDayOfYear());
+    public static void processing(){
+        ReservationSystem.setDatabaseStatus(DatabaseStatus.PROCESSING);
     }
 }

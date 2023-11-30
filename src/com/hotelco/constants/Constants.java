@@ -96,4 +96,9 @@ public final class Constants {
      * after no input.
      */
     public static final Integer SCREENSAVER_TIMEOUT = 100;
+
+    /**
+     * Whether to enter developer mode or not
+     */
+    public static final Boolean DEV_MODE = false;
 }

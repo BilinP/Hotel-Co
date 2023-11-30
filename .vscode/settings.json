@@ -23,5 +23,6 @@
     "editor.rulers": [
         80
     ],
-    "java.dependency.packagePresentation": "hierarchical"
+    "java.dependency.packagePresentation": "hierarchical",
+    "java.debug.settings.showQualifiedNames": false
 }
