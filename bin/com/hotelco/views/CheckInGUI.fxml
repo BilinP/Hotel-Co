@@ -48,7 +48,7 @@
                   <Insets left="5.0" />
                </padding>
             </TableView>
-            <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="140.0" styleClass="yellowButton" stylesheets="@../stylesheets/ButtonSS.css" text="Check-In">
+            <Button mnemonicParsing="false" onMouseReleased="#checkIn" prefHeight="40.0" prefWidth="140.0" styleClass="yellowButton" stylesheets="@../stylesheets/ButtonSS.css" text="Check-In">
                <VBox.margin>
                   <Insets left="700.0" top="40.0" />
                </VBox.margin>

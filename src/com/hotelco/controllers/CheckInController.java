@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import com.hotelco.entities.Reservation;
-
+import com.hotelco.entities.ReservationSystem;
 import com.hotelco.utilities.DatabaseUtil;
 import com.hotelco.utilities.ReservationCalculator;
 
@@ -98,7 +98,7 @@ public class CheckInController extends BaseController {
         Task<ObservableList<Reservation>> task = new Task<ObservableList<Reservation>>() {
             @Override
             protected ObservableList<Reservation> call() throws Exception {
-                Reservation reservation[] = DatabaseUtil.getTodayCheckIns();
+                Reservation reservation[] = re;
                 Collections.reverse(Arrays.asList(reservation));
                 return FXCollections.observableArrayList(Arrays.asList(reservation));                
             }  
@@ -142,6 +142,7 @@ public class CheckInController extends BaseController {
 
     @FXML
     void checkIn(MouseEvent event) {
+        System.out.print("hi");
         for (Reservation reservation : selectedReservations) {
              reservation.setIsCheckedIn(true);
              reservation.push();
