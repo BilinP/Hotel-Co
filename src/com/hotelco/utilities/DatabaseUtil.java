@@ -3,6 +3,7 @@ package com.hotelco.utilities;
 import com.hotelco.constants.RoomType;
 import com.hotelco.entities.Reservation;
 import com.hotelco.entities.ReservationSystem;
+import com.hotelco.entities.User;
 
 import java.math.BigDecimal;
 import java.sql.*;
@@ -73,7 +74,7 @@ public class DatabaseUtil{
     };
 
     /**
-     * Gets the rate from the database for the supplied RoomType
+     * Gets the rate from the database for the supplied RoomType.
      * @param roomType the room type for this rate request 
      * @return the rate of this room type
      */
@@ -100,6 +101,103 @@ public class DatabaseUtil{
         }
         ReservationSystem.ready();
         return rate;
+    }
+
+    /**
+     * Helper function that starts a recursive search for availability ranges
+     * @param startDate start date to check, inclusive
+     * @param endDate end date to check, exclusive
+     * @param roomtype room type  for which to check availabilities
+     * @return a start-date-based array of availabilities for the supplied range
+     */
+    public static Boolean[] binaryAvailabilitySearch(
+        LocalDate startDate, LocalDate endDate, RoomType roomtype){
+        Boolean result[] = new Boolean[0];
+        Long left = startDate.toEpochDay();
+        Long right = endDate.toEpochDay() - 1;
+
+        ArrayList<Boolean> availabilities = getAvailableDays(left, right, roomtype);
+
+        result = new Boolean[availabilities.size()];
+        availabilities.toArray(result);
+
+        return result;
+    }
+
+    /**
+     * Gets a today-based array of availabilities for the supplied number of days
+     * and {@link RoomType}. For just today's availability, set numDays = 0.
+     * @param numDays number of days into the future for which to retreive
+     * availabilities
+     * @param roomType room type for which to check availabilities
+     * @return a today-based array of availabilities for the supplied number of
+     * days
+     */
+    public static Boolean[] getAvailabilities(Integer numDays, RoomType roomType){
+        LocalDate today = LocalDate.now();
+
+        return binaryAvailabilitySearch(today, today.plusDays(numDays), roomType);
+    }
+
+    /**
+     * Recursive check for availabilities.
+     * @param left epoch day of leftmost date to check
+     * @param right epoch day of rightmost date to check
+     * @param roomType room type for which to check availabilities
+     * @return a list of availabilities for the supplied range
+     */
+    public static ArrayList<Boolean> getAvailableDays(
+        Long left, Long right, RoomType roomType){
+        ArrayList<Boolean> result = new ArrayList<Boolean>();
+        ArrayList<Boolean> lowList = new ArrayList<Boolean>();
+        ArrayList<Boolean> highList = new ArrayList<Boolean>();
+        Long numDays = right - left + 1;
+        Long low, high, lowLen, highLen;
+
+        if(checkAvailability(
+            LocalDate.ofEpochDay(left), LocalDate.ofEpochDay(right + 1), roomType)){
+                System.out.println(
+                    LocalDate.ofEpochDay(left) + " - " + LocalDate.ofEpochDay(right));
+            for (int i = 0; i <= numDays; i++){
+                result.add(true);
+            }
+            return result;
+        }
+        else if (numDays == 1){
+            result.add(false);
+            return result;
+        }
+        
+        high = left + numDays/2;
+        low = high - 1;
+        
+
+        if (checkAvailability(
+            LocalDate.ofEpochDay(left), LocalDate.ofEpochDay(low + 1), roomType)){
+            lowLen = low - left + 1;
+            for (int i = 0; i < lowLen; i++){
+                lowList.add(true);
+            }
+        }
+        else {
+            lowList.addAll(getAvailableDays(left, low, roomType));
+        }
+
+        if (checkAvailability(
+            LocalDate.ofEpochDay(high), LocalDate.ofEpochDay(left + numDays), roomType)){
+            highLen = right - high + 1;
+            for (int i = 0; i < highLen; i++){
+                highList.add(true);
+            }
+        }
+        else {
+            highList.addAll(getAvailableDays(high, left + numDays - 1, roomType));
+        }
+
+        result.addAll(lowList);
+        result.addAll(highList);
+        
+        return result;
     }
     /**
      * Checks the availability of a room type within a given date.
@@ -329,7 +427,6 @@ public class DatabaseUtil{
         String sqlQuery = "SELECT * " + 
             "FROM reservations " + 
             "WHERE start_date = '" + Date.valueOf(LocalDate.now()) + "' " +
-            "AND user_id = " + ReservationSystem.getCurrentUser().getUserId() + " " +
             "AND is_checked_in = 0";
         Connection con = ReservationSystem.getDatabaseConnection();
     
@@ -389,6 +486,43 @@ public class DatabaseUtil{
     }
 
     /**
+     * Gets the current user's potential check-ins.
+     * @return the current user's reservations from today.
+     */
+    public static Reservation[] getUserCheckIns(User user){
+        ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
+        Reservation[] result = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sqlQuery = "SELECT * " + 
+            "FROM reservations " + 
+            "WHERE start_date = '" + Date.valueOf(LocalDate.now()) + "' " +
+            "AND user_id = " + user.getUserId() + " " +
+            "AND is_checked_in = 0";
+        Connection con = ReservationSystem.getDatabaseConnection();
+    
+        try {
+            ps = con.prepareStatement(sqlQuery);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                reservationList.add(
+                    new Reservation(rs.getInt("reservation_id"), true));
+                ReservationSystem.processing();
+            }
+            result = new Reservation[reservationList.size()];
+            reservationList.toArray(result);
+        }
+        catch (SQLException e){
+            System.out.println("DatabaseUtil.getTodayCheckIns()");
+            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
+            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
+            System.out.println(e);
+        }
+        ReservationSystem.ready();
+        return result;
+    };
+
+    /**
      * Gets all active reservations in the database. This includes reservations
      * where the date is >= today, reservations not marked as cancelled, and
      * reservations not marked as checked out.
@@ -427,6 +561,11 @@ public class DatabaseUtil{
         ReservationSystem.ready();
         return result;
     }
+
+    /**
+     * Gets all active reservations from the database
+     * @return all active reservations in the databse
+     */
     public static ResultSet getActiveReservationsRS(){
         PreparedStatement ps = null;
         ResultSet result = null;
