@@ -10,17 +10,14 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import com.hotelco.developer.Settings;
+
 /**
  * Utility class to send emails
  * @author John Lee
  */
 public class SendMail
 {
-
-	//SETUP MAIL SERVER PROPERTIES
-	//DRAFT AN EMAIL
-	//SEND EMAIL
-
 	Session newSession = null;
 	MimeMessage mimeMessage = null;
 	/**
@@ -34,14 +31,16 @@ public class SendMail
 	 * @throws IOException
 	 */
 	public static void startSend(String emailString, String subject, String body) {
-		try {
-			body = body + EmailGenerator.SIGNATURE;
-			SendMail mail = new SendMail();
-			mail.setupServerProperties();
-			mail.draftEmail(emailString, subject, body); //(Email, EmailSubject, EmailBody)
-			mail.sendEmail();
-		} catch (Exception e) {
-			e.printStackTrace();
+		if(Settings.CAN_EMAIL){
+			try {
+				body = body + EmailGenerator.SIGNATURE;
+				SendMail mail = new SendMail();
+				mail.setupServerProperties();
+				mail.draftEmail(emailString, subject, body); //(Email, EmailSubject, EmailBody)
+				mail.sendEmail();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
