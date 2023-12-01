@@ -98,9 +98,9 @@ public class CheckOutController extends BaseController {
         Task<ObservableList<Reservation>> task = new Task<ObservableList<Reservation>>() {
             @Override
             protected ObservableList<Reservation> call() throws Exception {
-                Reservation reservation[] = DatabaseUtil.getUserCheckOuts(ReservationSystem.getCurrentUser());
-                Collections.reverse(Arrays.asList(reservation));
-                return FXCollections.observableArrayList(Arrays.asList(reservation));                
+                Reservation reservations[] = DatabaseUtil.getUserCheckOuts(ReservationSystem.getCurrentUser());
+                Collections.reverse(Arrays.asList(reservations));
+                return FXCollections.observableArrayList(Arrays.asList(reservations));                
             }  
         };
 

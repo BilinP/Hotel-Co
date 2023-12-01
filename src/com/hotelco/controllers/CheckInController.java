@@ -98,9 +98,9 @@ public class CheckInController extends BaseController {
         Task<ObservableList<Reservation>> task = new Task<ObservableList<Reservation>>() {
             @Override
             protected ObservableList<Reservation> call() throws Exception {
-                Reservation reservation[] = DatabaseUtil.getUserCheckIns(ReservationSystem.getCurrentUser());
-                Collections.reverse(Arrays.asList(reservation));
-                return FXCollections.observableArrayList(Arrays.asList(reservation));                
+                Reservation reservations[] = DatabaseUtil.getUserCheckIns(ReservationSystem.getCurrentUser());
+                Collections.reverse(Arrays.asList(reservations));
+                return FXCollections.observableArrayList(Arrays.asList(reservations));                
             }  
         };
 
@@ -142,7 +142,6 @@ public class CheckInController extends BaseController {
 
     @FXML
     void checkIn(MouseEvent event) {
-        System.out.print("hi");
         for (Reservation reservation : selectedReservations) {
              reservation.setIsCheckedIn(true);
              reservation.push();

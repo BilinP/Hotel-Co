@@ -14,11 +14,11 @@ public final class Constants {
     /**
      * Standard check in time
      */
-    public static final Integer CHECK_IN_TIME = 13;
+    public static final Integer CHECK_IN_TIME = 16;
     /**
      * Standard check out time
      */
-    public static final Integer CHECK_OUT_TIME = 14;
+    public static final Integer CHECK_OUT_TIME = 11;
     /**
      * Maximum capacity of a double room. 
      */

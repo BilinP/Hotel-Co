@@ -2,6 +2,7 @@ package com.hotelco.utilities;
 
 import com.hotelco.constants.DatabaseStatus;
 import com.hotelco.constants.RoomType;
+import com.hotelco.devtools.TimerTool;
 import com.hotelco.entities.Reservation;
 import com.hotelco.entities.ReservationSystem;
 import com.hotelco.entities.User;
@@ -477,7 +478,7 @@ public class DatabaseUtil{
             rs = ps.executeQuery();
             while(rs.next()){
                 reservationList.add(
-                    new Reservation(rs.getInt("reservation_id"), true));
+                    new Reservation(rs.getInt("reservation_id"), false));
                 DatabaseUtil.processing();
             }
             result = new Reservation[reservationList.size()];
@@ -506,7 +507,8 @@ public class DatabaseUtil{
             "FROM reservations " + 
             "WHERE end_date = '" + Date.valueOf(LocalDate.now()) + "' " +
             "AND user_id = " + user.getUserId() + " " +
-            "AND is_checked_out = 1";
+            "AND is_checked_in = 1 " +
+            "AND is_checked_out = 0";
         Connection con = ReservationSystem.getDatabaseConnection();
     
         try {
@@ -514,14 +516,14 @@ public class DatabaseUtil{
             rs = ps.executeQuery();
             while(rs.next()){
                 reservationList.add(
-                    new Reservation(rs.getInt("reservation_id"), true));
+                    new Reservation(rs.getInt("reservation_id"), false));
                 DatabaseUtil.processing();
             }
             result = new Reservation[reservationList.size()];
             reservationList.toArray(result);
         }
         catch (SQLException e){
-            System.out.println("DatabaseUtil.getTodayCheckOuts()");
+            System.out.println("DatabaseUtil.getUserCheckOuts()");
             System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
