@@ -1,11 +1,13 @@
 package com.hotelco.controllers;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
 
+import com.hotelco.constants.Constants;
 import com.hotelco.entities.Reservation;
 import com.hotelco.entities.ReservationSystem;
 import com.hotelco.utilities.DatabaseUtil;
@@ -143,8 +145,13 @@ public class CheckInController extends BaseController {
     @FXML
     void checkIn(MouseEvent event) {
         for (Reservation reservation : selectedReservations) {
-             reservation.setIsCheckedIn(true);
-             reservation.push();
+            if (LocalDateTime.now().getHour() >= Constants.CHECK_IN_TIME){    
+                reservation.setIsCheckedIn(true);
+                reservation.push();
+            }
+            else {
+                //FIXME: Notify user it is too early for check-in
+            }
         }
     }
     
