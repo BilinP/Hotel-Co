@@ -506,7 +506,7 @@ public class DatabaseUtil{
             "FROM reservations " + 
             "WHERE end_date = '" + Date.valueOf(LocalDate.now()) + "' " +
             "AND user_id = " + user.getUserId() + " " +
-            "AND is_checked_out = 1";
+            "AND is_checked_out = 0";
         Connection con = ReservationSystem.getDatabaseConnection();
     
         try {
