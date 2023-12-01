@@ -2,7 +2,9 @@ package com.hotelco.controllers;
 
 import java.time.format.DateTimeFormatter;
 
+import com.hotelco.constants.Constants;
 import com.hotelco.entities.Reservation;
+import com.hotelco.utilities.EmailGenerator;
 import com.hotelco.utilities.FXMLPaths;
 import com.hotelco.utilities.Instances;
 import com.hotelco.utilities.ReservationCalculator;
@@ -86,8 +88,7 @@ public class ThankYouController extends BaseController {
         room.setText(reservation.getRoom().getRoomType().toPrettyString());
         thankYou.setText("Thank you, " + reservation.getUser().getFirstName());
         total.setText("$" + ReservationCalculator.calcTotal(reservation).toString());
-        //TODO:Enable this for release version
-        //EmailGenerator.reservationConfirmation(reservation);
+        EmailGenerator.reservationConfirmation(reservation);
     }
 
 }

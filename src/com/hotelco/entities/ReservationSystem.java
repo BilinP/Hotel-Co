@@ -117,6 +117,7 @@ public class ReservationSystem {
      * Checks out every reservation whose check out date is today
      */
     public static void dailyCheckOut(){
+        System.out.println("dailyCheckOut() called");
         int i;
         Reservation[] todayCheckOuts = DatabaseUtil.getTodayCheckouts();
         if(todayCheckOuts != null){
@@ -133,6 +134,7 @@ public class ReservationSystem {
      * Checks in every reservation whose check in date is today
      */
     public static void dailyCheckIn(){
+        System.out.println("dailyCheckIn() called");
         int i;
         Reservation[] todayCheckIns = DatabaseUtil.getTodayCheckIns();
         if (todayCheckIns != null){
