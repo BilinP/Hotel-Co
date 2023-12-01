@@ -1,7 +1,7 @@
 package com.hotelco.utilities;
 
-import com.hotelco.constants.Constants;
 import com.hotelco.controllers.LoginController;
+import com.hotelco.developer.Settings;
 import com.hotelco.entities.ReservationSystem;
 
 import javafx.animation.PauseTransition;
@@ -38,7 +38,7 @@ public class IdleTimer {
          */
         public static void initialize() {
             if (idleTimer == null) {
-                idleTimer = new PauseTransition(Duration.seconds(Constants.IDLE_TIMEOUT));
+                idleTimer = new PauseTransition(Duration.seconds(Settings.IDLE_TIMEOUT));
             }
 
             idleTimer.setOnFinished(e -> {

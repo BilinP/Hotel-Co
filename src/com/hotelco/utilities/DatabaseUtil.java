@@ -2,7 +2,7 @@ package com.hotelco.utilities;
 
 import com.hotelco.constants.DatabaseStatus;
 import com.hotelco.constants.RoomType;
-import com.hotelco.devtools.TimerTool;
+import com.hotelco.developer.TimerTool;
 import com.hotelco.entities.Reservation;
 import com.hotelco.entities.ReservationSystem;
 import com.hotelco.entities.User;
