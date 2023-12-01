@@ -1,6 +1,8 @@
 package com.hotelco.utilities;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -11,6 +13,12 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import com.hotelco.developer.Settings;
+import com.hotelco.entities.Reservation;
+import com.hotelco.entities.ReservationSystem;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 
 /**
  * Utility class to send emails
@@ -33,11 +41,19 @@ public class SendMail
 	public static void startSend(String emailString, String subject, String body) {
 		if(Settings.CAN_EMAIL){
 			try {
-				body = body + EmailGenerator.SIGNATURE;
-				SendMail mail = new SendMail();
-				mail.setupServerProperties();
-				mail.draftEmail(emailString, subject, body); //(Email, EmailSubject, EmailBody)
-				mail.sendEmail();
+				Task<Void> task = new Task<Void>() {
+        	    @Override
+            	protected Void call() throws Exception {
+					String mailBody = body + EmailGenerator.SIGNATURE;
+					SendMail mail = new SendMail();
+					mail.setupServerProperties();
+					mail.draftEmail(emailString, subject, mailBody); //(Email, EmailSubject, EmailBody)
+					mail.sendEmail();					
+					return null;
+            	}  
+        	};
+        		new Thread(task).start();
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
