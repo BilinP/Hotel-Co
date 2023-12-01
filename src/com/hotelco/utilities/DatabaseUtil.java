@@ -494,6 +494,43 @@ public class DatabaseUtil{
     };
 
     /**
+     * Gets the current user's potential check-outs.
+     * @return the current user's check-outs from today.
+     */
+    public static Reservation[] getUserCheckOuts(User user){
+        ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
+        Reservation[] result = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sqlQuery = "SELECT * " + 
+            "FROM reservations " + 
+            "WHERE end_date = '" + Date.valueOf(LocalDate.now()) + "' " +
+            "AND user_id = " + user.getUserId() + " " +
+            "AND is_checked_out = 1";
+        Connection con = ReservationSystem.getDatabaseConnection();
+    
+        try {
+            ps = con.prepareStatement(sqlQuery);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                reservationList.add(
+                    new Reservation(rs.getInt("reservation_id"), true));
+                DatabaseUtil.processing();
+            }
+            result = new Reservation[reservationList.size()];
+            reservationList.toArray(result);
+        }
+        catch (SQLException e){
+            System.out.println("DatabaseUtil.getTodayCheckOuts()");
+            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
+            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
+            System.out.println(e);
+        }
+        DatabaseUtil.ready();
+        return result;
+    };
+
+    /**
      * Gets all active reservations in the database. This includes reservations
      * where the date is >= today, reservations not marked as cancelled, and
      * reservations not marked as checked out.
