@@ -29,10 +29,17 @@ public class DashboardController extends BaseController {
     private Button bookRoomButton;
 
     /**
-     * Button named 'cart' that calls 'switchToMenu()' when pressed.
+     * Button named 'Check In' that calls 'switchToCheckIn()' when pressed.
      */
     @FXML
-    private Button cartButton;
+    private Button checkInButton;
+
+    
+    /**
+     * Button named 'Check out' that calls 'switchToCheckOut()' when pressed.
+     */
+    @FXML
+    private Button checkOutButton;
 
     /**
      * Button named 'home' that calls 'switchToCart()' when pressed.
@@ -62,7 +69,7 @@ public class DashboardController extends BaseController {
      /**
      * Array of Button  that stores all the menu button.
      */
-    private final Button[] menubuttons = new Button[5];
+    private final Button[] menubuttons = new Button[6];
 
     /**
      * String which stores the current anchor scene.
@@ -79,10 +86,11 @@ public class DashboardController extends BaseController {
     private void initialize() {
         switchAnchor(FXMLPaths.HOME);
          menubuttons[0] = bookRoomButton;
-         menubuttons[1] = cartButton;
+         menubuttons[1] = checkInButton;
          menubuttons[2] = homeButton;
          menubuttons[3] = profileButton;
          menubuttons[4] = viewBookingButton;
+         menubuttons[5] =  checkOutButton;
          buttonSelection(homeButton);
         Platform.runLater(() -> {
       
@@ -96,10 +104,17 @@ public class DashboardController extends BaseController {
      * @param event
      */
     @FXML
-    void switchToCart(MouseEvent event) {
+    void switchToCheckIn(MouseEvent event) {
         switchAnchor(FXMLPaths.CHECK_IN);
-        buttonSelection(cartButton);
+        buttonSelection(checkInButton);
     }
+    @FXML
+     void switchToCheckOut(MouseEvent event) {
+        switchAnchor(FXMLPaths.CHECK_OUT);
+        buttonSelection(checkOutButton);
+    }
+
+    
 
    /**
      * This method is called by pressing the 'home' button.

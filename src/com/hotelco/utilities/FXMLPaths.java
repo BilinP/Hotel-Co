@@ -22,5 +22,6 @@ public class FXMLPaths {
     public static final String SCREENSAVER = "/com/hotelco/views/ScreenSaverGUI.fxml";
     public static final String RESET_PASSWORD = "/com/hotelco/views/ResetPasswordGUI.fxml";
     public static final String CHECK_IN = "/com/hotelco/views/CheckInGUI.fxml";
+    public static final String CHECK_OUT = "/com/hotelco/views/CheckOutGUI.fxml";
     public static final String All_RESERVATION = "/com/hotelco/views/AllReservationGUI.fxml";
 }
