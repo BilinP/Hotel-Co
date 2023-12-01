@@ -98,7 +98,7 @@ public class CheckInController extends BaseController {
         Task<ObservableList<Reservation>> task = new Task<ObservableList<Reservation>>() {
             @Override
             protected ObservableList<Reservation> call() throws Exception {
-                Reservation reservation[] = re;
+                Reservation reservation[] = DatabaseUtil.getUserCheckIns(ReservationSystem.getCurrentUser());
                 Collections.reverse(Arrays.asList(reservation));
                 return FXCollections.observableArrayList(Arrays.asList(reservation));                
             }  
