@@ -158,7 +158,7 @@ public class User {
             System.out.println("Reservation.getSalt()");
             System.out.println(e);
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
         return result;
     }
     /**
@@ -185,7 +185,7 @@ public class User {
             System.out.println(e);
             System.out.println("User.getHashedPassword()");
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
         return result;
     }
     /**
@@ -264,7 +264,7 @@ public class User {
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
     }
     /**
      * Fetches User from database through user ID.
@@ -299,7 +299,7 @@ public class User {
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
     }
     /**
      * Fetches user from database by email or id. Assumes user has one of
@@ -360,7 +360,7 @@ public class User {
             
             while(rs.next()){
                 tempRoom = new Room(rs.getInt("room_num"));
-                ReservationSystem.processing();
+                DatabaseUtil.processing();
                 tempStartDate = rs.getDate("start_date").toLocalDate();
                 tempEndDate = rs.getDate("end_date").toLocalDate();
                 tempComments = rs.getString("comments");
@@ -373,7 +373,7 @@ public class User {
                     tempEndDate, this, tempComments, tempGroupSize,
                     tempReservationId, tempIsCancelled, tempIsCheckedIn,
                     tempIsCheckedOut);
-                ReservationSystem.processing();
+                DatabaseUtil.processing();
                 reservationList.add(tempReservation);
             }
             result = new Reservation[reservationList.size()];
@@ -385,7 +385,7 @@ public class User {
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
         return result;
     }
     /**
@@ -436,7 +436,7 @@ public class User {
             System.out.println(e);
             System.out.println("User.push(password)");
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
     }
     /**
      * Updates a user's details in the database.
@@ -463,6 +463,6 @@ public class User {
             System.out.println("User not updated in database");
             System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
     }
 }

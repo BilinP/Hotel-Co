@@ -54,7 +54,7 @@ public class EmailGenerator {
             "\n\nYou have requested a password reset for your account. Your new password is:\n\n" +
             tempPassword +
             "\n\nPlease use this  password to log in" +
-             "\n\n\t\tSincerely,\n\t\t\tHotel Co.";
+             "\n\nSincerely,\nHotel Co.";
         SendMail.startSend(user.getEmail(), subject, message);
     }
 }

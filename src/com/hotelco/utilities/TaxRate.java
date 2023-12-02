@@ -40,7 +40,7 @@ public class TaxRate {
             System.out.println(e);
             System.out.println("TaxRate.getTaxRate()");
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
         return result;
     }
     /**
@@ -74,7 +74,7 @@ public class TaxRate {
             System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
             System.out.println("TaxRate.getTaxMultiplier()");
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
         
         if (result != null){
             result = result.divide(new BigDecimal("100"));

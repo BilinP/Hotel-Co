@@ -43,7 +43,15 @@
                         <Insets left="90.0" />
                      </padding>
                   </Button>
-                  <Button fx:id="cartButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseReleased="#switchToCart" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: transparent;" text="Check-In" textFill="#f9bd1a">
+                  <Button fx:id="checkInButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseReleased="#switchToCheckIn" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: transparent;" text="Check-In" textFill="#f9bd1a">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <padding>
+                        <Insets left="90.0" />
+                     </padding>
+                  </Button>
+                  <Button fx:id="checkOutButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseReleased="#switchToCheckOut" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: transparent;" text="Check-Out" textFill="#f9bd1a">
                      <font>
                         <Font size="18.0" />
                      </font>

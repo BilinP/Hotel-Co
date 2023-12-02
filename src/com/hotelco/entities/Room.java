@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.hotelco.constants.RoomType;
+import com.hotelco.utilities.DatabaseUtil;
 /**
  * Class that structures the details of a room 
  * @author Daniel Schwartz
@@ -98,7 +99,7 @@ public class Room {
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
     }
 
     // public Boolean isOccupied(){

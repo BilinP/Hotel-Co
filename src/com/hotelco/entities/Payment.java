@@ -5,9 +5,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import com.hotelco.constants.Constants;
+import com.hotelco.utilities.DatabaseUtil;
 import com.hotelco.utilities.ReservationCalculator;
 /**
  * Maintains the payment associated with a reservation.
@@ -60,16 +63,23 @@ public class Payment {
     }
     /**
      * Attemps to pay for the active reservation
-     * @param reservation reservation to pay
+ * @param reservation reservation to pay
      */
     public Payment(Reservation reservation){
         Reservation temp = ReservationSystem.getCurrentReservation();
+        
         ReservationSystem.setCurrentReservation(reservation);
+        if (LocalDateTime.now().getHour() < Constants.CHECK_OUT_TIME
+            && LocalDate.now().isBefore(reservation.getEndDate())){
+            reservation.setEndDate(LocalDate.now());
+            reservation.push();
+        }
         amount = ReservationCalculator.calcTotal(reservation);
         timeOfPayment = LocalDateTime.now();
         if(ReservationSystem.requestCreditCardPayment(amount)){
             push();
         }
+
         ReservationSystem.setCurrentReservation(temp);
     }
     
@@ -107,6 +117,6 @@ public class Payment {
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
     }
 }

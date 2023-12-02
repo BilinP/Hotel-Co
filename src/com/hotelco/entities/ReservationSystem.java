@@ -103,6 +103,7 @@ public class ReservationSystem {
      */
     public static void book(){
         currentReservation.create();
+        currentUser.fetch(true);
     }
     /**
      * Cancels the "current reservation" by setting isCancelled. See
@@ -170,16 +171,19 @@ public class ReservationSystem {
         Payment payment = new Payment(reservation);
         return payment.getPaymentId() != null;
     }
+    
     /**
-     * Sets the Database status as READY
+     * "Changes" a reservation by cancelling it and generating a new one.
+     * @param oldReservation reservation to be cancelled
+     * @param newReservation reservation to book
      */
-    public static void ready(){
-        ReservationSystem.setDatabaseStatus(DatabaseStatus.READY);
-    }
-    /**
-     * Sets the Database status as PROCESSING
-     */
-    public static void processing(){
-        ReservationSystem.setDatabaseStatus(DatabaseStatus.PROCESSING);
+    public static void changeReservation(Reservation oldReservation, Reservation newReservation){
+        Reservation temp = ReservationSystem.getCurrentReservation();
+
+        oldReservation.cancel(true);
+        ReservationSystem.setCurrentReservation(newReservation);
+        ReservationSystem.book();
+
+        ReservationSystem.setCurrentReservation(temp);
     }
 }

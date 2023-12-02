@@ -1,12 +1,16 @@
 package com.hotelco.application;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 
+import com.hotelco.constants.Constants;
+import com.hotelco.constants.RoomType;
 import com.hotelco.controllers.LoginController;
 import com.hotelco.utilities.DailyTask;
+import com.hotelco.utilities.DatabaseUtil;
 import com.hotelco.utilities.FXMLPaths;
 import com.hotelco.utilities.FrequentTask;
 import com.hotelco.utilities.IdleTimer;
@@ -37,24 +41,29 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		
 		try {
-			DailyTask.scheduleDailyTasks();
-			FrequentTask.scheduleFrequentTasks();
-			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXMLPaths.LOGIN));
-			Parent root = fxmlLoader.load();
-			Scene scene = new Scene(root, Screen.getPrimary().getBounds().getWidth(), Screen.getPrimary().getBounds().getHeight());
-			Instances.setScene(scene);
-			Instances.setStage(primaryStage);
-			IdleTimer.initialize();
-			LoginController lc = (LoginController) fxmlLoader.getController();
-			lc.initializeIdleTimer();
-			primaryStage.centerOnScreen();
-			primaryStage.initStyle(StageStyle.UNDECORATED);
-			primaryStage.setTitle("HotelCo");
-			primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/com/hotelco/images/hotelco.png")));
-			primaryStage.setResizable(false);
-			primaryStage.setScene(scene);
-			primaryStage.show();
-			//primaryStage.setFullScreen(true);
+			if (Constants.DEV_MODE){
+				DevMode.run();
+			}
+			else {
+				DailyTask.scheduleDailyTasks();
+				FrequentTask.scheduleFrequentTasks();
+				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXMLPaths.LOGIN));
+				Parent root = fxmlLoader.load();
+				Scene scene = new Scene(root, Screen.getPrimary().getBounds().getWidth(), Screen.getPrimary().getBounds().getHeight());
+				Instances.setScene(scene);
+				Instances.setStage(primaryStage);
+				IdleTimer.initialize();
+				LoginController lc = (LoginController) fxmlLoader.getController();
+				lc.initializeIdleTimer();
+				primaryStage.centerOnScreen();
+				primaryStage.initStyle(StageStyle.UNDECORATED);
+				primaryStage.setTitle("HotelCo");
+				primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/com/hotelco/images/hotelco.png")));
+				primaryStage.setResizable(false);
+				primaryStage.setScene(scene);
+				primaryStage.show();
+				//primaryStage.setFullScreen(true);
+			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

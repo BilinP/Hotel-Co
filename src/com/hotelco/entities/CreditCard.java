@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 import com.hotelco.constants.CreditCardType;
+import com.hotelco.utilities.DatabaseUtil;
 
 /**
  * Maintains a credit card associated with a single user. Assumes that
@@ -205,7 +206,7 @@ public class CreditCard{
         
         if(user != null){
             if (userHasOneCard()){
-                ReservationSystem.processing();
+                DatabaseUtil.processing();
                 sqlQuery = "UPDATE credit_cards " +
                 "SET card_num = '" + creditCardNum +
                 "', cvv = '" + cvvNum +
@@ -213,7 +214,7 @@ public class CreditCard{
                 "' WHERE user_id = " + user.getUserId();
             }
             else {
-                ReservationSystem.processing();
+                DatabaseUtil.processing();
                 sqlQuery = "INSERT INTO credit_cards " +
                 "SET card_num = '" + creditCardNum +
                 "', cvv = '" + cvvNum +
@@ -231,7 +232,7 @@ public class CreditCard{
                 System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
                 System.out.println(e);
             }
-            ReservationSystem.ready();
+            DatabaseUtil.ready();
         }
     }
     /**
@@ -271,7 +272,7 @@ public class CreditCard{
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
     }
     /**
      * Checks if the CreditCard's user has a card associated with them in the
@@ -301,7 +302,7 @@ public class CreditCard{
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
         return result;
     }
     /**

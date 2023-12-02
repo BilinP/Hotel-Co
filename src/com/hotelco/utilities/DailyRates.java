@@ -37,7 +37,7 @@ public class DailyRates {
             System.out.println(e);
             System.out.println("DailyRates.getRoomRate()");
         }
-        ReservationSystem.ready();
+        DatabaseUtil.ready();
         return result;
     }
 }

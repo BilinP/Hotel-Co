@@ -34,12 +34,12 @@ public class FrequentTask {
                 try{
                     con.close();
                     con = ReservationSystem.getDatabaseConnection();
-                    ReservationSystem.ready();
+                    DatabaseUtil.ready();
                 }
                 catch (SQLException e){
                     System.out.println(e);
                 }
-                ReservationSystem.ready();
+                DatabaseUtil.ready();
             }
             else {
                 System.out.println("Rescheduling reconnection attempt");
