@@ -1,5 +1,6 @@
 package com.hotelco.controllers;
 
+import com.hotelco.entities.Password;
 import com.hotelco.entities.ReservationSystem;
 import com.hotelco.entities.User;
 import com.hotelco.utilities.DatabaseUtil;
@@ -98,6 +99,11 @@ public class LoginController extends BaseController {
         });
     }
 
+    public LoginController(TextField email, PasswordField password){
+       this.email=email;
+       this.password=password;
+    }
+
     /**
      * This method is called when pressing the 'Login' button.
      * It handles input verification and user login. It will enter 'MenuGUI' upon successful login.
@@ -106,11 +112,12 @@ public class LoginController extends BaseController {
      * @author Daniel Schwartz
      */
     @FXML
-    private void login(Event event) {
-        if (email.getText().isEmpty() || password.getText().isEmpty()) {
+    public int login(Event event) {
+        if (email.getText().isEmpty() 
+        || password.getText().isEmpty()) {
             notification.setText("Please enter username and password");
             notification.setFill(Color.RED);
-            return;
+            return 0;
         }
         String emailStr = email.getText();
         if(DatabaseUtil.doesEmailExist(emailStr)){
@@ -120,21 +127,25 @@ public class LoginController extends BaseController {
                 ReservationSystem.setCurrentUser(new User(emailStr, true));
                 if(ReservationSystem.getCurrentUser().getIsManager()){
                     switchScene(FXMLPaths.MANAGER_DASHBOARD);
+                    return 1;
                 }else{
-                     switchScene(FXMLPaths.DASHBOARD);  
-                } 
-                
+                    switchScene(FXMLPaths.DASHBOARD);  
+                    return 2;
+                }     
             }
             else{
                 notification.setText("Invalid Username/Password!");
                 notification.setFill(Color.RED);
+                return 3;
             }
         }
         else {
             notification.setText("Invalid Username/Password!");
             notification.setFill(Color.RED);
+            return 4;
         }
     }
+
 
     /**
      * This method is called by pressing the 'Don't have an account? Create an account.' text.
