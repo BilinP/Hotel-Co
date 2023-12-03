@@ -52,7 +52,7 @@
                </VBox.margin>
             </Line>
             <VBox maxWidth="550.0" />
-            <Button fx:id="button" mnemonicParsing="false" onMouseReleased="#switchToHomeScene" prefHeight="30.0" prefWidth="200.0" styleClass="blueButton" stylesheets="@../stylesheets/ButtonSS.css" text="BACK TO CHECK IN" textFill="WHITE">
+            <Button fx:id="button" mnemonicParsing="false" onMouseReleased="#switchToLastAnchor" prefHeight="30.0" prefWidth="200.0" styleClass="blueButton" stylesheets="@../stylesheets/ButtonSS.css" text="BACK TO CHECK IN" textFill="WHITE">
                <font>
                   <Font name="Britannic Bold" size="12.0" />
                </font>

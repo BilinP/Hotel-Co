@@ -146,7 +146,7 @@ public class CheckOutController extends BaseController {
 
     @FXML
     void checkOut(MouseEvent event) {
-        //if (!selectedReservations.isEmpty()) {
+        if (!selectedReservations.isEmpty()) {
             for (Reservation reservation : selectedReservations) {
                 reservation.setIsCheckedOut(true);
                 reservation.push();
@@ -155,7 +155,7 @@ public class CheckOutController extends BaseController {
                     .switchAnchor(FXMLPaths.CONFIRMATION);
             cc.setIsCheckin(false);
             cc.writeInfo(ReservationSystem.getCurrentUser());
-      //  }
+        }
     }
 
 }
