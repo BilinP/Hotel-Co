@@ -99,10 +99,6 @@ public class LoginController extends BaseController {
         });
     }
 
-    public LoginController(TextField email, PasswordField password){
-       this.email=email;
-       this.password=password;
-    }
 
     /**
      * This method is called when pressing the 'Login' button.
