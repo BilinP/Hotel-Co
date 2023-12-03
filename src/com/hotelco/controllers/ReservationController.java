@@ -14,6 +14,7 @@ import com.hotelco.entities.Reservation;
 import com.hotelco.entities.ReservationSystem;
 import com.hotelco.entities.Room;
 import com.hotelco.utilities.DatabaseUtil;
+import com.hotelco.utilities.EmailGenerator;
 import com.hotelco.utilities.FXMLPaths;
 import com.hotelco.utilities.Instances;
 import com.hotelco.utilities.ReservationCalculator;
@@ -724,6 +725,7 @@ public class ReservationController extends BaseController {
             ReservationSystem.getCurrentUser(), Integer.parseInt(guests.getText()));
         ReservationSystem.setCurrentReservation(reservation);
         ReservationSystem.book();
+        EmailGenerator.reservationConfirmation(reservation);
         return ReservationSystem.getCurrentReservation();
     }
 

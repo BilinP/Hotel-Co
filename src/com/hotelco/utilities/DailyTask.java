@@ -5,6 +5,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.hotelco.constants.Constants;
+import com.hotelco.constants.MsTime;
 import com.hotelco.entities.ReservationSystem;
 /**
  * Creates a task that runs every day. 
@@ -14,40 +15,19 @@ public class DailyTask {
     /**
      * Creates either a daily check in or check out task that runs at a fixed
      * time.
-     * @param hour the hour which triggers this daily task
-     * @param checkIn Whether the task should be a check in (else a check out)
+ * @param hour the hour which triggers this daily task
      * @author Daniel Schwartz
      */
-    public DailyTask(Integer hour, Boolean checkIn){
+    public DailyTask(Integer hour){
         Timer timer = new Timer(true);
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, hour);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         Date time = calendar.getTime();
-        if (checkIn){
-            timer.scheduleAtFixedRate(new CheckInScheduledTask(), time,
-            86400000);
+        timer.scheduleAtFixedRate(new CheckOutScheduledTask(), time,
+            MsTime.DAY);
         }
-        else {
-            timer.scheduleAtFixedRate(new CheckOutScheduledTask(), time,
-            86400000);
-        }
-    }
-    /**
-     * A special class that extends Timertask and gives it a unique run()
-     * method.
-     * @author Daniel Schwartz
-     */
-    class CheckInScheduledTask extends TimerTask {
-        /**
-         * Runs the daily check in task
-         */
-        public void run() {
-            //System.out.println("Running daily check ins");
-            ReservationSystem.dailyCheckIn();
-        }
-    }
     /**
      * A special class that extends Timertask and gives it a unique run()
      * method.
@@ -62,11 +42,10 @@ public class DailyTask {
             ReservationSystem.dailyCheckOut();
         }
     }
-    /**
+        /**
      * Schedules all the daily tasks
      */
     public static void scheduleDailyTasks(){
-        new DailyTask(Constants.CHECK_IN_TIME, true);
-	    new DailyTask(Constants.CHECK_OUT_TIME, false);
+        new DailyTask(Constants.CHECK_OUT_TIME);
     }
 }

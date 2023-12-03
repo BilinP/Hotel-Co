@@ -14,11 +14,11 @@ public final class Constants {
     /**
      * Standard check in time
      */
-    public static final Integer CHECK_IN_TIME = 13;
+    public static final Integer CHECK_IN_TIME = 16;
     /**
      * Standard check out time
      */
-    public static final Integer CHECK_OUT_TIME = 14;
+    public static final Integer CHECK_OUT_TIME = 11;
     /**
      * Maximum capacity of a double room. 
      */
@@ -38,15 +38,6 @@ public final class Constants {
      * Maximum capacity of any room in the hotel
      */ 
     public static final Integer MAX_CAP = 6;
-    /**
-     * Interval for closing and reopening database connection
-     */
-    public static final Integer RECONNECT_INTERVAL = 20 * MsTime.MINUTE;
-    /**
-     * Interval for attempting to close and reopen database connection after
-     * failed attempt to do so
-     */
-    public static final Integer RETRY_INTERVAL = 30 * MsTime.SECOND;
     /**
      * Tax rate multiplier on the weekends
      */
@@ -85,20 +76,4 @@ public final class Constants {
                                                 "\t- Panoramic View\n\n" +
                                                 "\t- 1 King Beds\n\n" +
                                                 "\t- 1300 sqft";
-    /**
-     * In seconds, the amount of time the system waits for automatic logout,
-     * when there is no input.
-     */
-    public static final Integer IDLE_TIMEOUT = 9000;
-
-    /**
-     * In seconds, the the amount of time the screen saver waits before starting
-     * after no input.
-     */
-    public static final Integer SCREENSAVER_TIMEOUT = 100;
-
-    /**
-     * Whether to enter developer mode or not
-     */
-    public static final Boolean DEV_MODE = false;
 }

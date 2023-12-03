@@ -6,9 +6,10 @@ import java.time.LocalDate;
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 
-import com.hotelco.constants.Constants;
 import com.hotelco.constants.RoomType;
 import com.hotelco.controllers.LoginController;
+import com.hotelco.developer.Developer;
+import com.hotelco.developer.Settings;
 import com.hotelco.utilities.DailyTask;
 import com.hotelco.utilities.DatabaseUtil;
 import com.hotelco.utilities.FXMLPaths;
@@ -41,10 +42,10 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		
 		try {
-			if (Constants.DEV_MODE){
-				DevMode.run();
+			if (Settings.DEV_MODE){
+				Developer.runDevMode();
 			}
-			else {
+			if (Settings.RUN_MAIN){
 				DailyTask.scheduleDailyTasks();
 				FrequentTask.scheduleFrequentTasks();
 				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXMLPaths.LOGIN));
