@@ -33,40 +33,12 @@ public class ConfirmationController extends BaseController {
     private Text message;
 
     /**
-     * Text that will display a Reservation objects reservation ID.
-     */
-    @FXML
-    private Text reservationNumber;
-
-    /**
-     * Text that will display a Reservation objects check-in date. 
-     */
-    @FXML
-    private Text checkIn;
-
-    /**
-     * Text that will display a Reservation objects check-out date.
-     */
-    @FXML
-    private Text checkOut;
-
-    /**
-     * Text that will display the room type of a Reservation.
-     */
-    @FXML
-    private Text room;
-    
-    /**
      * Text that will display the Users first name.
      */
     @FXML
     private Text thankYou;
     
-    /**
-     * Text that will display the total cost of the Reservation.
-     */
-    @FXML
-    private Text total;    
+
 
     private boolean isCheckIn;
 
@@ -106,12 +78,12 @@ public class ConfirmationController extends BaseController {
             thankYou.setText("Welcome " + user.getFirstName());
             message.setText("Your check-in is complete. Enjoy your stay at Hotel CO. ");
             keyMessage.setText("Please pick up your key card from below");
-            button.setText("BACK TO CHECK IN");
+            button.setText("BACK TO CHECK-IN");
         }else{
             thankYou.setText("Farewell " + user.getFirstName());
             message.setText("Your check-out is complete. Thank you for staying at Hotel CO.");
             keyMessage.setText("Please drop off your key card below.");
-            button.setText("BACK TO CHECK OUT");
+            button.setText("BACK TO CHECK-OUT");
         }
         
     }

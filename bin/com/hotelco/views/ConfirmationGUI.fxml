@@ -22,7 +22,7 @@
                   <Image url="@../images/hotelco.png" />
                </image>
             </ImageView>
-            <Text fx:id="thankYou" fill="#f9bd1a" strokeType="OUTSIDE" strokeWidth="0.0" text="Thank you,">
+            <Text fx:id="thankYou" fill="#f9bd1a" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome">
                <font>
                   <Font size="48.0" />
                </font>
@@ -30,7 +30,7 @@
                   <Insets bottom="15.0" />
                </VBox.margin>
             </Text>
-            <Text fx:id="message" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="You're all set for your vacation here at Hotel Co.">
+            <Text fx:id="message" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Your check-in is complete. Enjoy your stay at Hotel CO. ">
                <font>
                   <Font size="27.0" />
                </font>
@@ -38,7 +38,7 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </Text>
-            <Text fx:id="keyMessage" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="You'll recieve a confirmation email soon.">
+            <Text fx:id="keyMessage" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Please pick up your key card from below">
                <font>
                   <Font size="22.0" />
                </font>
@@ -52,12 +52,12 @@
                </VBox.margin>
             </Line>
             <VBox maxWidth="550.0" />
-            <Button fx:id="button" mnemonicParsing="false" onMouseReleased="#switchToHomeScene" prefHeight="30.0" prefWidth="200.0" styleClass="blueButton" stylesheets="@../stylesheets/ButtonSS.css" text="BACK TO HOME" textFill="WHITE">
+            <Button fx:id="button" mnemonicParsing="false" onMouseReleased="#switchToHomeScene" prefHeight="30.0" prefWidth="200.0" styleClass="blueButton" stylesheets="@../stylesheets/ButtonSS.css" text="BACK TO CHECK IN" textFill="WHITE">
                <font>
                   <Font name="Britannic Bold" size="12.0" />
                </font>
                <VBox.margin>
-                  <Insets top="40.0" />
+                  <Insets top="20.0" />
                </VBox.margin>
             </Button>
          </children>
