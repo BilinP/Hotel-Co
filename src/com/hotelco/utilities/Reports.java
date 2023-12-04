@@ -241,32 +241,32 @@ public class Reports {
     }
 
     /**
-     * Finds the amount of vacant rooms at the current date
-     * @return the number of vacant rooms
+     * Fetches the amount of vacant rooms for tonight
+     * @return the number of vacant rooms tonight
      */
-    public static Integer numEmptyRooms(){
+    public static Integer getOccupancy(){
         
         Integer result = 0;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        String sqlQuery = "SELECT room_num " + 
+        String sqlQuery = "SELECT COUNT(room_num) AS total " + 
             "FROM rooms " + 
-            "WHERE room_num NOT IN (" + 
+            "WHERE room_num IN (" + 
                 "SELECT room_num " + 
                 "FROM reservations " + 
-                "WHERE start_date < '" + Date.valueOf(LocalDate.now()) +
-                "' OR end_date >= '" + Date.valueOf(LocalDate.now()) + "') "; 
+                "WHERE start_date <= '" + Date.valueOf(LocalDate.now()) +
+                "' AND end_date > '" + Date.valueOf(LocalDate.now()) + "') "; 
         Connection con = ReservationSystem.getDatabaseConnection();
     
         try {
             ps = con.prepareStatement(sqlQuery);
             rs = ps.executeQuery();
             if(rs.next()){
-                result++;
+                result = rs.getInt("total");
             }
         }
         catch (SQLException e){
-            System.out.println("ReservationSystem.findEmptyRoom()");
+            System.out.println("Reports.numEmptyRooms");
             System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
@@ -276,6 +276,36 @@ public class Reports {
     
     }
 
+    public static Integer getVacancy(){
+        Integer result = 0;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sqlQuery = "SELECT COUNT(room_num) AS total " + 
+            "FROM rooms " + 
+            "WHERE room_num NOT IN (" + 
+                "SELECT room_num " + 
+                "FROM reservations " + 
+                "WHERE start_date <= '" + Date.valueOf(LocalDate.now()) +
+                "' AND end_date > '" + Date.valueOf(LocalDate.now()) + "') "; 
+        Connection con = ReservationSystem.getDatabaseConnection();
+    
+        try {
+            ps = con.prepareStatement(sqlQuery);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                result = rs.getInt("total");
+            }
+        }
+        catch (SQLException e){
+            System.out.println("Reports.numEmptyRooms");
+            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
+            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
+            System.out.println(e);
+        }
+        DatabaseUtil.ready();
+        return result;
+    
+    }
     /**
      * Gets the total amount of rooms in the database by room type
      * @param roomType the room type to count
@@ -307,4 +337,28 @@ public class Reports {
         return result;
     }
     
+    public static Integer getNumRooms(){
+        Integer result = 0;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sqlQuery = "SELECT COUNT(room_num) " +
+            "AS total FROM rooms";
+        Connection con = ReservationSystem.getDatabaseConnection();
+    
+        try {
+            ps = con.prepareStatement(sqlQuery);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                result = rs.getInt("total");
+            }
+        }
+        catch (SQLException e){
+            System.out.println("DatabaseUtil.countRooms()");
+            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
+            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
+            System.out.println(e);
+        }
+        DatabaseUtil.ready();
+        return result;
+    }
 }
