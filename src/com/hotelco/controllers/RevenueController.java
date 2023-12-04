@@ -6,8 +6,10 @@ import com.hotelco.utilities.TextFormatters;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.chart.BarChart;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 
 
 /**
@@ -19,35 +21,20 @@ import javafx.scene.input.MouseEvent;
 
 public class RevenueController extends BaseController {
     
-    /**
-     * TextField that contains the email of the user.
-     */
     @FXML
-    private TextField email;
+    private Text dailyRevenue;
 
-    /**
-     * TextField that contains the first name of the user.
-     */
     @FXML
-    private TextField first;
-    /**
-     * TextField that contains the last name of the user.
-     */
+    private Text lifetimeRevenue;
+
     @FXML
-    private TextField last;
+    private BarChart<?, ?> revenueChart;
 
-    /**
-     * TextField that contains the phone number of the user.
-     */
     @FXML
-    private TextField number;
+    private Text weeklyRevenue;
 
-    /**
-     * User that contains the current user.
-     */
-
-    private User user;
-
+    @FXML
+    private Text yearlyRevenue;
 
     /**
      * This method is called immediately upon controller creation.
