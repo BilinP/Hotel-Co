@@ -241,19 +241,25 @@ public class CreditCard{
      */
     public Boolean assign(){
         Boolean result = false;
-        User newUser = DatabaseUtil.getCreditCardUser(creditCardNum);
-        if (newUser != null && user.getUserId() != newUser.getUserId()){
-            //FIXME: ISSUE MESSAGE THAT THE CC IS ALREADY IN USE
-            System.out.println("CreditCard in use. Not assign()ed");
-            result = false;
-        }
-        else if (verify()){
+
+        if (verify()){
             assignToUser();
             result = true;
         }
-        else {
-            System.out.println("Credit card could not be verified.");
-        }
+
+        return result;
+    }
+    /**
+     * Checks if the CreditCard already exists in the database and returns true
+     * if that card's userId matches this one's.
+     * @return true when there is a user conflict, false if not
+     */
+    public Boolean checkUserConflict(){
+        Boolean result = true;
+        User newUser = DatabaseUtil.getCreditCardUser(creditCardNum);
+        
+        result = newUser != null && user.getUserId() != newUser.getUserId();
+        
         return result;
     }
     /**

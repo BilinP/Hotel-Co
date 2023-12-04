@@ -706,20 +706,30 @@ public class ReservationController extends BaseController {
      * @return true if card details are accurate, false otherwise
      */
     private boolean assignCard() {
+        Boolean result = false;
         CreditCard card = new CreditCard(
             cardNumber.getText(), CVC.getText(), parseExpDate(),
             ReservationSystem.getCurrentUser()
         );
 
-        if (!card.assign()) {
+        if (card.checkUserConflict()){
+            paymentNotification.setText("Credit card is already in use by another user");
+            result = false;  
+        }
+        else if (card.assign()) {
+            result = true;
+                      
+        }
+        else {
             paymentNotification.setText("Please check your payment details");
             setRedBorder(CVC);
             setRedBorder(cardNumber);
             setRedBorder(expDateMonth);
             setRedBorder(expDateYear);
-            return false;            
+            result = false;
         }
-        return true;
+        
+        return result;
     }
 
     /**
