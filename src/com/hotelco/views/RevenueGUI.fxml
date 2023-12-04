@@ -17,12 +17,15 @@
       </Text>
       <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#6d7176" height="136.0" layoutX="7.0" layoutY="235.0" stroke="#1f1f1f00" strokeType="INSIDE" width="204.0" />
       <Rectangle arcHeight="30.0" arcWidth="30.0" fill="#6d7176" height="386.0" layoutX="439.0" layoutY="186.0" stroke="#1f1f1f00" strokeType="INSIDE" width="447.0" />
-      <BarChart fx:id="revenueChart" layoutX="427.0" layoutY="204.0" legendSide="TOP" prefHeight="371.0" prefWidth="456.0" style="-fx-background-color: transparent;">
+      <BarChart fx:id="revenueChart" layoutX="427.0" layoutY="204.0" legendSide="TOP" legendVisible="false" prefHeight="371.0" prefWidth="456.0" style=": \\;" stylesheets="@../stylesheets/BarChart.css" verticalGridLinesVisible="false">
         <xAxis>
-          <CategoryAxis side="BOTTOM" />
+          <CategoryAxis fx:id="month" side="BOTTOM" style="-fx-border-color: transparent;" styleClass="axis-tick-mark-text-node" tickLabelFill="WHITE" tickLength="100.0" tickMarkVisible="false">
+               <tickLabelFont>
+                  <Font name="System Bold" size="10.0" />
+               </tickLabelFont></CategoryAxis>
         </xAxis>
         <yAxis>
-          <NumberAxis forceZeroInRange="false" minorTickCount="2" minorTickLength="2.0" minorTickVisible="false" side="LEFT" tickLabelFill="#3d4043" tickLabelGap="2.0" tickLength="2.0" tickMarkVisible="false" tickUnit="2.0" upperBound="1000.0">
+          <NumberAxis forceZeroInRange="false" minorTickCount="2" minorTickLength="2.0" minorTickVisible="false" side="LEFT" style="-fx-border-color: transparent;" tickLabelFill="#3d4043" tickLabelGap="2.0" tickLength="2.0" tickMarkVisible="false" tickUnit="2.0" upperBound="900.0">
                <tickLabelFont>
                   <Font size="12.0" />
                </tickLabelFont></NumberAxis>
