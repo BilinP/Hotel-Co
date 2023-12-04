@@ -505,7 +505,7 @@ public class DatabaseUtil{
         ResultSet rs = null;
         String sqlQuery = "SELECT * " + 
             "FROM reservations " + 
-            "WHERE end_date = '" + Date.valueOf(LocalDate.now()) + "' " +
+            "WHERE end_date >= '" + Date.valueOf(LocalDate.now()) + "' " +
             "AND user_id = " + user.getUserId() + " " +
             "AND is_checked_in = 1 " +
             "AND is_checked_out = 0";
@@ -532,6 +532,41 @@ public class DatabaseUtil{
         return result;
     };
 
+    /**
+     * Gets the current user's potential check-outs.
+     * @return the current user's check-outs from today.
+     */
+    public static Reservation[] getTodayNoShows(){
+        ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
+        Reservation[] result = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sqlQuery = "SELECT * " + 
+            "FROM reservations " + 
+            "WHERE start_date = '" + Date.valueOf(LocalDate.now()) + "' " +
+            "AND is_checked_in = 0 ";
+        Connection con = ReservationSystem.getDatabaseConnection();
+    
+        try {
+            ps = con.prepareStatement(sqlQuery);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                reservationList.add(
+                    new Reservation(rs.getInt("reservation_id"), false));
+                DatabaseUtil.processing();
+            }
+            result = new Reservation[reservationList.size()];
+            reservationList.toArray(result);
+        }
+        catch (SQLException e){
+            System.out.println("DatabaseUtil.getTodayNoShows()");
+            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
+            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
+            System.out.println(e);
+        }
+        DatabaseUtil.ready();
+        return result;
+    };
     /**
      * Gets all active reservations in the database. This includes reservations
      * where the date is >= today, reservations not marked as cancelled, and
@@ -609,5 +644,36 @@ public class DatabaseUtil{
      */
     public static void processing(){
         ReservationSystem.setDatabaseStatus(DatabaseStatus.PROCESSING);
+    }
+    /**
+     * Checks if a credit card number is in the databse
+     * @param creditCardNumber credit card number to check
+     * @return true if {@creditCardNumber} already exists in the database, false if they
+     * do not
+     */
+    public static User getCreditCardUser(String creditCardNumber){
+        PreparedStatement ps = null;
+        String sqlQuery = "SELECT user_id " +
+            "FROM credit_cards " +
+            "WHERE card_num = '" + creditCardNumber + "'";
+        ResultSet rs = null;
+        User result = null;
+        Connection con = ReservationSystem.getDatabaseConnection();
+    
+        try {
+            ps = con.prepareStatement(sqlQuery);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                result = new User(rs.getString("user_id"), false);
+            }
+        }
+        catch (SQLException e){
+            System.out.println("DatabaseUtil.getCreditCardUser()");
+            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
+            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
+            System.out.println(e);
+        }
+        ready();
+        return result;
     }
 }

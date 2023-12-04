@@ -35,6 +35,7 @@ public class Reports {
             rs = ps.executeQuery();
             if(rs.next())
             result = rs.getBigDecimal("total");
+            result = result == null ? new BigDecimal("0") : null;
         }
         catch (SQLException e){
             System.out.println("DatabaseUtil.getRevenue()");

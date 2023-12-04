@@ -147,12 +147,14 @@ public class CheckInController extends BaseController {
 
     @FXML
     void checkIn(MouseEvent event) {
-        if (!selectedReservations.isEmpty()) {
-            for (Reservation reservation : selectedReservations) {
-                if (LocalDateTime.now().getHour() >= Constants.CHECK_IN_TIME) {
-                    reservation.setIsCheckedIn(true);
-                    reservation.push();
-                }
+        for (Reservation reservation : selectedReservations) {
+            if (LocalDateTime.now().isAfter(
+                LocalDateTime.of(LocalDate.now(), Constants.CHECK_IN_TIME))){    
+                reservation.setIsCheckedIn(true);
+                reservation.push();
+            }
+            else {
+                //FIXME: Notify user it is too early for check-in
             }
             ConfirmationController cc = (ConfirmationController) Instances.getDashboardController()
                     .switchAnchor(FXMLPaths.CONFIRMATION);
