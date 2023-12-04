@@ -107,7 +107,35 @@ public class Reports {
         DatabaseUtil.ready();
         return result;
     }
-
+    public static Integer countOccupiedRooms(RoomType roomType){
+        Integer result = 0;
+        LocalDate today = LocalDate.now();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sqlQuery =
+            "SELECT COUNT(room_num) as total " +
+            "FROM reservations " +
+            "WHERE start_date <= '" + Date.valueOf(today) + "' " +
+            "AND end_date > '" + Date.valueOf(today) + "' " +
+            "AND room_type = '" + roomType.toString() + "'";
+        Connection con = ReservationSystem.getDatabaseConnection();
+    
+        try {
+            ps = con.prepareStatement(sqlQuery);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                result = rs.getInt("total");
+            }
+        }
+        catch (SQLException e){
+            System.out.println("DatabaseUtil.countAvailableRooms()");
+            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
+            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
+            System.out.println(e);
+        }
+        DatabaseUtil.ready();
+        return result;
+    }
     /**
      * Counts the amount of available rooms within the current day
      * @return number of available rooms
