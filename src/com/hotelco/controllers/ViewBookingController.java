@@ -79,7 +79,7 @@ public class ViewBookingController extends BaseController {
 
     @FXML
     private void cancel(MouseEvent event) {
-        reservation.cancel(false);
+        reservation.cancel(true);
         ReservationHistoryController rhc = (ReservationHistoryController) Instances.getDashboardController().switchAnchor(FXMLPaths.RHGUI);
         rhc.setNotification("Reservation successfully cancelled");
     }
