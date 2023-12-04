@@ -241,7 +241,12 @@ public class CreditCard{
      */
     public Boolean assign(){
         Boolean result = false;
-        if (verify()){
+        User newUser = DatabaseUtil.getCreditCardUser(creditCardNum);
+        if (newUser != null && user.getUserId() != newUser.getUserId()){
+            //FIXME: ISSUE MESSAGE THAT THE CC IS ALREADY IN USE
+            result = false;
+        }
+        else if (verify()){
             assignToUser();
             result = true;
         }
