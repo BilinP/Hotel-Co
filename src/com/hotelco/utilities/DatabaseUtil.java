@@ -665,7 +665,7 @@ public class DatabaseUtil{
             ps = con.prepareStatement(sqlQuery);
             rs = ps.executeQuery();
             if(rs.next()){
-                result = new User(rs.getString("user_id"), false);
+                result = new User(rs.getInt("user_id"), false);
             }
         }
         catch (SQLException e){
