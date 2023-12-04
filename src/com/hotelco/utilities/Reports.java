@@ -113,11 +113,18 @@ public class Reports {
         PreparedStatement ps = null;
         ResultSet rs = null;
         String sqlQuery =
-            "SELECT COUNT(room_num) as total " +
-            "FROM reservations " +
-            "WHERE start_date <= '" + Date.valueOf(today) + "' " +
-            "AND end_date > '" + Date.valueOf(today) + "' " +
-            "AND room_type = '" + roomType.toString() + "'";
+             "SELECT COUNT(room_num) as total " +
+            "FROM (" +
+                "SELECT room_num " +
+                "FROM rooms " +
+                "WHERE room_num " +
+                "IN (" +
+                    "SELECT room_num " + 
+                    "FROM reservations " +
+                    "WHERE start_date <= '" + Date.valueOf(today) + "' " +
+                    "AND end_date > '" + Date.valueOf(today) + "') " +
+                "AND room_type = '" + roomType.toString() + "') " +
+                "AS T";
         Connection con = ReservationSystem.getDatabaseConnection();
     
         try {
@@ -187,8 +194,8 @@ public class Reports {
         ResultSet rs = null;
         String sqlQuery = "SELECT COUNT(*) AS total " + 
             "FROM reservations " + 
-            "WHERE startDate = '" + Date.valueOf(LocalDate.now()) + "'";
-            System.out.println(sqlQuery);
+            "WHERE start_Date = '" + Date.valueOf(LocalDate.now()) + "' " +
+            "AND is_checked_in = 1 ";
         Connection con = ReservationSystem.getDatabaseConnection();
     
         try {
@@ -200,6 +207,37 @@ public class Reports {
         }
         catch (SQLException e){
             System.out.println("DatabaseUtil.countTodayCheckIns()");
+            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
+            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
+            System.out.println(e);
+        }
+        DatabaseUtil.ready();
+        return result;
+    }
+    
+    /**
+     * Gives an integer for the number of check-outs within the current day
+     * @return number of check-outs
+     */
+    public static Integer countTodayCheckOuts(){   
+        Integer result = 0;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String sqlQuery = "SELECT COUNT(*) AS total " + 
+            "FROM reservations " + 
+            "WHERE end_Date = '" + Date.valueOf(LocalDate.now()) + "' " +
+            "AND is_checked_out = 1";
+        Connection con = ReservationSystem.getDatabaseConnection();
+    
+        try {
+            ps = con.prepareStatement(sqlQuery);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                result = rs.getInt("total");
+            }
+        }
+        catch (SQLException e){
+            System.out.println("DatabaseUtil.countTodayCheckOuts()");
             System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);
