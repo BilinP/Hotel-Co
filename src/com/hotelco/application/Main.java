@@ -1,17 +1,9 @@
 package com.hotelco.application;
 
-import java.io.IOException;
-import java.time.LocalDate;
-
-import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
-
-import com.hotelco.constants.RoomType;
 import com.hotelco.controllers.LoginController;
 import com.hotelco.developer.Developer;
 import com.hotelco.developer.Settings;
 import com.hotelco.utilities.DailyTask;
-import com.hotelco.utilities.DatabaseUtil;
 import com.hotelco.utilities.FXMLPaths;
 import com.hotelco.utilities.FrequentTask;
 import com.hotelco.utilities.IdleTimer;
@@ -73,7 +65,7 @@ public class Main extends Application {
 	/**
  	* This method serves as the starting point for the application's execution.
  	*/
-	 public static void main(String[] args) throws AddressException, MessagingException, IOException {
+	 public static void main(String[] args) {
 		launch(args);
 	}
 }

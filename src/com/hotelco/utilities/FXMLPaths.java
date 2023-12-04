@@ -6,6 +6,9 @@ package com.hotelco.utilities;
  * @author      Grigor Azakian
  */
 public class FXMLPaths {
+    
+    private FXMLPaths() {}
+
     public static final String LOGIN = "/com/hotelco/views/LoginGUI.fxml";
     public static final String CREATE_ACCOUNT = "/com/hotelco/views/CreateAccountGUI.fxml";
     public static final String HOME = "/com/hotelco/views/HomeGUI.fxml";
@@ -23,6 +26,6 @@ public class FXMLPaths {
     public static final String RESET_PASSWORD = "/com/hotelco/views/ResetPasswordGUI.fxml";
     public static final String CHECK_IN = "/com/hotelco/views/CheckInGUI.fxml";
     public static final String CHECK_OUT = "/com/hotelco/views/CheckOutGUI.fxml";
-    public static final String All_RESERVATION = "/com/hotelco/views/AllReservationGUI.fxml";
-     public static final String CONFIRMATION = "/com/hotelco/views/ConfirmationGUI.fxml";
+    public static final String ALL_RESERVATION = "/com/hotelco/views/AllReservationGUI.fxml";
+    public static final String CONFIRMATION = "/com/hotelco/views/ConfirmationGUI.fxml";
 }

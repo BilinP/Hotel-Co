@@ -80,7 +80,7 @@ public class HomeController extends BaseController {
      * which will set the next image to be shown and trigger the next FadeTransition.
      * @param images
      */
-    private void setChangeListeners(Image images[]) {
+    private void setChangeListeners(Image[] images) {
         fo.opacityProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {

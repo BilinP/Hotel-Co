@@ -531,7 +531,7 @@ public class ReservationController extends BaseController {
         boolean expDateStatus = expDateIsInteractedWith && setExpDateErrorStatus();
         boolean cardNumberStatus = cardNumberIsInteractedWith && setCardNumberErrorStatus();
         boolean result = CVCStatus || expDateStatus || cardNumberStatus;
-        if (result = false) {
+        if (!result) {
             paymentNotification.setText("");
         }
         return result;
@@ -654,11 +654,9 @@ public class ReservationController extends BaseController {
                 setErrorOnExpDateFields();
                 return false;
             }
-            if (endDate.getValue() != null) {
-                if (parseExpDate().plusMonths(1).isBefore(endDate.getValue())) {
+            if (endDate.getValue() != null &&  (parseExpDate().plusMonths(1).isBefore(endDate.getValue()))) {
                     setErrorOnExpDateFields();
                     return false;                    
-                }
             }            
             if (parseExpDate().plusMonths(1).isBefore(LocalDate.now())) {
                 setErrorOnExpDateFields();

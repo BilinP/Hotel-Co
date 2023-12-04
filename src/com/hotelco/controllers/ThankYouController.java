@@ -88,7 +88,6 @@ public class ThankYouController extends BaseController {
         room.setText(reservation.getRoom().getRoomType().toPrettyString());
         thankYou.setText("Thank you, " + reservation.getUser().getFirstName());
         total.setText("$" + ReservationCalculator.calcTotal(reservation).toString());
-        EmailGenerator.reservationConfirmation(reservation);
     }
 
 }

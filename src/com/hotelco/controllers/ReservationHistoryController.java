@@ -104,15 +104,15 @@ public class ReservationHistoryController extends BaseController {
         Task<ObservableList<Reservation>> task = new Task<ObservableList<Reservation>>() {
             @Override
             protected ObservableList<Reservation> call() throws Exception {
-                Reservation reservation[] = ReservationSystem.getCurrentUser().getReservations();
+                Reservation[] reservation = ReservationSystem.getCurrentUser().getReservations();
                 Collections.reverse(Arrays.asList(reservation));
                 return FXCollections.observableArrayList(Arrays.asList(reservation));                
             }  
         };
 
-        task.setOnSucceeded(e -> {
-            table.setItems(task.getValue());
-        });
+        task.setOnSucceeded(e ->
+            table.setItems(task.getValue())
+        );
         
         new Thread(task).start();
     }
