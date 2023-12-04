@@ -51,14 +51,6 @@
                         <Insets left="90.0" />
                      </padding>
                   </Button>
-                  <Button fx:id="exportButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseReleased="#switchToExport" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: transparent;" text="Export" textFill="#f9bd1a">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <padding>
-                        <Insets left="90.0" />
-                     </padding>
-                  </Button>
                   <VBox alignment="BOTTOM_CENTER" VBox.vgrow="ALWAYS">
                      <children>
                         <Button mnemonicParsing="false" onMouseReleased="#switchToLoginScene" prefHeight="30.0" prefWidth="218.0" styleClass="redButton" stylesheets="@../stylesheets/ButtonSS.css" text="LOG OUT" textFill="WHITE">

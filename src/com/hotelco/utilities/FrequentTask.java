@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.hotelco.constants.Constants;
+import com.hotelco.developer.Settings;
 import com.hotelco.entities.ReservationSystem;
 
 /**
@@ -45,7 +45,7 @@ public class FrequentTask {
                 System.out.println("Rescheduling reconnection attempt");
                 Timer timer = new Timer(true);
                 timer.schedule(
-                    new DatabaseReconnectTask(), Constants.RETRY_INTERVAL);
+                    new DatabaseReconnectTask(), Settings.RETRY_INTERVAL);
             }
         }
     }
@@ -53,7 +53,7 @@ public class FrequentTask {
      * Schedules the frequent task(s).
      */
     public static void scheduleFrequentTasks(){
-        new FrequentTask(Constants.RECONNECT_INTERVAL);
+        new FrequentTask(Settings.RECONNECT_INTERVAL);
     }
 
 }

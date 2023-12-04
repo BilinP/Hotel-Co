@@ -1,14 +1,18 @@
 package com.hotelco.controllers;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
 
+import com.hotelco.constants.Constants;
 import com.hotelco.entities.Reservation;
 import com.hotelco.entities.ReservationSystem;
 import com.hotelco.utilities.DatabaseUtil;
+import com.hotelco.utilities.FXMLPaths;
+import com.hotelco.utilities.Instances;
 import com.hotelco.utilities.ReservationCalculator;
 
 import javafx.application.Platform;
@@ -24,10 +28,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
 /**
- * The RHController class is the associated controller class of the 'ReservationHistoryGUI' view. 
- * It handles connection between the GUI and internal data.
+ * The RHController class is the associated controller class of the
+ * 'ReservationHistoryGUI' view. It handles connection between the GUI and
+ * internal data.
  * 
- * @author      Grigor Azakian
+ * @author Grigor Azakian
  */
 public class CheckInController extends BaseController {
 
@@ -51,28 +56,28 @@ public class CheckInController extends BaseController {
 
     /**
      * TableColumn containing information about a bookings check in date.
-     */    
+     */
     @FXML
     private TableColumn<Reservation, LocalDate> checkInDate;
 
     /**
      * TableColumn containing information about a bookings check out date.
-     */    
+     */
     @FXML
     private TableColumn<Reservation, LocalDate> checkOutDate;
 
     /**
      * TableColumn containing information about a bookings total cost.
-     */    
+     */
     @FXML
     private TableColumn<Reservation, String> total;
 
-
     private List<Reservation> selectedReservations = new ArrayList<>();
+
     /**
-     * Called immediately upon controller creation.
-     * Sets up the parameters for the data to be displayed in each TableColumn.
-     * Afterwards, it calls displayOrders().
+     * Called immediately upon controller creation. Sets up the parameters for the
+     * data to be displayed in each TableColumn. Afterwards, it calls
+     * displayOrders().
      */
     @FXML
     private void initialize() {
@@ -86,13 +91,13 @@ public class CheckInController extends BaseController {
             });
             displayOrders();
         Platform.runLater(() -> {
-            
+
         });
     }
 
     /**
-     * Uses an array of reservations for the current user and passes it to the TableView.
-     * This will set the data in each TableColumn.
+     * Uses an array of reservations for the current user and passes it to the
+     * TableView. This will set the data in each TableColumn.
      */
     private void displayOrders() {
         Task<ObservableList<Reservation>> task = new Task<ObservableList<Reservation>>() {
@@ -113,7 +118,7 @@ public class CheckInController extends BaseController {
 
     @FXML
     void toggleSelection(MouseEvent event) {
-        Reservation res=table.getSelectionModel().getSelectedItem();
+        Reservation res = table.getSelectionModel().getSelectedItem();
         if (res != null) {
             toggle(res);
         }
@@ -133,20 +138,26 @@ public class CheckInController extends BaseController {
                 super.updateItem(item, empty);
                 if (selectedReservations.contains(item)) {
                     getStyleClass().add("table-row-cell-selectedtoggle");
-                } 
+                }
             }
         });
         table.refresh();
-      
+
     }
 
     @FXML
     void checkIn(MouseEvent event) {
-        System.out.print("hi");
-        for (Reservation reservation : selectedReservations) {
-             reservation.setIsCheckedIn(true);
-             reservation.push();
+        if (!selectedReservations.isEmpty()) {
+            for (Reservation reservation : selectedReservations) {
+                if (LocalDateTime.now().getHour() >= Constants.CHECK_IN_TIME) {
+                    reservation.setIsCheckedIn(true);
+                    reservation.push();
+                }
+            }
+            ConfirmationController cc = (ConfirmationController) Instances.getDashboardController()
+                    .switchAnchor(FXMLPaths.CONFIRMATION);
+            cc.setIsCheckin(true);
+            cc.writeInfo(ReservationSystem.getCurrentUser());
         }
     }
-    
 }

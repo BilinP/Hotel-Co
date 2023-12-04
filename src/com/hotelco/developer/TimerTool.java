@@ -1,4 +1,4 @@
-package com.hotelco.devtools;
+package com.hotelco.developer;
 
 /**
  * Tool to easily and repeatedly report execution time between lines of code.

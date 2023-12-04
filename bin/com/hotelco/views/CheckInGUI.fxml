@@ -23,7 +23,7 @@
             </Text>
             <VBox prefHeight="36.0" prefWidth="900.0">
                <children>
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Please Select All Reservations you want to check in Today" textAlignment="CENTER" wrappingWidth="900.0">
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Please select a reservation to check in" textAlignment="CENTER" wrappingWidth="900.0">
                      <font>
                         <Font size="24.0" />
                      </font>

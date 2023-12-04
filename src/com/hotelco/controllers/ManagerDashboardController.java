@@ -56,7 +56,7 @@ public class ManagerDashboardController extends BaseController {
      /**
      * Array of Button  that stores all the menu button.
      */
-    private final Button[] menubuttons = new Button[4];
+    private final Button[] menubuttons = new Button[3];
 
     /**
      * String which stores the current anchor scene.
@@ -75,7 +75,6 @@ public class ManagerDashboardController extends BaseController {
          menubuttons[0] = revenueButton;
          menubuttons[1] = vacancyButton;
          menubuttons[2] = reservationsButton;
-         menubuttons[3] = exportButton;
          buttonSelection(revenueButton);
         Platform.runLater(() -> {
       
@@ -127,16 +126,6 @@ public class ManagerDashboardController extends BaseController {
         buttonSelection(vacancyButton);
     }
 
-   /**
-     * This method is called by pressing the 'Book Room' button.
-     * It changes the right anchorpane to the RoomChoiceGUI scene
-     * @param event The 'mouse released' event that is triggered by pressing the 'Book ROom' button.
-     */
-    @FXML
-    void switchToExport(MouseEvent event) {
-        switchAnchor(FXMLPaths.ROOMS);
-        buttonSelection(exportButton);
-    }
 
     /**
      * This method is used to change the style of the button to emphasis the 
