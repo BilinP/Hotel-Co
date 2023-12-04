@@ -28,4 +28,5 @@ public class FXMLPaths {
     public static final String CHECK_OUT = "/com/hotelco/views/CheckOutGUI.fxml";
     public static final String ALL_RESERVATION = "/com/hotelco/views/AllReservationGUI.fxml";
     public static final String CONFIRMATION = "/com/hotelco/views/ConfirmationGUI.fxml";
+    public static final String REVENUE = "/com/hotelco/views/REVENUEGUI.fxml";
 }

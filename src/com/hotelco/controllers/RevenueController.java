@@ -1,15 +1,15 @@
 package com.hotelco.controllers;
 
-import com.hotelco.entities.ReservationSystem;
-import com.hotelco.entities.User;
-import com.hotelco.utilities.TextFormatters;
+
+import com.hotelco.utilities.Reports;
+
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
-import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
+
 import javafx.scene.text.Text;
+import java.text.NumberFormat;
 
 
 /**
@@ -43,29 +43,17 @@ public class RevenueController extends BaseController {
      * a formatter for the 'number', 'first', and 'email'.
      */
     @FXML
-    private void initialize() {     
-        TextFormatters textFormatters = new TextFormatters();
-        user = ReservationSystem.getCurrentUser();
-        number.setTextFormatter(textFormatters.PHONE_NUMBER);
-        first.setTextFormatter(textFormatters.FIRST_NAME);
-        first.setFocusTraversable(true);
-        last.setTextFormatter(textFormatters.LAST_NAME);
-        email.setText(user.getEmail());
-        first.setText(user.getFirstName());
-        last.setText(user.getLastName());
-        number.setText(user.getPhone());        
+    private void initialize() { 
+        NumberFormat numberFormat = NumberFormat.getNumberInstance();
+        numberFormat.setMinimumFractionDigits(2);
+        numberFormat.setMaximumFractionDigits(2);
+        //dailyRevenue.setText("$ "+numberFormat.format(Reports.getDailyRevenue()));
+        lifetimeRevenue.setText("$ "+numberFormat.format(Reports.getLifetimeRevenue()));
+        weeklyRevenue.setText("$ "+numberFormat.format(Reports.getWeeklyRevenue()));
+        yearlyRevenue.setText("$ "+numberFormat.format(Reports.getYearlyRevenue()));
         Platform.runLater(() -> {
 
         });
-    }
-
-    @FXML
-    private void saveProfileContent(MouseEvent event) {
-        user.setEmail(email.getText());
-        user.setFirstName(first.getText());
-        user.setLastName(last.getText());
-        user.setPhone(number.getText());
-        user.push();
     }
 
 }

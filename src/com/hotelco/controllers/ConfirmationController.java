@@ -1,6 +1,5 @@
 package com.hotelco.controllers;
 
-import com.hotelco.constants.RoomType;
 import com.hotelco.entities.User;
 import com.hotelco.utilities.FXMLPaths;
 import com.hotelco.utilities.Instances;

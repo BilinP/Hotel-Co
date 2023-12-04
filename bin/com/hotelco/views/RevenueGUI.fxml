@@ -55,24 +55,24 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Text>
-      <Text fx:id="lifetimeRevenue" fill="WHITE" layoutX="17.0" layoutY="322.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$" wrappingWidth="105.13671875">
+      <Text fx:id="lifetimeRevenue" fill="WHITE" layoutX="5.0" layoutY="317.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$" wrappingWidth="204.0">
          <font>
-            <Font size="48.0" />
+            <Font size="36.0" />
          </font>
       </Text>
-      <Text fx:id="yearlyRevenue" fill="WHITE" layoutX="230.0" layoutY="322.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$" wrappingWidth="105.13671875">
+      <Text fx:id="yearlyRevenue" fill="WHITE" layoutX="221.0" layoutY="317.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$" wrappingWidth="204.0">
          <font>
-            <Font size="48.0" />
+            <Font size="36.0" />
          </font>
       </Text>
-      <Text fx:id="weeklyRevenue" fill="WHITE" layoutX="18.0" layoutY="473.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$" wrappingWidth="105.13671875">
+      <Text fx:id="weeklyRevenue" fill="WHITE" layoutX="5.0" layoutY="463.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$" wrappingWidth="204.0">
          <font>
-            <Font size="48.0" />
+            <Font size="36.0" />
          </font>
       </Text>
-      <Text fx:id="dailyRevenue" fill="WHITE" layoutX="231.0" layoutY="481.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$" wrappingWidth="105.13671875">
+      <Text fx:id="dailyRevenue" fill="WHITE" layoutX="221.0" layoutY="462.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$" wrappingWidth="204.0">
          <font>
-            <Font size="48.0" />
+            <Font size="36.0" />
          </font>
       </Text>
    </children>

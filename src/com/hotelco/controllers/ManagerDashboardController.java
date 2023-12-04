@@ -100,7 +100,7 @@ public class ManagerDashboardController extends BaseController {
      */
     @FXML
     private void switchToRevenue(MouseEvent event) {
-       switchAnchor(FXMLPaths.HOME);
+       switchAnchor(FXMLPaths.REVENUE);
        buttonSelection(revenueButton);
     }
 
