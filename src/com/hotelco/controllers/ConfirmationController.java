@@ -97,8 +97,8 @@ public class ConfirmationController extends BaseController {
             keyMessage.setText("Please pick up your key card from below");
             button.setText("BACK TO CHECK-IN");
         } else {
-            thankYou.setText("Farewell " + user.getFirstName());
-            message.setText("Your check-out is complete. Thank you for staying at Hotel CO.");
+            thankYou.setText("Farewell, " + user.getFirstName() + "!");
+            message.setText("Your check-out is complete. Thank you for staying at Hotel Co.");
             keyMessage.setText("Please drop off your key card below.");
             button.setText("BACK TO CHECK-OUT");
         }
