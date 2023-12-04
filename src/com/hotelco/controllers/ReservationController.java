@@ -25,6 +25,7 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -137,7 +138,7 @@ public class ReservationController extends BaseController {
     private Text rate;
 
     @FXML
-    private Text changeButton;
+    private Button changeButton;
 
     /***************************************************************************
      *                                                                         *
@@ -232,7 +233,7 @@ public class ReservationController extends BaseController {
             }    
             refreshExpDateErrorStatus();
             if ((expDateMonth.getLength() == 2 && expDateYear.getLength() == 2)
-            && setExpDateErrorStatus()) {
+            && !setExpDateErrorStatus()) {
                 paymentNotification.setText("");
                 setAllPaymentFieldErrorStatus();
             }
@@ -256,7 +257,7 @@ public class ReservationController extends BaseController {
             }
             refreshExpDateErrorStatus();  
             if ((expDateMonth.getLength() == 2 && expDateYear.getLength() == 2)
-            && setExpDateErrorStatus()) {
+            && !setExpDateErrorStatus()) {
                 paymentNotification.setText("");
                 setAllPaymentFieldErrorStatus();
             }               
@@ -468,9 +469,12 @@ public class ReservationController extends BaseController {
         CVCIsInteractedWith = true;      
         boolean datePickerStatus = isAnyDatePickerEmpty();
         boolean paymentFieldStatus = setAllPaymentFieldErrorStatus();
+        
         if (datePickerStatus || paymentFieldStatus || !assignCard()) {
             return;
         }
+        
+        
         
         Reservation reservation = createReservation();
         ThankYouController tyc = (ThankYouController) Instances.getDashboardController().switchAnchor(FXMLPaths.THANK_YOU);
@@ -536,9 +540,9 @@ public class ReservationController extends BaseController {
      * @return true if any of the payment TextFields are empty, false if they are all filled
      */
     private boolean setAllPaymentFieldErrorStatus() {
-        boolean CVCStatus = CVCIsInteractedWith && setCVCErrorStatus();
-        boolean expDateStatus = expDateIsInteractedWith && setExpDateErrorStatus();
-        boolean cardNumberStatus = cardNumberIsInteractedWith && setCardNumberErrorStatus();
+        boolean CVCStatus = CVCIsInteractedWith ? setCVCErrorStatus() : true;
+        boolean expDateStatus = expDateIsInteractedWith ? setExpDateErrorStatus() : true;
+        boolean cardNumberStatus = cardNumberIsInteractedWith ? setCardNumberErrorStatus() : true;
         boolean result = CVCStatus || expDateStatus || cardNumberStatus;
         if (!result) {
             paymentNotification.setText("");
@@ -661,22 +665,22 @@ public class ReservationController extends BaseController {
         if (expDateMonth.getLength() == 2 && expDateYear.getLength() == 2) {
             if (Integer.parseInt(expDateMonth.getText()) > 12) {
                 setErrorOnExpDateFields();
-                return false;
+                return true;
             }
             if (endDate.getValue() != null &&  (parseExpDate().plusMonths(1).isBefore(endDate.getValue()))) {
                     setErrorOnExpDateFields();
-                    return false;                    
+                    return true;                    
             }            
             if (parseExpDate().plusMonths(1).isBefore(LocalDate.now())) {
                 setErrorOnExpDateFields();
-                return false;    
+                return true;    
             }
             setWhiteBorder(expDateMonth);
             setWhiteBorder(expDateYear);
-            return true;
+            return false;
         }
         setErrorOnExpDateFields();
-        return false;
+        return true;
     }
 
     /**
@@ -732,7 +736,7 @@ public class ReservationController extends BaseController {
             ReservationSystem.getCurrentUser(), Integer.parseInt(guests.getText()));
         ReservationSystem.setCurrentReservation(reservation);
         ReservationSystem.book();
-        EmailGenerator.reservationConfirmation(reservation);
+        //EmailGenerator.reservationConfirmation(reservation);
         return ReservationSystem.getCurrentReservation();
     }
 
@@ -748,7 +752,9 @@ public class ReservationController extends BaseController {
 
     void setToCancel(Reservation reservation) {
         toCancel = reservation;
-        changeButton.setDisable(true);
+        room = toCancel.getRoom().getRoomType();
+        roomText.setText(room.toPrettyString());
+        Platform.runLater(() -> changeButton.setDisable(true));
     }
 
 
