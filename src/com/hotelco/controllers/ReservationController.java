@@ -136,6 +136,9 @@ public class ReservationController extends BaseController {
     @FXML
     private Text rate;
 
+    @FXML
+    private Text changeButton;
+
     /***************************************************************************
      *                                                                         *
      * Instance Variables                                                      *
@@ -152,6 +155,8 @@ public class ReservationController extends BaseController {
     private boolean expDateIsInteractedWith = false;
 
     private boolean CVCIsInteractedWith = false;
+
+    private Reservation toCancel;
 
     /***************************************************************************
      *                                                                         *
@@ -470,6 +475,10 @@ public class ReservationController extends BaseController {
         Reservation reservation = createReservation();
         ThankYouController tyc = (ThankYouController) Instances.getDashboardController().switchAnchor(FXMLPaths.THANK_YOU);
         tyc.writeReservationInfo(reservation);
+
+        if (toCancel != null) {
+            toCancel.cancel(false);
+        }
     }
 
     /**
@@ -732,9 +741,14 @@ public class ReservationController extends BaseController {
      * Sets the users chosen RoomType upon controller creation.
      * @param roomType Users chosen RoomType
      */
-    public void setRoomType(RoomType roomType) {
+    void setRoomType(RoomType roomType) {
         this.room = roomType;
         roomText.setText(roomType.toPrettyString());
+    }
+
+    void setToCancel(Reservation reservation) {
+        toCancel = reservation;
+        changeButton.setDisable(true);
     }
 
 

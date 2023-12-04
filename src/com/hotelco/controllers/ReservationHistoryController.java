@@ -4,8 +4,12 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 
+import javax.swing.text.View;
+
 import com.hotelco.entities.Reservation;
 import com.hotelco.entities.ReservationSystem;
+import com.hotelco.utilities.FXMLPaths;
+import com.hotelco.utilities.Instances;
 import com.hotelco.utilities.ReservationCalculator;
 
 import javafx.application.Platform;
@@ -19,6 +23,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 
 /**
  * The RHController class is the associated controller class of the 'ReservationHistoryGUI' view. 
@@ -70,6 +75,9 @@ public class ReservationHistoryController extends BaseController {
     @FXML
     private TableColumn<Reservation, String> total;
 
+    @FXML
+    private Text notification;
+
     /**
      * Called immediately upon controller creation.
      * Sets up the parameters for the data to be displayed in each TableColumn.
@@ -77,6 +85,13 @@ public class ReservationHistoryController extends BaseController {
      */
     @FXML
     private void initialize() {
+        table.getSelectionModel().selectedItemProperty().addListener((property, oldItem, newItem) -> {
+            if (newItem != null) {
+                ViewBookingController vbc = (ViewBookingController) Instances.getDashboardController().switchAnchor(FXMLPaths.VIEW_BOOKING);
+                vbc.writeReservationInfo(newItem);
+            }
+        });
+
         roomType.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getRoom().getRoomType().toPrettyString()));
         orderNumber.setCellValueFactory(new PropertyValueFactory<Reservation, Integer>("reservationId"));
         checkInDate.setCellValueFactory(new PropertyValueFactory<Reservation, LocalDate>("startDate"));
@@ -91,9 +106,7 @@ public class ReservationHistoryController extends BaseController {
         });
         table.addEventFilter(MouseEvent.MOUSE_DRAGGED, Event::consume);
         displayOrders();
-        Platform.runLater(() -> {
-            
-        });
+
     }
 
     /**
@@ -115,5 +128,9 @@ public class ReservationHistoryController extends BaseController {
         );
         
         new Thread(task).start();
+    }
+
+    void setNotification(String string) {
+        notification.setText(string);
     }
 }

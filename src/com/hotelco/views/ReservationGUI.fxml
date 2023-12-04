@@ -327,7 +327,7 @@
                               </HBox>
                            </children>
                         </VBox>
-                        <Button mnemonicParsing="false" onMouseReleased="#switchToRoomChoiceScene" prefHeight="50.0" prefWidth="170.0" styleClass="grayButton" stylesheets="@../stylesheets/ButtonSS.css" text="Change Room Type" textFill="WHITE">
+                        <Button fx:id="changeButton" mnemonicParsing="false" onMouseReleased="#switchToRoomChoiceScene" prefHeight="50.0" prefWidth="170.0" styleClass="grayButton" stylesheets="@../stylesheets/ButtonSS.css" text="Change Room Type" textFill="WHITE">
                            <font>
                               <Font size="16.0" />
                            </font>
