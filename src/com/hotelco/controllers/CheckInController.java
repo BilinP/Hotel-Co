@@ -33,14 +33,17 @@ import javafx.util.Duration;
 import javafx.scene.paint.Color;
 
 /**
- * The RHController class is the associated controller class of the
- * 'ReservationHistoryGUI' view. It handles connection between the GUI and
- * internal data.
+ * The CheckInController class is the associated controller class of the
+ * 'CheckInGUI' view. It handles connection between the GUI and internal data.
  * 
  * @author Grigor Azakian
+ * @author Bilin Pattasseril
  */
 public class CheckInController extends BaseController {
 
+    /**
+     * Text used to notify the user of early check-in.
+     */
     @FXML
     private Text notifcation;
 
@@ -123,6 +126,14 @@ public class CheckInController extends BaseController {
         new Thread(task).start();
     }
 
+    /**
+     * Upon clicking on a reservation on a table it will retrieve the reservation
+     * then it will call the toggle(reservation )and finally clear the selection.
+     * 
+     * @param event that triggers this function toggleSelection upon mouse click on
+     *              table.
+     */
+
     @FXML
     void toggleSelection(MouseEvent event) {
         Reservation res = table.getSelectionModel().getSelectedItem();
@@ -131,6 +142,15 @@ public class CheckInController extends BaseController {
         }
         table.getSelectionModel().clearSelection();
     }
+
+    /**
+     * Moves a reservation into the selectedReservations ArrayList only if it is not
+     * already in the list. If the reservation is already in the list, it will be
+     * removed. Additionally, this method will recolor the table to visually
+     * represent the selected reservation.
+     * 
+     * @param reservation the reserivation that was selected.
+     */
 
     private void toggle(Reservation reservation) {
         if (selectedReservations.contains(reservation)) {
@@ -149,8 +169,15 @@ public class CheckInController extends BaseController {
             }
         });
         table.refresh();
-
     }
+
+    /**
+     * Initiates the check-in process by calling the method upon pressing the
+     * 'Check-in' button. Adds the reservation to the selectedReservations list and
+     * switches to the confirmationController scene.
+     * 
+     * @param event The event that triggers the check-in process
+     */
 
     @FXML
     void checkIn(MouseEvent event) {
@@ -170,6 +197,11 @@ public class CheckInController extends BaseController {
         }
     }
 
+    /**
+     * Updates the notification text to inform the user about an early arrival for
+     * check-in as well changes color to red.This message will last for 10 seconds.
+     */
+
     private void notification() {
         notifcation.setText("Thank you for your early arrival! Our check-in time is set for 4:00 pm.");
         notifcation.setFill(Color.RED);
@@ -177,6 +209,10 @@ public class CheckInController extends BaseController {
         timeline.play();
     }
 
+    /**
+     * Changes the notification text to provide directions for selecting
+     * reservations to check in as well change color back to white.
+     */
     private void directions() {
         notifcation.setText("Please select a reservation(s) to check in");
         notifcation.setFill(Color.WHITE);
