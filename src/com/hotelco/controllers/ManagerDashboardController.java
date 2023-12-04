@@ -71,7 +71,7 @@ public class ManagerDashboardController extends BaseController {
      */
     @FXML
     private void initialize() {
-        switchAnchor(FXMLPaths.HOME);
+        switchAnchor(FXMLPaths.REVENUE);
          menubuttons[0] = revenueButton;
          menubuttons[1] = vacancyButton;
          menubuttons[2] = reservationsButton;
