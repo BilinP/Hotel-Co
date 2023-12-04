@@ -119,6 +119,7 @@ public class RoomChoiceController extends BaseController {
      */
     @FXML
      void switchToBooking(MouseEvent event) {
+       
          Button clickedButton = (Button) event.getSource();
          RoomType roomType = RoomType.parseString(clickedButton.getId().toUpperCase());
          ReservationController rc = (ReservationController) Instances.getDashboardController().switchAnchor(FXMLPaths.RESERVATION);

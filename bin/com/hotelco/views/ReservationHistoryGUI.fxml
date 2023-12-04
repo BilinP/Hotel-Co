@@ -20,6 +20,18 @@
                   <Insets left="30.0" top="30.0" />
                </VBox.margin>
             </Text>
+            <VBox alignment="CENTER">
+               <children>
+                  <Text fx:id="notification" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+               </children>
+            </VBox>
             <TableView fx:id="table" minWidth="800.0" prefHeight="554.0" prefWidth="900.0" style="-fx-background-color: transparent;" stylesheets="@../stylesheets/TableViewSS.css">
               <columns>
                 <TableColumn fx:id="orderNumber" editable="false" prefWidth="71.0" text="Reservation Number" />
@@ -33,7 +45,7 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
                <VBox.margin>
-                  <Insets top="30.0" />
+                  <Insets top="15.0" />
                </VBox.margin>
                <padding>
                   <Insets left="5.0" />
