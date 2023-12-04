@@ -5,7 +5,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #484d54;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hotelco.controllers.VacancyController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #484d54;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hotelco.controllers.VacancyController">
    <children>
       <Text fill="#f9bd1a" layoutX="6.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vacancy">
          <font>
@@ -77,7 +77,7 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Text>
-      <Text fx:id="kingVacant1" fill="WHITE" layoutX="380.0" layoutY="583.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vacant:">
+      <Text fx:id="suiteVacant" fill="WHITE" layoutX="380.0" layoutY="583.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vacant:">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>

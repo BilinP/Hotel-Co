@@ -2,7 +2,9 @@ package com.hotelco.controllers;
 
 
 
+import com.hotelco.constants.RoomType;
 import com.hotelco.utilities.DatabaseUtil;
+import com.hotelco.utilities.Reports;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -31,8 +33,7 @@ public class VacancyController extends BaseController {
     @FXML
     private Text kingVacant;
 
-    @FXML
-    private Text kingVacant1;
+   
 
     @FXML
     private Text queenInUse;
@@ -42,6 +43,8 @@ public class VacancyController extends BaseController {
 
     @FXML
     private Text suiteInUse;
+     @FXML
+    private Text suiteVacant;
 
     @FXML
     private Text totalCheckIn;
@@ -63,13 +66,29 @@ public class VacancyController extends BaseController {
      */
     @FXML
     private void initialize() {
-        doubleInUse.setText("Occupied:"+ DatabaseUtil.);
+      
+        doubleVacant.setText("Vacant: "+ Reports.countOccupiedRooms(RoomType.parseString("DOUBLE")));
+        doubleInUse.setText("Occupied: "+ Reports.countAvailableRooms(RoomType.parseString("DOUBLE")));
+
+        queenVacant.setText("Vacant: "+ Reports.countOccupiedRooms(RoomType.parseString("QUEEN")));
+        queenInUse.setText("Occupied: "+ Reports.countAvailableRooms(RoomType.parseString("QUEEN")));
+
+        kingVacant.setText("Vacant: "+ Reports.countOccupiedRooms(RoomType.parseString("KING")));
+        kingInUse.setText("Occupied: "+ Reports.countAvailableRooms(RoomType.parseString("KING")));
+
+        suiteVacant.setText("Vacant: "+ Reports.countOccupiedRooms(RoomType.parseString("SUITE")));
+        suiteInUse.setText("Occupied: "+ Reports.countAvailableRooms(RoomType.parseString("SUITE")));
+
+        totalInUse.setText("Occupied: "+ Reports.getOccupancy());
+        totalVacant.setText("Vacant: "+ Reports.getVacancy());
+
+        totalCheckIn.setText("Check In: "+ Reports.countTodayCheckIns());
+        totalCheckOut.setText("Check Out: "+ Reports.countTodayCheckOuts());
 
         Platform.runLater(() -> {
 
         });
     }
 
-    private set
 
 }
