@@ -122,7 +122,7 @@ public class ManagerDashboardController extends BaseController {
      */
     @FXML
     void switchToRoomVacancy(MouseEvent event) {
-        switchAnchor(FXMLPaths.RHGUI);
+        switchAnchor(FXMLPaths.VACANCY);
         buttonSelection(vacancyButton);
     }
 

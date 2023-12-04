@@ -2,6 +2,8 @@ package com.hotelco.controllers;
 
 
 
+import com.hotelco.utilities.DatabaseUtil;
+
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 
@@ -61,11 +63,13 @@ public class VacancyController extends BaseController {
      */
     @FXML
     private void initialize() {
-      
+        doubleInUse.setText("Occupied:"+ DatabaseUtil.);
 
         Platform.runLater(() -> {
 
         });
     }
+
+    private set
 
 }
