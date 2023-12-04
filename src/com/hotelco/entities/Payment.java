@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 import com.hotelco.constants.Constants;
@@ -69,7 +70,7 @@ public class Payment {
         Reservation temp = ReservationSystem.getCurrentReservation();
         
         ReservationSystem.setCurrentReservation(reservation);
-        if (LocalDateTime.now().getHour() < Constants.CHECK_OUT_TIME
+        if (LocalTime.now().isBefore(Constants.CHECK_OUT_TIME)
             && LocalDate.now().isBefore(reservation.getEndDate())){
             reservation.setEndDate(LocalDate.now());
             reservation.push();
