@@ -74,7 +74,6 @@ public class ProfileController extends BaseController {
 
     @FXML
     private void saveProfileContent(MouseEvent event) {
-        User user = ReservationSystem.getCurrentUser();
         user.setEmail(email.getText());
         user.setFirstName(first.getText());
         user.setLastName(last.getText());

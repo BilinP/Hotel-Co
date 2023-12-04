@@ -12,10 +12,13 @@ import com.hotelco.entities.User;
 * @version     %I%, %G%
 */
 public class EmailGenerator {
+
+    private EmailGenerator() {}
+    
     /**
      * Signature for end of emails
      */
-    public final static String SIGNATURE = "Phone: 818 - 555 - 1337\r\n" + //
+    public static final String SIGNATURE = "Phone: 818 - 555 - 1337\r\n" + //
             "Email: HotelCoDesk@gmail.com\r\n" + //
             "Website: hotelco.hotel.co\r\n" + //
             "Address: 18111 Nordhoff St, Northridge, CA 91330\r\n" + //

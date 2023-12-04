@@ -78,9 +78,9 @@ public class AllReservationController extends BaseController {
     @FXML
     private void initialize() {
             roomType.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getRoom().getRoomType().toPrettyString()));
-            orderNumber.setCellValueFactory(new PropertyValueFactory<Reservation, Integer>("reservationId"));
-            checkInDate.setCellValueFactory(new PropertyValueFactory<Reservation, LocalDate>("startDate"));
-            checkOutDate.setCellValueFactory(new PropertyValueFactory<Reservation, LocalDate>("endDate"));
+            orderNumber.setCellValueFactory(new PropertyValueFactory<>("reservationId"));
+            checkInDate.setCellValueFactory(new PropertyValueFactory<>("startDate"));
+            checkOutDate.setCellValueFactory(new PropertyValueFactory<>("endDate"));
             status.setCellValueFactory(cell -> new SimpleStringProperty(
                 cell.getValue().getIsCancelled() ? "Cancelled" :
                 cell.getValue().getEndDate().isBefore(LocalDate.now()) ? "Completed" : 
@@ -104,15 +104,15 @@ public class AllReservationController extends BaseController {
         Task<ObservableList<Reservation>> task = new Task<ObservableList<Reservation>>() {
             @Override
             protected ObservableList<Reservation> call() throws Exception {
-                Reservation reservation[] = DatabaseUtil.getActiveReservations(false);
+                Reservation[] reservation = DatabaseUtil.getActiveReservations(false);
                 Collections.reverse(Arrays.asList(reservation));
                 return FXCollections.observableArrayList(Arrays.asList(reservation));                
             }  
         };
 
-        task.setOnSucceeded(e -> {
-            table.setItems(task.getValue());
-        });
+        task.setOnSucceeded(e ->
+            table.setItems(task.getValue())
+        );
         
         new Thread(task).start();
     }

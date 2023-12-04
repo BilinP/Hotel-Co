@@ -1,6 +1,5 @@
 package com.hotelco.controllers;
 
-import com.hotelco.entities.Password;
 import com.hotelco.entities.ReservationSystem;
 import com.hotelco.entities.User;
 import com.hotelco.utilities.DatabaseUtil;
@@ -94,14 +93,9 @@ public class LoginController extends BaseController {
             image.setClip(rectangle);
             imageRight.setClip(clip);   
              
-        Platform.runLater(() -> {
-            email.getScene().getRoot().requestFocus(); 
-        });
-    }
-
-    public LoginController(TextField email, PasswordField password){
-       this.email=email;
-       this.password=password;
+        Platform.runLater(() ->
+            email.getScene().getRoot().requestFocus()
+        );
     }
 
     /**
@@ -199,9 +193,9 @@ public class LoginController extends BaseController {
      */
     public void initializeIdleTimer() {
         idleTimer = new PauseTransition(Duration.seconds(10));
-        idleTimer.setOnFinished(e -> {
-            switchToScreenSaver();
-        });
+        idleTimer.setOnFinished(e ->
+            switchToScreenSaver()
+        );
 
         handler = e -> {
             idleTimer.stop();
