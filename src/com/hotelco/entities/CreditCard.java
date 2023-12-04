@@ -244,11 +244,15 @@ public class CreditCard{
         User newUser = DatabaseUtil.getCreditCardUser(creditCardNum);
         if (newUser != null && user.getUserId() != newUser.getUserId()){
             //FIXME: ISSUE MESSAGE THAT THE CC IS ALREADY IN USE
+            System.out.println("CreditCard in use. Not assign()ed");
             result = false;
         }
         else if (verify()){
             assignToUser();
             result = true;
+        }
+        else {
+            System.out.println("Credit card could not be verified.");
         }
         return result;
     }
