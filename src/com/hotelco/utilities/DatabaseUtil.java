@@ -470,7 +470,8 @@ public class DatabaseUtil{
             "FROM reservations " + 
             "WHERE start_date = '" + Date.valueOf(LocalDate.now()) + "' " +
             "AND user_id = " + user.getUserId() + " " +
-            "AND is_checked_in = 0";
+            "AND is_checked_in = 0 " +
+            "AND is_cancelled = 0";
         Connection con = ReservationSystem.getDatabaseConnection();
     
         try {

@@ -30,12 +30,13 @@ public class Reports {
         String sqlQuery = "SELECT SUM(amount) AS total FROM payments " +
             "WHERE DATE(time) > '" + Date.valueOf(startDate) + "'";
         Connection con = ReservationSystem.getDatabaseConnection();
+
         try {
             ps = con.prepareStatement(sqlQuery);
             rs = ps.executeQuery();
             if(rs.next())
             result = rs.getBigDecimal("total");
-            result = result == null ? new BigDecimal("0") : null;
+            result = result == null ? new BigDecimal("0") : result;
         }
         catch (SQLException e){
             System.out.println("DatabaseUtil.getRevenue()");
@@ -68,7 +69,8 @@ public class Reports {
      * @return the monthly revenue of the hotel collected thus far
      */
     public static BigDecimal getMonthlyRevenue(){
-        return getRevenue(LocalDate.now().getDayOfMonth());
+        int day = LocalDate.now().getDayOfMonth();
+        return getRevenue(day);
     }
 
     /**

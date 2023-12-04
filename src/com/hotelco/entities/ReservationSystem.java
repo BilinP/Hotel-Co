@@ -106,14 +106,6 @@ public class ReservationSystem {
         currentUser.fetch(true);
     }
     /**
-     * Cancels the "current reservation" by setting isCancelled. See
-     * currentReservation member for further description of current reservation.
-     */
-    public static void cancelReservation(){
-        currentReservation.setIsCancelled(true);
-        currentReservation.push();
-    }
-    /**
      * Checks out every reservation whose check out date is today
      */
     public static void dailyCheckOut(){

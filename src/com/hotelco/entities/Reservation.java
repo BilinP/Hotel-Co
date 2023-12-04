@@ -570,6 +570,8 @@ public class Reservation {
             }
             isCheckedOut = true;
         }
+        isCheckedIn = false;
+        isCheckedOut = false;
         push();
     }
 }
