@@ -67,7 +67,10 @@ public class DailyTask {
 
             for (Integer i = 0; i < numReservations; i++){
                 reservations[i].setIsCancelled(true);
-                System.out.println("Cancelling reservation "
+                reservations[i].setIsCheckedIn(false);
+                reservations[i].setIsCheckedOut(false);
+                reservations[i].push();
+                System.out.println("Cancelled reservation "
                     + reservations[i].getReservationId());
             }
         }
