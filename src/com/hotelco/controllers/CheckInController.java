@@ -15,6 +15,8 @@ import com.hotelco.utilities.FXMLPaths;
 import com.hotelco.utilities.Instances;
 import com.hotelco.utilities.ReservationCalculator;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -26,6 +28,9 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
+import javafx.util.Duration;
+import javafx.scene.paint.Color;
 
 /**
  * The RHController class is the associated controller class of the
@@ -35,6 +40,9 @@ import javafx.scene.input.MouseEvent;
  * @author Grigor Azakian
  */
 public class CheckInController extends BaseController {
+
+    @FXML
+    private Text notifcation;
 
     /**
      * TableView that contains every TableColumn.
@@ -81,15 +89,16 @@ public class CheckInController extends BaseController {
      */
     @FXML
     private void initialize() {
-            roomType.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getRoom().getRoomType().toPrettyString()));
-            orderNumber.setCellValueFactory(new PropertyValueFactory<>("reservationId"));
-            checkInDate.setCellValueFactory(new PropertyValueFactory<>("startDate"));
-            checkOutDate.setCellValueFactory(new PropertyValueFactory<>("endDate"));
-            total.setCellValueFactory(cell -> {
-                Reservation reservation = cell.getValue();
-                return new SimpleStringProperty("$" + ReservationCalculator.calcTotal(reservation).toString());
-            });
-            displayOrders();
+        roomType.setCellValueFactory(
+                cell -> new SimpleStringProperty(cell.getValue().getRoom().getRoomType().toPrettyString()));
+        orderNumber.setCellValueFactory(new PropertyValueFactory<>("reservationId"));
+        checkInDate.setCellValueFactory(new PropertyValueFactory<>("startDate"));
+        checkOutDate.setCellValueFactory(new PropertyValueFactory<>("endDate"));
+        total.setCellValueFactory(cell -> {
+            Reservation reservation = cell.getValue();
+            return new SimpleStringProperty("$" + ReservationCalculator.calcTotal(reservation).toString());
+        });
+        displayOrders();
         Platform.runLater(() -> {
 
         });
@@ -105,14 +114,12 @@ public class CheckInController extends BaseController {
             protected ObservableList<Reservation> call() throws Exception {
                 Reservation[] reservation = DatabaseUtil.getUserCheckIns(ReservationSystem.getCurrentUser());
                 Collections.reverse(Arrays.asList(reservation));
-                return FXCollections.observableArrayList(Arrays.asList(reservation));                
-            }  
+                return FXCollections.observableArrayList(Arrays.asList(reservation));
+            }
         };
 
-        task.setOnSucceeded(e ->
-            table.setItems(task.getValue())
-        );
-        
+        task.setOnSucceeded(e -> table.setItems(task.getValue()));
+
         new Thread(task).start();
     }
 
@@ -147,19 +154,32 @@ public class CheckInController extends BaseController {
 
     @FXML
     void checkIn(MouseEvent event) {
-        for (Reservation reservation : selectedReservations) {
-            if (LocalDateTime.now().isAfter(
-                LocalDateTime.of(LocalDate.now(), Constants.CHECK_IN_TIME))){    
-                reservation.setIsCheckedIn(true);
-                reservation.push();
+        if (!selectedReservations.isEmpty()) {
+            for (Reservation reservation : selectedReservations) {
+                if (LocalDateTime.now().isAfter(LocalDateTime.of(LocalDate.now(), Constants.CHECK_IN_TIME))) {
+                    reservation.setIsCheckedIn(true);
+                    reservation.push();
+                } else {
+                    notification();
+                }
+                ConfirmationController cc = (ConfirmationController) Instances.getDashboardController()
+                        .switchAnchor(FXMLPaths.CONFIRMATION);
+                cc.setIsCheckin(true);
+                cc.writeInfo(ReservationSystem.getCurrentUser());
             }
-            else {
-                //FIXME: Notify user it is too early for check-in
-            }
-            ConfirmationController cc = (ConfirmationController) Instances.getDashboardController()
-                    .switchAnchor(FXMLPaths.CONFIRMATION);
-            cc.setIsCheckin(true);
-            cc.writeInfo(ReservationSystem.getCurrentUser());
         }
     }
+
+    private void notification() {
+        notifcation.setText("Thank you for your early arrival! Our check-in time is set for 4:00 pm.");
+        notifcation.setFill(Color.RED);
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(10), ae -> directions()));
+        timeline.play();
+    }
+
+    private void directions() {
+        notifcation.setText("Please select a reservation(s) to check in");
+        notifcation.setFill(Color.WHITE);
+    }
+
 }
