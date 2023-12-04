@@ -364,8 +364,8 @@ public class DatabaseUtil{
         ResultSet rs = null;
         String sqlQuery = "SELECT * " + 
             "FROM reservations " + 
-            "WHERE end_date <= '" + Date.valueOf(LocalDate.now()) +
-            "' AND is_checked_in = 1";
+            "WHERE end_date = '" + Date.valueOf(LocalDate.now()) + "' " +
+            "AND is_checked_in = 1";
         Connection con = ReservationSystem.getDatabaseConnection();
         try {
             ps = con.prepareStatement(sqlQuery);
