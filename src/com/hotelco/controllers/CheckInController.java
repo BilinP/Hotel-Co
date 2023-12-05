@@ -2,6 +2,7 @@ package com.hotelco.controllers;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -203,7 +204,8 @@ public class CheckInController extends BaseController {
      */
 
     private void notification() {
-        notifcation.setText("Thank you for your early arrival! Our check-in time is set for 4:00 pm.");
+        notifcation.setText("Thank you for your early arrival! Our check-in time is set for " + 
+        Constants.CHECK_IN_TIME.format(DateTimeFormatter.ofPattern("hh:mm a")));
         notifcation.setFill(Color.RED);
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(10), ae -> directions()));
         timeline.play();
