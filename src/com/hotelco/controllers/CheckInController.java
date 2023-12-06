@@ -182,18 +182,20 @@ public class CheckInController extends BaseController {
 
     @FXML
     void checkIn(MouseEvent event) {
+         notification();
         if (!selectedReservations.isEmpty()) {
             for (Reservation reservation : selectedReservations) {
                 if (LocalDateTime.now().isAfter(LocalDateTime.of(LocalDate.now(), Constants.CHECK_IN_TIME))) {
                     reservation.setIsCheckedIn(true);
                     reservation.push();
-                } else {
-                    notification();
-                }
-                ConfirmationController cc = (ConfirmationController) Instances.getDashboardController()
+                      ConfirmationController cc = (ConfirmationController) Instances.getDashboardController()
                         .switchAnchor(FXMLPaths.CONFIRMATION);
                 cc.setIsCheckin(true);
                 cc.writeInfo(ReservationSystem.getCurrentUser());
+                } else {
+                    notification();
+                }
+              
             }
         }
     }
