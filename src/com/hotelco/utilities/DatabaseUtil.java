@@ -677,4 +677,21 @@ public class DatabaseUtil{
         ready();
         return result;
     }
+    public static void deleteAllCreditCards(){
+        PreparedStatement ps = null;
+        String sqlQuery = "DELETE FROM credit_cards";
+        Connection con = ReservationSystem.getDatabaseConnection();
+    
+        try {
+            ps = con.prepareStatement(sqlQuery);
+            ps.execute();
+        }
+        catch (SQLException e){
+            System.out.println("DatabaseUtil.deleteAllCreditCards()");
+            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
+            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
+            System.out.println(e);
+        }
+        ready();
+    }
 }
