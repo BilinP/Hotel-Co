@@ -29,7 +29,7 @@ public class Settings {
      * In seconds, the amount of time the system waits for automatic logout,
      * when there is no input.
      */
-    public static final Integer IDLE_TIMEOUT = 9000;
+    public static final Integer IDLE_TIMEOUT = 30;
     /**
      * Interval for closing and reopening database connection
      */
