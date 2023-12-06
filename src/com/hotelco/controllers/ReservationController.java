@@ -746,7 +746,7 @@ public class ReservationController extends BaseController {
             ReservationSystem.getCurrentUser(), Integer.parseInt(guests.getText()));
         ReservationSystem.setCurrentReservation(reservation);
         ReservationSystem.book();
-        //EmailGenerator.reservationConfirmation(reservation);
+        EmailGenerator.reservationConfirmation(reservation);
         return ReservationSystem.getCurrentReservation();
     }
 

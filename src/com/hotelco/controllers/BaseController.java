@@ -43,7 +43,7 @@ public class BaseController  {
             stage.setResizable(false);
             stage.setScene(scene);
             stage.show();
-            //stage.setFullScreen(true);
+            stage.setFullScreen(true);
 
             return controller;
             

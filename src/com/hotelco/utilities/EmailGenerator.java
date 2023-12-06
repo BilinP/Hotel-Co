@@ -37,7 +37,7 @@ public class EmailGenerator {
             "\nNumber of guests: "  + reservation.getGroupSize() +
             "\nRoom type: "  + reservation.getRoom().getRoomType().toPrettyString() +
             "\n\nWe hope you thoroughly enjoy your stay with us." +
-            "\n\n\t\tSincerely,\n\t\t\tHotel Co.\n";
+            "\n\nSincerely,\nHotel Co.\n";
         SendMail.startSend(reservation.getUser().getEmail(), subject, message);
     }
 
