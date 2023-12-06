@@ -67,17 +67,17 @@ public class VacancyController extends BaseController {
     @FXML
     private void initialize() {
       
-        doubleVacant.setText("Vacant: "+ Reports.countOccupiedRooms(RoomType.parseString("DOUBLE")));
-        doubleInUse.setText("Occupied: "+ Reports.countAvailableRooms(RoomType.parseString("DOUBLE")));
+        doubleVacant.setText("Vacant: "+ Reports.countAvailableRooms(RoomType.of("DOUBLE")));
+        doubleInUse.setText("Occupied: "+ Reports.countOccupiedRooms(RoomType.of("DOUBLE")));
 
-        queenVacant.setText("Vacant: "+ Reports.countOccupiedRooms(RoomType.parseString("QUEEN")));
-        queenInUse.setText("Occupied: "+ Reports.countAvailableRooms(RoomType.parseString("QUEEN")));
+        queenVacant.setText("Vacant: "+ Reports.countAvailableRooms(RoomType.of("QUEEN")));
+        queenInUse.setText("Occupied: "+ Reports.countOccupiedRooms(RoomType.of("QUEEN")));
 
-        kingVacant.setText("Vacant: "+ Reports.countOccupiedRooms(RoomType.parseString("KING")));
-        kingInUse.setText("Occupied: "+ Reports.countAvailableRooms(RoomType.parseString("KING")));
+        kingVacant.setText("Vacant: "+ Reports.countAvailableRooms(RoomType.of("KING")));
+        kingInUse.setText("Occupied: "+ Reports.countOccupiedRooms(RoomType.of("KING")));
 
-        suiteVacant.setText("Vacant: "+ Reports.countOccupiedRooms(RoomType.parseString("SUITE")));
-        suiteInUse.setText("Occupied: "+ Reports.countAvailableRooms(RoomType.parseString("SUITE")));
+        suiteVacant.setText("Vacant: "+ Reports.countAvailableRooms(RoomType.of("SUITE")));
+        suiteInUse.setText("Occupied: "+ Reports.countOccupiedRooms(RoomType.of("SUITE")));
 
         totalInUse.setText("Occupied: "+ Reports.getOccupancy());
         totalVacant.setText("Vacant: "+ Reports.getVacancy());

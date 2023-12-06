@@ -113,7 +113,7 @@ public class Reports {
         PreparedStatement ps = null;
         ResultSet rs = null;
         String sqlQuery =
-             "SELECT COUNT(room_num) as total " +
+            "SELECT COUNT(room_num) as total " +
             "FROM (" +
                 "SELECT room_num " +
                 "FROM rooms " +

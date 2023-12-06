@@ -89,7 +89,7 @@ public class Room {
             rs = ps.executeQuery();
             if(rs.next())
             {
-                roomType = RoomType.parseString(rs.getString("room_type"));
+                roomType = RoomType.of(rs.getString("room_type"));
                 maxGroupSize = rs.getInt("max_group_size");
             }
                     }

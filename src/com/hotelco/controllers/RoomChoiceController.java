@@ -121,7 +121,7 @@ public class RoomChoiceController extends BaseController {
      void switchToBooking(MouseEvent event) {
        
          Button clickedButton = (Button) event.getSource();
-         RoomType roomType = RoomType.parseString(clickedButton.getId().toUpperCase());
+         RoomType roomType = RoomType.of(clickedButton.getId().toUpperCase());
          ReservationController rc = (ReservationController) Instances.getDashboardController().switchAnchor(FXMLPaths.RESERVATION);
          rc.setRoomType(roomType);
     }

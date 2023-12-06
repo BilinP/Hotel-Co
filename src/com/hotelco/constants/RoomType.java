@@ -32,7 +32,7 @@ public enum RoomType {
  * @param roomTypeStr string to be converted
  * @return a RoomType enum based on the supplied string
  */
-    public static RoomType parseString(String roomTypeStr) {
+    public static RoomType of(String roomTypeStr) {
         RoomType rt = null;
         switch (roomTypeStr.toUpperCase()){
             case "DBL":
