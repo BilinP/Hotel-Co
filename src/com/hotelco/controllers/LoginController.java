@@ -116,8 +116,7 @@ public class LoginController extends BaseController {
         String emailStr = email.getText();
         if(DatabaseUtil.doesEmailExist(emailStr)){
             if (Verifier.verifyPassword(emailStr, password.getText())){
-                idleTimer.stop();
-                Instances.getScene().removeEventHandler(Event.ANY, handler);
+                removeTimer();
                 ReservationSystem.setCurrentUser(new User(emailStr, true));
                 if(ReservationSystem.getCurrentUser().getIsManager()){
                     switchScene(FXMLPaths.MANAGER_DASHBOARD);
@@ -148,8 +147,7 @@ public class LoginController extends BaseController {
      */
     @FXML
     private void switchToCreateAccount(MouseEvent event) {
-        idleTimer.stop();
-        Instances.getScene().removeEventHandler(Event.ANY, handler);
+        removeTimer();
         switchScene(FXMLPaths.CREATE_ACCOUNT);
     }
 
@@ -211,9 +209,13 @@ public class LoginController extends BaseController {
      * Switches the scene to ScreenSaverGUI.
      */
     private void switchToScreenSaver() {
-        idleTimer.stop();
-        Instances.getScene().removeEventHandler(Event.ANY, handler);
+        removeTimer();
         switchScene(FXMLPaths.SCREENSAVER);
+    }
+
+    private void removeTimer() {
+        idleTimer.stop();
+        Instances.getScene().removeEventHandler(Event.ANY, handler);        
     }
 
 }
