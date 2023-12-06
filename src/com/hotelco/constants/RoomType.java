@@ -28,7 +28,7 @@ public enum RoomType {
     }
 
 /**
- * Parses the string argument as a RoomType enume
+ * Parses the string argument as a RoomType enum
  * @param roomTypeStr string to be converted
  * @return a RoomType enum based on the supplied string
  */

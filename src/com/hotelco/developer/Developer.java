@@ -4,11 +4,15 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import com.hotelco.constants.RoomType;
 import com.hotelco.entities.ReservationSystem;
 import com.hotelco.entities.User;
 import com.hotelco.utilities.DatabaseUtil;
+import com.hotelco.utilities.Reports;
 
 import javafx.scene.chart.PieChart.Data;
 
@@ -33,7 +37,7 @@ public class Developer {
         setUserEmail("daniel.schwartz.447@my.csun.edu", "p@p.com");
     }
     public static void run3(){
-        System.out.println(DatabaseUtil.doesEmailExist("daniel.schwartz.447@my.csun.edu"));
+        DatabaseUtil.deleteAllCreditCards();
     }
 
     public static void setUserEmail(String oldEmail, String newEmail){
@@ -51,7 +55,7 @@ public class Developer {
             ps.execute();
         }
         catch (SQLException e){
-            System.out.println("DevMode.setUserEmail()");
+            System.out.println("DatabaseUtil.setUserEmail()");
             System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
             System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
             System.out.println(e);

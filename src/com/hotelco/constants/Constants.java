@@ -16,11 +16,11 @@ public final class Constants {
     /**
      * Standard check in time
      */
-    public static final LocalTime CHECK_IN_TIME = LocalTime.of(16, 0, 0);
+    public static final LocalTime CHECK_IN_TIME = LocalTime.of(19, 0, 0);
     /**
      * Standard check out time
      */
-    public static final LocalTime CHECK_OUT_TIME = LocalTime.of(11, 0 , 0);
+    public static final LocalTime CHECK_OUT_TIME = LocalTime.of(14, 34, 0);
     /**
      * The time at which a reservation booked for today, but isn't checked in,
      * gets cancelled.

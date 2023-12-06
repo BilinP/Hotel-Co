@@ -17,6 +17,10 @@ public class Settings {
      */
     public static final Boolean RUN_MAIN = true;
     /**
+     * Whether or not to run the application in full screen
+     */
+    public static final Boolean FULL_SCREEN = true;
+    /**
      * In seconds, the the amount of time the screen saver waits before starting
      * after no input.
      */
@@ -34,7 +38,5 @@ public class Settings {
      * Interval for attempting to close and reopen database connection after
      * failed attempt to do so
      */
-    public static final Integer RETRY_INTERVAL = 30 * MsTime.SECOND;
-
-    
+    public static final Integer RETRY_INTERVAL = 30 * MsTime.SECOND;    
 }
