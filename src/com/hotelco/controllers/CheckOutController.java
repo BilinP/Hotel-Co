@@ -30,7 +30,7 @@ import javafx.scene.input.MouseEvent;
  * 'ReservationHistoryGUI' view. It handles connection between the GUI and
  * internal data.
  * 
- * @author Grigor Azakian
+ * @author Grigor Azakian, Bilin Pattasseril
  */
 public class CheckOutController extends BaseController {
 
@@ -70,6 +70,9 @@ public class CheckOutController extends BaseController {
     @FXML
     private TableColumn<Reservation, String> total;
 
+      /**
+     * List containing all the Reservation that are selected by User.
+     */
     private List<Reservation> selectedReservations = new ArrayList<>();
 
     /**
@@ -114,7 +117,14 @@ public class CheckOutController extends BaseController {
 
         new Thread(task).start();
     }
-
+     /**
+     * Upon clicking on a reservation on a table it will retrieve the reservation
+     * then it will call the toggle(reservation) function and finally clear the
+     * selection.
+     * 
+     * @param event that triggers this function is toggleSelection upon mouse click
+     *              on table.
+     */
     @FXML
     void toggleSelection(MouseEvent event) {
         Reservation res = table.getSelectionModel().getSelectedItem();
@@ -124,6 +134,14 @@ public class CheckOutController extends BaseController {
         table.getSelectionModel().clearSelection();
     }
 
+     /**
+     * Moves a reservation into the selectedReservations ArrayList only if it is not
+     * already in the list. If the reservation is already in the list, it will be
+     * removed. Additionally, this method will recolor the table to visually
+     * represent the selected reservation.
+     * 
+     * @param reservation the reserivation that was selected.
+     */
     private void toggle(Reservation reservation) {
         if (selectedReservations.contains(reservation)) {
             selectedReservations.remove(reservation);
@@ -143,7 +161,13 @@ public class CheckOutController extends BaseController {
         table.refresh();
 
     }
-
+    /**
+     * Initiates the check-in process by calling the method upon pressing the
+     * 'Check-Out' button. Adds the reservation to the selectedReservations list and
+     * switches to the confirmationController scene.
+     * 
+     * @param event The event that triggers the check-out process
+     */
     @FXML
     void checkOut(MouseEvent event) {
         if (!selectedReservations.isEmpty()) {

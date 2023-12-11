@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 
 import com.hotelco.constants.RoomType;
@@ -27,19 +28,44 @@ public class Developer {
     public static void runDevMode(){
         //run1();
         //run2();
-        run3();
+        //run3();
+        run4();
+        System.out.println(1111);
     }
 
+    /**
+     * developer sandbox 1
+     */
     public static void run1(){
         setUserEmail("p@p.com", "daniel.schwartz.447@my.csun.edu");
     }
+
+    /**
+     * developer sandbox 2
+     */
     public static void run2(){
         setUserEmail("daniel.schwartz.447@my.csun.edu", "p@p.com");
     }
+
+    /**
+     * developer sandbox 3
+     */
     public static void run3(){
         DatabaseUtil.deleteAllCreditCards();
     }
 
+    /**
+     * developer sandbox 4
+     */
+    public static void run4(){
+        Reports.getRevenueOfMonth(Month.of(12), 2023);
+    }
+
+    /**
+     * Changes a user's email in the database
+     * @param oldEmail the old email
+     * @param newEmail the new email
+     */
     public static void setUserEmail(String oldEmail, String newEmail){
         Integer userId = new User(oldEmail, false).getUserId();
         DatabaseUtil.ready();

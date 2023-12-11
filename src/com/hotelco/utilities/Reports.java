@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.Month;
+import java.time.Year;
 
 import com.hotelco.constants.RoomType;
 import com.hotelco.entities.ReservationSystem;
@@ -107,6 +109,37 @@ public class Reports {
         DatabaseUtil.ready();
         return result;
     }
+
+    public static BigDecimal getRevenueOfMonth(Month month, Integer year) {   
+        BigDecimal result = new BigDecimal(0);
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        LocalDate startDate = LocalDate.of(year, month, 1);
+        LocalDate endDate = LocalDate.of(year, month, month.maxLength());
+        String sqlQuery = "SELECT SUM(amount) AS total FROM payments " +
+            "WHERE DATE(time) >= '" + Date.valueOf(startDate) + "' " +
+            "AND DATE(time) <= '" + Date.valueOf(endDate) + "'";
+        System.out.println(sqlQuery);
+        Connection con = ReservationSystem.getDatabaseConnection();
+
+        try {
+            ps = con.prepareStatement(sqlQuery);
+            rs = ps.executeQuery();
+            if(rs.next())
+            result = rs.getBigDecimal("total");
+            result = result == null ? new BigDecimal("0") : result;
+        }
+        catch (SQLException e){
+            System.out.println("DatabaseUtil.getRevenue()");
+            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
+            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
+            System.out.println(e);
+        }
+        DatabaseUtil.ready();
+        return result;
+    }
+
+    //FIXME: javadocs
     public static Integer countOccupiedRooms(RoomType roomType){
         Integer result = 0;
         LocalDate today = LocalDate.now();
@@ -399,4 +432,6 @@ public class Reports {
         DatabaseUtil.ready();
         return result;
     }
+
+    
 }

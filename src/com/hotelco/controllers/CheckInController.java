@@ -37,8 +37,7 @@ import javafx.scene.paint.Color;
  * The CheckInController class is the associated controller class of the
  * 'CheckInGUI' view. It handles connection between the GUI and internal data.
  * 
- * @author Grigor Azakian
- * @author Bilin Pattasseril
+ * @author Grigor Azakian, Bilin Pattasseril
  */
 public class CheckInController extends BaseController {
 
@@ -84,6 +83,9 @@ public class CheckInController extends BaseController {
     @FXML
     private TableColumn<Reservation, String> total;
 
+    /**
+     * List containing all the Reservation that are selected by User.
+     */
     private List<Reservation> selectedReservations = new ArrayList<>();
 
     /**
@@ -129,10 +131,11 @@ public class CheckInController extends BaseController {
 
     /**
      * Upon clicking on a reservation on a table it will retrieve the reservation
-     * then it will call the toggle(reservation )and finally clear the selection.
+     * then it will call the toggle(reservation) function and finally clear the
+     * selection.
      * 
-     * @param event that triggers this function toggleSelection upon mouse click on
-     *              table.
+     * @param event that triggers this function is toggleSelection upon mouse click
+     *              on table.
      */
 
     @FXML
@@ -182,20 +185,21 @@ public class CheckInController extends BaseController {
 
     @FXML
     void checkIn(MouseEvent event) {
-         notification();
+        notification();
         if (!selectedReservations.isEmpty()) {
             for (Reservation reservation : selectedReservations) {
-                if (LocalDateTime.now().isAfter(LocalDateTime.of(LocalDate.now(), Constants.CHECK_IN_TIME))) {
+                if (LocalDateTime.now().isAfter(
+                    LocalDateTime.of(LocalDate.now(), Constants.CHECK_IN_TIME))) {
                     reservation.setIsCheckedIn(true);
                     reservation.push();
-                      ConfirmationController cc = (ConfirmationController) Instances.getDashboardController()
-                        .switchAnchor(FXMLPaths.CONFIRMATION);
-                cc.setIsCheckin(true);
-                cc.writeInfo(ReservationSystem.getCurrentUser());
+                    ConfirmationController cc = (ConfirmationController) Instances.getDashboardController()
+                            .switchAnchor(FXMLPaths.CONFIRMATION);
+                    cc.setIsCheckin(true);
+                    cc.writeInfo(ReservationSystem.getCurrentUser());
                 } else {
                     notification();
                 }
-              
+
             }
         }
     }
@@ -206,8 +210,8 @@ public class CheckInController extends BaseController {
      */
 
     private void notification() {
-        notifcation.setText("Thank you for your early arrival! Our check-in time is set for " + 
-        Constants.CHECK_IN_TIME.format(DateTimeFormatter.ofPattern("hh:mm a")));
+        notifcation.setText("Thank you for your early arrival! Our check-in time is set for "
+                + Constants.CHECK_IN_TIME.format(DateTimeFormatter.ofPattern("hh:mm a")));
         notifcation.setFill(Color.RED);
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(10), ae -> directions()));
         timeline.play();

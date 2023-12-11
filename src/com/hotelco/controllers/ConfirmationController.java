@@ -4,7 +4,6 @@ import com.hotelco.entities.User;
 import com.hotelco.utilities.FXMLPaths;
 import com.hotelco.utilities.Instances;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
@@ -48,14 +47,6 @@ public class ConfirmationController extends BaseController {
      */
     private boolean isCheckIn;
 
-    @FXML
-    private void initialize() {
-        // add non JavaFX related code here
-        Platform.runLater(() -> {
-            // add JavaFX related code here
-        });
-    }
-
     /**
      * This method is called by pressing the 'Back to ...' button. It exits the
      * 'ConfirmationGUI' and enters the last anchor which could be 'CheckInGUI' or
@@ -85,7 +76,7 @@ public class ConfirmationController extends BaseController {
     }
 
     /**
-     * This method will print the details of the current reservation onto the
+     * This method will write the details of the current reservation onto the
      * screen.
      * 
      * @param reservation The current reservation to print details for.

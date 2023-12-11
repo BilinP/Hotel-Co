@@ -2,6 +2,8 @@ package com.hotelco.utilities;
 
 import com.hotelco.constants.DatabaseStatus;
 import com.hotelco.constants.RoomType;
+import com.hotelco.developer.Developer;
+import com.hotelco.developer.Settings;
 import com.hotelco.developer.TimerTool;
 import com.hotelco.entities.Reservation;
 import com.hotelco.entities.ReservationSystem;
@@ -459,6 +461,7 @@ public class DatabaseUtil{
 
     /**
      * Gets the current user's potential check-ins.
+     * @param user the user for whom to retrieve their check-ins
      * @return the current user's reservations from today.
      */
     public static Reservation[] getUserCheckIns(User user){
@@ -497,6 +500,7 @@ public class DatabaseUtil{
 
     /**
      * Gets the current user's potential check-outs.
+     * @param user the user for whom to retrieve their check-outs.
      * @return the current user's check-outs from today.
      */
     public static Reservation[] getUserCheckOuts(User user){
@@ -649,7 +653,7 @@ public class DatabaseUtil{
     /**
      * Checks if a credit card number is in the databse
      * @param creditCardNumber credit card number to check
-     * @return true if {@creditCardNumber} already exists in the database, false if they
+     * @return true if creditCardNumber already exists in the database, false if they
      * do not
      */
     public static User getCreditCardUser(String creditCardNumber){
@@ -677,21 +681,26 @@ public class DatabaseUtil{
         ready();
         return result;
     }
+    /**
+     * Deletes all credit cards in the database. DO NOT CALL.
+     */
     public static void deleteAllCreditCards(){
-        PreparedStatement ps = null;
-        String sqlQuery = "DELETE FROM credit_cards";
-        Connection con = ReservationSystem.getDatabaseConnection();
-    
-        try {
-            ps = con.prepareStatement(sqlQuery);
-            ps.execute();
+        if (Settings.DEV_MODE == true){
+            PreparedStatement ps = null;
+            String sqlQuery = "DELETE FROM credit_cards";
+            Connection con = ReservationSystem.getDatabaseConnection();
+        
+            try {
+                ps = con.prepareStatement(sqlQuery);
+                ps.execute();
+            }
+            catch (SQLException e){
+                System.out.println("DatabaseUtil.deleteAllCreditCards()");
+                System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
+                System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
+                System.out.println(e);
+            }
+            ready();
         }
-        catch (SQLException e){
-            System.out.println("DatabaseUtil.deleteAllCreditCards()");
-            System.out.println(Thread.currentThread().getStackTrace()[2].getLineNumber());
-            System.out.println(Thread.currentThread().getStackTrace()[2].getMethodName());
-            System.out.println(e);
-        }
-        ready();
     }
 }
