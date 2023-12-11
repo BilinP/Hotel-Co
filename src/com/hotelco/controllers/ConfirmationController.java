@@ -79,7 +79,7 @@ public class ConfirmationController extends BaseController {
      * This method will write the details of the current reservation onto the
      * screen.
      * 
-     * @param reservation The current reservation to write details for.
+     * @param user the user for the system.
      */
     void writeInfo(User user) {
         if (isCheckIn) {
