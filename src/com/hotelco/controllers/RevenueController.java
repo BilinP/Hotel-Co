@@ -2,14 +2,16 @@ package com.hotelco.controllers;
 
 import com.hotelco.utilities.Reports;
 
-import javafx.application.Platform;
+
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.text.Text;
+
+import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.time.LocalDate;
-import java.time.Month;
+
 
 /**
  * The ProfileController class is the associated controller class of the
@@ -27,7 +29,7 @@ public class RevenueController extends BaseController {
     private Text lifetimeRevenue;
 
     @FXML
-    private BarChart<String, Double> revenueChart;
+    private BarChart<String, BigDecimal> revenueChart;
 
     @FXML
     private Text weeklyRevenue;
@@ -51,19 +53,15 @@ public class RevenueController extends BaseController {
         weeklyRevenue.setText("$ " + numberFormat.format(Reports.getWeeklyRevenue()));
         yearlyRevenue.setText("$ " + numberFormat.format(Reports.getYearlyRevenue()));
 
-        XYChart.Series<String, Double> plot = new XYChart.Series<>();
+        XYChart.Series<String, BigDecimal> plot = new XYChart.Series<>();
         String[] monthAbb = { "Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec" };
-        for (int i = 5; i >= 0; i--) {
-            LocalDate monthDate = LocalDate.now().minusMonths(i);
+        for (int m = 5; m >= 0; m--) {
+            LocalDate monthDate = LocalDate.now().minusMonths(m);
             String monthString = monthAbb[monthDate.getMonthValue() - 1];
-            Double revenueDouble = Reports.getRevenueOfMonth(monthDate.getMonth(), monthDate.getYear()).doubleValue();
-            plot.getData().add(new XYChart.Data<>(monthString, revenueDouble));
+            BigDecimal revenueBDecimal = Reports.getRevenueOfMonth(monthDate.getMonth(), monthDate.getYear());
+            plot.getData().add(new XYChart.Data<>(monthString, revenueBDecimal));
         }
         revenueChart.getData().add(plot);
-
-        Platform.runLater(() -> {
-
-        });
     }
 
 }
