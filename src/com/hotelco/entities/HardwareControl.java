@@ -1,5 +1,8 @@
 package com.hotelco.entities;
 
+/**
+ * Controls hardware elements of the reservation station
+ */
 public class HardwareControl {
     /**
      * Dummy function to magnetize and dispense a card based on a reservation
