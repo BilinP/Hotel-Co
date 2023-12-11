@@ -151,12 +151,24 @@ public class ReservationController extends BaseController {
       */
     private RoomType room;
 
+    /**
+     * Boolean that is true if the card number TextField has been interacted with.
+     */
     private boolean cardNumberIsInteractedWith = false;
 
+    /**
+     * Boolean that is true if either the expiration date month or year TextFields have been interacted with.
+     */
     private boolean expDateIsInteractedWith = false;
 
+    /**
+     * Boolean that is true if the CVC TextField has been interacted with.
+     */
     private boolean CVCIsInteractedWith = false;
 
+    /**
+     * Contains a Reservation to be cancelled if the user had a reservation to change.
+     */
     private Reservation toCancel;
 
     /***************************************************************************
@@ -550,6 +562,12 @@ public class ReservationController extends BaseController {
         return result;
     }
 
+    /**
+     * Performs basic checks on the CVC TextField.
+     * If the checks fail, sets the border of the CVC TextField to red and
+     * writes an error message.
+     * @return 'true' if an error was detected, 'false' otherwise.
+     */
     private boolean setCVCErrorStatus() {
         if (CVC.getLength() < 3) {
             setRedBorder(CVC);
@@ -560,6 +578,12 @@ public class ReservationController extends BaseController {
         return false;
     }
 
+    /**
+     * Performs basic checks on the card number TextField.
+     * If the checks fail, sets the border of the card number TextField to red and
+     * writes an error message.
+     * @return 'true' if an error was detected, 'false' otherwise.
+     */    
     private boolean setCardNumberErrorStatus() {
         if (cardNumber.getLength() < 15) {
             setRedBorder(cardNumber);
@@ -694,6 +718,10 @@ public class ReservationController extends BaseController {
         return expDate;
     }
 
+    /**
+     * Sets a red border on expiration date month and year TextFields
+     * as well as writes an error message on screen.
+     */
     private void setErrorOnExpDateFields() {
         setRedBorder(expDateMonth);
         setRedBorder(expDateYear);        

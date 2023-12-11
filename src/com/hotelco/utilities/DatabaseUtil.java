@@ -274,9 +274,9 @@ public class DatabaseUtil{
     }
     /**
      * Checks how many rooms are currently occupied.
-     * @param startDate
-     * @param endDate
-     * @param roomType
+     * @param startDate the start date to check
+     * @param endDate the end date to check
+     * @param roomType the room type to check
      * @return the number of occupied rooms.
      */
     public static Integer countOccupiedRooms(

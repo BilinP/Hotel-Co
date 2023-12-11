@@ -238,7 +238,7 @@ public class CreditCard{
     /**
      * Conditionally assigns a card to a User upon verification. See
      * assignToUser() for it's implementation details.
-     * @ return the success of verification AND assignment.
+     * @return the success of verification AND assignment.
      */
     public Boolean assign(){
         Boolean result = false;
