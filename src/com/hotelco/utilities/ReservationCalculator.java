@@ -58,10 +58,10 @@ public class ReservationCalculator {
      * @return the total price of the potential reservation
      */
     public static BigDecimal calcSubTotal(LocalDate startDate, LocalDate endDate,
-    RoomType roomtype){
+    RoomType roomType){
         LocalDate i;
         BigDecimal sum = new BigDecimal(0);
-        BigDecimal baseRate = DailyRates.getRoomRate(roomtype);
+        BigDecimal baseRate = DailyRates.getRoomRate(roomType);
 
         for (i = startDate; i.isBefore(endDate); i = i.plusDays(1)){
             sum = sum.add(calcDailyTotal(baseRate, i));
