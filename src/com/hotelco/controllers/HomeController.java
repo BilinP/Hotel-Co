@@ -2,7 +2,6 @@ package com.hotelco.controllers;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -52,12 +51,6 @@ public class HomeController extends BaseController {
 
             setChangeListeners(images);
             playTransition();        
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-
-            }
-        });
     }
 
     /**

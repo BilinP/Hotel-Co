@@ -10,8 +10,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
 /**
- * The ThankYouController class is the associated controller class of the
- * 'ThankYouGUI' view. It handles connection between the GUI and internal data.
+ * The ConfirmationController class is the associated controller class of the
+ * 'ConfirmationGUI' view. It handles connection between the GUI and internal
+ * data.
  * 
  * @author Bilin Pattasseril
  */
@@ -37,10 +38,10 @@ public class ConfirmationController extends BaseController {
     private Text message;
 
     /**
-     * Text that will display the Users first name.
+     * Text that will display a start message and the Users first name.
      */
     @FXML
-    private Text thankYou;
+    private Text startMessage;
 
     /**
      * boolean that will hold if the last scene was check in.
@@ -62,14 +63,13 @@ public class ConfirmationController extends BaseController {
         } else {
             Instances.getDashboardController().switchAnchor(FXMLPaths.CHECK_OUT);
         }
-
     }
 
     /**
      * This function must be manually called upon switching to ConfirmationGUI. Sets
      * the isCheckIn to a boolean value upon controller creation.
      * 
-     * @param value last scene changed from
+     * @param value last scene it changed from which is a boolean value.
      */
     public void setIsCheckin(boolean value) {
         isCheckIn = value;
@@ -79,16 +79,16 @@ public class ConfirmationController extends BaseController {
      * This method will write the details of the current reservation onto the
      * screen.
      * 
-     * @param reservation The current reservation to print details for.
+     * @param reservation The current reservation to write details for.
      */
     void writeInfo(User user) {
         if (isCheckIn) {
-            thankYou.setText("Welcome " + user.getFirstName());
+            startMessage.setText("Welcome " + user.getFirstName());
             message.setText("Your check-in is complete. Enjoy your stay at Hotel CO. ");
             keyMessage.setText("Please pick up your key card from below");
             button.setText("BACK TO CHECK-IN");
         } else {
-            thankYou.setText("Farewell, " + user.getFirstName() + "!");
+            startMessage.setText("Farewell, " + user.getFirstName() + "!");
             message.setText("Your check-out is complete. Thank you for staying at Hotel Co.");
             keyMessage.setText("Please drop off your key card below.");
             button.setText("BACK TO CHECK-OUT");
