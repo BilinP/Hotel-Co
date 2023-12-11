@@ -2,7 +2,6 @@ package com.hotelco.controllers;
 
 import com.hotelco.utilities.Reports;
 
-
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
@@ -12,36 +11,53 @@ import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 
-
 /**
- * The ProfileController class is the associated controller class of the
- * 'Profile' view. It handles connection between the GUI and internal data.
+ * The RevenueController class is the associated controller class of the
+ * 'Revenue' view. It handles connection between the GUI and internal data for
+ * Mangers.
  * 
  * @author Bilin Pattasseril
  */
 
 public class RevenueController extends BaseController {
 
+    /**
+     * Text that contains the Daily Revenue made.
+     */
     @FXML
     private Text dailyRevenue;
 
+    /**
+     * Text that contains the life time Revenue made.
+     */
     @FXML
     private Text lifetimeRevenue;
 
+    /**
+     * Barchart that contains a chart for the revenue made each month for the last 6
+     * months.
+     */
     @FXML
     private BarChart<String, BigDecimal> revenueChart;
 
+    /**
+     * Text that contains the week Revenue made.
+     */
     @FXML
     private Text weeklyRevenue;
 
+    /**
+     * Text that contains the year Revenue made.
+     */
     @FXML
     private Text yearlyRevenue;
 
     /**
      * This method is called immediately upon controller creation. It updates the
-     * the current user and then updates the textfields 'email',
-     * 'first','last','number' to what is stored in the database.It as well sets a
-     * formatter for the 'number', 'first', and 'email'.
+     * the text 'yearlyRevenue','weeklyRevenue', 'lifetimeRevenue', 'dailyRevenue'
+     * to what is stored in the database.It as well sets a barchart cart by
+     * updateing the revenueChart and calling the database for that assoicae month
+     * for the last 6 months.
      */
     @FXML
     private void initialize() {
