@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #3c4149;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hotelco.controllers.ConfirmationController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" style="-fx-background-color: #3c4149;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hotelco.controllers.ConfirmationController">
    <children>
       <VBox alignment="CENTER" prefHeight="700.0" prefWidth="900.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -22,7 +22,7 @@
                   <Image url="@../images/hotelco.png" />
                </image>
             </ImageView>
-            <Text fx:id="thankYou" fill="#f9bd1a" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome">
+            <Text fx:id="startMessage" fill="#f9bd1a" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome">
                <font>
                   <Font size="48.0" />
                </font>
