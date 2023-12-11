@@ -80,10 +80,10 @@ public class ScreenSaverController extends BaseController {
     }
 
     /**
-     * Sets up the ChangeListeners for fo and fi.
-     * The ChangeListeners will listen to the opacity value of fo and fi
-     * which will set the next image to be shown and trigger the next FadeTransition.
-     * @param images
+     * Returns a ChangeListener that will set up transitions for an ImageView pair.
+     * The ChangeListeners will listen to the opacity value of the ImageView
+     * it binds to, and set up FadeTransitions for its pair.
+     * @param pair The ImageView to have FadeTransitions triggered.
      */    
     private ChangeListener<Number> constructChangeListener(ImageView pair) {
         return (new ChangeListener<Number>() {
