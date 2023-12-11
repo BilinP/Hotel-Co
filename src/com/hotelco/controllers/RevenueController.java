@@ -8,6 +8,8 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.text.Text;
 import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.Month;
 
 /**
  * The ProfileController class is the associated controller class of the
@@ -50,12 +52,13 @@ public class RevenueController extends BaseController {
         yearlyRevenue.setText("$ " + numberFormat.format(Reports.getYearlyRevenue()));
 
         XYChart.Series<String, Double> plot = new XYChart.Series<>();
-        plot.getData().add(new XYChart.Data<>("July", 3000.00));
-        plot.getData().add(new XYChart.Data<>("Aug", 2500.00));
-        plot.getData().add(new XYChart.Data<>("Sept", 4000.00));
-        plot.getData().add(new XYChart.Data<>("Oct", 3030.00));
-        plot.getData().add(new XYChart.Data<>("Nov", 2500.00));
-        plot.getData().add(new XYChart.Data<>("Dec", Reports.getMonthlyRevenue().doubleValue()));
+        String[] monthAbb = { "Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec" };
+        for (int i = 5; i >= 0; i--) {
+            LocalDate monthDate = LocalDate.now().minusMonths(i);
+            String monthString = monthAbb[monthDate.getMonthValue() - 1];
+            Double revenueDouble = Reports.getRevenueOfMonth(monthDate.getMonth(), monthDate.getYear()).doubleValue();
+            plot.getData().add(new XYChart.Data<>(monthString, revenueDouble));
+        }
         revenueChart.getData().add(plot);
 
         Platform.runLater(() -> {
