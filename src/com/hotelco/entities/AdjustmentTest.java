@@ -6,6 +6,9 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+/**
+ * Tests for the Adjustment Class
+ */
 public class AdjustmentTest {
     Adjustment adjustment1 = new Adjustment();
     Adjustment adjustment2 = new Adjustment("Pillow underfluff credit", new BigDecimal("-25.50"));
