@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane prefHeight="800.0" prefWidth="1300.0" styleClass="background" stylesheets="@../stylesheets/BackgroundSS.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hotelco.controllers.DashboardController">
+<StackPane prefHeight="800.0" prefWidth="1300.0" styleClass="background" stylesheets="@../stylesheets/BackgroundSS.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.hotelco.controllers.DashboardController">
    <children>
       <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1200.0">
          <right>
@@ -27,7 +27,7 @@
                         <Insets bottom="30.0" top="30.0" />
                      </VBox.margin>
                   </ImageView>
-                  <Button fx:id="homeButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseReleased="#switchToMenu" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: transparent;" text="Home" textAlignment="CENTER" textFill="#f9bd1a">
+                  <Button fx:id="homeButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseReleased="#switchToHome" prefHeight="50.0" prefWidth="300.0" style="-fx-background-color: transparent;" text="Home" textAlignment="CENTER" textFill="#f9bd1a">
                      <font>
                         <Font size="18.0" />
                      </font>

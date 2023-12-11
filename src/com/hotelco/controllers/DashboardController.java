@@ -1,26 +1,23 @@
 package com.hotelco.controllers;
+
 import java.io.IOException;
 
 import com.hotelco.entities.ReservationSystem;
 import com.hotelco.utilities.FXMLPaths;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
-
 /**
- * The Dashboard class is the associated controller class of the 'dashboard' view. 
- * It handles connection between the GUI and internal data. 
+ * The Dashboard class is the associated controller class of the 'dashboard'
+ * view. It handles connection between the GUI and internal data.
  * 
- * @author      Bilin Pattasseril
- * 
+ * @author Bilin Pattasseril
  */
 public class DashboardController extends BaseController {
-    
 
     /**
      * Button named 'Book Room' that calls 'switchToRoomSearch()' when pressed.
@@ -34,7 +31,6 @@ public class DashboardController extends BaseController {
     @FXML
     private Button checkInButton;
 
-    
     /**
      * Button named 'Check out' that calls 'switchToCheckOut()' when pressed.
      */
@@ -42,7 +38,7 @@ public class DashboardController extends BaseController {
     private Button checkOutButton;
 
     /**
-     * Button named 'home' that calls 'switchToCart()' when pressed.
+     * Button named 'home' that calls 'switchToHome()' when pressed.
      */
     @FXML
     private Button homeButton;
@@ -54,20 +50,20 @@ public class DashboardController extends BaseController {
     private Button profileButton;
 
     /**
-     *  A AnchorPane which is the right of the dashboard.
+     * A AnchorPane which is the right of the dashboard.
      */
     @FXML
-    public  AnchorPane rightAnchor;
-
+    public AnchorPane rightAnchor;
 
     /**
-     * Button named 'Reservation History' that calls 'switchToReservationHistory()' when pressed.
+     * Button named 'Reservation History' that calls 'switchToReservationHistory()'
+     * when pressed.
      */
     @FXML
     private Button viewBookingButton;
 
-     /**
-     * Array of Button  that stores all the menu button.
+    /**
+     * Array of Button that stores all the menu button.
      */
     private final Button[] menubuttons = new Button[6];
 
@@ -76,61 +72,67 @@ public class DashboardController extends BaseController {
      */
     private String currentPath;
 
-
     /**
-     * Called immediately upon controller creation.
-     * It changes the anchor to the home and initalize each menu button
-     * 
+     * Called immediately upon controller creation. It changes the anchor to the
+     * home and initalize each menu button
      */
     @FXML
     private void initialize() {
         switchAnchor(FXMLPaths.HOME);
-         menubuttons[0] = bookRoomButton;
-         menubuttons[1] = checkInButton;
-         menubuttons[2] = homeButton;
-         menubuttons[3] = profileButton;
-         menubuttons[4] = viewBookingButton;
-         menubuttons[5] =  checkOutButton;
-         buttonSelection(homeButton);
-        Platform.runLater(() -> {
-      
-        });
+        menubuttons[0] = bookRoomButton;
+        menubuttons[1] = checkInButton;
+        menubuttons[2] = homeButton;
+        menubuttons[3] = profileButton;
+        menubuttons[4] = viewBookingButton;
+        menubuttons[5] = checkOutButton;
+        buttonSelection(homeButton);
     }
 
-    
-
-    
-    /** 
-     * @param event
+    /**
+     * This method is called by pressing the 'Check In' button. It changes the right
+     * anchorpane to the 'CheckInGUI' scene
+     * 
+     * @param event The 'mouse released' event that is triggered by pressing the
+     *              'Check In' button.
      */
     @FXML
     void switchToCheckIn(MouseEvent event) {
         switchAnchor(FXMLPaths.CHECK_IN);
         buttonSelection(checkInButton);
     }
+
+    /**
+     * This method is called by pressing the 'Check Out' button. It changes the right
+     * anchorpane to the 'CheckOutGUI' scene
+     * 
+     * @param event The 'mouse released' event that is triggered by pressing the
+     *              'Check Out' button.
+     */
     @FXML
-     void switchToCheckOut(MouseEvent event) {
+    void switchToCheckOut(MouseEvent event) {
         switchAnchor(FXMLPaths.CHECK_OUT);
         buttonSelection(checkOutButton);
     }
 
-    
-
-   /**
-     * This method is called by pressing the 'home' button.
-     * It changes the right anchorpane to the home scene
-     * @param event The 'mouse released' event that is triggered by pressing the 'home' button.
+    /**
+     * This method is called by pressing the 'home' button. It changes the right
+     * anchorpane to the 'HomeGUI' scene
+     * 
+     * @param event The 'mouse released' event that is triggered by pressing the
+     *              'home' button.
      */
     @FXML
-    private void switchToMenu(MouseEvent event) {
-       switchAnchor(FXMLPaths.HOME);
-       buttonSelection(homeButton);
+    private void switchToHome(MouseEvent event) {
+        switchAnchor(FXMLPaths.HOME);
+        buttonSelection(homeButton);
     }
 
-    
-    /** 
-     * Method is isused by pressing the 
-     * @param event
+    /**
+     * This method is called by pressing the 'Log Out' button. It will switch
+     *  the scene to 'LoginGUI' scene
+     * 
+     * @param event The 'mouse released' event that is triggered by pressing the
+     *              'Log Out' button.
      */
     @FXML
     void switchToLoginScene(MouseEvent event) {
@@ -138,11 +140,12 @@ public class DashboardController extends BaseController {
         switchScene(FXMLPaths.LOGIN);
     }
 
-    
     /**
-     * This method is called by pressing the 'Profile' button.
-     * It changes the right anchorpane to the profile scene
-     * @param event The 'mouse released' event that is triggered by pressing the 'profile' button.
+     * This method is called by pressing the 'Profile' button. It changes the right
+     * anchorpane to the 'ProfileGUI' scene
+     * 
+     * @param event The 'mouse released' event that is triggered by pressing the
+     *              'profile' button.
      */
     @FXML
     void switchToProfile(MouseEvent event) {
@@ -150,11 +153,12 @@ public class DashboardController extends BaseController {
         switchAnchor(FXMLPaths.PROFILE);
     }
 
-    
     /**
-     * This method is called by pressing the 'Reservation History' button.
-     * It changes the right anchorpane to the ReservationHistoryGUI scene
-     * @param event The 'mouse released' event that is triggered by pressing the 'Reservation History' button.
+     * This method is called by pressing the 'Reservation History' button. It
+     * changes the right anchorpane to the 'ReservationHistoryGUI' scene
+     * 
+     * @param event The 'mouse released' event that is triggered by pressing the
+     *              'Reservation History' button.
      */
     @FXML
     void switchToReservationHistory(MouseEvent event) {
@@ -162,10 +166,12 @@ public class DashboardController extends BaseController {
         buttonSelection(viewBookingButton);
     }
 
-   /**
-     * This method is called by pressing the 'Book Room' button.
-     * It changes the right anchorpane to the RoomChoiceGUI scene
-     * @param event The 'mouse released' event that is triggered by pressing the 'Book ROom' button.
+    /**
+     * This method is called by pressing the 'Book Room' button. It changes the
+     * right anchorpane to the RoomChoiceGUI scene
+     * 
+     * @param event The 'mouse released' event that is triggered by pressing the
+     *              'Book ROom' button.
      */
     @FXML
     void switchToRoomSearch(MouseEvent event) {
@@ -174,15 +180,16 @@ public class DashboardController extends BaseController {
     }
 
     /**
-     * This method is used to change the style of the button to emphasis the 
-     * * current selection and the non current selection.
-     * @param selectedButton The  button that is selected
+     * This method is used to change the style of the button to emphasis the *
+     * current selection and the non current selection.
+     * 
+     * @param selectedButton The button that is selected
      */
-    private void buttonSelection(Button selectedButton){
-        for(Button button: menubuttons){
-            if(button!= null && button.equals(selectedButton)){
+    private void buttonSelection(Button selectedButton) {
+        for (Button button : menubuttons) {
+            if (button != null && button.equals(selectedButton)) {
                 button.setStyle("-fx-text-fill: #3c4149;-fx-background-color:#f9bd1a;-fx-border-color: transparent;");
-            }else if (button!=null){
+            } else if (button != null) {
                 button.setStyle("-fx-text-fill: #f9bd1a;-fx-background-color:#3c4149;-fx-border-color: transparent;");
             }
         }
@@ -190,11 +197,13 @@ public class DashboardController extends BaseController {
     }
 
     /**
-     * This method will switch the anchor the user is currently viewing to the provided FXML file located in 'fxmlLocation'.
+     * This method will switch the anchor the user is currently viewing to the
+     * provided FXML file located in 'fxmlLocation'.
+     * 
      * @param path The file path of the FXML file to switch to.
      */
-     public BaseController switchAnchor(String path){
-        if(!path.equals(currentPath)){
+    public BaseController switchAnchor(String path) {
+        if (!path.equals(currentPath)) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
             try {
                 AnchorPane newContent = loader.load();
@@ -208,5 +217,3 @@ public class DashboardController extends BaseController {
         return null;
     }
 }
-
-
