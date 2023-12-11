@@ -119,7 +119,6 @@ public class Reports {
         String sqlQuery = "SELECT SUM(amount) AS total FROM payments " +
             "WHERE DATE(time) >= '" + Date.valueOf(startDate) + "' " +
             "AND DATE(time) <= '" + Date.valueOf(endDate) + "'";
-        System.out.println(sqlQuery);
         Connection con = ReservationSystem.getDatabaseConnection();
 
         try {
