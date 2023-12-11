@@ -185,7 +185,8 @@ public class CheckInController extends BaseController {
          notification();
         if (!selectedReservations.isEmpty()) {
             for (Reservation reservation : selectedReservations) {
-                if (LocalDateTime.now().isAfter(LocalDateTime.of(LocalDate.now(), Constants.CHECK_IN_TIME))) {
+                if (LocalDateTime.now().isAfter(
+                    LocalDateTime.of(LocalDate.now(), Constants.CHECK_IN_TIME))) {
                     reservation.setIsCheckedIn(true);
                     reservation.push();
                       ConfirmationController cc = (ConfirmationController) Instances.getDashboardController()

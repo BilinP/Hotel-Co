@@ -21,8 +21,8 @@ public class DailyTask {
     /**
      * Creates either a daily check in or check out task that runs at a fixed
      * time.
- * @param hour the hour which triggers this daily task
-     * @author Daniel Schwartz
+     * @param timeOfDay time of day to run this task
+     * @param task Task type
      */
     public DailyTask(LocalTime timeOfDay, Tasks task){
         Timer timer = new Timer(true);
@@ -52,7 +52,7 @@ public class DailyTask {
             ReservationSystem.dailyCheckOut();
         }
     }
-        /**
+    /**
      * A special class that extends Timertask and gives it a unique run()
      * method.
      */

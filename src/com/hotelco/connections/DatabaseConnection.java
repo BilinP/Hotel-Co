@@ -11,7 +11,6 @@ public class DatabaseConnection {
 /**
  * Connects static member con to the database
  * @return Connection object, connected to database
- * @author Daniel Schwartz
  */
     public static Connection connectDB()
     {
