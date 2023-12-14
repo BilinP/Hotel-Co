@@ -5,8 +5,18 @@ import com.hotelco.controllers.DashboardController;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * Stores several instances of necessary front-end objects that are commonly
+ * referenced.
+ * 
+ * @author      Grigor Azakian
+ */
 public class Instances {
 
+    /**
+     * Ensures that Instances is a utility class that cannot be created
+     * as an object.
+     */
     private Instances() {}
 
     /**

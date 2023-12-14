@@ -13,6 +13,10 @@ import com.hotelco.entities.User;
 */
 public class EmailGenerator {
 
+    /**
+     * Ensures that EmaiLGenerator is a utility class that cannot be created
+     * as an object.
+     */    
     private EmailGenerator() {}
     
     /**
