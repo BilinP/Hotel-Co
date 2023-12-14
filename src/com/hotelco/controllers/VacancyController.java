@@ -3,7 +3,6 @@ package com.hotelco.controllers;
 
 
 import com.hotelco.constants.RoomType;
-import com.hotelco.utilities.DatabaseUtil;
 import com.hotelco.utilities.Reports;
 
 import javafx.application.Platform;

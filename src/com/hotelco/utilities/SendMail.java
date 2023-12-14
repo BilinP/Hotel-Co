@@ -1,8 +1,6 @@
 package com.hotelco.utilities;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -13,11 +11,6 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import com.hotelco.developer.Settings;
-import com.hotelco.entities.Reservation;
-import com.hotelco.entities.ReservationSystem;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 
 /**

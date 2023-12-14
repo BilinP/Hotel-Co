@@ -2,9 +2,7 @@ package com.hotelco.controllers;
 
 import java.time.format.DateTimeFormatter;
 
-import com.hotelco.constants.Constants;
 import com.hotelco.entities.Reservation;
-import com.hotelco.utilities.EmailGenerator;
 import com.hotelco.utilities.FXMLPaths;
 import com.hotelco.utilities.Instances;
 import com.hotelco.utilities.ReservationCalculator;
