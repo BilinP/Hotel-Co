@@ -114,9 +114,6 @@ public class CreateAccountController extends BaseController {
      * This method is called when pressing the 'Register' button.
      * It handles input verification and account creation. It will switch to 'LoginGUI' upon successful account creation.
      * @param event The 'mouse released' event that is triggered by pressing the 'Create Account' button.
-     * @author Grigor Azakian
-     * @author Daniel Schwartz
-     * @author Bilin Pattasseril
      */
     @FXML
     private void createAccount(MouseEvent event) {

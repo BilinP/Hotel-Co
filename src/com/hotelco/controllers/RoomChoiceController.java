@@ -6,7 +6,6 @@ import com.hotelco.utilities.DatabaseUtil;
 import com.hotelco.utilities.FXMLPaths;
 import com.hotelco.utilities.Instances;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
@@ -106,10 +105,6 @@ public class RoomChoiceController extends BaseController {
             queenFlavor.setText(Constants.QueenRoomFlavor);
             dblFlavor.setText(Constants.DblRoomFlavor);
             suiteFlavor.setText(Constants.SuiteRoomFlavor);
-        Platform.runLater(() -> {
-
-
-        });
     }
 
     /**
@@ -119,7 +114,6 @@ public class RoomChoiceController extends BaseController {
      */
     @FXML
      void switchToBooking(MouseEvent event) {
-       
          Button clickedButton = (Button) event.getSource();
          RoomType roomType = RoomType.of(clickedButton.getId().toUpperCase());
          ReservationController rc = (ReservationController) Instances.getDashboardController().switchAnchor(FXMLPaths.RESERVATION);

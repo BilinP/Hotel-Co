@@ -7,16 +7,16 @@ import com.hotelco.entities.ReservationSystem;
 import com.hotelco.entities.User;
 
 /**
-* Contains the email signature constant for sent emails.
-* @author      John Lee
-* @version     %I%, %G%
+* Contains different email templates and starts the process of sending
+* an email.
+* @author      Grigor Azakian
 */
 public class EmailGenerator {
 
     private EmailGenerator() {}
     
     /**
-     * Signature for end of emails
+     * HotelCo signature that should always appear at the end of an email.
      */
     public static final String SIGNATURE = "Phone: 818 - 555 - 1337\r\n" + //
             "Email: HotelCoDesk@gmail.com\r\n" + //
@@ -24,6 +24,10 @@ public class EmailGenerator {
             "Address: 18111 Nordhoff St, Northridge, CA 91330\r\n\n" + //
             "Remember, at Hotel Co.,\n~We do hotels~";
 
+    /**
+     * Sends an email to a user upon reservation creation.
+     * @param reservation Reservation to write details from.
+     */
     public static void reservationConfirmation(Reservation reservation) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yy");
         String subject = "Reservation confirmation";
@@ -41,6 +45,11 @@ public class EmailGenerator {
         SendMail.startSend(reservation.getUser().getEmail(), subject, message);
     }
 
+    /**
+     * Sends an email to a user upon payment failure.
+     * @param reservationID Number of reservation that has had a payment failure.
+     * @param user User that must rectify payment failure.
+     */
     public static void paymentWarning(Integer reservationID, User user) {
             String subject = "Reservation " + reservationID + " payment";
             String message = "Dear " + user.getFirstName() + " " +
@@ -51,6 +60,12 @@ public class EmailGenerator {
             SendMail.startSend(
                     ReservationSystem.getCurrentUser().getEmail(), subject, message);
     }
+
+    /**
+     * Sends an email to a user upon successful password reset.
+     * @param tempPassword Temporary password created upon password reset.
+     * @param user User that reset their password.
+     */
     public static void resetPassword(String tempPassword, User user) {
         String subject = "Password Reset";
         String message = "Hello," + user.getFirstName()+" "+ user.getLastName()+","+
