@@ -788,6 +788,11 @@ public class ReservationController extends BaseController {
         roomText.setText(roomType.toPrettyString());
     }
 
+    /**
+     * Sets up scene for the relevant Reservation that must be changed.
+     * Called when entering scene from ViewBookingGUI.
+     * @param reservation Reservation to be cancelled upon successful booking
+     */
     void setToCancel(Reservation reservation) {
         toCancel = reservation;
         room = toCancel.getRoom().getRoomType();

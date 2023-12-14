@@ -74,9 +74,7 @@ public class LoginController extends BaseController {
 
     /**
      * Rounds the corners of the beach ImageView upon initialization of the
-     * Controller.
-     * 
-     * @author Grigor Azakian
+     * controller.
      */
     @FXML
     private void initialize() {
@@ -95,12 +93,10 @@ public class LoginController extends BaseController {
 
     /**
      * This method is called when pressing the 'Login' button. It handles input
-     * verification and user login. It will enter 'MenuGUI' upon successful login.
+     * verification and user login. It will enter 'DashboardGUI' upon successful login.
      * 
      * @param event The 'mouse released' event that is triggered by pressing the
      *              'Login' button.
-     * @author Grigor Azakian
-     * @author Daniel Schwartz
      */
     @FXML
     public int login(Event event) {
@@ -165,7 +161,6 @@ public class LoginController extends BaseController {
      * 
      * @param event The 'key pressed' event that is triggered by pressing any key on
      *              the keyboard.
-     * @author Bilin P
      */
     @FXML
     private void enter(KeyEvent event) {
@@ -180,7 +175,6 @@ public class LoginController extends BaseController {
      * @param text  The string to set the variable 'notification' to.
      * @param color sets the string color for 'notification' to specifed color and
      *              if it is null it will not set a color.
-     * @author Bilin P
      */
     void setNotification(String text, Color color) {
         notification.setText(text);
@@ -224,5 +218,4 @@ public class LoginController extends BaseController {
         idleTimer.stop();
         Instances.getScene().removeEventHandler(Event.ANY, handler);
     }
-
 }
