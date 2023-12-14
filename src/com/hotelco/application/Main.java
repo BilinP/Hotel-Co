@@ -1,8 +1,8 @@
 package com.hotelco.application;
 
+import com.hotelco.administrator.Settings;
 import com.hotelco.controllers.LoginController;
 import com.hotelco.developer.Developer;
-import com.hotelco.developer.Settings;
 import com.hotelco.utilities.DailyTask;
 import com.hotelco.utilities.FXMLPaths;
 import com.hotelco.utilities.FrequentTask;

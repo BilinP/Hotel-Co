@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.hotelco.developer.Settings;
+import com.hotelco.administrator.Settings;
 import com.hotelco.entities.ReservationSystem;
 
 /**

@@ -1,7 +1,7 @@
 package com.hotelco.utilities;
 
+import com.hotelco.administrator.Settings;
 import com.hotelco.controllers.LoginController;
-import com.hotelco.developer.Settings;
 import com.hotelco.entities.ReservationSystem;
 
 import javafx.animation.PauseTransition;
