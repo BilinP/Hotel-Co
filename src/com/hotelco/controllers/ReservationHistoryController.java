@@ -72,7 +72,9 @@ public class ReservationHistoryController extends BaseController {
      */
     @FXML
     private TableColumn<Reservation, String> total;
-
+    /**
+     * Text containing notifcation message.
+     */
     @FXML
     private Text notification;
 
