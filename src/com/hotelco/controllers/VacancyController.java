@@ -85,7 +85,7 @@ public class VacancyController extends BaseController {
 
     /**
      * This method is called immediately upon controller creation. It updates the
-     * the textfields 'doubleVacant', 'doubleInUse','queenVacant','queenInUse',
+     * the text's 'doubleVacant', 'doubleInUse','queenVacant','queenInUse',
      * 'kingVacant','kingInUse','suiteVacant', 'suiteInUse','totalInUse',
      * 'totalVacant', 'totalCheckIn','totalCheckOut', to what is stored in the
      * database.

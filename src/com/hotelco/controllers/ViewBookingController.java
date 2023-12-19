@@ -13,21 +13,22 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
 /**
- * The ThankYouController class is the associated controller class of the 'ThankYouGUI' view. 
- * It handles connection between the GUI and internal data.
+ * The ViewBookingController class is the associated controller class of the
+ * 'ViewBookingGUI' view. It handles connection between the GUI and internal
+ * data.
  * 
- * @author      Grigor Azakian
+ * @author Grigor Azakian
  */
 public class ViewBookingController extends BaseController {
 
     /**
-     * Text that will display a Reservation objects reservation ID.
+     * Text that will display a Reservation objects reservation number.
      */
     @FXML
     private Text reservationNumber;
 
     /**
-     * Text that will display a Reservation objects check-in date. 
+     * Text that will display a Reservation objects check-in date.
      */
     @FXML
     private Text checkIn;
@@ -43,47 +44,60 @@ public class ViewBookingController extends BaseController {
      */
     @FXML
     private Text room;
-    
+
     /**
      * Text that will display the total cost of the Reservation.
      */
     @FXML
-    private Text total;   
-
-    @FXML
-    private Button cancelButton;
-
-    @FXML
-    private Button changeButton;
-
-    private Reservation reservation;
-
+    private Text total;
 
     /**
-     * This method is called by pressing the 'BACK TO HOME' button.
-     * It exits the 'ThankYouGUI' and enters the 'HomeGUI'.
-     * @param event The 'mouse released' event that is triggered by pressing the 'BACK TO HOME' button.
+     * Button that will call cancel() method when pressed
      */
     @FXML
-    private void switchToHomeScene(MouseEvent event) {
-        Instances.getDashboardController().switchAnchor(FXMLPaths.HOME);
-    }
+    private Button cancelButton;
+    /**
+     * Button that will call change() method when pressed
+     */
+    @FXML
+    private Button changeButton;
+    /**
+     * reserviation that will hold the reservation selected.
+     */
+    private Reservation reservation;
 
+    /**
+     * This method is called by pressing the 'Cancel' button. It changes the
+     * right anchorpane to the ReservationHistoryGUI scene
+     * 
+     * @param event The 'mouse released' event that is triggered by pressing the
+     *              'cancel' button.
+     */
     @FXML
     private void cancel(MouseEvent event) {
         reservation.cancel(true);
-        ReservationHistoryController rhc = (ReservationHistoryController) Instances.getDashboardController().switchAnchor(FXMLPaths.RHGUI);
+        ReservationHistoryController rhc = (ReservationHistoryController) Instances.getDashboardController()
+                .switchAnchor(FXMLPaths.RHGUI);
         rhc.setNotification("Reservation successfully cancelled");
     }
-
+    /**
+     * This method is called by pressing the 'Change' button. It changes the
+     * right anchorpane to the ReservationGUI scene
+     * 
+     * @param event The 'mouse released' event that is triggered by pressing the
+     *              'Change' button.
+     */
     @FXML
     private void change(MouseEvent event) {
-        ReservationController rc = (ReservationController) Instances.getDashboardController().switchAnchor(FXMLPaths.RESERVATION);
+        ReservationController rc = (ReservationController) Instances.getDashboardController()
+                .switchAnchor(FXMLPaths.RESERVATION);
         rc.setToCancel(reservation);
     }
 
     /**
-     * This method will print the details of the current reservation onto the screen.
+     * This method will print the details of the current reservation onto the
+     * screen.
+     * 
      * @param reservation The current reservation to print details for.
      */
     void writeReservationInfo(Reservation reservation) {
@@ -100,7 +114,5 @@ public class ViewBookingController extends BaseController {
             changeButton.setDisable(true);
         }
     }
-
-
 
 }
