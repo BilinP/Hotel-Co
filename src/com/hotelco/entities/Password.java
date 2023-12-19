@@ -8,7 +8,7 @@ import java.math.BigInteger;
 
 /**
  * The password class represents a password with a salt for security. It provides methods to encrypt and verify.  
- * @author BilinP
+ * @author Bilin Pattasseril
  */
 public class Password{
     /**

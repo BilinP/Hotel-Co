@@ -10,7 +10,7 @@ import com.hotelco.entities.Password;
 import com.hotelco.entities.User;
 /**
  * Utility class for verifications
- * @author BilinP, Daniel Schwartz
+ * @author Bilin Pattasseril, Daniel Schwartz
  */
 
 public class Verifier {
@@ -38,7 +38,6 @@ public class Verifier {
      * which is checking the format of the email.
      * @param email The email address to be validated.
      * @return a Boolean where true means the email is valid and false if not
-     * @author Bilin Pattasseril
      */
     public static Boolean isValidEmail(String email){
         if(email.length()>320){return false;}
