@@ -25,9 +25,9 @@ public class SendMail
 	/**
 	 * The main method to send an email by taking in a String email, subject, and body, and setting up
 	 * a Google stmp server
-	 * @param emailString
-	 * @param subject
-	 * @param body
+	 * @param emailString The email address to be sent to.
+	 * @param subject subject of the email
+	 * @param body content of the email
 	 * @throws AddressException
 	 * @throws MessagingException
 	 * @throws IOException
@@ -74,19 +74,18 @@ public class SendMail
 		}
 	}
 
-	//Add user email and info for room
 	/**
 	 * Sets up a draft email using a string pass for a email, subject, and body
-	 * @param Email
-	 * @param EmailSubject
-	 * @param EmailBody
+	 * @param Email Email address recepient
+	 * @param EmailSubject email subject
+	 * @param EmailBody content of email
 	 * @return a mime message
 	 * @throws AddressException
 	 * @throws MessagingException
 	 * @throws IOException
 	 */
 	private MimeMessage draftEmail(String Email, String EmailSubject, String EmailBody) throws AddressException, MessagingException, IOException {
-		String emailReceipient = Email;  //Enter list of email recepients
+		String emailReceipient = Email; 
 		String emailSubject = EmailSubject;
 		mimeMessage = new MimeMessage(newSession);
 		 
