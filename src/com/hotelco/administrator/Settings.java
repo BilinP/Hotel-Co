@@ -2,6 +2,9 @@ package com.hotelco.administrator;
 
 import com.hotelco.constants.MsTime;
 
+/**
+ * Holds the administrator pre-launch settings. 
+ */
 public class Settings {
 
     /**

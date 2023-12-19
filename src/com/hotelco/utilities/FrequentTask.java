@@ -13,6 +13,11 @@ import com.hotelco.entities.ReservationSystem;
  * Can create tasks that happen frequently and repeatedly.
  */
 public class FrequentTask {
+    /**
+     * initiates a DatabaseReconnectTask that occurs every minutesFrequency
+     * minutes 
+     * @param minutesFrequency how often to schedule the task
+     */
     public FrequentTask(Integer minutesFrequency){
         Timer timer = new Timer(true);
         timer.scheduleAtFixedRate(

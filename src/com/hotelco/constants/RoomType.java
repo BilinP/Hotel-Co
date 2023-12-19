@@ -6,7 +6,10 @@ package com.hotelco.constants;
  * @author Daniel Schwartz
  */
 public enum RoomType {
-    DBL("Double"), QUEEN("Queen"), KING("King"), SUITE("Suite");
+    DBL("Double"),
+    QUEEN("Queen"),
+    KING("King"),
+    SUITE("Suite");
 
     /**
      * Snake case and "pretty" string of this enum
