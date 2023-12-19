@@ -518,7 +518,10 @@ public class Reservation {
         public void setRateDiscount(Adjustment newRateDiscount){
             rateDiscount = newRateDiscount;
         }
-        //unlikely to use this function
+        /**
+         * Adds an adjustment to the adjustments of this reservation
+         * @param adjustmentToAdd the adjustment to add.
+         */
         public void addAdjustment(Adjustment adjustmentToAdd){
             Integer adjustmentsLength = adjustments.length;
             Adjustment[] newAdjustments = new Adjustment[adjustmentsLength + 1];
@@ -527,6 +530,11 @@ public class Reservation {
             newAdjustments[adjustmentsLength] = adjustmentToAdd;
             adjustments = newAdjustments;
         }
+
+        /**
+         * Gets the total of all adjustments of this reservation
+         * @return the total of all adjustments of this reservation
+         */
         public BigDecimal getTotalAdustments(){
             Integer adjustmentsLength = adjustments.length;
             BigDecimal total = new BigDecimal(0);
