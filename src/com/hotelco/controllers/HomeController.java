@@ -70,8 +70,8 @@ public class HomeController extends BaseController {
     /**
      * Sets up the ChangeListeners for fo and fi.
      * The ChangeListeners will listen to the opacity value of fo and fi
-     * which will set the next image to be shown and trigger the next FadeTransition.
-     * @param images
+     * which will set the next image to be shown an trigger the next FadeTransition.
+     * @param images  holds all the images different which will be used for transitions
      */
     private void setChangeListeners(Image[] images) {
         fo.opacityProperty().addListener(new ChangeListener<Number>() {

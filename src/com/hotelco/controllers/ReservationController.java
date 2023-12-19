@@ -136,7 +136,10 @@ public class ReservationController extends BaseController {
      */
     @FXML
     private Text rate;
-
+    
+     /**
+     * Button named 'Change Room Type' that calls 'switchToRoomChoiceScene()' when pressed.
+     */
     @FXML
     private Button changeButton;
 
@@ -660,7 +663,6 @@ public class ReservationController extends BaseController {
      * Sets expiration date TextField borders to white and clears error message if
      * user finished entering either MM or YY, or if the user deletes either the MM or YY fields. 
      * Used to refresh the error status if user is retrying to enter a valid expiration date.
-     * @param newValue The focus state of any expiration date TextField.
      */    
     private void refreshExpDateErrorStatus() {
             setWhiteBorder(expDateMonth);
@@ -670,7 +672,6 @@ public class ReservationController extends BaseController {
     /**
      * Sets expiration date TextField borders to red and displays error message if
      * entered expiration date has already passed.
-     * @param newValue The focus state of any expiration date TextField.
      * @return true if expDate is valid, false otherwise
      */
     private boolean setExpDateErrorStatus() {

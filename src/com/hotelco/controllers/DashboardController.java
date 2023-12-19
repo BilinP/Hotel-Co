@@ -201,6 +201,7 @@ public class DashboardController extends BaseController {
      * provided FXML file located in 'fxmlLocation'.
      * 
      * @param path The file path of the FXML file to switch to.
+     * @return null return's null if the anchor is already being shown. 
      */
     public BaseController switchAnchor(String path) {
         if (!path.equals(currentPath)) {

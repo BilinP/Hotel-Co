@@ -99,11 +99,10 @@ public class LoginController extends BaseController {
      *              'Login' button.
      */
     @FXML
-    public int login(Event event) {
+    public void login(Event event) {
         if (email.getText().isEmpty() || password.getText().isEmpty()) {
             notification.setText("Please enter username and password");
             notification.setFill(Color.RED);
-            return 0;
         }
         String emailStr = email.getText();
         if (DatabaseUtil.doesEmailExist(emailStr)) {
@@ -112,20 +111,16 @@ public class LoginController extends BaseController {
                 ReservationSystem.setCurrentUser(new User(emailStr, true));
                 if (ReservationSystem.getCurrentUser().getIsManager()) {
                     switchScene(FXMLPaths.MANAGER_DASHBOARD);
-                    return 1;
                 } else {
                     switchScene(FXMLPaths.DASHBOARD);
-                    return 2;
                 }
             } else {
                 notification.setText("Invalid Username/Password!");
                 notification.setFill(Color.RED);
-                return 3;
             }
         } else {
             notification.setText("Invalid Username/Password!");
             notification.setFill(Color.RED);
-            return 4;
         }
     }
 

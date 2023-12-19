@@ -25,7 +25,7 @@ import java.security.SecureRandom;
  * 'ResetPasswordGUI' view. It handles connection between the GUI and internal
  * data.
  * 
- * @author Bilin Pattasseril
+ * @author Bilin Pattasseril, Grigor Azakian
  */
 public class ResetPasswordController extends BaseController {
 
@@ -67,8 +67,6 @@ public class ResetPasswordController extends BaseController {
     /**
      * Rounds the corners of the beach ImageView upon initialization of the
      * Controller.
-     * 
-     * @author Grigor Azakian
      */
     @FXML
     private void initialize() {
@@ -92,8 +90,7 @@ public class ResetPasswordController extends BaseController {
      * It will enter 'Login GUI' upon successful reset.
      * 
      * @param event The 'mouse released' event that is triggered by pressing the
-     *              'Login' button.
-     * @author Bilin Pattasseril
+     *              'Reset Password' button.
      */
     @FXML
     private void resetPassword(MouseEvent event) {
@@ -120,7 +117,7 @@ public class ResetPasswordController extends BaseController {
      * This method is called to get a temp password with length 10 which is
      * randomize.
      * 
-     * @author Bilin Pattasseril
+     * @return a random temporary password of size 9
      */
 
     public static String generateTempPassword() {
@@ -143,7 +140,6 @@ public class ResetPasswordController extends BaseController {
      * 
      * @param event The 'mouse released' event that is triggered by pressing the
      *              'Return to Login?' button.
-     * @author Bilin Pattasseril
      */
     @FXML
     private void switchToLogin(MouseEvent event) {
@@ -158,7 +154,6 @@ public class ResetPasswordController extends BaseController {
      * @param text  The string to set the variable 'notification' to.
      * @param color sets the string color for 'notification' to specifed color and
      *              if it is null it will not set a color.
-     * @author Bilin Pattasseril
      */
     void setNotification(String text, Color color) {
         notification.setText(text);
@@ -172,8 +167,6 @@ public class ResetPasswordController extends BaseController {
      * and the current scene's EventHandler. idleTimer will call
      * switchToScreenSaver() when its timer reaches 0. The scene will track every
      * event and reset the timer when an event is made.
-     * 
-     * @author Grigor Azakian
      */
     public void initializeIdleTimer() {
         idleTimer = new PauseTransition(Duration.seconds(10));
@@ -193,8 +186,6 @@ public class ResetPasswordController extends BaseController {
     /**
      * Called if idleTimer reaches the end of its timer. Switches the scene to
      * ScreenSaverGUI.
-     * 
-     * @author Grigor Azakian
      */
     private void switchToScreenSaver() {
         idleTimer.stop();
