@@ -674,18 +674,6 @@ public class ReservationController extends BaseController {
      * @return true if expDate is valid, false otherwise
      */
     private boolean setExpDateErrorStatus() {
-        /*
-        if (!(expDateMonth.getLength() == 2 && expDateYear.getLength() == 2) ||
-            Integer.parseInt(expDateMonth.getText()) > 12 ||
-            (endDate.getValue() != null && parseExpDate().plusMonths(1).isBefore(endDate.getValue()) ||
-            parseExpDate().plusMonths(1).isBefore(LocalDate.now()))) {
-                setErrorOnExpDateFields();
-                return false;
-            }
-        return true;
-        */
-
-
         if (expDateMonth.getLength() == 2 && expDateYear.getLength() == 2) {
             if (Integer.parseInt(expDateMonth.getText()) > 12) {
                 setErrorOnExpDateFields();
