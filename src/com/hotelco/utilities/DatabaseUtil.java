@@ -682,7 +682,7 @@ public class DatabaseUtil{
      * Deletes all credit cards in the database. DO NOT CALL.
      */
     public static void deleteAllCreditCards(){
-        if (Settings.DEV_MODE == true){
+        if (com.hotelco.developer.Settings.DEV_MODE == true){
             PreparedStatement ps = null;
             String sqlQuery = "DELETE FROM credit_cards";
             Connection con = ReservationSystem.getDatabaseConnection();

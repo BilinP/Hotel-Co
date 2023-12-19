@@ -9,14 +9,6 @@ public class Settings {
      */
     public static final Boolean CAN_EMAIL = true;
     /**
-     * Whether to enter developer mode or not
-     */
-    public static final Boolean DEV_MODE = false;
-    /**
-     * Whether to run main or not.
-     */
-    public static final Boolean RUN_MAIN = true;
-    /**
      * Whether or not to run the application in full screen
      */
     public static final Boolean FULL_SCREEN = true;

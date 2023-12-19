@@ -35,10 +35,10 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 
 		try {
-			if (Settings.DEV_MODE) {
+			if (com.hotelco.developer.Settings.DEV_MODE) {
 				Developer.runDevMode();
 			}
-			if (Settings.RUN_MAIN) {
+			if (com.hotelco.developer.Settings.RUN_MAIN) {
 				DailyTask.scheduleDailyTasks();
 				FrequentTask.scheduleFrequentTasks();
 				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXMLPaths.LOGIN));
