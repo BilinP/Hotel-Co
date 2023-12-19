@@ -146,6 +146,7 @@ public class LoginController extends BaseController {
      */
     @FXML
     void switchToResetPassword(MouseEvent event) {
+        removeTimer();
         ResetPasswordController rpc = (ResetPasswordController) switchScene(FXMLPaths.RESET_PASSWORD);
         rpc.initializeIdleTimer();
     }
