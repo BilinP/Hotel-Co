@@ -1,10 +1,8 @@
 package com.hotelco.utilities;
 
+import com.hotelco.administrator.Settings;
 import com.hotelco.constants.DatabaseStatus;
 import com.hotelco.constants.RoomType;
-import com.hotelco.developer.Developer;
-import com.hotelco.developer.Settings;
-import com.hotelco.developer.TimerTool;
 import com.hotelco.entities.Reservation;
 import com.hotelco.entities.ReservationSystem;
 import com.hotelco.entities.User;
@@ -359,7 +357,6 @@ public class DatabaseUtil{
      * @return the reservations with today as their check out date
      */
     public static Reservation[] getTodayCheckouts(){
-        //FIXME: What to do when the daily check out doesn't run?
         ArrayList<Reservation> reservationList = new ArrayList<Reservation>();
         Reservation[] result = null;
         PreparedStatement ps = null;
@@ -685,7 +682,7 @@ public class DatabaseUtil{
      * Deletes all credit cards in the database. DO NOT CALL.
      */
     public static void deleteAllCreditCards(){
-        if (Settings.DEV_MODE == true){
+        if (com.hotelco.developer.Settings.DEV_MODE == true){
             PreparedStatement ps = null;
             String sqlQuery = "DELETE FROM credit_cards";
             Connection con = ReservationSystem.getDatabaseConnection();

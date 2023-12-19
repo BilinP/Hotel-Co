@@ -455,6 +455,11 @@ public class Reservation {
         }
         DatabaseUtil.ready();
     }
+
+    /**
+     * Creates a new adjustment for this reservation
+     * @param adjustment adjustment to add
+     */
     public void createNewAdjustment(Adjustment adjustment){
         pushNewAdjustment(adjustment);
         fetch(true);

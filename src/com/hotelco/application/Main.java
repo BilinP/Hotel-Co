@@ -1,8 +1,8 @@
 package com.hotelco.application;
 
+import com.hotelco.administrator.Settings;
 import com.hotelco.controllers.LoginController;
 import com.hotelco.developer.Developer;
-import com.hotelco.developer.Settings;
 import com.hotelco.utilities.DailyTask;
 import com.hotelco.utilities.FXMLPaths;
 import com.hotelco.utilities.FrequentTask;
@@ -35,10 +35,10 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 
 		try {
-			if (Settings.DEV_MODE) {
+			if (com.hotelco.developer.Settings.DEV_MODE) {
 				Developer.runDevMode();
 			}
-			if (Settings.RUN_MAIN) {
+			if (com.hotelco.developer.Settings.RUN_MAIN) {
 				DailyTask.scheduleDailyTasks();
 				FrequentTask.scheduleFrequentTasks();
 				FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(FXMLPaths.LOGIN));

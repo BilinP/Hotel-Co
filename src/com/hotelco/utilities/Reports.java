@@ -8,7 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Month;
-import java.time.Year;
 
 import com.hotelco.constants.RoomType;
 import com.hotelco.entities.ReservationSystem;
@@ -110,6 +109,12 @@ public class Reports {
         return result;
     }
 
+    /**
+     * Gets the revenue of a given month year
+     * @param month Month to check
+     * @param year Year to check
+     * @return the revenue for the supplied month/year
+     */
     public static BigDecimal getRevenueOfMonth(Month month, Integer year) {   
         BigDecimal result = new BigDecimal(0);
         PreparedStatement ps = null;
@@ -138,7 +143,11 @@ public class Reports {
         return result;
     }
 
-    //FIXME: javadocs
+    /**
+     * Counts the number of occupied rooms in the database
+     * @param roomType type of room to count
+     * @return the number of occupied rooms
+     */
     public static Integer countOccupiedRooms(RoomType roomType){
         Integer result = 0;
         LocalDate today = LocalDate.now();
@@ -177,6 +186,7 @@ public class Reports {
     }
     /**
      * Counts the amount of available rooms within the current day
+     * @param roomType type of room to count
      * @return number of available rooms
      */
     public static Integer countAvailableRooms(RoomType roomType){
@@ -346,6 +356,10 @@ public class Reports {
     
     }
 
+    /**
+     * Gets the total vacancy of the hotel from the database.
+     * @return the total vacancy of the hotel
+     */
     public static Integer getVacancy(){
         Integer result = 0;
         PreparedStatement ps = null;
@@ -407,6 +421,10 @@ public class Reports {
         return result;
     }
     
+    /**
+     * Gets the number of rooms in the hotel
+     * @return the number of rooms in the hotel
+     */
     public static Integer getNumRooms(){
         Integer result = 0;
         PreparedStatement ps = null;

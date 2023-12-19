@@ -1,21 +1,13 @@
 package com.hotelco.developer;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Month;
-import java.time.format.DateTimeFormatter;
-
-import com.hotelco.constants.RoomType;
 import com.hotelco.entities.ReservationSystem;
 import com.hotelco.entities.User;
 import com.hotelco.utilities.DatabaseUtil;
 import com.hotelco.utilities.Reports;
-
-import javafx.scene.chart.PieChart.Data;
 
 /**
  * Contains the developer sandbox and methods usefull to developers
@@ -30,7 +22,6 @@ public class Developer {
         //run2();
         //run3();
         run4();
-        System.out.println(1111);
     }
 
     /**

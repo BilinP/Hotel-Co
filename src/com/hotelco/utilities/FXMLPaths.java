@@ -7,6 +7,10 @@ package com.hotelco.utilities;
  */
 public class FXMLPaths {
     
+    /**
+     * Ensures that FXMLPaths is a utility class that cannot be created
+     * as an object.
+     */    
     private FXMLPaths() {}
 
     /**
