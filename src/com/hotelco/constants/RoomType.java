@@ -26,7 +26,7 @@ public enum RoomType {
     /**
      * Constructs a RoomType with an associated pretty string
      * 
-     * @param prettyName
+     * @param prettyName pretty name of this RoomType
      */
     RoomType(String prettyName) {
         this.prettyName = prettyName;
