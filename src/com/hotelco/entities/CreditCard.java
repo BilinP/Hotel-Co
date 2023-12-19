@@ -95,10 +95,10 @@ public class CreditCard{
      * Creates a credit card by explicitly defining every member except
      * creditCardType. creditCardType is determined inside the constructor
      * algorithmically.
-     * @param newCreditCardNum
-     * @param newCVVNum
-     * @param newExpDate
-     * @param newUser
+     * @param newCreditCardNum credit card number to associate with this credit card
+     * @param newCVVNum cvv number to associate with this credit card
+     * @param newExpDate expiration date to associate with this credit card
+     * @param newUser user to associate with this credit card
      */
     public CreditCard(
         String newCreditCardNum, String newCVVNum,

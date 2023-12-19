@@ -16,7 +16,7 @@ public class TimerTool {
 
     /**
      * Constructs a TimerTool based on the current time and supplied line number.
-     * @param line
+     * @param line the line with which to start the timer
      */
     public TimerTool(Integer line){
         prevTime = System.currentTimeMillis();

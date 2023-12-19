@@ -1,6 +1,5 @@
 package com.hotelco.utilities;
 
-import com.hotelco.administrator.Settings;
 import com.hotelco.constants.DatabaseStatus;
 import com.hotelco.constants.RoomType;
 import com.hotelco.entities.Reservation;

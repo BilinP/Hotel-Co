@@ -6,9 +6,13 @@ package com.hotelco.constants;
  * @author Daniel Schwartz
  */
 public enum RoomType {
+    /**Double bed room type*/
     DBL("Double"),
+    /**Queen bed room type */
     QUEEN("Queen"),
+    /**King bed type*/
     KING("King"),
+    /**Suite room type*/
     SUITE("Suite");
 
     /**

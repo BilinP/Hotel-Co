@@ -1,5 +1,8 @@
 package com.hotelco.developer;
 
+/**
+ * Holds the developer pre-launch settings
+ */
 public class Settings {
 
     /**
