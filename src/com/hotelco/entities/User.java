@@ -317,10 +317,11 @@ public class User {
     }
     /**
      * Fetches all reservations associated with a user from the database by user id
-     * @param onlyFuture
-     * @param byDate
-     * @param onlyNotCancelled
-     * @return the reservation results.
+     * @param onlyFuture whether or not to fetch only future reservations
+     * @param byDate whether to sort by date
+     * @param onlyNotCancelled whether or not to fectch only not cancelled
+     * reservations
+     * @return the reservation results
      */
     public Reservation[] fetchReservations(
         Boolean onlyFuture, Boolean byDate, Boolean onlyNotCancelled){

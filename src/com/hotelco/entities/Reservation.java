@@ -478,8 +478,8 @@ public class Reservation {
         private Adjustment rateDiscount;
         /**
          * Constructs an InvoiceDetails with the supplied parameters
-         * @param newRateDiscount
-         * @param newAdjustments
+         * @param newRateDiscount rate discount to associate with this Reservation
+         * @param newAdjustments adjustments to associate with this Reservation
          */
         public InvoiceDetails(Adjustment newRateDiscount, Adjustment[] newAdjustments){
             adjustments = newAdjustments;
