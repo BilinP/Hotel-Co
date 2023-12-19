@@ -17,6 +17,8 @@ public class Verifier {
     /**
     * Utility to check and verify if a proper password is inputted.
     * @return a Boolean for a proper password.
+    * @param email email address 
+    * @param password Inputed password 
     */
     public static Boolean verifyPassword(String email, String password)
     {
