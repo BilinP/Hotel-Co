@@ -2,14 +2,11 @@ package com.hotelco.controllers;
 
 import java.time.format.DateTimeFormatter;
 
-import com.hotelco.constants.Constants;
 import com.hotelco.entities.Reservation;
-import com.hotelco.utilities.EmailGenerator;
 import com.hotelco.utilities.FXMLPaths;
 import com.hotelco.utilities.Instances;
 import com.hotelco.utilities.ReservationCalculator;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
@@ -58,13 +55,6 @@ public class ThankYouController extends BaseController {
     @FXML
     private Text total;    
 
-    @FXML
-    private void initialize() {
-        //add non JavaFX related code here
-        Platform.runLater(() -> {
-            //add JavaFX related code here
-        });
-    }
 
     /**
      * This method is called by pressing the 'BACK TO HOME' button.

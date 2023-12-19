@@ -7,7 +7,6 @@ import com.hotelco.utilities.FXMLPaths;
 import com.hotelco.utilities.Instances;
 import com.hotelco.utilities.ReservationCalculator;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
@@ -59,13 +58,6 @@ public class ViewBookingController extends BaseController {
 
     private Reservation reservation;
 
-    @FXML
-    private void initialize() {
-        //add non JavaFX related code here
-        Platform.runLater(() -> {
-            //add JavaFX related code here
-        });
-    }
 
     /**
      * This method is called by pressing the 'BACK TO HOME' button.
