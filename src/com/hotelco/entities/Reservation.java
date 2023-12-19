@@ -78,11 +78,11 @@ public class Reservation {
     /**
      * Creates a new reservation, ready to be added to the database. Programmer
      * must explcitly call push() to add the reservation to the database.
-     * @param newRoom
-     * @param newStartDate
-     * @param newEndDate
-     * @param newUser
-     * @param newGroupSize
+     * @param newRoom room to associate with this reservation
+     * @param newStartDate start date to associate with this reservation
+     * @param newEndDate end date to associate with this reservation
+     * @param newUser user to associate with this reservation
+     * @param newGroupSize group size to associate with this reservation
      */
     public Reservation(
         Room newRoom, LocalDate newStartDate, LocalDate newEndDate,
@@ -97,16 +97,16 @@ public class Reservation {
     /**
      * Creates a reservation with most fields explicitly defined.
      * Invoice details are fetched from the database.
-     * @param newRoom
-     * @param newStartDate
-     * @param newEndDate
-     * @param newUser
-     * @param newComments
-     * @param newGroupSize
-     * @param newReservationId
-     * @param newIsCancelled
-     * @param newIsCheckedIn
-     * @param newIsCheckedOut
+     * @param newRoom room to associate with this reservation
+     * @param newStartDate start date to associate with this reservation
+     * @param newEndDate end date to associate with this reservation
+     * @param newUser user to associate with this reservation
+     * @param newComments comments to associate with this reservation
+     * @param newGroupSize groupSize to associate with this reservation
+     * @param newReservationId reservationId to associate with this reservation
+     * @param newIsCancelled cancelled status to associate with this reservation
+     * @param newIsCheckedIn checked in status to associate with this reservation
+     * @param newIsCheckedOut checked out status to associate with this reservation
      */
     public Reservation(
         Room newRoom, LocalDate newStartDate, LocalDate newEndDate, User newUser, 
