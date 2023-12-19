@@ -20,6 +20,10 @@ import javafx.concurrent.Task;
  */
 public class SendMail
 {
+	/**
+	 * Initializes a Session class to gather email properties and a
+	 * MimeMessage class to style an email message.
+	 */
 	Session newSession = null;
 	MimeMessage mimeMessage = null;
 	/**
